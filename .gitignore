@@ -1,0 +1,19 @@
+# Ignorar archivos de Python
+*.pyc
+*.pyo
+__pycache__/
+
+# Ignorar la base de datos SQLite de Django
+*.sqlite3
+
+# Ignorar archivos de entorno virtual
+venv/
+env/
+*.env
+
+# Ignorar directorios de migraciones de Django
+myweb/*/migrations/
+
+# Ignorar archivos de configuración de IDEs como PyCharm o VSCode
+.idea/
+.vscode/
