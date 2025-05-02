@@ -57,19 +57,44 @@ class Objeto(models.Model):
     nombre = models.CharField(max_length=100)
 
 class JugadorEnPartida(models.Model):
-    jugador = models.OneToOneField(Jugador, on_delete=models.CASCADE)
-    partido = models.OneToOneField(Partido, on_delete=models.CASCADE)
-    campeon = models.OneToOneField(Campeon, on_delete=models.CASCADE)
+    jugador = models.ForeignKey(Jugador, on_delete=models.CASCADE, related_name='partidas')
+    partido = models.ForeignKey(Partido, on_delete=models.CASCADE, related_name='jugadores_en_partida')
+    campeon = models.ForeignKey(Campeon, on_delete=models.CASCADE, related_name='jugadores_en_partida')
+    side = models.CharField(max_length=10)  # blue o red
+    posicion = models.CharField(max_length=10)
+    resultado = models.BooleanField()  # True si ganó
+    kills = models.IntegerField()
+    deaths = models.IntegerField()
+    assists = models.IntegerField()
+    double_kills = models.IntegerField()
+    triple_kills = models.IntegerField()
+    quadra_kills = models.IntegerField()
+    penta_kills = models.IntegerField()
+    first_blood = models.BooleanField()
+    wards_placed = models.IntegerField()
+    wards_killed = models.IntegerField()
+    vision_score = models.IntegerField()
+    total_gold = models.IntegerField()
+    damage_to_champions = models.IntegerField()
+    cs_total = models.IntegerField()
+    minion_kills = models.IntegerField()
+    monster_kills = models.IntegerField()
+    monster_kills_own_jungle = models.IntegerField()
+    monster_kills_enemy_jungle = models.IntegerField()
+
     objetos_comprados = models.ManyToManyField(Objeto, related_name='jugadores_en_partida')
     objetivos_neutrales_matados = models.ManyToManyField(ObjetivoNeutral, related_name='jugadores_en_partida')
 
-# Relación tripartita: Equipo - Partido - Campeón con información extra
+    class Meta:
+        unique_together = ('jugador', 'partido')  # un jugador solo puede aparecer una vez por partida
+
+# Relación tripartita: Equipo - Partido 
 class Seleccion(models.Model):
     equipo = models.ForeignKey(Equipo, on_delete=models.CASCADE)
     partido = models.ForeignKey(Partido, on_delete=models.CASCADE)
     campeon = models.ForeignKey(Campeon, on_delete=models.CASCADE)
     orden_seleccion = models.IntegerField()
-    orden_baneo = models.IntegerField(null=True, blank=True)  # si aplica
+    orden_baneo = models.IntegerField(null=True, blank=True) 
 
     class Meta:
         unique_together = ('equipo', 'partido', 'campeon')
