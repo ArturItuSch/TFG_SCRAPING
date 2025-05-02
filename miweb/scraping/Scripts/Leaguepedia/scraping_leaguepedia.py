@@ -199,12 +199,13 @@ def get_player_data(urls):
                         datos_complementarios = {}
                         
                     miembro = {
-                        'residencia': residencia,
-                        'pais': pais,
                         'jugador': jugador,
                         'nombre': nombre_real,
-                        'nacimiento': datos_complementarios.get('birthday', None),
+                        'residencia': residencia,
                         'rol': rol,
+                        'equipo': url.split('/')[-1].replace('_', ' ').replace('Season', '').strip(),
+                        'pais': pais,
+                        'nacimiento': datos_complementarios.get('birthday', None),
                         'soloqueue_ids': datos_complementarios.get('soloqueue_ids', None),
                         'contratado_hasta': contrato,
                         'contratado_desde': fecha_union,
@@ -228,14 +229,11 @@ def get_player_data(urls):
 
 # Extraer los logos de los equipos y su nombre -> Retorna una lista de diccionarios con el nombre del equipo y una lista de las urls de los logos
 def get_teams_logos(url):
-    nombre_equipos = []
-    logos = []
-
     try:
         response = requests.get(url, headers=headers)
         if not response or response.status_code != 200:
             print(f"No se pudo obtener la página: {url}")
-            return nombre_equipos, logos
+            return None
 
         soup = BeautifulSoup(response.content, 'html.parser')
         tables = soup.find_all('table', {'class': 'wikitable tournament-roster'})
@@ -244,15 +242,17 @@ def get_teams_logos(url):
             try:
                 nombre_equipo = table.find('tr').get_text(strip=True)
                 nombre_equipo = nombre_equipo.replace(' ', '_').replace('/', '_')
-                nombre_equipos.append(nombre_equipo)
-
+                ruta_logo_equipo = os.path.join(TEAM_IMAGES_DIR, f"{nombre_equipo}.png")
+                
                 row = table.find('tr', {'class': 'RosterLogos'})
                 if row:
                     logo_url = row.find('img')
                     if logo_url:
                         logo = logo_url.get('data-src') or logo_url.get('src')
                         if logo:
-                            logos.append(logo)
+                            download_image(ruta_logo_equipo, logo)
+                            print(f"Logo de {nombre_equipo} guardado en {ruta_logo_equipo}.")
+                            return ruta_logo_equipo
                         else:
                             print(f"Logo no encontrado para {nombre_equipo}")
                     else:
@@ -267,34 +267,31 @@ def get_teams_logos(url):
     except Exception as e:
         print(f"Error general al extraer logos de equipos en {url}: {e}")
 
-    download_images(nombre_equipos, logos, TEAM_IMAGES_DIR)
-    return nombre_equipos, logos
-
-# Descragar las images 
-def download_images(nombres_archivo, url_imagenes, ruta):
-    rutas_logos = []
+def download_image(ruta_completa, url_imagen):
+    """
+    Descarga una imagen desde una URL y la guarda en la ruta especificada (incluyendo el nombre del archivo).
     
-    for nombre_archivo, logo_url in zip(nombres_archivo, url_imagenes):
-        nombre_imagen = f"{nombre_archivo}_logo.png"
-        ruta_imagen = os.path.join(ruta, nombre_imagen)
-        relative_path = os.path.relpath(ruta_imagen, PROJECT_ROOT)
+    Args:
+        ruta_completa (str): Ruta completa donde guardar la imagen, incluyendo el nombre del archivo.
+        url_imagen (str): URL desde donde se descargará la imagen.
 
-        try:
-            print(f"Descargando {nombre_imagen}...")
-            img_data = requests.get(logo_url).content
-            with open(ruta_imagen, 'wb') as f:
-                f.write(img_data)
-            print(f"Imagen {nombre_imagen} descargada correctamente.")
-            rutas_logos.append({
-                "equipo": nombre_archivo,
-                "ruta": relative_path.replace("\\", "/"),
-                "url_logo": logo_url
-            })
-        except Exception as e:
-            print(f"Error al descargar la imagen {nombre_imagen}: {e}")
-
-    write_json(LOGO_TEAMS_PATH, rutas_logos)
-   
+    Returns:
+        bool: True si la descarga fue exitosa, False en caso contrario.
+    """
+    try:
+        print(f"Descargando imagen desde {url_imagen} a {ruta_completa}...")
+        img_data = requests.get(url_imagen, timeout=10)
+        img_data.raise_for_status()  # Lanza un error si la respuesta no es 200
+        with open(ruta_completa, 'wb') as f:
+            f.write(img_data.content)
+        print(f"Imagen guardada correctamente en {ruta_completa}.")
+        return True
+    except Exception as e:
+        print(f"Error al descargar la imagen: {e}")
+        return False
+    
+# Conseguir la información de los jugadores de los equipos que se pasan por una lista de urls  
+# Retorna una lista de diccionarios con la información de los jugadores
 def get_team_info(urls):
     informacion_equipos = []
 
@@ -308,57 +305,74 @@ def get_team_info(urls):
             soup = BeautifulSoup(response.text, 'html.parser')
 
             # Buscar la tabla de información del equipo
-            table = soup.find('table', class_='infobox InfoboxTeam', id='infoboxTeam')
+            table = soup.select_one('table#infoboxTeam')
             if not table:
                 print(f"No se encontró la tabla de información del equipo en: {url}")
                 continue
-            
-            # Inicializamos las variables
-            nombre_equipo = None
-            pais = None
-            propietario = None
-            fecha_fundacion = None
-            
-            rows = table.find_all('tr')
-            for row in rows:
-                # Buscar el nombre del equipo
-                if row.find('th', class_='infobox-title'):
-                    nombre_equipo = row.find('th', class_='infobox-title').get_text(strip=True)
-                
-                # Buscar el país
-                if row.find('span', class_='sprite country-sprite'):
-                    pais = row.find('span', class_='sprite country-sprite')['title']
-                
-                # Buscar el propietario
-                if row.find('td', class_='infobox-label') and row.find('td', class_='infobox-label').get_text(strip=True) == 'Owner':
-                    propietario = row.find('td', class_='infobox-data').get_text(strip=True)
-                
-                # Buscar la fecha de fundación en sub-tablas
-                if row.find('table', class_='infobox-suitable'):
-                    sub_rows = row.find_all('tr')
-                    for sub_row in sub_rows:
-                        if sub_row.find('th', class_='infobox-label') and sub_row.find('td', class_='infobox-data'):
-                            if sub_row.find('th', class_='teamdate'):
-                                fecha_fundacion = sub_row.find('td', class_='infobox-data').get_text(strip=True)
+            equipo = {
+                'nombre_equipo': None,
+                'logo': None,
+                'pais': None,
+                'region': None,
+                'propietario': None,
+                'head_coach': None,
+                'partners': [],
+                'fecha_fundacion': None
+            }
 
-            # Verificar que tenemos todos los datos
-            if nombre_equipo and pais and propietario and fecha_fundacion:
-                # Almacenar la información del equipo
-                informacion_equipos.append({
-                    'nombre': nombre_equipo,
-                    'region': "EMEA",
-                    'pais': pais,
-                    'propietario': propietario,
-                    'ano_fundacion': fecha_fundacion
-                })
-            else:
-                print(f"Faltan datos para el equipo en {url}")
+            # Nombre del equipo
+            nombre = table.select_one('th.infobox-title')
+            if nombre:
+                equipo['nombre_equipo'] = nombre.get_text(strip=True)
 
+            # Logo
+            logo_img = table.select_one('img[data-src]')
+            if logo_img:
+                equipo['logo'] = logo_img['data-src']
+
+            # País (Org Location)
+            org_location_row = table.find('td', class_='infobox-label', string='Org Location')
+            if org_location_row:
+                pais_td = org_location_row.find_next_sibling('td')
+                pais_span = pais_td.select_one('span.markup-object-name')
+                equipo['pais'] = pais_span.get_text(strip=True) if pais_span else pais_td.get_text(strip=True)
+
+            # Región
+            region_icon = table.select_one('tr.infobox-region div.region-icon')
+            if region_icon:
+                equipo['region'] = region_icon.get_text(strip=True)
+
+            # Propietario (Owner)
+            owner_row = table.find('td', class_='infobox-label', string='Owner')
+            if owner_row:
+                owner_td = owner_row.find_next_sibling('td')
+                equipo['propietario'] = owner_td.get_text(" ", strip=True)
+
+            # Head Coach
+            coach_row = table.find('td', class_='infobox-label', string='Head Coach')
+            if coach_row:
+                coach_td = coach_row.find_next_sibling('td')
+                equipo['head_coach'] = coach_td.get_text(" ", strip=True)
+
+            # Partners
+            partners_row = table.find('td', class_='infobox-label', string='Partner')
+            if partners_row:
+                partners_td = partners_row.find_next_sibling('td')
+                partners_links = partners_td.select('a')
+                equipo['partners'] = [a.get_text(strip=True) for a in partners_links]
+
+            # Fecha de fundación
+            fecha_row = table.select_one('table.infobox-subtable td')
+            if fecha_row:
+                equipo['fecha_fundacion'] = fecha_row.get_text(strip=True)
+
+            # Mostrar resultado
+            print(equipo) 
         except requests.exceptions.RequestException as e:
             print(f"Error al obtener la página {url}: {e}")
         except Exception as e:
             print(f"Error al procesar la página {url}: {e}")
-
+        print(f"Información de los jugadores del equipo {url} procesada correctamente.")
     return informacion_equipos
              
 if __name__ == "__main__":
@@ -371,10 +385,10 @@ if __name__ == "__main__":
     #write_json(PLAYER_INSTALATION_DATA, player_data)    
         
     # Obtener los logos de los equipos
-    get_teams_logos("https://lol.fandom.com/wiki/LEC/2025_Season/Spring_Season")
+    #get_teams_logos("https://lol.fandom.com/wiki/LEC/2025_Season/Spring_Season")
     
     # Obtener los datos de los equipos
-    #team_data = get_team_info(equipos_url)
+    team_data = get_team_info(equipos_url)
     #write_json(TEAMS_INSTALATION_JSON, team_data)    
     
     
