@@ -374,7 +374,7 @@ if __name__ == "__main__":
     get_teams_logos("https://lol.fandom.com/wiki/LEC/2025_Season/Spring_Season")
     
     # Obtener los datos de los equipos
-    team_data = get_team_info(equipos_url)
-    write_json(TEAMS_INSTALATION_JSON, team_data)    
+    #team_data = get_team_info(equipos_url)
+    #write_json(TEAMS_INSTALATION_JSON, team_data)    
     
     
