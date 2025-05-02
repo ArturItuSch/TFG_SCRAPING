@@ -1,92 +1,102 @@
 [
     {
-        "nombre_equipo": "Rogue (European Team)",
-        "pais": null,
-        "region": null,
+        "nombre_equipo": "Movistar_KOI",
+        "logo": "miweb\\Resources\\Images\\TeamsLEC\\Movistar_KOI.png",
+        "pais": "Spain",
+        "region": "EMEA",
         "propietario": null,
-        "head_coach": null,
-        "fecha_fundacion": "Created2016-05-03 (Organization)",
-        "logo": "https://static.wikia.nocookie.net/lolesports_gamepedia_en/images/9/98/Rouge_%28European_Team%29_LEC_Roster_2025.jpg/revision/latest/scale-to-width-down/320?cb=20250117014848"
+        "head_coach": "Tomás \" Melzhet \" Campelos",
+        "partners": "OverActive Media",
+        "fecha_fundacion": "2017-01-10 Organization"
     },
     {
-        "nombre_equipo": "Team Vitality",
-        "pais": null,
-        "region": null,
-        "propietario": null,
-        "head_coach": null,
-        "fecha_fundacion": "Created2015-12-09",
-        "logo": "https://static.wikia.nocookie.net/lolesports_gamepedia_en/images/9/9a/Team_Vitality_2025_Winter.jpeg/revision/latest/scale-to-width-down/320?cb=20250425092341"
+        "nombre_equipo": "Karmine_Corp",
+        "logo": "miweb\\Resources\\Images\\TeamsLEC\\Karmine_Corp.png",
+        "pais": "France",
+        "region": "EMEA",
+        "propietario": "Kamel \" Kameto \" Kebir Amine \" Prime \" Mekri Zouhaïr \" Kotei \" Darji",
+        "head_coach": "Rehareha \" Reha \" Ramanana",
+        "partners": null,
+        "fecha_fundacion": "2020-11-16"
     },
     {
-        "nombre_equipo": "G2 Esports",
-        "pais": null,
-        "region": null,
+        "nombre_equipo": "Team_BDS",
+        "logo": "miweb\\Resources\\Images\\TeamsLEC\\Team_BDS.png",
+        "pais": "Switzerland",
+        "region": "EMEA",
         "propietario": null,
-        "head_coach": null,
-        "fecha_fundacion": "Created2015-10-15",
-        "logo": "https://static.wikia.nocookie.net/lolesports_gamepedia_en/images/e/e2/G2_Esports_2025_Winter.jpeg/revision/latest/scale-to-width-down/320?cb=20250425090011"
+        "head_coach": "Yanis \" Striker \" Kella",
+        "partners": null,
+        "fecha_fundacion": "2020-05-13"
     },
     {
-        "nombre_equipo": "Team BDS",
-        "pais": null,
-        "region": null,
-        "propietario": null,
-        "head_coach": null,
-        "fecha_fundacion": "Created2020-05-13",
-        "logo": "https://static.wikia.nocookie.net/lolesports_gamepedia_en/images/8/81/Team_BDS_2025_Winter.jpeg/revision/latest/scale-to-width-down/320?cb=20250425091708"
+        "nombre_equipo": "G2_Esports",
+        "logo": "miweb\\Resources\\Images\\TeamsLEC\\G2_Esports.png",
+        "pais": "Germany",
+        "region": "EMEA",
+        "propietario": "Jens Hilgers",
+        "head_coach": "Dylan \" Dylan Falco \" Falco",
+        "partners": "AOC, Logitech G, Red Bull, Mastercard, PHILIPS, Herman Miller, OAKLEY, Ralph Lauren, ESL Faceit Group, SkinRave",
+        "fecha_fundacion": "2015-10-15"
+    },
+    {
+        "nombre_equipo": "SK_Gaming",
+        "logo": "miweb\\Resources\\Images\\TeamsLEC\\SK_Gaming.png",
+        "pais": "Germany",
+        "region": "EMEA",
+        "propietario": "Alexander \" TheSlasH \" Müller",
+        "head_coach": "David \" OWN3R \" Rodriguez",
+        "partners": "Deutsche Telekom, Mercedes-Benz, REWE, Sony, Nhow Hotel, TERRA, RECARO, WD Black, InZone",
+        "fecha_fundacion": "September 16, 2010(2010-09-16)"
+    },
+    {
+        "nombre_equipo": "Team_Heretics",
+        "logo": "miweb\\Resources\\Images\\TeamsLEC\\Team_Heretics.png",
+        "pais": "Spain",
+        "region": "EMEA",
+        "propietario": "Antonio Catena Arnau Vidal Jorge \" Goorgo \" Orejudo David \" TheGrefg \" Cánovas",
+        "head_coach": "Víctor \" Machuki \" Machuca",
+        "partners": "Cervezas San Miguel, Hyundai",
+        "fecha_fundacion": "Organization 2016-08-02LoL Division 2017-01-25"
+    },
+    {
+        "nombre_equipo": "Team_Vitality",
+        "logo": "miweb\\Resources\\Images\\TeamsLEC\\Team_Vitality.png",
+        "pais": "France",
+        "region": "EMEA",
+        "propietario": "Fabien \" Neo \" Devide Nicolas \" Nico \" Maurer",
+        "head_coach": "James \" Mac \" MacCormack",
+        "partners": "Skin.Club, Magnum, Hummel",
+        "fecha_fundacion": "2015-12-09"
     },
     {
         "nombre_equipo": "Fnatic",
-        "pais": null,
-        "region": null,
-        "propietario": null,
-        "head_coach": null,
-        "fecha_fundacion": "CreatedMarch 14, 2011(2011-03-14)",
-        "logo": "https://static.wikia.nocookie.net/lolesports_gamepedia_en/images/3/3b/WIN25FNC.png/revision/latest/scale-to-width-down/320?cb=20250116134447"
-    },
-    {
-        "nombre_equipo": "Karmine Corp",
-        "pais": null,
-        "region": null,
-        "propietario": null,
-        "head_coach": null,
-        "fecha_fundacion": "Created2020-11-16",
-        "logo": "https://static.wikia.nocookie.net/lolesports_gamepedia_en/images/9/90/Karmine_Corp_2025_FST.jpeg/revision/latest/scale-to-width-down/320?cb=20250312070116"
-    },
-    {
-        "nombre_equipo": "Movistar KOI",
-        "pais": null,
-        "region": null,
-        "propietario": null,
-        "head_coach": null,
-        "fecha_fundacion": "Created2017-01-10 Organization",
-        "logo": "https://static.wikia.nocookie.net/lolesports_gamepedia_en/images/7/70/Movistar_KOI_2025_Winter.jpeg/revision/latest/scale-to-width-down/320?cb=20250425090644"
-    },
-    {
-        "nombre_equipo": "Team Heretics",
-        "pais": null,
-        "region": null,
-        "propietario": null,
-        "head_coach": null,
-        "fecha_fundacion": "Created (1)Organization 2016-08-02LoL Division 2017-01-25Disbanded (1)LoL Division 2017-12-31Created (2)LoL Division 2021-12-20",
-        "logo": "https://static.wikia.nocookie.net/lolesports_gamepedia_en/images/a/a8/Team_Heretics_2025_Winter.jpeg/revision/latest/scale-to-width-down/320?cb=20250425091929"
+        "logo": "miweb\\Resources\\Images\\TeamsLEC\\Fnatic.png",
+        "pais": "United Kingdom",
+        "region": "EMEA",
+        "propietario": "Samuel Mathews Anne Mathews",
+        "head_coach": "Fabian \" GrabbZ \" Lohmann",
+        "partners": "INZONE, Jack Link's, Red Bull, Betify, Sony, GoGlobal",
+        "fecha_fundacion": "March 14, 2011(2011-03-14)"
     },
     {
         "nombre_equipo": "GIANTX",
-        "pais": null,
-        "region": null,
+        "logo": "miweb\\Resources\\Images\\TeamsLEC\\GIANTX.png",
+        "pais": "United Kingdom",
+        "region": "EMEA",
         "propietario": null,
-        "head_coach": null,
-        "fecha_fundacion": "Created2023-12-14",
-        "logo": "https://static.wikia.nocookie.net/lolesports_gamepedia_en/images/7/72/GIANTX_Roster_LEC_2025.jpg/revision/latest/scale-to-width-down/320?cb=20250117003114"
+        "head_coach": "André \" Guilhoto \" Pereira",
+        "partners": "EE, Goodfella’s, Opel, KitKat, HSBC UK, Maggi Fusian, Costa del Sol Málaga, Fitchin, Hot Wheels, PCSPECIALIST",
+        "fecha_fundacion": "2023-12-14"
     },
     {
-        "nombre_equipo": "SK Gaming",
-        "pais": null,
-        "region": null,
-        "propietario": null,
-        "head_coach": null,
-        "fecha_fundacion": "CreatedSeptember 16, 2010(2010-09-16)",
-        "logo": "https://static.wikia.nocookie.net/lolesports_gamepedia_en/images/e/e9/SK_Gaming_2025_Winter.jpeg/revision/latest/scale-to-width-down/320?cb=20250425091449"
+        "nombre_equipo": "Rogue",
+        "logo": "miweb\\Resources\\Images\\TeamsLEC\\Rogue.png",
+        "pais": "United States",
+        "region": "EMEA",
+        "propietario": "Franklin \" Frank \" Villareal Carson Knuth Derek Nelson",
+        "head_coach": "Simon \" fredy122 \" Payne",
+        "partners": "Infinite Reality, ReKTGlobal, Steve Aoki, KIA",
+        "fecha_fundacion": "2016-05-03 (Organization)"
     }
 ]

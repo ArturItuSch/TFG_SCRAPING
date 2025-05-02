@@ -13,6 +13,7 @@ sys.path.insert(0, PROJECT_ROOT)
 
 from Resources.rutas import *
 TEAM_IMAGES_DIR = os.path.join(CARPETA_IMAGENES_TEAMS)
+PLAYER_IMAGES_DIR = os.path.join(CARPETA_IMAGENES_PLAYERS)
 PLAYER_INSTALATION_DATA = os.path.join(JSON_INSTALATION_PLAYERS, "players_data_leguepedia.json")
 TEAMS_INSTALATION_JSON = os.path.join(JSON_INSTALATION_TEAMS, "teams_data_leguepedia.json")
 LOGO_TEAMS_PATH = os.path.join(JSON_PATH_TEAMS_LOGOS, "teams_logos_path.json")
@@ -65,9 +66,18 @@ def get_html(url, headers=None, timeout=10):
         response = requests.get(url, headers=headers, timeout=timeout)
         response.raise_for_status()
         return response
+    except requests.exceptions.Timeout:
+        print("⚠️ Tiempo de espera agotado.")
+    except requests.exceptions.TooManyRedirects:
+        print("⚠️ Demasiadas redirecciones.")
+    except requests.exceptions.SSLError:
+        print("⚠️ Error SSL.")
+    except requests.exceptions.ConnectionError:
+        print("⚠️ Error de conexión.")
+    except requests.exceptions.HTTPError as err:
+        print(f"⚠️ Error HTTP: {err}")
     except requests.exceptions.RequestException as e:
-        print(f"Error al realizar GET a {url}: {e}")
-        return None
+        print(f"⚠️ Error desconocido: {e}")
     
     
 # Conseguir los enlaces de los equipos de la LEC 2025 Spring Season
@@ -119,8 +129,16 @@ def get_extra_player_data(url):
                 if td is not None:
                     img_link_tag = table.find('a', class_='image')
                     if img_link_tag and img_link_tag.has_attr('href'):
-                        player_data['image'] = img_link_tag['href']
-                        continue # Salta al siguiente ciclo del bucle
+                        player_image = download_image(os.path.join(PLAYER_IMAGES_DIR, f"{url.split('/')[-1]}.png"), img_link_tag['href'])
+                        if player_image is not None:
+                            player_data['image'] = player_image
+                            continue
+                        else:
+                            print(f"Error al descargar la imagen del jugador: {url}")
+                            player_data['image'] = None
+                    else:
+                        print(f"No se encontró la imagen del jugador en: {url}")
+                        return None                            
                 # Conseguir el cumpleaños del jugador y sus nicknames de SoloQ
                 cells = row.find_all('td')
                 if len(cells) == 2:
@@ -227,68 +245,35 @@ def get_player_data(urls):
 
     return all_player_data
 
-# Extraer los logos de los equipos y su nombre -> Retorna una lista de diccionarios con el nombre del equipo y una lista de las urls de los logos
-def get_teams_logos(url):
-    try:
-        response = requests.get(url, headers=headers)
-        if not response or response.status_code != 200:
-            print(f"No se pudo obtener la página: {url}")
-            return None
-
-        soup = BeautifulSoup(response.content, 'html.parser')
-        tables = soup.find_all('table', {'class': 'wikitable tournament-roster'})
-
-        for table in tables:
-            try:
-                nombre_equipo = table.find('tr').get_text(strip=True)
-                nombre_equipo = nombre_equipo.replace(' ', '_').replace('/', '_')
-                ruta_logo_equipo = os.path.join(TEAM_IMAGES_DIR, f"{nombre_equipo}.png")
-                
-                row = table.find('tr', {'class': 'RosterLogos'})
-                if row:
-                    logo_url = row.find('img')
-                    if logo_url:
-                        logo = logo_url.get('data-src') or logo_url.get('src')
-                        if logo:
-                            download_image(ruta_logo_equipo, logo)
-                            print(f"Logo de {nombre_equipo} guardado en {ruta_logo_equipo}.")
-                            return ruta_logo_equipo
-                        else:
-                            print(f"Logo no encontrado para {nombre_equipo}")
-                    else:
-                        print(f"Tag <img> no encontrado para {nombre_equipo}")
-                else:
-                    print(f"Fila 'RosterLogos' no encontrada en la tabla de {nombre_equipo}")
-            except Exception as e:
-                print(f"Error procesando la tabla de un equipo: {e}")
-
-    except requests.exceptions.RequestException as e:
-        print(f"Error de red al acceder a {url}: {e}")
-    except Exception as e:
-        print(f"Error general al extraer logos de equipos en {url}: {e}")
-
 def download_image(ruta_completa, url_imagen):
     """
-    Descarga una imagen desde una URL y la guarda en la ruta especificada (incluyendo el nombre del archivo).
-    
+    Descarga una imagen desde una URL y la guarda en la ruta especificada.
+    Devuelve la ruta relativa al proyecto si la descarga fue exitosa.
+
     Args:
-        ruta_completa (str): Ruta completa donde guardar la imagen, incluyendo el nombre del archivo.
-        url_imagen (str): URL desde donde se descargará la imagen.
+        ruta_completa (str): Ruta completa donde guardar la imagen.
+        url_imagen (str): URL de la imagen.
 
     Returns:
-        bool: True si la descarga fue exitosa, False en caso contrario.
+        str | None: Ruta relativa si fue exitosa, None si falló.
     """
     try:
         print(f"Descargando imagen desde {url_imagen} a {ruta_completa}...")
         img_data = requests.get(url_imagen, timeout=10)
-        img_data.raise_for_status()  # Lanza un error si la respuesta no es 200
+        img_data.raise_for_status()
+
         with open(ruta_completa, 'wb') as f:
             f.write(img_data.content)
+
         print(f"Imagen guardada correctamente en {ruta_completa}.")
-        return True
+
+        # Obtener ruta relativa
+        ruta_relativa = os.path.relpath(ruta_completa, start=os.getcwd())
+        return ruta_relativa
+
     except Exception as e:
         print(f"Error al descargar la imagen: {e}")
-        return False
+        return None
     
 # Conseguir la información de los jugadores de los equipos que se pasan por una lista de urls  
 # Retorna una lista de diccionarios con la información de los jugadores
@@ -316,19 +301,23 @@ def get_team_info(urls):
                 'region': None,
                 'propietario': None,
                 'head_coach': None,
-                'partners': [],
+                'partners': None,
                 'fecha_fundacion': None
             }
 
             # Nombre del equipo
             nombre = table.select_one('th.infobox-title')
             if nombre:
-                equipo['nombre_equipo'] = nombre.get_text(strip=True)
+                equipo['nombre_equipo'] = nombre.get_text(strip=True).replace(' ', '_').replace('Season', '').strip()
 
             # Logo
             logo_img = table.select_one('img[data-src]')
             if logo_img:
-                equipo['logo'] = logo_img['data-src']
+                logo_path = download_image(os.path.join(TEAM_IMAGES_DIR, f"{equipo['nombre_equipo']}.png"), logo_img['data-src'])
+                if logo_path is not None:
+                    equipo['logo'] = logo_path
+            else:
+                print(f"No se encontró la imagen del logo en: {url}")
 
             # País (Org Location)
             org_location_row = table.find('td', class_='infobox-label', string='Org Location')
@@ -359,7 +348,7 @@ def get_team_info(urls):
             if partners_row:
                 partners_td = partners_row.find_next_sibling('td')
                 partners_links = partners_td.select('a')
-                equipo['partners'] = [a.get_text(strip=True) for a in partners_links]
+                equipo['partners'] = equipo['partners'] = ", ".join([a.get_text(strip=True) for a in partners_links])
 
             # Fecha de fundación
             fecha_row = table.select_one('table.infobox-subtable td')
@@ -367,28 +356,22 @@ def get_team_info(urls):
                 equipo['fecha_fundacion'] = fecha_row.get_text(strip=True)
 
             # Mostrar resultado
-            print(equipo) 
-        except requests.exceptions.RequestException as e:
-            print(f"Error al obtener la página {url}: {e}")
+            print(f"Información del equipo {equipo['nombre_equipo']} extraída correctamente.") 
+            informacion_equipos.append(equipo)
         except Exception as e:
-            print(f"Error al procesar la página {url}: {e}")
-        print(f"Información de los jugadores del equipo {url} procesada correctamente.")
+            print(f"Error al intentar extraer la información del equipo: {e}")
+            continue
     return informacion_equipos
              
 if __name__ == "__main__":
     equipos_url = get_team_links("https://lol.fandom.com/wiki/LEC/2025_Season/Spring_Season")  
     
     # Obtener los datos de los Jugadores
-    #player_data = get_player_data(equipos_url)
-     
-    # Guardar los datos de los jugadores en un JSON    
-    #write_json(PLAYER_INSTALATION_DATA, player_data)    
-        
-    # Obtener los logos de los equipos
-    #get_teams_logos("https://lol.fandom.com/wiki/LEC/2025_Season/Spring_Season")
+    '''player_data = get_player_data(equipos_url)
+    write_json(PLAYER_INSTALATION_DATA, player_data)'''  
     
-    # Obtener los datos de los equipos
+    # Obtener los datos de los equipos descargar los logos y guardarlos en un JSON
     team_data = get_team_info(equipos_url)
-    #write_json(TEAMS_INSTALATION_JSON, team_data)    
+    write_json(TEAMS_INSTALATION_JSON, team_data)    
     
     
