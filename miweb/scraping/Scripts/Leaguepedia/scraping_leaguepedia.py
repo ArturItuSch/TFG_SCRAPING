@@ -1,5 +1,6 @@
-"""
-Script para realizar scraping de datos de Leaguepedia.
+'''===============================
+Script para realizar scraping de datos de Leaguepedia
+===============================
 
 Este módulo contiene funciones reutilizables para trabajar con datos
 de jugadores y equipos, incluyendo la obtención de HTML, conversión de fechas,
@@ -7,7 +8,35 @@ creación de archivos JSON y descarga de imágenes.
 
 Autor: Artur Schuldt
 Fecha: 25 de abril de 2025
-"""
+
+Módulos:
+--------
+
+- `requests`: Para realizar solicitudes HTTP.
+- `BeautifulSoup`: Para analizar HTML.
+- `urljoin`: Para construir URLs absolutas.
+- `os`: Para interactuar con el sistema operativo.
+- `sys`: Para manipular el entorno de Python.
+- `json`: Para trabajar con datos JSON.
+- `pathlib`: Para manejar rutas de archivos.
+- `re`: Para trabajar con expresiones regulares.
+- `datetime`: Para manipular fechas.
+
+Funciones:
+----------
+
+1. `convertir_fecha(fecha_str)`
+2. `write_json(nombre_archivo, datos)`
+3. `get_html(url, headers=None, timeout=10)`
+4. `get_team_links(url)`
+5. `get_extra_player_data(url)`
+6. `get_player_data(urls)`
+
+Descripción:
+------------
+
+Este script está diseñado para realizar scraping en Leaguepedia, un sitio de
+referencia sobre datos de la escena competitiva de *League of Legends*.'''
 
 import requests
 from bs4 import BeautifulSoup
