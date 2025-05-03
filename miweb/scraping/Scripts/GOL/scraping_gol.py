@@ -1,4 +1,5 @@
 import os
+import random
 from selenium.webdriver.common.by import By
 from bs4 import BeautifulSoup
 import json
@@ -7,18 +8,69 @@ from selenium.webdriver.support import expected_conditions as EC
 from urllib.parse import urljoin
 import time
 import sys
+import requests
+import re
 
 # Ubiciaciones de los archivos json:
 BASE_DIR = os.path.abspath(os.path.join(os.path.dirname(__file__), '..', '..', '..'))
 sys.path.insert(0, BASE_DIR)
-JSON_DIR = os.path.join(BASE_DIR, "scraping", "JSON")
+from scraping.Scripts.driver import iniciar_driver
+from Resources.rutas import *
+
+JSON_DIR = os.path.join(BASE_DIR, "Resources", "JSON")
 JSON_INSTALATION = os.path.join(JSON_DIR, "Instalation")
+JSON_CHAMPIONS_INSTALATION = os.path.join(JSON_INSTALATION, "Champions")
 JSON_UPDATES = os.path.join(JSON_DIR, "Updates")
+CHAMPIONS_FOLDER_PATH = os.path.join(BASE_DIR, CARPETA_IMAGENES_CHAMPIONS)
 
-# Si los directorios existen
-os.makedirs(JSON_INSTALATION, exist_ok=True)
-os.makedirs(JSON_UPDATES, exist_ok=True)
+BASE_URL = "https://gol.gg"
+CHAMPIONS_URL = "https://gol.gg/champion/list/season-S15/split-Spring/tournament-ALL/sort-1/"
 
+# Encabezados para las peticiones HTTP
+headers = {
+    "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36",
+    "Accept-Language": "es-ES,es;q=0.9,en;q=0.8",
+    "Referer": "https://www.google.com/",
+    "Accept": "text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,*/*;q=0.8",
+    "Connection": "keep-alive",
+    "Upgrade-Insecure-Requests": "1",
+    "DNT": "1", 
+    "Sec-Fetch-Dest": "document",
+    "Sec-Fetch-Mode": "navigate",
+    "Sec-Fetch-Site": "same-origin",
+    "Sec-Fetch-User": "?1",
+    "Cache-Control": "max-age=0",
+}
+
+# Si deseas cambiar el "Referer" o el "User-Agent" de forma dinámica
+def obtener_headers_dinamicos():
+    user_agents = [
+        "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36",
+        "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Firefox/112.0",
+        "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Edge/112.0"
+    ]
+    
+    referers = [
+        "https://www.google.com/",
+        "https://www.bing.com/",
+        "https://www.yahoo.com/"
+    ]
+    
+    headers["User-Agent"] = random.choice(user_agents)
+    headers["Referer"] = random.choice(referers)
+    
+    return headers
+
+def write_json(nombre_archivo, datos):
+    try:
+        with open(nombre_archivo, 'w', encoding='utf-8') as f:
+            json.dump(datos, f, ensure_ascii=False, indent=4)
+        print(f"Archivo JSON guardado correctamente en: {nombre_archivo}")
+    except (IOError, OSError) as e:
+        print(f"Error de escritura en el archivo {nombre_archivo}: {e}")
+    except TypeError as e:
+        print(f"Error de serialización de JSON: {e}")
+        
 def accept_cookies(driver):
     try:
         driver.get("https://gol.gg/esports/home/")
@@ -30,50 +82,115 @@ def accept_cookies(driver):
         print("Cookies aceptadas.")
     except Exception as e:
         print("No se pudo aceptar cookies:", e)
-        
-def get_team_data(driver):
-    driver.get("https://gol.gg/teams/list/season-ALL/split-ALL/tournament-LEC%202025%20Spring%20Season/")
-    time.sleep(2)
+
+def crear_carpeta(ruta_carpeta):
     try:
-        team_data=[]
-        table = WebDriverWait(driver, 10).until(
-            EC.presence_of_element_located((By.CSS_SELECTOR, "table"))
+        os.makedirs(ruta_carpeta, exist_ok=True)
+        print(f"Carpeta creada o ya existente: {ruta_carpeta}")
+    except Exception as e:
+        print(f"Error al crear la carpeta '{ruta_carpeta}': {e}")
+        
+def download_image(ruta_local, url_imagen):
+    try:
+        headers = obtener_headers_dinamicos()
+        response = requests.get(url_imagen, headers=headers, stream=True)
+        response.raise_for_status()
+        with open(ruta_local, 'wb') as f:
+            for chunk in response.iter_content(1024):
+                f.write(chunk)
+        time.sleep(random.uniform(1,2))
+        print(f"Imagen: {url_imagen} descargada correctamente en {ruta_local}")
+        ruta_relativa = os.path.relpath(ruta_local, start=os.getcwd())
+        return ruta_relativa
+    except Exception as e:
+        print(f"Error al descargar la imagen: {e}")
+        time.sleep(random.uniform(1,2))
+        return None
+
+def get_champions_information(driver):
+    champions = []
+    try:
+        driver.get(CHAMPIONS_URL)
+
+        # Espera a que se cargue la tabla
+        WebDriverWait(driver, 15).until(
+            EC.presence_of_element_located((By.CLASS_NAME, "table_list"))
         )
 
-        # Obtener todas las filas de la tabla, excluyendo la cabecera
-        rows = table.find_elements(By.CSS_SELECTOR, "tbody tr")
-        for row in rows:
-            cells = row.find_elements(By.TAG_NAME, "td")
-            if len(cells) >= 7:
-               team = {
-                "nombre": cells[0].text.strip(),
-                "win_rate": cells[1].text.strip(),
-                "kda": cells[2].text.strip(),
-                "game_duration": cells[3].text.strip(),
-                "gpm": cells[4].text.strip(),
-                "dpm": cells[5].text.strip(),
-                "wpm": cells[6].text.strip(),
-            }
-            team_data.append(team)
-        print("✅ Tabla extraída correctamente.")
-        return team_data
+        response = driver.page_source
+        soup = BeautifulSoup(response, 'html.parser')
+        table = soup.find('table', class_='table_list')
+
+        if table:
+            tbody = table.find('tbody')
+            rows = tbody.find_all('tr') if tbody else []
+
+            for row in rows:
+                try:
+                    img = row.find('img', class_='champion_icon_light')
+                    if not img:
+                        continue
+                    
+                    nombre = re.sub(r'[\\/*?:"<>|]', "", img['alt'])   
+                    nombre = re.sub(r'\s+', '_', nombre.strip()) 
+                    url_relativa = img['src']
+
+                    champion = {
+                        'nombre': nombre,
+                        'ruta_imagen': None
+                    }
+
+                    if not url_relativa.startswith("/"):
+                        url_relativa = "/" + url_relativa
+                        crear_carpeta(os.path.join(CHAMPIONS_FOLDER_PATH, nombre))
+                        ruta_local = os.path.join(os.path.join(CHAMPIONS_FOLDER_PATH, nombre), f"{nombre}.png")
+                        url_absoluta = urljoin(BASE_URL, url_relativa)
+                        champion["ruta_imagen"] = download_image(ruta_local, url_absoluta)
+                    else:
+                        print(f"No se encontró la imagen de {nombre}")
+
+                    champions.append(champion)
+
+                except Exception as e:
+                    print(f"Error procesando fila: {e}")
+                    continue
+        else:
+            print("No se encontró la tabla.")
     except Exception as e:
-        print("❌ Error al extraer la tabla:", e)
-        
-def guardar_json(data, directory):
+        print(f"Error inesperado: {e}")
+    return champions
+
+def verificar_existencia_imagen(nombre_campeon, ruta_json):
     try:
-        with open(directory, 'w', encoding='utf-8') as f:
-            json.dump(data, f, indent=4, ensure_ascii=False)
-        print(f"✅ Archivo guardado correctamente en: {directory}")
+        with open(ruta_json, 'r', encoding='utf-8') as f:
+            datos = json.load(f)
+
+        for champ in datos:
+            if champ.get("nombre", "").lower() == nombre_campeon.lower():
+                ruta = champ.get("ruta_imagen")
+                if ruta:
+                    if os.path.exists(ruta):
+                        print(f"✅ El archivo de {nombre_campeon} existe en: {ruta}")
+                        return True
+                    else:
+                        print(f"❌ El archivo de {nombre_campeon} NO existe en: {ruta}")
+                        return False
+                else:
+                    print(f"{nombre_campeon} no tiene ruta asignada.")
+                    return False
+
+        print(f"{nombre_campeon} no se encuentra en el JSON.")
+        return False
+
     except Exception as e:
-        print(f"❌ Error al guardar el archivo JSON: {e}")
-        
-def cargar_json(directory):
+        print(f"Error al verificar la imagen: {e}")
+        return False
+    
+if __name__ == '__main__':
+    driver = iniciar_driver()
     try:
-        with open(directory, 'r', encoding='utf-8') as f:
-            data = json.load(f)
-        print(f"✅ Archivo cargado correctamente desde: {directory}")
-        return data
-    except Exception as e:
-        print(f"❌ Error al cargar el archivo JSON: {e}")
-        return None
+        '''champions = get_champions_information(driver)
+        write_json(os.path.join(JSON_CHAMPIONS_INSTALATION, 'champions.json'), champions)
+        verificar_existencia_imagen("Nami", os.path.join(JSON_CHAMPIONS_INSTALATION, 'champions.json'))'''
+    finally:
+        driver.quit()
