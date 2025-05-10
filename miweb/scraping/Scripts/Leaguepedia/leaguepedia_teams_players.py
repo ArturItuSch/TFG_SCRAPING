@@ -492,12 +492,7 @@ def get_team_info(urls):
             print(f"Error al intentar extraer la información del equipo: {e}")
             continue
     return informacion_equipos
-<<<<<<< Updated upstream
-             
-=======
 
-          
->>>>>>> Stashed changes
 if __name__ == "__main__":
     equipos_url = get_team_links("https://lol.fandom.com/wiki/LEC/2025_Season/Spring_Season")  
     

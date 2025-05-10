@@ -12,4 +12,10 @@ JSON_PATH_PLAYERS_LOGOS = os.path.join(JSON_INSTALATION_PLAYERS, 'Logos_PATH')
 #Imagenes
 CARPETA_IMAGENES_TEAMS = os.path.join(BASE_DIR, 'Resources', 'Images', 'TeamsLEC')
 CARPETA_IMAGENES_PLAYERS = os.path.join(BASE_DIR, 'Resources', 'Images', 'PlayersLEC')
-CARPETA_IMAGENES_CHAMPIONS = os.path.join(BASE_DIR, 'Resources', 'Champions')
+CARPETA_IMAGENES_CHAMPIONS = os.path.join(BASE_DIR, 'Resources', 'Images', 'Champions')
+
+#Carpeta CSV
+CARPETA_CSV_GAMES = os.path.join(BASE_DIR, 'Resources', 'CSV')
+
+# Diccionarios
+DICCIONARIO_CLAVES = os.path.join(BASE_DIR, 'Resources', 'Diccionary')

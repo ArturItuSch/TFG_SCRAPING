@@ -10,7 +10,8 @@
         "soloqueue_ids": "KR: 칸 나#0211, EUW: K C#kcwin",
         "contratado_hasta": "2025-11-17",
         "contratado_desde": "2024-05-02",
-        "imagen": "miweb\\Resources\\Images\\PlayersLEC\\Canna.png"
+        "imagen": "miweb\\Resources\\Images\\PlayersLEC\\Canna.png",
+        "nuevo_id": "80417a9477a146568af8f083f76542c6"
     },
     {
         "jugador": "Yike",
@@ -23,7 +24,8 @@
         "soloqueue_ids": "EUW: KC Yiken#1111, KR: : YIK#YIK",
         "contratado_hasta": "2026-11-16",
         "contratado_desde": "2024-12-14",
-        "imagen": "miweb\\Resources\\Images\\PlayersLEC\\Yike.png"
+        "imagen": "miweb\\Resources\\Images\\PlayersLEC\\Yike.png",
+        "nuevo_id": "f9a4c30737be4cd7ae24b6e208d95f38"
     },
     {
         "jugador": "Vladi",
@@ -36,7 +38,8 @@
         "soloqueue_ids": "EUW: J1HUIV#000, KR: Jjimdak#000",
         "contratado_hasta": "2027-11-15",
         "contratado_desde": "2024-05-02",
-        "imagen": "miweb\\Resources\\Images\\PlayersLEC\\Vladi.png"
+        "imagen": "miweb\\Resources\\Images\\PlayersLEC\\Vladi.png",
+        "nuevo_id": "51b8327ec85a4485b5b6c61f2e2fed69"
     },
     {
         "jugador": "Caliste",
@@ -49,7 +52,8 @@
         "soloqueue_ids": "EUW: KC NEXT ADKING#EUW, KR: KC Caliste#0001",
         "contratado_hasta": "2026-11-16",
         "contratado_desde": "2024-12-14",
-        "imagen": "miweb\\Resources\\Images\\PlayersLEC\\Caliste.png"
+        "imagen": "miweb\\Resources\\Images\\PlayersLEC\\Caliste.png",
+        "nuevo_id": "cd68607ed33446c9b9cd4d9776108e9c"
     },
     {
         "jugador": "Targamas",
@@ -62,7 +66,8 @@
         "soloqueue_ids": "EUW: Targamas#5555, KR: Grizzly Hills#123, NA: EVOLVE5555#NA1",
         "contratado_hasta": "2025-11-17",
         "contratado_desde": "2023-05-17",
-        "imagen": "miweb\\Resources\\Images\\PlayersLEC\\Targamas.png"
+        "imagen": "miweb\\Resources\\Images\\PlayersLEC\\Targamas.png",
+        "nuevo_id": "0cf58e23868444f7ae42a364392e856e"
     },
     {
         "jugador": "JNX",
@@ -75,7 +80,8 @@
         "soloqueue_ids": "EUW: SK 187 , Jötunheimrr , 5 0 or 0 5 , KlausStörtebeker, Liantiao Jenax, JENAX UNCHAINED, die on side, SK 187",
         "contratado_hasta": "2025-11-17",
         "contratado_desde": "2024-12-16",
-        "imagen": "miweb\\Resources\\Images\\PlayersLEC\\JNX.png"
+        "imagen": "miweb\\Resources\\Images\\PlayersLEC\\JNX.png",
+        "nuevo_id": "09cf37104d8346c2aab25c8b7c599c5c"
     },
     {
         "jugador": "Boukada",
@@ -88,7 +94,8 @@
         "soloqueue_ids": null,
         "contratado_hasta": "2025-11-17",
         "contratado_desde": "2025-02-28",
-        "imagen": "miweb\\Resources\\Images\\PlayersLEC\\Boukada.png"
+        "imagen": "miweb\\Resources\\Images\\PlayersLEC\\Boukada.png",
+        "nuevo_id": "a8e2f90088184014a2409a814de4bec8"
     },
     {
         "jugador": "RKR",
@@ -101,7 +108,8 @@
         "soloqueue_ids": null,
         "contratado_hasta": "2025-11-17",
         "contratado_desde": "2024-12-16",
-        "imagen": "miweb\\Resources\\Images\\PlayersLEC\\RKR.png"
+        "imagen": "miweb\\Resources\\Images\\PlayersLEC\\RKR.png",
+        "nuevo_id": "03b07fc73e124ed185bd9dda6bcce416"
     },
     {
         "jugador": "Keduii",
@@ -114,7 +122,8 @@
         "soloqueue_ids": "",
         "contratado_hasta": "2025-11-17",
         "contratado_desde": "2025-03-21",
-        "imagen": "miweb\\Resources\\Images\\PlayersLEC\\Keduii.png"
+        "imagen": "miweb\\Resources\\Images\\PlayersLEC\\Keduii.png",
+        "nuevo_id": "93ac4058f3ee4f68953544890ff861b6"
     },
     {
         "jugador": "Rahel",
@@ -127,7 +136,8 @@
         "soloqueue_ids": "KR: 42141321, EUW: 2021Worlds0150, Rahel",
         "contratado_hasta": "2025-11-17",
         "contratado_desde": "2024-05-27",
-        "imagen": "miweb\\Resources\\Images\\PlayersLEC\\Rahel.png"
+        "imagen": "miweb\\Resources\\Images\\PlayersLEC\\Rahel.png",
+        "nuevo_id": "4b0efacae81c494497c34d64662e6cc2"
     },
     {
         "jugador": "Loopy",
@@ -140,7 +150,8 @@
         "soloqueue_ids": "KR: Loopy",
         "contratado_hasta": "2025-11-17",
         "contratado_desde": "2024-12-16",
-        "imagen": "miweb\\Resources\\Images\\PlayersLEC\\Loopy.png"
+        "imagen": "miweb\\Resources\\Images\\PlayersLEC\\Loopy.png",
+        "nuevo_id": "2d1563ad676846cea9c4b86a6ff8cff8"
     },
     {
         "jugador": "BrokenBlade",
@@ -153,7 +164,8 @@
         "soloqueue_ids": "EUW: Dr BlackBerry, brokenblade22, NA: THEONEPIEEEEEECE, KR: 1a2b3c4d5f6, str8 beefy mode, CN: asdovjstsmapibb, YassuoSanchovies",
         "contratado_hasta": "2026-11-16",
         "contratado_desde": "2021-12-03",
-        "imagen": "miweb\\Resources\\Images\\PlayersLEC\\BrokenBlade.png"
+        "imagen": "miweb\\Resources\\Images\\PlayersLEC\\BrokenBlade.png",
+        "nuevo_id": "87cbb180351e4a1a8a176bd049c4572c"
     },
     {
         "jugador": "SkewMond",
@@ -166,7 +178,8 @@
         "soloqueue_ids": null,
         "contratado_hasta": "2026-11-16",
         "contratado_desde": "2024-12-11",
-        "imagen": "miweb\\Resources\\Images\\PlayersLEC\\SkewMond.png"
+        "imagen": "miweb\\Resources\\Images\\PlayersLEC\\SkewMond.png",
+        "nuevo_id": "c6a850206d704d0bba248489e9a4c7f9"
     },
     {
         "jugador": "Caps",
@@ -179,7 +192,8 @@
         "soloqueue_ids": "EUW: Dr Orange, CN: g2caps1, NA: G2 Rodrigo",
         "contratado_hasta": "2025-11-17",
         "contratado_desde": "2018-11-29",
-        "imagen": "miweb\\Resources\\Images\\PlayersLEC\\Caps.png"
+        "imagen": "miweb\\Resources\\Images\\PlayersLEC\\Caps.png",
+        "nuevo_id": "1adb24f4e88347fc852600872643643b"
     },
     {
         "jugador": "Hans Sama",
@@ -192,7 +206,8 @@
         "soloqueue_ids": "EUW: Dr Mango, KR: TrackingTheWeebs, MSF GoHan, NA: FZQFSFSF",
         "contratado_hasta": "2026-11-16",
         "contratado_desde": "2022-12-22",
-        "imagen": "miweb\\Resources\\Images\\PlayersLEC\\Hans_Sama.png"
+        "imagen": "miweb\\Resources\\Images\\PlayersLEC\\Hans_Sama.png",
+        "nuevo_id": "cea9d6d48b7a420885675ca87b3634bc"
     },
     {
         "jugador": "Labrov",
@@ -205,7 +220,8 @@
         "soloqueue_ids": "EUW: school phobia",
         "contratado_hasta": "2026-11-16",
         "contratado_desde": "2024-12-11",
-        "imagen": "miweb\\Resources\\Images\\PlayersLEC\\Labrov.png"
+        "imagen": "miweb\\Resources\\Images\\PlayersLEC\\Labrov.png",
+        "nuevo_id": "5d10bd8eb97c47b493b70f313f702bdc"
     },
     {
         "jugador": "Rodrigo",
@@ -231,7 +247,8 @@
         "soloqueue_ids": "EUW: Nothing much, KR: EUBEST",
         "contratado_hasta": "2025-11-17",
         "contratado_desde": "2024-12-28",
-        "imagen": "miweb\\Resources\\Images\\PlayersLEC\\Adam_(Adam_Maanane).png"
+        "imagen": "miweb\\Resources\\Images\\PlayersLEC\\Adam_(Adam_Maanane).png",
+        "nuevo_id": "3cd6110b1beb469abf579e2658322858"
     },
     {
         "jugador": "Malrang",
@@ -244,7 +261,8 @@
         "soloqueue_ids": "KR: Co24, EUW: sdfsdfsgert, BR: KBM Malrang#CBLol",
         "contratado_hasta": "2025-11-17",
         "contratado_desde": "2024-12-28",
-        "imagen": "miweb\\Resources\\Images\\PlayersLEC\\Malrang.png"
+        "imagen": "miweb\\Resources\\Images\\PlayersLEC\\Malrang.png",
+        "nuevo_id": "c92bde2cffd04400a35db33cca975d19"
     },
     {
         "jugador": "Larssen",
@@ -257,7 +275,8 @@
         "soloqueue_ids": "EUW: : PeacefulWαrrior, IIlIlIlllIII, CN: Lovestory321",
         "contratado_hasta": "2027-11-15",
         "contratado_desde": "2023-11-23",
-        "imagen": "miweb\\Resources\\Images\\PlayersLEC\\Larssen.png"
+        "imagen": "miweb\\Resources\\Images\\PlayersLEC\\Larssen.png",
+        "nuevo_id": "72d995c1e0a04b98a57ecbce74bb8129"
     },
     {
         "jugador": "Patrik",
@@ -270,7 +289,8 @@
         "soloqueue_ids": "EUW: Rotten Tea, mainpyke00, helpfnatic, Evey Reborn, OG Patrik, noragretsplayer, AshtonClutcher12",
         "contratado_hasta": "2025-11-17",
         "contratado_desde": "2024-12-28",
-        "imagen": "miweb\\Resources\\Images\\PlayersLEC\\Patrik.png"
+        "imagen": "miweb\\Resources\\Images\\PlayersLEC\\Patrik.png",
+        "nuevo_id": "920932c1d5f44c9995b48b207c51fe17"
     },
     {
         "jugador": "Execute",
@@ -283,7 +303,8 @@
         "soloqueue_ids": "KR: 갤러리 정",
         "contratado_hasta": "2025-11-17",
         "contratado_desde": "2024-12-28",
-        "imagen": "miweb\\Resources\\Images\\PlayersLEC\\Execute.png"
+        "imagen": "miweb\\Resources\\Images\\PlayersLEC\\Execute.png",
+        "nuevo_id": "343502c41fba49d49657a4e9fc14ecfc"
     },
     {
         "jugador": "Carlsen",
@@ -296,7 +317,8 @@
         "soloqueue_ids": null,
         "contratado_hasta": "2026-11-16",
         "contratado_desde": "2024-12-03",
-        "imagen": "miweb\\Resources\\Images\\PlayersLEC\\Carlsen.png"
+        "imagen": "miweb\\Resources\\Images\\PlayersLEC\\Carlsen.png",
+        "nuevo_id": "0e08ef8ffa4b4be48cbc812b13f3c8cd"
     },
     {
         "jugador": "Sheo",
@@ -309,7 +331,8 @@
         "soloqueue_ids": null,
         "contratado_hasta": "2026-11-16",
         "contratado_desde": "2024-12-03",
-        "imagen": "miweb\\Resources\\Images\\PlayersLEC\\Sheo.png"
+        "imagen": "miweb\\Resources\\Images\\PlayersLEC\\Sheo.png",
+        "nuevo_id": "b35b3b9276d842c4b4629a5faec00f10"
     },
     {
         "jugador": "Kamiloo",
@@ -322,7 +345,8 @@
         "soloqueue_ids": null,
         "contratado_hasta": "2027-11-15",
         "contratado_desde": "2024-12-03",
-        "imagen": "miweb\\Resources\\Images\\PlayersLEC\\Kamiloo.png"
+        "imagen": "miweb\\Resources\\Images\\PlayersLEC\\Kamiloo.png",
+        "nuevo_id": "43a3b028823e4a32ad6c73324baa3b0f"
     },
     {
         "jugador": "Flakked",
@@ -335,7 +359,8 @@
         "soloqueue_ids": "EUW: 2weeksrank1, 6419, 100x100 MERENGUE, el tetoncito, TH Bellingham, KR: 696942042069420",
         "contratado_hasta": "2025-11-17",
         "contratado_desde": "2023-05-31",
-        "imagen": "miweb\\Resources\\Images\\PlayersLEC\\Flakked.png"
+        "imagen": "miweb\\Resources\\Images\\PlayersLEC\\Flakked.png",
+        "nuevo_id": "88d4b6360d244abab512268ab2bb1e66"
     },
     {
         "jugador": "Stend",
@@ -348,7 +373,8 @@
         "soloqueue_ids": null,
         "contratado_hasta": "2026-11-16",
         "contratado_desde": "2024-12-03",
-        "imagen": "miweb\\Resources\\Images\\PlayersLEC\\Stend.png"
+        "imagen": "miweb\\Resources\\Images\\PlayersLEC\\Stend.png",
+        "nuevo_id": "1f6e9963ba874f998219a6ff173fb093"
     },
     {
         "jugador": "Naak Nako",
@@ -361,7 +387,8 @@
         "soloqueue_ids": null,
         "contratado_hasta": "2027-11-15",
         "contratado_desde": "2024-12-13",
-        "imagen": "miweb\\Resources\\Images\\PlayersLEC\\Naak_Nako.png"
+        "imagen": "miweb\\Resources\\Images\\PlayersLEC\\Naak_Nako.png",
+        "nuevo_id": "648f47952b0942448834596cbe015676"
     },
     {
         "jugador": "Lyncas",
@@ -374,7 +401,8 @@
         "soloqueue_ids": "EUW: im a jungler",
         "contratado_hasta": "2026-11-26",
         "contratado_desde": "2024-05-13",
-        "imagen": "miweb\\Resources\\Images\\PlayersLEC\\Lyncas.png"
+        "imagen": "miweb\\Resources\\Images\\PlayersLEC\\Lyncas.png",
+        "nuevo_id": "5a55e35e3aa440a78320df48a90c043a"
     },
     {
         "jugador": "Czajek",
@@ -387,7 +415,8 @@
         "soloqueue_ids": "EUW: Czajëkk",
         "contratado_hasta": "2027-11-15",
         "contratado_desde": "2024-12-13",
-        "imagen": "miweb\\Resources\\Images\\PlayersLEC\\Czajek.png"
+        "imagen": "miweb\\Resources\\Images\\PlayersLEC\\Czajek.png",
+        "nuevo_id": "a09333940609477d91f3dd97a2b574bf"
     },
     {
         "jugador": "Carzzy",
@@ -400,7 +429,8 @@
         "soloqueue_ids": "EUW: : bob kong, CN: turbosnail",
         "contratado_hasta": "2026-11-16",
         "contratado_desde": "2023-12-19",
-        "imagen": "miweb\\Resources\\Images\\PlayersLEC\\Carzzy.png"
+        "imagen": "miweb\\Resources\\Images\\PlayersLEC\\Carzzy.png",
+        "nuevo_id": "02fca8ec909f4236a1fd13449eb3c769"
     },
     {
         "jugador": "Hylissang",
@@ -413,7 +443,8 @@
         "soloqueue_ids": "EUW: : Peshon#EUW, KR: : Svveeney Todd, CN: Dancewithme",
         "contratado_hasta": "2026-11-16",
         "contratado_desde": "2023-12-19",
-        "imagen": "miweb\\Resources\\Images\\PlayersLEC\\Hylissang.png"
+        "imagen": "miweb\\Resources\\Images\\PlayersLEC\\Hylissang.png",
+        "nuevo_id": "6073fa8b82834193837119b7fc726c69"
     },
     {
         "jugador": "Nisqy",
@@ -426,7 +457,8 @@
         "soloqueue_ids": "EUW: : BENCHSQY, KR: : NISKING, NA: : wouhouu",
         "contratado_hasta": "2025-11-17",
         "contratado_desde": "2025-03-05",
-        "imagen": "miweb\\Resources\\Images\\PlayersLEC\\Nisqy.png"
+        "imagen": "miweb\\Resources\\Images\\PlayersLEC\\Nisqy.png",
+        "nuevo_id": "61c93bb57cee4984902fa44384fdef85"
     },
     {
         "jugador": "Oscarinin",
@@ -439,7 +471,8 @@
         "soloqueue_ids": "EUW: : Isagi Yoichi#BLGOD",
         "contratado_hasta": "2026-11-16",
         "contratado_desde": "2023-03-02",
-        "imagen": "miweb\\Resources\\Images\\PlayersLEC\\Oscarinin.png"
+        "imagen": "miweb\\Resources\\Images\\PlayersLEC\\Oscarinin.png",
+        "nuevo_id": "a283185d82c947f19a00b7e116d52c08"
     },
     {
         "jugador": "Razork",
@@ -452,7 +485,8 @@
         "soloqueue_ids": "EUW: : Razørk Activoo#razzz, NA: : Foquita Activaa#NA1",
         "contratado_hasta": "2026-11-16",
         "contratado_desde": "2021-12-10",
-        "imagen": "miweb\\Resources\\Images\\PlayersLEC\\Razork.png"
+        "imagen": "miweb\\Resources\\Images\\PlayersLEC\\Razork.png",
+        "nuevo_id": "6ee5641084194e45a7ac5de555791bc4"
     },
     {
         "jugador": "Humanoid",
@@ -465,7 +499,8 @@
         "soloqueue_ids": "EUW: : Marek Brazda1#DOG, CN: Quarantineabuser, NA: : Wesley Warren Jr#NA1",
         "contratado_hasta": "2025-11-17",
         "contratado_desde": "2022-01-01",
-        "imagen": "miweb\\Resources\\Images\\PlayersLEC\\Humanoid.png"
+        "imagen": "miweb\\Resources\\Images\\PlayersLEC\\Humanoid.png",
+        "nuevo_id": "51b4c1d1c8964e2dbee0d65dca6cc5a9"
     },
     {
         "jugador": "Upset",
@@ -478,7 +513,8 @@
         "soloqueue_ids": "EUW: : FNC Upset#0308, NA: : THINKPOSITIVE03#NA1",
         "contratado_hasta": "2025-11-17",
         "contratado_desde": "2024-12-20",
-        "imagen": "miweb\\Resources\\Images\\PlayersLEC\\Upset.png"
+        "imagen": "miweb\\Resources\\Images\\PlayersLEC\\Upset.png",
+        "nuevo_id": "c9fae7c52ea344fe97d57813909e95cb"
     },
     {
         "jugador": "Mikyx",
@@ -491,7 +527,8 @@
         "soloqueue_ids": "EUW: FNC Mikyx#1998, KR: MSF Kacchan, CN: G2Kuroko",
         "contratado_hasta": "2026-11-16",
         "contratado_desde": "2024-12-20",
-        "imagen": "miweb\\Resources\\Images\\PlayersLEC\\Mikyx.png"
+        "imagen": "miweb\\Resources\\Images\\PlayersLEC\\Mikyx.png",
+        "nuevo_id": "b8b4a6c93f584a38add2c78e7c689ba5"
     },
     {
         "jugador": "Irrelevant",
@@ -504,7 +541,8 @@
         "soloqueue_ids": null,
         "contratado_hasta": "2026-11-16",
         "contratado_desde": "2024-12-23",
-        "imagen": "miweb\\Resources\\Images\\PlayersLEC\\Irrelevant.png"
+        "imagen": "miweb\\Resources\\Images\\PlayersLEC\\Irrelevant.png",
+        "nuevo_id": "cc226257be2544329183543814ed17bd"
     },
     {
         "jugador": "113",
@@ -517,7 +555,8 @@
         "soloqueue_ids": "EUW: Supmass 113, lpl aggression7, SUP 113 bum, pandora9 jgl acc, 113 113 113 113, 113 boom, VGIA 113",
         "contratado_hasta": "2025-11-17",
         "contratado_desde": "2024-12-23",
-        "imagen": "miweb\\Resources\\Images\\PlayersLEC\\113.png"
+        "imagen": "miweb\\Resources\\Images\\PlayersLEC\\113.png",
+        "nuevo_id": "bf92836e14e44befb0a248e30cbd5fd6"
     },
     {
         "jugador": "nuc",
@@ -530,7 +569,8 @@
         "soloqueue_ids": "EUW: : knight9z, KR: : PENGUIN TERROR",
         "contratado_hasta": "2026-11-16",
         "contratado_desde": "2021-12-20",
-        "imagen": "miweb\\Resources\\Images\\PlayersLEC\\Nuc.png"
+        "imagen": "miweb\\Resources\\Images\\PlayersLEC\\Nuc.png",
+        "nuevo_id": "69aff76b97f041caba29f418a1e1457e"
     },
     {
         "jugador": "Ice",
@@ -543,7 +583,8 @@
         "soloqueue_ids": "KR: 폭탄치우기",
         "contratado_hasta": "2025-11-17",
         "contratado_desde": "2023-12-22",
-        "imagen": "miweb\\Resources\\Images\\PlayersLEC\\Ice_(Yoon_Sang-hoon).png"
+        "imagen": "miweb\\Resources\\Images\\PlayersLEC\\Ice_(Yoon_Sang-hoon).png",
+        "nuevo_id": "2bb832cd07744191a047fc917f9bc1c8"
     },
     {
         "jugador": "Parus",
@@ -556,7 +597,8 @@
         "soloqueue_ids": null,
         "contratado_hasta": "2025-11-17",
         "contratado_desde": "2024-12-23",
-        "imagen": "miweb\\Resources\\Images\\PlayersLEC\\Parus.png"
+        "imagen": "miweb\\Resources\\Images\\PlayersLEC\\Parus.png",
+        "nuevo_id": "da0217cc9e5e47a7b19ff5855d04e99a"
     },
     {
         "jugador": "Myrwn",
@@ -569,7 +611,8 @@
         "soloqueue_ids": "EUW: Lamine Yamal#Annie, RascadorDeGatas#Miau",
         "contratado_hasta": "2026-11-16",
         "contratado_desde": "2024-12-06",
-        "imagen": "miweb\\Resources\\Images\\PlayersLEC\\Myrwn.png"
+        "imagen": "miweb\\Resources\\Images\\PlayersLEC\\Myrwn.png",
+        "nuevo_id": "7c4a3f3cfd314f8ca7fea01282c5bdcd"
     },
     {
         "jugador": "Elyoya",
@@ -582,7 +625,8 @@
         "soloqueue_ids": "EUW: komanche uchiha, domyos, Ratón calvo, Andrew Laedis",
         "contratado_hasta": "2026-11-16",
         "contratado_desde": "2024-12-06",
-        "imagen": "miweb\\Resources\\Images\\PlayersLEC\\Elyoya.png"
+        "imagen": "miweb\\Resources\\Images\\PlayersLEC\\Elyoya.png",
+        "nuevo_id": "7fa3e4e145b746a4bd67500a9251ad26"
     },
     {
         "jugador": "Jojopyun",
@@ -595,7 +639,8 @@
         "soloqueue_ids": "NA: : jojopyun 16",
         "contratado_hasta": "2026-11-16",
         "contratado_desde": "2024-12-06",
-        "imagen": "miweb\\Resources\\Images\\PlayersLEC\\Jojopyun.png"
+        "imagen": "miweb\\Resources\\Images\\PlayersLEC\\Jojopyun.png",
+        "nuevo_id": "6cadc23153ec4239a2f86e2f1c6ef961"
     },
     {
         "jugador": "Supa",
@@ -608,7 +653,8 @@
         "soloqueue_ids": "EUW: : tukaan, K1374n0, 4tukano4, Perro de Elyoya",
         "contratado_hasta": "2026-11-16",
         "contratado_desde": "2024-12-06",
-        "imagen": "miweb\\Resources\\Images\\PlayersLEC\\Supa.png"
+        "imagen": "miweb\\Resources\\Images\\PlayersLEC\\Supa.png",
+        "nuevo_id": "09b1a4024d7b439ab555d400cf3d487b"
     },
     {
         "jugador": "Alvaro",
@@ -621,7 +667,8 @@
         "soloqueue_ids": "",
         "contratado_hasta": "2026-11-16",
         "contratado_desde": "2024-12-06",
-        "imagen": "miweb\\Resources\\Images\\PlayersLEC\\Alvaro_(%C3%81lvaro_Fern%C3%A1ndez).png"
+        "imagen": "miweb\\Resources\\Images\\PlayersLEC\\Alvaro_(%C3%81lvaro_Fern%C3%A1ndez).png",
+        "nuevo_id": "27202aaab38a414b93027727bef6454c"
     },
     {
         "jugador": "Zeph",
@@ -647,7 +694,8 @@
         "soloqueue_ids": null,
         "contratado_hasta": "2026-11-16",
         "contratado_desde": "2025-01-10",
-        "imagen": "miweb\\Resources\\Images\\PlayersLEC\\Lot.png"
+        "imagen": "miweb\\Resources\\Images\\PlayersLEC\\Lot.png",
+        "nuevo_id": "f015a526b4dd4f0eb4f932ef63627ce1"
     },
     {
         "jugador": "ISMA",
@@ -660,7 +708,8 @@
         "soloqueue_ids": null,
         "contratado_hasta": "2026-11-16",
         "contratado_desde": "2025-03-08",
-        "imagen": "miweb\\Resources\\Images\\PlayersLEC\\ISMA.png"
+        "imagen": "miweb\\Resources\\Images\\PlayersLEC\\ISMA.png",
+        "nuevo_id": "f737f02379a741f7a96d5d5c0a39f18f"
     },
     {
         "jugador": "Jackies",
@@ -673,7 +722,8 @@
         "soloqueue_ids": "EUW: DEMON JACKIES",
         "contratado_hasta": "2026-11-16",
         "contratado_desde": "2023-12-14",
-        "imagen": "miweb\\Resources\\Images\\PlayersLEC\\Jackies.png"
+        "imagen": "miweb\\Resources\\Images\\PlayersLEC\\Jackies.png",
+        "nuevo_id": "d3516e62bf8c43948f3098fd9d237781"
     },
     {
         "jugador": "Noah",
@@ -686,7 +736,8 @@
         "soloqueue_ids": "KR: Positive Taek, EUW: Noah7",
         "contratado_hasta": "2026-11-16",
         "contratado_desde": "2025-01-08",
-        "imagen": "miweb\\Resources\\Images\\PlayersLEC\\Noah_(Oh_Hyeon-taek).png"
+        "imagen": "miweb\\Resources\\Images\\PlayersLEC\\Noah_(Oh_Hyeon-taek).png",
+        "nuevo_id": "7d27fd9618d841e6b6e42d95a69cd2dd"
     },
     {
         "jugador": "Jun",
@@ -699,6 +750,7 @@
         "soloqueue_ids": "KR: 경로당홍삼캔디훔쳐먹는김건, 독기품기, EUW: europe, qrds",
         "contratado_hasta": "2026-11-16",
         "contratado_desde": "2025-01-08",
-        "imagen": "miweb\\Resources\\Images\\PlayersLEC\\Jun_(Yoon_Se-jun).png"
+        "imagen": "miweb\\Resources\\Images\\PlayersLEC\\Jun_(Yoon_Se-jun).png",
+        "nuevo_id": "a3167c1e190d4ce08a107b3e917a24f2"
     }
 ]

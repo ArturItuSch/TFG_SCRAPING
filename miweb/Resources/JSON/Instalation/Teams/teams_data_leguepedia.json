@@ -7,7 +7,8 @@
         "propietario": "Kamel \" Kameto \" Kebir Amine \" Prime \" Mekri Zouhaïr \" Kotei \" Darji",
         "head_coach": "Rehareha \" Reha \" Ramanana",
         "partners": null,
-        "fecha_fundacion": "2020-11-16"
+        "fecha_fundacion": "2020-11-16",
+        "nuevo_id": "e620e3a4ef974acf82193866106eb67f"
     },
     {
         "nombre_equipo": "Team_BDS",
@@ -17,7 +18,8 @@
         "propietario": null,
         "head_coach": "Yanis \" Striker \" Kella",
         "partners": null,
-        "fecha_fundacion": "2020-05-13"
+        "fecha_fundacion": "2020-05-13",
+        "nuevo_id": "34d7a773dd0e41399c43965224ed9af8"
     },
     {
         "nombre_equipo": "Team_Vitality",
@@ -27,7 +29,8 @@
         "propietario": "Fabien \" Neo \" Devide Nicolas \" Nico \" Maurer",
         "head_coach": "James \" Mac \" MacCormack",
         "partners": "Skin.Club, Magnum, Hummel",
-        "fecha_fundacion": "2015-12-09"
+        "fecha_fundacion": "2015-12-09",
+        "nuevo_id": "d9ceaf30112848feb9304656c6f23214"
     },
     {
         "nombre_equipo": "Rogue",
@@ -37,7 +40,8 @@
         "propietario": "Franklin \" Frank \" Villareal Carson Knuth Derek Nelson",
         "head_coach": "Simon \" fredy122 \" Payne",
         "partners": "Infinite Reality, ReKTGlobal, Steve Aoki, KIA",
-        "fecha_fundacion": "2016-05-03 (Organization)"
+        "fecha_fundacion": "2016-05-03 (Organization)",
+        "nuevo_id": "c8344aac598742b89549f83cef2a897a"
     },
     {
         "nombre_equipo": "Fnatic",
@@ -47,7 +51,8 @@
         "propietario": "Samuel Mathews Anne Mathews",
         "head_coach": "Fabian \" GrabbZ \" Lohmann",
         "partners": "INZONE, Jack Link's, Red Bull, Betify, Sony, GoGlobal",
-        "fecha_fundacion": "March 14, 2011(2011-03-14)"
+        "fecha_fundacion": "March 14, 2011(2011-03-14)",
+        "nuevo_id": "bd0db9b6b2eb45f19eab6ec5bd08a7f4"
     },
     {
         "nombre_equipo": "GIANTX",
@@ -57,7 +62,8 @@
         "propietario": null,
         "head_coach": "André \" Guilhoto \" Pereira",
         "partners": "EE, Goodfella’s, Opel, KitKat, HSBC UK, Maggi Fusian, Costa del Sol Málaga, Fitchin, Hot Wheels, PCSPECIALIST",
-        "fecha_fundacion": "2023-12-14"
+        "fecha_fundacion": "2023-12-14",
+        "nuevo_id": "4fc832abbb92407b800866bca8b17141"
     },
     {
         "nombre_equipo": "G2_Esports",
@@ -67,7 +73,8 @@
         "propietario": "Jens Hilgers",
         "head_coach": "Dylan \" Dylan Falco \" Falco",
         "partners": "AOC, Logitech G, Red Bull, Mastercard, PHILIPS, Herman Miller, OAKLEY, Ralph Lauren, ESL Faceit Group, SkinRave",
-        "fecha_fundacion": "2015-10-15"
+        "fecha_fundacion": "2015-10-15",
+        "nuevo_id": "a3a7c809b584436da089f7f40c8e1d1d"
     },
     {
         "nombre_equipo": "Movistar_KOI",
@@ -77,7 +84,8 @@
         "propietario": null,
         "head_coach": "Tomás \" Melzhet \" Campelos",
         "partners": "OverActive Media",
-        "fecha_fundacion": "2017-01-10 Organization"
+        "fecha_fundacion": "2017-01-10 Organization",
+        "nuevo_id": "dc25a23a72ec4b049c1ec9d24ba83287"
     },
     {
         "nombre_equipo": "SK_Gaming",
@@ -87,7 +95,8 @@
         "propietario": "Alexander \" TheSlasH \" Müller",
         "head_coach": "David \" OWN3R \" Rodriguez",
         "partners": "Deutsche Telekom, Mercedes-Benz, REWE, Sony, Nhow Hotel, TERRA, RECARO, WD Black, InZone",
-        "fecha_fundacion": "September 16, 2010(2010-09-16)"
+        "fecha_fundacion": "September 16, 2010(2010-09-16)",
+        "nuevo_id": "2759e51150024d2388f6698943fba0c6"
     },
     {
         "nombre_equipo": "Team_Heretics",
@@ -97,6 +106,7 @@
         "propietario": "Antonio Catena Arnau Vidal Jorge \" Goorgo \" Orejudo David \" TheGrefg \" Cánovas",
         "head_coach": "Víctor \" Machuki \" Machuca",
         "partners": "Cervezas San Miguel, Hyundai",
-        "fecha_fundacion": "Organization 2016-08-02LoL Division 2017-01-25"
+        "fecha_fundacion": "Organization 2016-08-02LoL Division 2017-01-25",
+        "nuevo_id": "74898e0627eb4970abf4fd41bee89916"
     }
 ]
