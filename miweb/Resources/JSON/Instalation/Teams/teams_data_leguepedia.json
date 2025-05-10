@@ -1,5 +1,25 @@
 [
     {
+        "nombre_equipo": "Karmine_Corp",
+        "logo": "miweb\\Resources\\Images\\TeamsLEC\\Karmine_Corp.png",
+        "pais": "France",
+        "region": "EMEA",
+        "propietario": "Kamel \" Kameto \" Kebir Amine \" Prime \" Mekri Zouhaïr \" Kotei \" Darji",
+        "head_coach": "Rehareha \" Reha \" Ramanana",
+        "partners": null,
+        "fecha_fundacion": "2020-11-16"
+    },
+    {
+        "nombre_equipo": "Team_BDS",
+        "logo": "miweb\\Resources\\Images\\TeamsLEC\\Team_BDS.png",
+        "pais": "Switzerland",
+        "region": "EMEA",
+        "propietario": null,
+        "head_coach": "Yanis \" Striker \" Kella",
+        "partners": null,
+        "fecha_fundacion": "2020-05-13"
+    },
+    {
         "nombre_equipo": "Team_Vitality",
         "logo": "miweb\\Resources\\Images\\TeamsLEC\\Team_Vitality.png",
         "pais": "France",
@@ -8,36 +28,6 @@
         "head_coach": "James \" Mac \" MacCormack",
         "partners": "Skin.Club, Magnum, Hummel",
         "fecha_fundacion": "2015-12-09"
-    },
-    {
-        "nombre_equipo": "Fnatic",
-        "logo": "miweb\\Resources\\Images\\TeamsLEC\\Fnatic.png",
-        "pais": "United Kingdom",
-        "region": "EMEA",
-        "propietario": "Samuel Mathews Anne Mathews",
-        "head_coach": "Fabian \" GrabbZ \" Lohmann",
-        "partners": "INZONE, Jack Link's, Red Bull, Betify, Sony, GoGlobal",
-        "fecha_fundacion": "March 14, 2011(2011-03-14)"
-    },
-    {
-        "nombre_equipo": "SK_Gaming",
-        "logo": "miweb\\Resources\\Images\\TeamsLEC\\SK_Gaming.png",
-        "pais": "Germany",
-        "region": "EMEA",
-        "propietario": "Alexander \" TheSlasH \" Müller",
-        "head_coach": "David \" OWN3R \" Rodriguez",
-        "partners": "Deutsche Telekom, Mercedes-Benz, REWE, Sony, Nhow Hotel, TERRA, RECARO, WD Black, InZone",
-        "fecha_fundacion": "September 16, 2010(2010-09-16)"
-    },
-    {
-        "nombre_equipo": "Movistar_KOI",
-        "logo": "miweb\\Resources\\Images\\TeamsLEC\\Movistar_KOI.png",
-        "pais": "Spain",
-        "region": "EMEA",
-        "propietario": null,
-        "head_coach": "Tomás \" Melzhet \" Campelos",
-        "partners": "OverActive Media",
-        "fecha_fundacion": "2017-01-10 Organization"
     },
     {
         "nombre_equipo": "Rogue",
@@ -50,14 +40,14 @@
         "fecha_fundacion": "2016-05-03 (Organization)"
     },
     {
-        "nombre_equipo": "Team_BDS",
-        "logo": "miweb\\Resources\\Images\\TeamsLEC\\Team_BDS.png",
-        "pais": "Switzerland",
+        "nombre_equipo": "Fnatic",
+        "logo": "miweb\\Resources\\Images\\TeamsLEC\\Fnatic.png",
+        "pais": "United Kingdom",
         "region": "EMEA",
-        "propietario": null,
-        "head_coach": "Yanis \" Striker \" Kella",
-        "partners": null,
-        "fecha_fundacion": "2020-05-13"
+        "propietario": "Samuel Mathews Anne Mathews",
+        "head_coach": "Fabian \" GrabbZ \" Lohmann",
+        "partners": "INZONE, Jack Link's, Red Bull, Betify, Sony, GoGlobal",
+        "fecha_fundacion": "March 14, 2011(2011-03-14)"
     },
     {
         "nombre_equipo": "GIANTX",
@@ -80,14 +70,24 @@
         "fecha_fundacion": "2015-10-15"
     },
     {
-        "nombre_equipo": "Karmine_Corp",
-        "logo": "miweb\\Resources\\Images\\TeamsLEC\\Karmine_Corp.png",
-        "pais": "France",
+        "nombre_equipo": "Movistar_KOI",
+        "logo": "miweb\\Resources\\Images\\TeamsLEC\\Movistar_KOI.png",
+        "pais": "Spain",
         "region": "EMEA",
-        "propietario": "Kamel \" Kameto \" Kebir Amine \" Prime \" Mekri Zouhaïr \" Kotei \" Darji",
-        "head_coach": "Rehareha \" Reha \" Ramanana",
-        "partners": null,
-        "fecha_fundacion": "2020-11-16"
+        "propietario": null,
+        "head_coach": "Tomás \" Melzhet \" Campelos",
+        "partners": "OverActive Media",
+        "fecha_fundacion": "2017-01-10 Organization"
+    },
+    {
+        "nombre_equipo": "SK_Gaming",
+        "logo": "miweb\\Resources\\Images\\TeamsLEC\\SK_Gaming.png",
+        "pais": "Germany",
+        "region": "EMEA",
+        "propietario": "Alexander \" TheSlasH \" Müller",
+        "head_coach": "David \" OWN3R \" Rodriguez",
+        "partners": "Deutsche Telekom, Mercedes-Benz, REWE, Sony, Nhow Hotel, TERRA, RECARO, WD Black, InZone",
+        "fecha_fundacion": "September 16, 2010(2010-09-16)"
     },
     {
         "nombre_equipo": "Team_Heretics",

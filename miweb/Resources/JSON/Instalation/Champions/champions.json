@@ -1,0 +1,682 @@
+[
+    {
+        "nombre": "Aatrox",
+        "ruta_imagen": "miweb\\Resources\\Champions\\Aatrox\\Aatrox.png"
+    },
+    {
+        "nombre": "Ahri",
+        "ruta_imagen": "miweb\\Resources\\Champions\\Ahri\\Ahri.png"
+    },
+    {
+        "nombre": "Akali",
+        "ruta_imagen": "miweb\\Resources\\Champions\\Akali\\Akali.png"
+    },
+    {
+        "nombre": "Alistar",
+        "ruta_imagen": "miweb\\Resources\\Champions\\Alistar\\Alistar.png"
+    },
+    {
+        "nombre": "Amumu",
+        "ruta_imagen": "miweb\\Resources\\Champions\\Amumu\\Amumu.png"
+    },
+    {
+        "nombre": "Anivia",
+        "ruta_imagen": "miweb\\Resources\\Champions\\Anivia\\Anivia.png"
+    },
+    {
+        "nombre": "Annie",
+        "ruta_imagen": "miweb\\Resources\\Champions\\Annie\\Annie.png"
+    },
+    {
+        "nombre": "Ashe",
+        "ruta_imagen": "miweb\\Resources\\Champions\\Ashe\\Ashe.png"
+    },
+    {
+        "nombre": "Blitzcrank",
+        "ruta_imagen": "miweb\\Resources\\Champions\\Blitzcrank\\Blitzcrank.png"
+    },
+    {
+        "nombre": "Brand",
+        "ruta_imagen": "miweb\\Resources\\Champions\\Brand\\Brand.png"
+    },
+    {
+        "nombre": "Caitlyn",
+        "ruta_imagen": "miweb\\Resources\\Champions\\Caitlyn\\Caitlyn.png"
+    },
+    {
+        "nombre": "Cassiopeia",
+        "ruta_imagen": "miweb\\Resources\\Champions\\Cassiopeia\\Cassiopeia.png"
+    },
+    {
+        "nombre": "Chogath",
+        "ruta_imagen": "miweb\\Resources\\Champions\\Chogath\\Chogath.png"
+    },
+    {
+        "nombre": "Corki",
+        "ruta_imagen": "miweb\\Resources\\Champions\\Corki\\Corki.png"
+    },
+    {
+        "nombre": "Darius",
+        "ruta_imagen": "miweb\\Resources\\Champions\\Darius\\Darius.png"
+    },
+    {
+        "nombre": "Diana",
+        "ruta_imagen": "miweb\\Resources\\Champions\\Diana\\Diana.png"
+    },
+    {
+        "nombre": "Dr._Mundo",
+        "ruta_imagen": "miweb\\Resources\\Champions\\Dr._Mundo\\Dr._Mundo.png"
+    },
+    {
+        "nombre": "Draven",
+        "ruta_imagen": "miweb\\Resources\\Champions\\Draven\\Draven.png"
+    },
+    {
+        "nombre": "Elise",
+        "ruta_imagen": "miweb\\Resources\\Champions\\Elise\\Elise.png"
+    },
+    {
+        "nombre": "Evelynn",
+        "ruta_imagen": "miweb\\Resources\\Champions\\Evelynn\\Evelynn.png"
+    },
+    {
+        "nombre": "Ezreal",
+        "ruta_imagen": "miweb\\Resources\\Champions\\Ezreal\\Ezreal.png"
+    },
+    {
+        "nombre": "Fiddlesticks",
+        "ruta_imagen": "miweb\\Resources\\Champions\\Fiddlesticks\\Fiddlesticks.png"
+    },
+    {
+        "nombre": "Fiora",
+        "ruta_imagen": "miweb\\Resources\\Champions\\Fiora\\Fiora.png"
+    },
+    {
+        "nombre": "Fizz",
+        "ruta_imagen": "miweb\\Resources\\Champions\\Fizz\\Fizz.png"
+    },
+    {
+        "nombre": "Galio",
+        "ruta_imagen": "miweb\\Resources\\Champions\\Galio\\Galio.png"
+    },
+    {
+        "nombre": "Gangplank",
+        "ruta_imagen": "miweb\\Resources\\Champions\\Gangplank\\Gangplank.png"
+    },
+    {
+        "nombre": "Garen",
+        "ruta_imagen": "miweb\\Resources\\Champions\\Garen\\Garen.png"
+    },
+    {
+        "nombre": "Gragas",
+        "ruta_imagen": "miweb\\Resources\\Champions\\Gragas\\Gragas.png"
+    },
+    {
+        "nombre": "Graves",
+        "ruta_imagen": "miweb\\Resources\\Champions\\Graves\\Graves.png"
+    },
+    {
+        "nombre": "Hecarim",
+        "ruta_imagen": "miweb\\Resources\\Champions\\Hecarim\\Hecarim.png"
+    },
+    {
+        "nombre": "Heimerdinger",
+        "ruta_imagen": "miweb\\Resources\\Champions\\Heimerdinger\\Heimerdinger.png"
+    },
+    {
+        "nombre": "Irelia",
+        "ruta_imagen": "miweb\\Resources\\Champions\\Irelia\\Irelia.png"
+    },
+    {
+        "nombre": "Janna",
+        "ruta_imagen": "miweb\\Resources\\Champions\\Janna\\Janna.png"
+    },
+    {
+        "nombre": "Jarvan_IV",
+        "ruta_imagen": "miweb\\Resources\\Champions\\Jarvan_IV\\Jarvan_IV.png"
+    },
+    {
+        "nombre": "Jax",
+        "ruta_imagen": "miweb\\Resources\\Champions\\Jax\\Jax.png"
+    },
+    {
+        "nombre": "Jayce",
+        "ruta_imagen": "miweb\\Resources\\Champions\\Jayce\\Jayce.png"
+    },
+    {
+        "nombre": "Jinx",
+        "ruta_imagen": "miweb\\Resources\\Champions\\Jinx\\Jinx.png"
+    },
+    {
+        "nombre": "Karma",
+        "ruta_imagen": "miweb\\Resources\\Champions\\Karma\\Karma.png"
+    },
+    {
+        "nombre": "Karthus",
+        "ruta_imagen": "miweb\\Resources\\Champions\\Karthus\\Karthus.png"
+    },
+    {
+        "nombre": "Kassadin",
+        "ruta_imagen": "miweb\\Resources\\Champions\\Kassadin\\Kassadin.png"
+    },
+    {
+        "nombre": "Katarina",
+        "ruta_imagen": "miweb\\Resources\\Champions\\Katarina\\Katarina.png"
+    },
+    {
+        "nombre": "Kayle",
+        "ruta_imagen": "miweb\\Resources\\Champions\\Kayle\\Kayle.png"
+    },
+    {
+        "nombre": "Kennen",
+        "ruta_imagen": "miweb\\Resources\\Champions\\Kennen\\Kennen.png"
+    },
+    {
+        "nombre": "KhaZix",
+        "ruta_imagen": "miweb\\Resources\\Champions\\KhaZix\\KhaZix.png"
+    },
+    {
+        "nombre": "KogMaw",
+        "ruta_imagen": "miweb\\Resources\\Champions\\KogMaw\\KogMaw.png"
+    },
+    {
+        "nombre": "LeBlanc",
+        "ruta_imagen": "miweb\\Resources\\Champions\\LeBlanc\\LeBlanc.png"
+    },
+    {
+        "nombre": "Lee_Sin",
+        "ruta_imagen": "miweb\\Resources\\Champions\\Lee_Sin\\Lee_Sin.png"
+    },
+    {
+        "nombre": "Leona",
+        "ruta_imagen": "miweb\\Resources\\Champions\\Leona\\Leona.png"
+    },
+    {
+        "nombre": "Lissandra",
+        "ruta_imagen": "miweb\\Resources\\Champions\\Lissandra\\Lissandra.png"
+    },
+    {
+        "nombre": "Lucian",
+        "ruta_imagen": "miweb\\Resources\\Champions\\Lucian\\Lucian.png"
+    },
+    {
+        "nombre": "Lulu",
+        "ruta_imagen": "miweb\\Resources\\Champions\\Lulu\\Lulu.png"
+    },
+    {
+        "nombre": "Lux",
+        "ruta_imagen": "miweb\\Resources\\Champions\\Lux\\Lux.png"
+    },
+    {
+        "nombre": "Malphite",
+        "ruta_imagen": "miweb\\Resources\\Champions\\Malphite\\Malphite.png"
+    },
+    {
+        "nombre": "Malzahar",
+        "ruta_imagen": "miweb\\Resources\\Champions\\Malzahar\\Malzahar.png"
+    },
+    {
+        "nombre": "Maokai",
+        "ruta_imagen": "miweb\\Resources\\Champions\\Maokai\\Maokai.png"
+    },
+    {
+        "nombre": "Master_Yi",
+        "ruta_imagen": "miweb\\Resources\\Champions\\Master_Yi\\Master_Yi.png"
+    },
+    {
+        "nombre": "Miss_Fortune",
+        "ruta_imagen": "miweb\\Resources\\Champions\\Miss_Fortune\\Miss_Fortune.png"
+    },
+    {
+        "nombre": "Mordekaiser",
+        "ruta_imagen": "miweb\\Resources\\Champions\\Mordekaiser\\Mordekaiser.png"
+    },
+    {
+        "nombre": "Morgana",
+        "ruta_imagen": "miweb\\Resources\\Champions\\Morgana\\Morgana.png"
+    },
+    {
+        "nombre": "Nami",
+        "ruta_imagen": "miweb\\Resources\\Champions\\Nami\\Nami.png"
+    },
+    {
+        "nombre": "Nasus",
+        "ruta_imagen": "miweb\\Resources\\Champions\\Nasus\\Nasus.png"
+    },
+    {
+        "nombre": "Nautilus",
+        "ruta_imagen": "miweb\\Resources\\Champions\\Nautilus\\Nautilus.png"
+    },
+    {
+        "nombre": "Nidalee",
+        "ruta_imagen": "miweb\\Resources\\Champions\\Nidalee\\Nidalee.png"
+    },
+    {
+        "nombre": "Nocturne",
+        "ruta_imagen": "miweb\\Resources\\Champions\\Nocturne\\Nocturne.png"
+    },
+    {
+        "nombre": "Nunu",
+        "ruta_imagen": "miweb\\Resources\\Champions\\Nunu\\Nunu.png"
+    },
+    {
+        "nombre": "Olaf",
+        "ruta_imagen": "miweb\\Resources\\Champions\\Olaf\\Olaf.png"
+    },
+    {
+        "nombre": "Orianna",
+        "ruta_imagen": "miweb\\Resources\\Champions\\Orianna\\Orianna.png"
+    },
+    {
+        "nombre": "Pantheon",
+        "ruta_imagen": "miweb\\Resources\\Champions\\Pantheon\\Pantheon.png"
+    },
+    {
+        "nombre": "Poppy",
+        "ruta_imagen": "miweb\\Resources\\Champions\\Poppy\\Poppy.png"
+    },
+    {
+        "nombre": "Quinn",
+        "ruta_imagen": "miweb\\Resources\\Champions\\Quinn\\Quinn.png"
+    },
+    {
+        "nombre": "Rammus",
+        "ruta_imagen": "miweb\\Resources\\Champions\\Rammus\\Rammus.png"
+    },
+    {
+        "nombre": "Renekton",
+        "ruta_imagen": "miweb\\Resources\\Champions\\Renekton\\Renekton.png"
+    },
+    {
+        "nombre": "Rengar",
+        "ruta_imagen": "miweb\\Resources\\Champions\\Rengar\\Rengar.png"
+    },
+    {
+        "nombre": "Riven",
+        "ruta_imagen": "miweb\\Resources\\Champions\\Riven\\Riven.png"
+    },
+    {
+        "nombre": "Rumble",
+        "ruta_imagen": "miweb\\Resources\\Champions\\Rumble\\Rumble.png"
+    },
+    {
+        "nombre": "Ryze",
+        "ruta_imagen": "miweb\\Resources\\Champions\\Ryze\\Ryze.png"
+    },
+    {
+        "nombre": "Sejuani",
+        "ruta_imagen": "miweb\\Resources\\Champions\\Sejuani\\Sejuani.png"
+    },
+    {
+        "nombre": "Shaco",
+        "ruta_imagen": "miweb\\Resources\\Champions\\Shaco\\Shaco.png"
+    },
+    {
+        "nombre": "Shen",
+        "ruta_imagen": "miweb\\Resources\\Champions\\Shen\\Shen.png"
+    },
+    {
+        "nombre": "Shyvana",
+        "ruta_imagen": "miweb\\Resources\\Champions\\Shyvana\\Shyvana.png"
+    },
+    {
+        "nombre": "Singed",
+        "ruta_imagen": "miweb\\Resources\\Champions\\Singed\\Singed.png"
+    },
+    {
+        "nombre": "Sion",
+        "ruta_imagen": "miweb\\Resources\\Champions\\Sion\\Sion.png"
+    },
+    {
+        "nombre": "Sivir",
+        "ruta_imagen": "miweb\\Resources\\Champions\\Sivir\\Sivir.png"
+    },
+    {
+        "nombre": "Skarner",
+        "ruta_imagen": "miweb\\Resources\\Champions\\Skarner\\Skarner.png"
+    },
+    {
+        "nombre": "Sona",
+        "ruta_imagen": "miweb\\Resources\\Champions\\Sona\\Sona.png"
+    },
+    {
+        "nombre": "Soraka",
+        "ruta_imagen": "miweb\\Resources\\Champions\\Soraka\\Soraka.png"
+    },
+    {
+        "nombre": "Swain",
+        "ruta_imagen": "miweb\\Resources\\Champions\\Swain\\Swain.png"
+    },
+    {
+        "nombre": "Syndra",
+        "ruta_imagen": "miweb\\Resources\\Champions\\Syndra\\Syndra.png"
+    },
+    {
+        "nombre": "Talon",
+        "ruta_imagen": "miweb\\Resources\\Champions\\Talon\\Talon.png"
+    },
+    {
+        "nombre": "Taric",
+        "ruta_imagen": "miweb\\Resources\\Champions\\Taric\\Taric.png"
+    },
+    {
+        "nombre": "Teemo",
+        "ruta_imagen": "miweb\\Resources\\Champions\\Teemo\\Teemo.png"
+    },
+    {
+        "nombre": "Thresh",
+        "ruta_imagen": "miweb\\Resources\\Champions\\Thresh\\Thresh.png"
+    },
+    {
+        "nombre": "Tristana",
+        "ruta_imagen": "miweb\\Resources\\Champions\\Tristana\\Tristana.png"
+    },
+    {
+        "nombre": "Trundle",
+        "ruta_imagen": "miweb\\Resources\\Champions\\Trundle\\Trundle.png"
+    },
+    {
+        "nombre": "Tryndamere",
+        "ruta_imagen": "miweb\\Resources\\Champions\\Tryndamere\\Tryndamere.png"
+    },
+    {
+        "nombre": "Twisted_Fate",
+        "ruta_imagen": "miweb\\Resources\\Champions\\Twisted_Fate\\Twisted_Fate.png"
+    },
+    {
+        "nombre": "Twitch",
+        "ruta_imagen": "miweb\\Resources\\Champions\\Twitch\\Twitch.png"
+    },
+    {
+        "nombre": "Udyr",
+        "ruta_imagen": "miweb\\Resources\\Champions\\Udyr\\Udyr.png"
+    },
+    {
+        "nombre": "Urgot",
+        "ruta_imagen": "miweb\\Resources\\Champions\\Urgot\\Urgot.png"
+    },
+    {
+        "nombre": "Varus",
+        "ruta_imagen": "miweb\\Resources\\Champions\\Varus\\Varus.png"
+    },
+    {
+        "nombre": "Vayne",
+        "ruta_imagen": "miweb\\Resources\\Champions\\Vayne\\Vayne.png"
+    },
+    {
+        "nombre": "Veigar",
+        "ruta_imagen": "miweb\\Resources\\Champions\\Veigar\\Veigar.png"
+    },
+    {
+        "nombre": "Vi",
+        "ruta_imagen": "miweb\\Resources\\Champions\\Vi\\Vi.png"
+    },
+    {
+        "nombre": "Viktor",
+        "ruta_imagen": "miweb\\Resources\\Champions\\Viktor\\Viktor.png"
+    },
+    {
+        "nombre": "Vladimir",
+        "ruta_imagen": "miweb\\Resources\\Champions\\Vladimir\\Vladimir.png"
+    },
+    {
+        "nombre": "Volibear",
+        "ruta_imagen": "miweb\\Resources\\Champions\\Volibear\\Volibear.png"
+    },
+    {
+        "nombre": "Warwick",
+        "ruta_imagen": "miweb\\Resources\\Champions\\Warwick\\Warwick.png"
+    },
+    {
+        "nombre": "Wukong",
+        "ruta_imagen": "miweb\\Resources\\Champions\\Wukong\\Wukong.png"
+    },
+    {
+        "nombre": "Xerath",
+        "ruta_imagen": "miweb\\Resources\\Champions\\Xerath\\Xerath.png"
+    },
+    {
+        "nombre": "Xin_Zhao",
+        "ruta_imagen": "miweb\\Resources\\Champions\\Xin_Zhao\\Xin_Zhao.png"
+    },
+    {
+        "nombre": "Yasuo",
+        "ruta_imagen": "miweb\\Resources\\Champions\\Yasuo\\Yasuo.png"
+    },
+    {
+        "nombre": "Yorick",
+        "ruta_imagen": "miweb\\Resources\\Champions\\Yorick\\Yorick.png"
+    },
+    {
+        "nombre": "Zac",
+        "ruta_imagen": "miweb\\Resources\\Champions\\Zac\\Zac.png"
+    },
+    {
+        "nombre": "Zed",
+        "ruta_imagen": "miweb\\Resources\\Champions\\Zed\\Zed.png"
+    },
+    {
+        "nombre": "Ziggs",
+        "ruta_imagen": "miweb\\Resources\\Champions\\Ziggs\\Ziggs.png"
+    },
+    {
+        "nombre": "Zilean",
+        "ruta_imagen": "miweb\\Resources\\Champions\\Zilean\\Zilean.png"
+    },
+    {
+        "nombre": "Zyra",
+        "ruta_imagen": "miweb\\Resources\\Champions\\Zyra\\Zyra.png"
+    },
+    {
+        "nombre": "Braum",
+        "ruta_imagen": "miweb\\Resources\\Champions\\Braum\\Braum.png"
+    },
+    {
+        "nombre": "Gnar",
+        "ruta_imagen": "miweb\\Resources\\Champions\\Gnar\\Gnar.png"
+    },
+    {
+        "nombre": "Azir",
+        "ruta_imagen": "miweb\\Resources\\Champions\\Azir\\Azir.png"
+    },
+    {
+        "nombre": "Kalista",
+        "ruta_imagen": "miweb\\Resources\\Champions\\Kalista\\Kalista.png"
+    },
+    {
+        "nombre": "RekSai",
+        "ruta_imagen": "miweb\\Resources\\Champions\\RekSai\\RekSai.png"
+    },
+    {
+        "nombre": "VelKoz",
+        "ruta_imagen": "miweb\\Resources\\Champions\\VelKoz\\VelKoz.png"
+    },
+    {
+        "nombre": "Bard",
+        "ruta_imagen": "miweb\\Resources\\Champions\\Bard\\Bard.png"
+    },
+    {
+        "nombre": "Ekko",
+        "ruta_imagen": "miweb\\Resources\\Champions\\Ekko\\Ekko.png"
+    },
+    {
+        "nombre": "Tahm_Kench",
+        "ruta_imagen": "miweb\\Resources\\Champions\\Tahm_Kench\\Tahm_Kench.png"
+    },
+    {
+        "nombre": "Kindred",
+        "ruta_imagen": "miweb\\Resources\\Champions\\Kindred\\Kindred.png"
+    },
+    {
+        "nombre": "Illaoi",
+        "ruta_imagen": "miweb\\Resources\\Champions\\Illaoi\\Illaoi.png"
+    },
+    {
+        "nombre": "Jhin",
+        "ruta_imagen": "miweb\\Resources\\Champions\\Jhin\\Jhin.png"
+    },
+    {
+        "nombre": "Aurelion_Sol",
+        "ruta_imagen": "miweb\\Resources\\Champions\\Aurelion_Sol\\Aurelion_Sol.png"
+    },
+    {
+        "nombre": "Taliyah",
+        "ruta_imagen": "miweb\\Resources\\Champions\\Taliyah\\Taliyah.png"
+    },
+    {
+        "nombre": "Kled",
+        "ruta_imagen": "miweb\\Resources\\Champions\\Kled\\Kled.png"
+    },
+    {
+        "nombre": "Ivern",
+        "ruta_imagen": "miweb\\Resources\\Champions\\Ivern\\Ivern.png"
+    },
+    {
+        "nombre": "Camille",
+        "ruta_imagen": "miweb\\Resources\\Champions\\Camille\\Camille.png"
+    },
+    {
+        "nombre": "Xayah",
+        "ruta_imagen": "miweb\\Resources\\Champions\\Xayah\\Xayah.png"
+    },
+    {
+        "nombre": "Rakan",
+        "ruta_imagen": "miweb\\Resources\\Champions\\Rakan\\Rakan.png"
+    },
+    {
+        "nombre": "Kayn",
+        "ruta_imagen": "miweb\\Resources\\Champions\\Kayn\\Kayn.png"
+    },
+    {
+        "nombre": "Ornn",
+        "ruta_imagen": "miweb\\Resources\\Champions\\Ornn\\Ornn.png"
+    },
+    {
+        "nombre": "Zoe",
+        "ruta_imagen": "miweb\\Resources\\Champions\\Zoe\\Zoe.png"
+    },
+    {
+        "nombre": "Kaisa",
+        "ruta_imagen": "miweb\\Resources\\Champions\\Kaisa\\Kaisa.png"
+    },
+    {
+        "nombre": "Pyke",
+        "ruta_imagen": "miweb\\Resources\\Champions\\Pyke\\Pyke.png"
+    },
+    {
+        "nombre": "Neeko",
+        "ruta_imagen": "miweb\\Resources\\Champions\\Neeko\\Neeko.png"
+    },
+    {
+        "nombre": "Sylas",
+        "ruta_imagen": "miweb\\Resources\\Champions\\Sylas\\Sylas.png"
+    },
+    {
+        "nombre": "Yuumi",
+        "ruta_imagen": "miweb\\Resources\\Champions\\Yuumi\\Yuumi.png"
+    },
+    {
+        "nombre": "Qiyana",
+        "ruta_imagen": "miweb\\Resources\\Champions\\Qiyana\\Qiyana.png"
+    },
+    {
+        "nombre": "Senna",
+        "ruta_imagen": "miweb\\Resources\\Champions\\Senna\\Senna.png"
+    },
+    {
+        "nombre": "Aphelios",
+        "ruta_imagen": "miweb\\Resources\\Champions\\Aphelios\\Aphelios.png"
+    },
+    {
+        "nombre": "Sett",
+        "ruta_imagen": "miweb\\Resources\\Champions\\Sett\\Sett.png"
+    },
+    {
+        "nombre": "Lillia",
+        "ruta_imagen": "miweb\\Resources\\Champions\\Lillia\\Lillia.png"
+    },
+    {
+        "nombre": "Yone",
+        "ruta_imagen": "miweb\\Resources\\Champions\\Yone\\Yone.png"
+    },
+    {
+        "nombre": "Samira",
+        "ruta_imagen": "miweb\\Resources\\Champions\\Samira\\Samira.png"
+    },
+    {
+        "nombre": "Seraphine",
+        "ruta_imagen": "miweb\\Resources\\Champions\\Seraphine\\Seraphine.png"
+    },
+    {
+        "nombre": "Rell",
+        "ruta_imagen": "miweb\\Resources\\Champions\\Rell\\Rell.png"
+    },
+    {
+        "nombre": "Viego",
+        "ruta_imagen": "miweb\\Resources\\Champions\\Viego\\Viego.png"
+    },
+    {
+        "nombre": "Gwen",
+        "ruta_imagen": "miweb\\Resources\\Champions\\Gwen\\Gwen.png"
+    },
+    {
+        "nombre": "Akshan",
+        "ruta_imagen": "miweb\\Resources\\Champions\\Akshan\\Akshan.png"
+    },
+    {
+        "nombre": "Vex",
+        "ruta_imagen": "miweb\\Resources\\Champions\\Vex\\Vex.png"
+    },
+    {
+        "nombre": "Zeri",
+        "ruta_imagen": "miweb\\Resources\\Champions\\Zeri\\Zeri.png"
+    },
+    {
+        "nombre": "Renata_Glasc",
+        "ruta_imagen": "miweb\\Resources\\Champions\\Renata_Glasc\\Renata_Glasc.png"
+    },
+    {
+        "nombre": "Belveth",
+        "ruta_imagen": "miweb\\Resources\\Champions\\Belveth\\Belveth.png"
+    },
+    {
+        "nombre": "Nilah",
+        "ruta_imagen": "miweb\\Resources\\Champions\\Nilah\\Nilah.png"
+    },
+    {
+        "nombre": "KSante",
+        "ruta_imagen": "miweb\\Resources\\Champions\\KSante\\KSante.png"
+    },
+    {
+        "nombre": "Milio",
+        "ruta_imagen": "miweb\\Resources\\Champions\\Milio\\Milio.png"
+    },
+    {
+        "nombre": "Naafiri",
+        "ruta_imagen": "miweb\\Resources\\Champions\\Naafiri\\Naafiri.png"
+    },
+    {
+        "nombre": "Briar",
+        "ruta_imagen": "miweb\\Resources\\Champions\\Briar\\Briar.png"
+    },
+    {
+        "nombre": "Hwei",
+        "ruta_imagen": "miweb\\Resources\\Champions\\Hwei\\Hwei.png"
+    },
+    {
+        "nombre": "Smolder",
+        "ruta_imagen": "miweb\\Resources\\Champions\\Smolder\\Smolder.png"
+    },
+    {
+        "nombre": "Aurora",
+        "ruta_imagen": "miweb\\Resources\\Champions\\Aurora\\Aurora.png"
+    },
+    {
+        "nombre": "Ambessa",
+        "ruta_imagen": "miweb\\Resources\\Champions\\Ambessa\\Ambessa.png"
+    },
+    {
+        "nombre": "Mel",
+        "ruta_imagen": "miweb\\Resources\\Champions\\Mel\\Mel.png"
+    }
+]

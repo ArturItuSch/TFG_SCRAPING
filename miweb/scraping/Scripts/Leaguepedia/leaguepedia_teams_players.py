@@ -1,3 +1,14 @@
+"""
+Script para realizar scraping de datos de Leaguepedia.
+
+Este módulo contiene funciones reutilizables para trabajar con datos
+de jugadores y equipos, incluyendo la obtención de HTML, conversión de fechas,
+creación de archivos JSON y descarga de imágenes.
+
+Autor: Artur Schuldt
+Fecha: 25 de abril de 2025
+"""
+
 import requests
 from bs4 import BeautifulSoup
 from urllib.parse import urljoin
@@ -8,16 +19,21 @@ from pathlib import Path
 import re
 from datetime import datetime
 
+# Establece la ruta raíz del proyecto
 PROJECT_ROOT = os.path.abspath(os.path.join(os.path.dirname(__file__), '../../../'))
 sys.path.insert(0, PROJECT_ROOT)
 
+# Importación de rutas desde archivo de configuración
 from Resources.rutas import *
+
+# Directorios y rutas para guardar datos
 TEAM_IMAGES_DIR = os.path.join(CARPETA_IMAGENES_TEAMS)
 PLAYER_IMAGES_DIR = os.path.join(CARPETA_IMAGENES_PLAYERS)
 PLAYER_INSTALATION_DATA = os.path.join(JSON_INSTALATION_PLAYERS, "players_data_leguepedia.json")
 TEAMS_INSTALATION_JSON = os.path.join(JSON_INSTALATION_TEAMS, "teams_data_leguepedia.json")
 LOGO_TEAMS_PATH = os.path.join(JSON_PATH_TEAMS_LOGOS, "teams_logos_path.json")
 
+# Encabezados para las peticiones HTTP
 headers = {
     "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36",
     "Accept-Language": "es-ES,es;q=0.9,en;q=0.8",
@@ -33,27 +49,19 @@ headers = {
     "Cache-Control": "max-age=0",
 }
 
+
 def convertir_fecha(fecha_str):
     """
-    Convierte una fecha en formato de texto (por ejemplo, "March 10, 2022") 
-    a un formato estándar de fecha (YYYY-MM-DD). Si la fecha contiene
-    información adicional como la edad, esta será eliminada antes de la conversión.
+    Convierte una fecha en inglés al formato 'YYYY-MM-DD'.
 
-    Parámetros:
-    fecha_str (str): La fecha en formato de texto que se desea convertir.
-
-    Retorna:
-    str: La fecha convertida al formato YYYY-MM-DD si la conversión es exitosa.
-         Retorna None si ocurre un error o la fecha no tiene el formato esperado.
-    
-    Excepciones:
-    Si la fecha no puede ser convertida debido a un error en el formato o 
-    cualquier otro tipo de excepción, la función maneja el error y retorna None.
+    :param fecha_str: Cadena con la fecha, puede contener edad entre paréntesis.
+                      Ejemplo: "March 15, 2000 (24 años)"
+    :type fecha_str: str
+    :return: Fecha convertida en formato 'YYYY-MM-DD' o None si hay error.
+    :rtype: str or None
     """
     try:
-        # Elimina la parte de la edad si está presente
         fecha_limpia = re.sub(r'\(.*?\)', '', fecha_str).strip()
-        # Convierte al formato YYYY-MM-DD
         fecha = datetime.strptime(fecha_limpia, "%B %d, %Y")
         return fecha.strftime("%Y-%m-%d")
     except ValueError:
@@ -63,23 +71,14 @@ def convertir_fecha(fecha_str):
         return None
 
 
-
 def write_json(nombre_archivo, datos):
     """
-    Guarda un diccionario de datos en un archivo JSON con un formato legible 
-    (con indentación y sin caracteres ASCII). Si ocurre un error durante 
-    el proceso de escritura, se manejan las excepciones correspondientes.
+    Guarda un diccionario en un archivo JSON con formato legible.
 
-    Parámetros:
-    nombre_archivo (str): El nombre o ruta del archivo donde se guardarán los datos en formato JSON.
-    datos (dict): Los datos a escribir en el archivo. Deben ser un objeto serializable en JSON.
-
-    Excepciones:
-    - IOError, OSError: Se generan si ocurre un error al intentar escribir en el archivo.
-    - TypeError: Se genera si los datos proporcionados no son serializables en JSON.
-
-    Retorna:
-    None: La función no retorna ningún valor, pero imprime un mensaje de éxito o error.
+    :param nombre_archivo: Ruta del archivo donde se guardará el JSON.
+    :type nombre_archivo: str
+    :param datos: Datos a guardar, típicamente un diccionario o lista.
+    :type datos: dict or list
     """
     try:
         with open(nombre_archivo, 'w', encoding='utf-8') as f:
@@ -89,28 +88,20 @@ def write_json(nombre_archivo, datos):
         print(f"Error de escritura en el archivo {nombre_archivo}: {e}")
     except TypeError as e:
         print(f"Error de serialización de JSON: {e}")
-  
+
+
 def get_html(url, headers=None, timeout=10):
     """
-    Realiza una solicitud HTTP GET a la URL proporcionada y devuelve la respuesta 
-    si la solicitud es exitosa. Si ocurre un error durante la solicitud, se 
-    maneja adecuadamente mostrando un mensaje de error según el tipo de excepción.
+    Realiza una petición GET a una URL y devuelve la respuesta si es exitosa.
 
-    Parámetros:
-    url (str): La URL a la que se realiza la solicitud GET.
-    headers (dict, opcional): Los encabezados HTTP adicionales que se incluyen en la solicitud. Por defecto es None.
-    timeout (int, opcional): El tiempo máximo de espera (en segundos) antes de que la solicitud se agote. Por defecto es 10 segundos.
-
-    Excepciones:
-    - Timeout: Si se agota el tiempo de espera de la solicitud.
-    - TooManyRedirects: Si hay demasiadas redirecciones.
-    - SSLError: Si ocurre un error relacionado con SSL.
-    - ConnectionError: Si hay problemas de conexión.
-    - HTTPError: Si la respuesta HTTP indica un error (por ejemplo, código 404 o 500).
-    - RequestException: Para cualquier otro error desconocido durante la solicitud.
-
-    Retorna:
-    response (requests.Response): El objeto de respuesta si la solicitud es exitosa. Si ocurre un error, retorna None.
+    :param url: Dirección web a la que se desea acceder.
+    :type url: str
+    :param headers: Encabezados HTTP opcionales.
+    :type headers: dict
+    :param timeout: Tiempo máximo de espera para la respuesta.
+    :type timeout: int
+    :return: Objeto `requests.Response` si fue exitoso, o None si hubo error.
+    :rtype: requests.Response or None
     """
     try:
         response = requests.get(url, headers=headers, timeout=timeout)
@@ -129,25 +120,21 @@ def get_html(url, headers=None, timeout=10):
     except requests.exceptions.RequestException as e:
         print(f"⚠️ Error desconocido: {e}")
 
-    
-    
+# Conseguir los enlaces de los equipos de la LEC 2025 Spring Season
 def get_team_links(url):
     """
-    Obtiene los enlaces a las páginas de los equipos de la temporada 2025 de la LEC 
-    desde la URL proporcionada.
+    Obtiene los enlaces de los equipos listados en la página de la LEC 2025 Spring Season.
 
-    La función realiza una solicitud HTTP a la URL especificada, extrae los enlaces 
-    correspondientes a los equipos y devuelve un conjunto de URLs completas.
+    Esta función analiza el HTML de la página dada y extrae todos los enlaces
+    de los equipos usando la clase CSS `catlink-teams`.
 
-    Parámetros:
-    url (str): La URL de la página que contiene los enlaces de los equipos.
+    :param url: URL de la página de Leaguepedia con los equipos de la LEC.
+    :type url: str
+    :return: Conjunto de URLs absolutas de las páginas de los equipos encontrados.
+    :rtype: set[str]
 
-    Excepciones:
-    - RequestException: Si ocurre un error en la solicitud HTTP (por ejemplo, problemas de red).
-    - Exception: Para cualquier otro error inesperado durante el procesamiento de los enlaces.
-
-    Retorna:
-    set: Un conjunto de URLs completas de los equipos, o un conjunto vacío si ocurre un error.
+    :raises requests.exceptions.RequestException: Si ocurre un error al hacer la solicitud HTTP.
+    :raises Exception: Si ocurre cualquier otro error inesperado durante el análisis.
     """
     base_url = 'https://lol.fandom.com/'
     try:
@@ -175,28 +162,25 @@ def get_team_links(url):
         print(f"Error inesperado al procesar los enlaces del equipo: {e}")
         return set()
 
+# Conseguir los datos específicos de los jugadores
 def get_extra_player_data(url):
     """
-    Obtiene los datos específicos de un jugador a partir de su página de perfil.
+    Extrae información adicional de un jugador desde su página en Leaguepedia.
 
-    La función realiza una solicitud HTTP a la URL proporcionada, procesa la página HTML
-    y extrae información relevante del jugador, incluyendo su cumpleaños, imagen y apodos 
-    de SoloQ.
+    Esta función obtiene el HTML de la página del jugador y analiza la tabla 
+    con id `infoboxPlayer` para obtener:
+    
+    - Enlace e imagen del jugador (si está disponible).
+    - Fecha de cumpleaños (convertida al formato YYYY-MM-DD).
+    - Nombres de invocador en Soloqueue por región.
 
-    Parámetros:
-    url (str): La URL de la página del jugador de la que se extraerán los datos.
+    :param url: URL de la página del jugador en Leaguepedia.
+    :type url: str
+    :return: Diccionario con los datos extraídos (`image`, `birthday`, `soloqueue_ids`) o None si falla.
+    :rtype: dict or None
 
-    Excepciones:
-    - RequestException: Si ocurre un error en la solicitud HTTP (por ejemplo, problemas de red).
-    - Exception: Para cualquier otro error inesperado durante el procesamiento de los datos del jugador.
-
-    Retorna:
-    dict: Un diccionario con los datos del jugador. Puede contener las claves:
-        - 'birthday': La fecha de nacimiento del jugador en formato YYYY-MM-DD.
-        - 'soloqueue_ids': Una lista de apodos de SoloQ y sus respectivas regiones.
-        - 'image': La ruta de la imagen descargada del jugador o None si no se pudo descargar.
-
-    Si ocurre algún error durante el proceso, se retorna None.
+    :raises requests.exceptions.RequestException: Si ocurre un error al hacer la solicitud HTTP.
+    :raises Exception: Si ocurre cualquier otro error inesperado durante el análisis de la página.
     """
     try:
         response = get_html(url, headers)
@@ -243,7 +227,7 @@ def get_extra_player_data(url):
                             nickname = b.next_sibling.strip() if b.next_sibling else ''
                             entries.append(f"{region}: {nickname}")
                         player_data['soloqueue_ids'] = ', '.join(entries)
-                        continue               
+                        continue              
         except Exception as e:
             print(f"Error al procesar la tabla de información del jugador: {e}")
             return None
@@ -254,40 +238,40 @@ def get_extra_player_data(url):
         print(f"Error inesperado al procesar los datos del jugador: {e}")
         return None
     return player_data
-
                                  
             
 
+# Conseguir los datos de los jugadores de los equipos
 def get_player_data(urls):
     """
-    Obtiene los datos de los jugadores de los equipos a partir de una lista de URLs.
+    Extrae información de los jugadores de los equipos desde sus respectivas páginas de Leaguepedia.
 
-    La función realiza solicitudes HTTP a las URLs proporcionadas, procesa la página HTML de cada una,
-    extrae los datos de los jugadores de las tablas y llama a la función `get_extra_player_data` para obtener
-    información adicional como el cumpleaños, los apodos de SoloQ y la imagen.
+    La función recorre una lista de URLs de equipos, accede a la tabla de miembros del equipo
+    y extrae datos como el nombre del jugador, nombre real, país, residencia, rol, fechas de contrato,
+    así como información adicional como la fecha de nacimiento, IDs de Soloqueue y la imagen del jugador,
+    mediante la función auxiliar `get_extra_player_data`.
 
-    Parámetros:
-    urls (list of str): Lista de URLs de las páginas de los equipos de la LEC.
+    :param urls: Lista de URLs de páginas de equipos en Leaguepedia.
+    :type urls: list[str]
+    :return: Lista de diccionarios, cada uno con los datos de un jugador.
+    :rtype: list[dict]
 
-    Excepciones:
-    - RequestException: Si ocurre un error en la solicitud HTTP (por ejemplo, problemas de red).
-    - Exception: Para cualquier otro error inesperado durante el procesamiento de los datos de los jugadores.
+    Cada diccionario incluye las siguientes claves:
 
-    Retorna:
-    list: Una lista de diccionarios, donde cada diccionario contiene la información de un jugador, con las siguientes claves:
-        - 'jugador': Nombre del jugador.
-        - 'nombre': Nombre real del jugador.
-        - 'residencia': Residencia del jugador.
-        - 'rol': Rol del jugador en el equipo.
-        - 'equipo': Nombre del equipo al que pertenece el jugador.
-        - 'pais': País de origen del jugador.
-        - 'nacimiento': Fecha de nacimiento del jugador (si está disponible).
-        - 'soloqueue_ids': Apodos de SoloQ del jugador y las regiones correspondientes (si están disponibles).
-        - 'contratado_hasta': Fecha de finalización del contrato del jugador.
-        - 'contratado_desde': Fecha de inicio del contrato del jugador.
-        - 'imagen': Enlace a la imagen del jugador (si está disponible).
-        
-    Si ocurre algún error durante el proceso, la función saltará esa URL y continuará con las siguientes.
+        - 'jugador' (str): Nombre del jugador en el roster.
+        - 'nombre' (str): Nombre real del jugador.
+        - 'residencia' (str): Región de residencia.
+        - 'rol' (str): Rol del jugador (Top, Jungle, etc.).
+        - 'equipo' (str): Nombre del equipo (derivado de la URL).
+        - 'pais' (str): País de nacionalidad (derivado del atributo title de la bandera).
+        - 'nacimiento' (str or None): Fecha de nacimiento (en formato YYYY-MM-DD si disponible).
+        - 'soloqueue_ids' (str or None): Lista de IDs de Soloqueue separados por coma y región.
+        - 'contratado_hasta' (str): Fecha hasta la cual tiene contrato.
+        - 'contratado_desde' (str): Fecha desde la cual está en el equipo.
+        - 'imagen' (str or None): Ruta del archivo local de la imagen del jugador descargada.
+
+    :raises requests.exceptions.RequestException: Si ocurre un error de red al obtener una página.
+    :raises Exception: Si ocurre un error inesperado durante el análisis de la información.
     """
     all_player_data = []  
     for url in urls:
@@ -365,19 +349,20 @@ def get_player_data(urls):
 
 def download_image(ruta_completa, url_imagen):
     """
-    Descarga una imagen desde una URL y la guarda localmente en la ruta especificada.
+    Descarga una imagen desde una URL y la guarda en la ruta especificada.
 
-    Esta función realiza una solicitud HTTP para obtener la imagen de la URL dada,
-    la guarda como un archivo binario en la ruta proporcionada y devuelve la ruta
-    relativa al directorio actual del proyecto si la descarga fue exitosa.
+    Descarga una imagen desde la URL proporcionada y la guarda en el sistema de archivos en la ubicación
+    especificada por `ruta_completa`. Retorna la ruta relativa al proyecto si la descarga fue exitosa.
 
-    Parámetros:
-        ruta_completa (str): Ruta absoluta donde se guardará la imagen descargada.
-        url_imagen (str): URL directa de la imagen a descargar.
+    :param ruta_completa: Ruta completa donde se guardará la imagen.
+    :type ruta_completa: str
+    :param url_imagen: URL de la imagen a descargar.
+    :type url_imagen: str
+    :return: Ruta relativa a la imagen si fue descargada correctamente, o None si falló.
+    :rtype: str or None
 
-    Retorna:
-        str | None: Ruta relativa al proyecto si la descarga fue exitosa; 
-                    None si ocurrió algún error durante el proceso.
+    :raises requests.exceptions.RequestException: Si ocurre un error al realizar la solicitud.
+    :raises OSError: Si ocurre un error al escribir el archivo.
     """
     try:
         print(f"Descargando imagen desde {url_imagen} a {ruta_completa}...")
@@ -397,29 +382,31 @@ def download_image(ruta_completa, url_imagen):
         print(f"Error al descargar la imagen: {e}")
         return None
     
+# Conseguir la información de los jugadores de los equipos que se pasan por una lista de urls y retorna una lista de diccionarios con la información de los jugadores
 def get_team_info(urls):
     """
-    Extrae información detallada de equipos desde una lista de URLs de páginas web.
+    Extrae información básica de equipos de Leaguepedia desde una lista de URLs.
 
-    Esta función realiza el scraping de cada página web correspondiente a un equipo, 
-    extrayendo información relevante como el nombre, logo, país, región, propietario, 
-    entrenador principal, socios y fecha de fundación. Utiliza `BeautifulSoup` para 
-    analizar el contenido HTML y devuelve una lista de diccionarios con los datos recolectados.
+    Accede a cada página de equipo especificada, busca su tabla `infoboxTeam` y extrae datos clave como nombre,
+    logo, país, región, propietario, entrenador principal, socios comerciales y fecha de fundación.
 
-    Parámetros:
-        urls (list[str]): Lista de URLs (una por equipo) desde donde se extraerá la información.
+    :param urls: Lista de URLs de páginas de equipos en Leaguepedia.
+    :type urls: list[str]
+    :return: Lista de diccionarios con información de cada equipo.
+    :rtype: list[dict]
 
-    Retorna:
-        list[dict]: Lista de diccionarios. Cada diccionario contiene información detallada
-                    sobre un equipo, incluyendo:
-                        - nombre_equipo
-                        - logo (ruta de la imagen descargada)
-                        - pais
-                        - region
-                        - propietario
-                        - head_coach
-                        - partners
-                        - fecha_fundacion
+    Cada diccionario de equipo contiene las siguientes claves:
+
+        - 'nombre_equipo' (str): Nombre del equipo (usado como identificador).
+        - 'logo' (str or None): Ruta relativa al logo descargado.
+        - 'pais' (str or None): País de origen del equipo.
+        - 'region' (str or None): Región de competencia del equipo.
+        - 'propietario' (str or None): Nombre del propietario del equipo.
+        - 'head_coach' (str or None): Entrenador principal.
+        - 'partners' (str or None): Lista de socios del equipo (separados por coma).
+        - 'fecha_fundacion' (str or None): Fecha en la que se fundó el equipo (si está disponible).
+
+    :raises Exception: Si ocurre un error durante el análisis de la información de una URL.
     """
     informacion_equipos = []
 
@@ -505,16 +492,21 @@ def get_team_info(urls):
             print(f"Error al intentar extraer la información del equipo: {e}")
             continue
     return informacion_equipos
+<<<<<<< Updated upstream
              
+=======
+
+          
+>>>>>>> Stashed changes
 if __name__ == "__main__":
     equipos_url = get_team_links("https://lol.fandom.com/wiki/LEC/2025_Season/Spring_Season")  
     
     # Obtener los datos de los Jugadores
-    '''player_data = get_player_data(equipos_url)
-    write_json(PLAYER_INSTALATION_DATA, player_data)'''  
+    player_data = get_player_data(equipos_url)
+    write_json(PLAYER_INSTALATION_DATA, player_data)
     
     # Obtener los datos de los equipos descargar los logos y guardarlos en un JSON
-    team_data = get_team_info(equipos_url)
-    write_json(TEAMS_INSTALATION_JSON, team_data)    
+    '''team_data = get_team_info(equipos_url)
+    write_json(TEAMS_INSTALATION_JSON, team_data) '''   
     
     
