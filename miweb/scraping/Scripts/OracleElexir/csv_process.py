@@ -10,14 +10,17 @@ sys.path.insert(0, PROJECT_ROOT)
 from Resources.rutas import *
 
 CARPETA_CSV = os.path.join(CARPETA_CSV_GAMES)
-CARPETA_CSV_LEC = os.path.join(CARPETA_CSV, 'LEC')
+CARPETA_CSV_LEC = os.path.join(CARPETA_CSV, 'LEC', '2025')
 IDS_EQUIPOS_DICCIONARIO = os.path.join(DICCIONARIO_CLAVES, 'taem_ids.json')
 IDS_PLAYER_DICCIONARIO = os.path.join(DICCIONARIO_CLAVES, 'player_ids.json')
 JSON_EQUIPOS = os.path.join(JSON_INSTALATION_TEAMS, 'teams_data_leguepedia.json')
 JSON_JUGADORES = os.path.join(JSON_INSTALATION_PLAYERS, 'players_data_leguepedia.json')
-def filtrar_liga(carpeta_csv, carpeta_salida, project_root, league='LEC'):
-    os.makedirs(carpeta_salida, exist_ok=True)
-    
+JSON_PARTIDOS = os.path.join(JSON_GAMES)
+
+
+def filtrar_ligas_automaticamente(carpeta_csv, carpeta_salida_base, project_root):
+    os.makedirs(carpeta_salida_base, exist_ok=True)
+
     archivos_csv = [
         os.path.relpath(os.path.join(carpeta_csv, archivo), start=project_root)
         for archivo in os.listdir(carpeta_csv)
@@ -28,12 +31,24 @@ def filtrar_liga(carpeta_csv, carpeta_salida, project_root, league='LEC'):
         ruta_absoluta = os.path.join(project_root, archivo)
         try:
             df = pd.read_csv(ruta_absoluta, dtype={2: str})
+
             if 'league' in df.columns:
-                datos_filtrados = df[df['league'] == league]
                 nombre_base = os.path.splitext(os.path.basename(archivo))[0]
-                ruta_salida = os.path.join(carpeta_salida, f"{nombre_base}_{league}.csv")
-                datos_filtrados.to_csv(ruta_salida, index=False)
-                print(f"Archivo guardado: {ruta_salida}")
+                anio = nombre_base[:4] if nombre_base[:4].isdigit() else 'unknown'
+
+                # Filtrar por cada liga encontrada en el archivo
+                for liga in df['league'].unique():
+                    datos_filtrados = df[df['league'] == liga]
+
+                    if not datos_filtrados.empty:
+                        carpeta_salida = os.path.join(carpeta_salida_base, liga, anio)
+                        os.makedirs(carpeta_salida, exist_ok=True)
+
+                        nombre_archivo = f"{nombre_base}_{liga}.csv"
+                        ruta_salida = os.path.join(carpeta_salida, nombre_archivo)
+
+                        datos_filtrados.to_csv(ruta_salida, index=False)
+                        print(f"Archivo guardado: {ruta_salida}")
             else:
                 print(f"El archivo {archivo} no contiene la columna 'league'.")
         except Exception as e:
@@ -197,10 +212,11 @@ def agregar_ids_jugadores(archivo, nuevos_ids):
 
     except Exception as e:
         print(f"Error al procesar el archivo '{archivo}': {e}")
-        
+
+
              
 if __name__ == '__main__':
-    #filtrar_liga(CARPETA_CSV, CARPETA_CSV_LEC, PROJECT_ROOT)
+    #filtrar_ligas_automaticamente(CARPETA_CSV, CARPETA_CSV, PROJECT_ROOT)
     equipos = obtener_equipos_o_jugadores(CARPETA_CSV_LEC, 'teamid', 'teamname')
     ids_nuevos(equipos, IDS_EQUIPOS_DICCIONARIO)
     lista_final = nombre_newIDs(equipos, IDS_EQUIPOS_DICCIONARIO)
