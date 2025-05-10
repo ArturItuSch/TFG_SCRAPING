@@ -31,7 +31,7 @@ def iniciar_driver():
         chrome_options.add_argument("--disable-dev-shm-usage")
         chrome_options.add_argument("--disable-gpu")
         UC.TARGET_VERSION = 85
-        driver = UC.Chrome(executable_path=chromedriver_path, options=chrome_options, use_subprocess=False)
+        driver = UC.Chrome(executable_path=chromedriver_path, options=chrome_options)
         return driver
     except Exception as e:
         print(f"❌ Error al iniciar ChromeDriver: {e}")
@@ -45,3 +45,4 @@ def iniciar_driver():
             print("⚠ No se pudo conectar a Chrome. Asegúrate de que no haya instancias abiertas y vuelve a intentarlo.", script_name='Driver')
 
         print("❌ No se pudo iniciar el driver. Cerrando el programa...")
+        
