@@ -8,7 +8,7 @@ from pathlib import Path
 import re
 from datetime import datetime
 import random
-
+import time
 # Establece la ruta raíz del proyecto
 PROJECT_ROOT = os.path.abspath(os.path.join(os.path.dirname(__file__), '..','..','..'))
 sys.path.insert(0, PROJECT_ROOT)
@@ -83,6 +83,7 @@ def write_json(nombre_archivo, datos):
 
 def get_html(url, timeout=10):
     try:
+        time.sleep(1)
         headers = obtener_headers_dinamicos()
         response = requests.get(url, headers=headers, timeout=timeout)
         response.raise_for_status()
@@ -267,18 +268,20 @@ def get_player_data(urls):
 
 def download_image(ruta_completa, url_imagen):
     try:
+        # Si la imagen ya existe, no volver a descargarla
+        if os.path.exists(ruta_completa):
+            print(f"Imagen ya existe en {ruta_completa}, se omite la descarga.")
+            return os.path.relpath(ruta_completa, start=os.getcwd())
+
         print(f"Descargando imagen desde {url_imagen} a {ruta_completa}...")
         img_data = requests.get(url_imagen, timeout=10)
         img_data.raise_for_status()
-
+        
         with open(ruta_completa, 'wb') as f:
             f.write(img_data.content)
 
         print(f"Imagen guardada correctamente en {ruta_completa}.")
-
-        # Obtener ruta relativa
-        ruta_relativa = os.path.relpath(ruta_completa, start=os.getcwd())
-        return ruta_relativa
+        return os.path.relpath(ruta_completa, start=os.getcwd())
 
     except Exception as e:
         print(f"Error al descargar la imagen: {e}")

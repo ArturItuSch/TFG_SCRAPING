@@ -1,0 +1,667 @@
+[
+    {
+        "name": "G2_Esports",
+        "season": "2016_Season",
+        "imagen_url": "miweb\\Resources\\Images\\TeamsLEC\\G2_Esports.png"
+    },
+    {
+        "name": "H2k-Gaming",
+        "season": "2016_Season",
+        "imagen_url": "miweb\\Resources\\Images\\TeamsLEC\\H2k-Gaming.png"
+    },
+    {
+        "name": "Team_Vitality",
+        "season": "2016_Season",
+        "imagen_url": "miweb\\Resources\\Images\\TeamsLEC\\Team_Vitality.png"
+    },
+    {
+        "name": "Origen",
+        "season": "2016_Season",
+        "imagen_url": "miweb\\Resources\\Images\\TeamsLEC\\Origen.png"
+    },
+    {
+        "name": "Unicorns_of_Love",
+        "season": "2016_Season",
+        "imagen_url": "miweb\\Resources\\Images\\TeamsLEC\\Unicorns_of_Love.png"
+    },
+    {
+        "name": "Fnatic",
+        "season": "2016_Season",
+        "imagen_url": "miweb\\Resources\\Images\\TeamsLEC\\Fnatic.png"
+    },
+    {
+        "name": "Elements",
+        "season": "2016_Season",
+        "imagen_url": "miweb\\Resources\\Images\\TeamsLEC\\Elements.png"
+    },
+    {
+        "name": "Splyce",
+        "season": "2016_Season",
+        "imagen_url": "miweb\\Resources\\Images\\TeamsLEC\\Splyce.png"
+    },
+    {
+        "name": "Team_ROCCAT",
+        "season": "2016_Season",
+        "imagen_url": "miweb\\Resources\\Images\\TeamsLEC\\Team_ROCCAT.png"
+    },
+    {
+        "name": "Giants_Gaming",
+        "season": "2016_Season",
+        "imagen_url": "miweb\\Resources\\Images\\TeamsLEC\\Giants_Gaming.png"
+    },
+    {
+        "name": "Schalke_04",
+        "season": "2016_Season",
+        "imagen_url": "miweb\\Resources\\Images\\TeamsLEC\\Schalke_04.png"
+    },
+    {
+        "name": "Fnatic",
+        "season": "2025_Season",
+        "imagen_url": "miweb\\Resources\\Images\\TeamsLEC\\Fnatic.png"
+    },
+    {
+        "name": "Karmine_Corp",
+        "season": "2025_Season",
+        "imagen_url": "miweb\\Resources\\Images\\TeamsLEC\\Karmine_Corp.png"
+    },
+    {
+        "name": "G2_Esports",
+        "season": "2025_Season",
+        "imagen_url": "miweb\\Resources\\Images\\TeamsLEC\\G2_Esports.png"
+    },
+    {
+        "name": "Movistar_KOI",
+        "season": "2025_Season",
+        "imagen_url": "miweb\\Resources\\Images\\TeamsLEC\\Movistar_KOI.png"
+    },
+    {
+        "name": "Team_Vitality",
+        "season": "2025_Season",
+        "imagen_url": "miweb\\Resources\\Images\\TeamsLEC\\Team_Vitality.png"
+    },
+    {
+        "name": "GIANTX",
+        "season": "2025_Season",
+        "imagen_url": "miweb\\Resources\\Images\\TeamsLEC\\GIANTX.png"
+    },
+    {
+        "name": "Team_BDS",
+        "season": "2025_Season",
+        "imagen_url": "miweb\\Resources\\Images\\TeamsLEC\\Team_BDS.png"
+    },
+    {
+        "name": "Team_Heretics",
+        "season": "2025_Season",
+        "imagen_url": "miweb\\Resources\\Images\\TeamsLEC\\Team_Heretics.png"
+    },
+    {
+        "name": "SK_Gaming",
+        "season": "2025_Season",
+        "imagen_url": "miweb\\Resources\\Images\\TeamsLEC\\SK_Gaming.png"
+    },
+    {
+        "name": "Rogue",
+        "season": "2025_Season",
+        "imagen_url": "miweb\\Resources\\Images\\TeamsLEC\\Rogue.png"
+    },
+    {
+        "name": "Rogue",
+        "season": "2022_Season",
+        "imagen_url": "miweb\\Resources\\Images\\TeamsLEC\\Rogue.png"
+    },
+    {
+        "name": "Fnatic",
+        "season": "2022_Season",
+        "imagen_url": "miweb\\Resources\\Images\\TeamsLEC\\Fnatic.png"
+    },
+    {
+        "name": "Misfits_Gaming",
+        "season": "2022_Season",
+        "imagen_url": "miweb\\Resources\\Images\\TeamsLEC\\Misfits_Gaming.png"
+    },
+    {
+        "name": "G2_Esports",
+        "season": "2022_Season",
+        "imagen_url": "miweb\\Resources\\Images\\TeamsLEC\\G2_Esports.png"
+    },
+    {
+        "name": "Excel",
+        "season": "2022_Season",
+        "imagen_url": "miweb\\Resources\\Images\\TeamsLEC\\Excel.png"
+    },
+    {
+        "name": "Team_Vitality",
+        "season": "2022_Season",
+        "imagen_url": "miweb\\Resources\\Images\\TeamsLEC\\Team_Vitality.png"
+    },
+    {
+        "name": "MAD_Lions",
+        "season": "2022_Season",
+        "imagen_url": "miweb\\Resources\\Images\\TeamsLEC\\MAD_Lions.png"
+    },
+    {
+        "name": "SK_Gaming",
+        "season": "2022_Season",
+        "imagen_url": "miweb\\Resources\\Images\\TeamsLEC\\SK_Gaming.png"
+    },
+    {
+        "name": "Team_BDS",
+        "season": "2022_Season",
+        "imagen_url": "miweb\\Resources\\Images\\TeamsLEC\\Team_BDS.png"
+    },
+    {
+        "name": "Astralis",
+        "season": "2022_Season",
+        "imagen_url": "miweb\\Resources\\Images\\TeamsLEC\\Astralis.png"
+    },
+    {
+        "name": "G2_Esports",
+        "season": "2019_Season",
+        "imagen_url": "miweb\\Resources\\Images\\TeamsLEC\\G2_Esports.png"
+    },
+    {
+        "name": "Origen",
+        "season": "2019_Season",
+        "imagen_url": "miweb\\Resources\\Images\\TeamsLEC\\Origen.png"
+    },
+    {
+        "name": "Fnatic",
+        "season": "2019_Season",
+        "imagen_url": "miweb\\Resources\\Images\\TeamsLEC\\Fnatic.png"
+    },
+    {
+        "name": "Splyce",
+        "season": "2019_Season",
+        "imagen_url": "miweb\\Resources\\Images\\TeamsLEC\\Splyce.png"
+    },
+    {
+        "name": "Team_Vitality",
+        "season": "2019_Season",
+        "imagen_url": "miweb\\Resources\\Images\\TeamsLEC\\Team_Vitality.png"
+    },
+    {
+        "name": "SK_Gaming",
+        "season": "2019_Season",
+        "imagen_url": "miweb\\Resources\\Images\\TeamsLEC\\SK_Gaming.png"
+    },
+    {
+        "name": "Schalke_04",
+        "season": "2019_Season",
+        "imagen_url": "miweb\\Resources\\Images\\TeamsLEC\\Schalke_04.png"
+    },
+    {
+        "name": "Misfits_Gaming",
+        "season": "2019_Season",
+        "imagen_url": "miweb\\Resources\\Images\\TeamsLEC\\Misfits_Gaming.png"
+    },
+    {
+        "name": "Excel",
+        "season": "2019_Season",
+        "imagen_url": "miweb\\Resources\\Images\\TeamsLEC\\Excel.png"
+    },
+    {
+        "name": "Rogue",
+        "season": "2019_Season",
+        "imagen_url": "miweb\\Resources\\Images\\TeamsLEC\\Rogue.png"
+    },
+    {
+        "name": "G2_Esports",
+        "season": "2020_Season",
+        "imagen_url": "miweb\\Resources\\Images\\TeamsLEC\\G2_Esports.png"
+    },
+    {
+        "name": "Fnatic",
+        "season": "2020_Season",
+        "imagen_url": "miweb\\Resources\\Images\\TeamsLEC\\Fnatic.png"
+    },
+    {
+        "name": "Origen",
+        "season": "2020_Season",
+        "imagen_url": "miweb\\Resources\\Images\\TeamsLEC\\Origen.png"
+    },
+    {
+        "name": "MAD_Lions",
+        "season": "2020_Season",
+        "imagen_url": "miweb\\Resources\\Images\\TeamsLEC\\MAD_Lions.png"
+    },
+    {
+        "name": "Misfits_Gaming",
+        "season": "2020_Season",
+        "imagen_url": "miweb\\Resources\\Images\\TeamsLEC\\Misfits_Gaming.png"
+    },
+    {
+        "name": "Rogue",
+        "season": "2020_Season",
+        "imagen_url": "miweb\\Resources\\Images\\TeamsLEC\\Rogue.png"
+    },
+    {
+        "name": "Excel",
+        "season": "2020_Season",
+        "imagen_url": "miweb\\Resources\\Images\\TeamsLEC\\Excel.png"
+    },
+    {
+        "name": "Schalke_04",
+        "season": "2020_Season",
+        "imagen_url": "miweb\\Resources\\Images\\TeamsLEC\\Schalke_04.png"
+    },
+    {
+        "name": "SK_Gaming",
+        "season": "2020_Season",
+        "imagen_url": "miweb\\Resources\\Images\\TeamsLEC\\SK_Gaming.png"
+    },
+    {
+        "name": "Team_Vitality",
+        "season": "2020_Season",
+        "imagen_url": "miweb\\Resources\\Images\\TeamsLEC\\Team_Vitality.png"
+    },
+    {
+        "name": "G2_Esports",
+        "season": "2017_Season",
+        "imagen_url": "miweb\\Resources\\Images\\TeamsLEC\\G2_Esports.png"
+    },
+    {
+        "name": "Misfits_Gaming",
+        "season": "2017_Season",
+        "imagen_url": "miweb\\Resources\\Images\\TeamsLEC\\Misfits_Gaming.png"
+    },
+    {
+        "name": "Fnatic",
+        "season": "2017_Season",
+        "imagen_url": "miweb\\Resources\\Images\\TeamsLEC\\Fnatic.png"
+    },
+    {
+        "name": "Team_ROCCAT",
+        "season": "2017_Season",
+        "imagen_url": "miweb\\Resources\\Images\\TeamsLEC\\Team_ROCCAT.png"
+    },
+    {
+        "name": "Giants_Gaming",
+        "season": "2017_Season",
+        "imagen_url": "miweb\\Resources\\Images\\TeamsLEC\\Giants_Gaming.png"
+    },
+    {
+        "name": "Unicorns_of_Love",
+        "season": "2017_Season",
+        "imagen_url": "miweb\\Resources\\Images\\TeamsLEC\\Unicorns_of_Love.png"
+    },
+    {
+        "name": "H2k-Gaming",
+        "season": "2017_Season",
+        "imagen_url": "miweb\\Resources\\Images\\TeamsLEC\\H2k-Gaming.png"
+    },
+    {
+        "name": "Splyce",
+        "season": "2017_Season",
+        "imagen_url": "miweb\\Resources\\Images\\TeamsLEC\\Splyce.png"
+    },
+    {
+        "name": "Team_Vitality",
+        "season": "2017_Season",
+        "imagen_url": "miweb\\Resources\\Images\\TeamsLEC\\Team_Vitality.png"
+    },
+    {
+        "name": "Origen",
+        "season": "2017_Season",
+        "imagen_url": "miweb\\Resources\\Images\\TeamsLEC\\Origen.png"
+    },
+    {
+        "name": "Ninjas_in_Pyjamas",
+        "season": "2017_Season",
+        "imagen_url": "miweb\\Resources\\Images\\TeamsLEC\\Ninjas_in_Pyjamas.png"
+    },
+    {
+        "name": "Mysterious_Monkeys",
+        "season": "2017_Season",
+        "imagen_url": "miweb\\Resources\\Images\\TeamsLEC\\Mysterious_Monkeys.png"
+    },
+    {
+        "name": "SK_Gaming",
+        "season": "2015_Season",
+        "imagen_url": "miweb\\Resources\\Images\\TeamsLEC\\SK_Gaming.png"
+    },
+    {
+        "name": "Fnatic",
+        "season": "2015_Season",
+        "imagen_url": "miweb\\Resources\\Images\\TeamsLEC\\Fnatic.png"
+    },
+    {
+        "name": "H2k-Gaming",
+        "season": "2015_Season",
+        "imagen_url": "miweb\\Resources\\Images\\TeamsLEC\\H2k-Gaming.png"
+    },
+    {
+        "name": "Gambit_Gaming",
+        "season": "2015_Season",
+        "imagen_url": "miweb\\Resources\\Images\\TeamsLEC\\Gambit_Gaming.png"
+    },
+    {
+        "name": "Unicorns_of_Love",
+        "season": "2015_Season",
+        "imagen_url": "miweb\\Resources\\Images\\TeamsLEC\\Unicorns_of_Love.png"
+    },
+    {
+        "name": "Copenhagen_Wolves",
+        "season": "2015_Season",
+        "imagen_url": "miweb\\Resources\\Images\\TeamsLEC\\Copenhagen_Wolves.png"
+    },
+    {
+        "name": "Elements",
+        "season": "2015_Season",
+        "imagen_url": "miweb\\Resources\\Images\\TeamsLEC\\Elements.png"
+    },
+    {
+        "name": "Team_ROCCAT",
+        "season": "2015_Season",
+        "imagen_url": "miweb\\Resources\\Images\\TeamsLEC\\Team_ROCCAT.png"
+    },
+    {
+        "name": "Giants_Gaming",
+        "season": "2015_Season",
+        "imagen_url": "miweb\\Resources\\Images\\TeamsLEC\\Giants_Gaming.png"
+    },
+    {
+        "name": "MeetYourMakers",
+        "season": "2015_Season",
+        "imagen_url": "miweb\\Resources\\Images\\TeamsLEC\\MeetYourMakers.png"
+    },
+    {
+        "name": "Origen",
+        "season": "2015_Season",
+        "imagen_url": "miweb\\Resources\\Images\\TeamsLEC\\Origen.png"
+    },
+    {
+        "name": "Fnatic",
+        "season": "2014_Season",
+        "imagen_url": "miweb\\Resources\\Images\\TeamsLEC\\Fnatic.png"
+    },
+    {
+        "name": "Alliance",
+        "season": "2014_Season",
+        "imagen_url": "miweb\\Resources\\Images\\TeamsLEC\\Alliance.png"
+    },
+    {
+        "name": "SK_Gaming",
+        "season": "2014_Season",
+        "imagen_url": "miweb\\Resources\\Images\\TeamsLEC\\SK_Gaming.png"
+    },
+    {
+        "name": "Team_ROCCAT",
+        "season": "2014_Season",
+        "imagen_url": "miweb\\Resources\\Images\\TeamsLEC\\Team_ROCCAT.png"
+    },
+    {
+        "name": "Gambit_Gaming",
+        "season": "2014_Season",
+        "imagen_url": "miweb\\Resources\\Images\\TeamsLEC\\Gambit_Gaming.png"
+    },
+    {
+        "name": "SUPA_HOT_CREW",
+        "season": "2014_Season",
+        "imagen_url": "miweb\\Resources\\Images\\TeamsLEC\\SUPA_HOT_CREW.png"
+    },
+    {
+        "name": "Copenhagen_Wolves",
+        "season": "2014_Season",
+        "imagen_url": "miweb\\Resources\\Images\\TeamsLEC\\Copenhagen_Wolves.png"
+    },
+    {
+        "name": "Millenium",
+        "season": "2014_Season",
+        "imagen_url": "miweb\\Resources\\Images\\TeamsLEC\\Millenium.png"
+    },
+    {
+        "name": "G2_Esports",
+        "season": "2021_Season",
+        "imagen_url": "miweb\\Resources\\Images\\TeamsLEC\\G2_Esports.png"
+    },
+    {
+        "name": "Rogue",
+        "season": "2021_Season",
+        "imagen_url": "miweb\\Resources\\Images\\TeamsLEC\\Rogue.png"
+    },
+    {
+        "name": "MAD_Lions",
+        "season": "2021_Season",
+        "imagen_url": "miweb\\Resources\\Images\\TeamsLEC\\MAD_Lions.png"
+    },
+    {
+        "name": "Schalke_04",
+        "season": "2021_Season",
+        "imagen_url": "miweb\\Resources\\Images\\TeamsLEC\\Schalke_04.png"
+    },
+    {
+        "name": "Fnatic",
+        "season": "2021_Season",
+        "imagen_url": "miweb\\Resources\\Images\\TeamsLEC\\Fnatic.png"
+    },
+    {
+        "name": "SK_Gaming",
+        "season": "2021_Season",
+        "imagen_url": "miweb\\Resources\\Images\\TeamsLEC\\SK_Gaming.png"
+    },
+    {
+        "name": "Misfits_Gaming",
+        "season": "2021_Season",
+        "imagen_url": "miweb\\Resources\\Images\\TeamsLEC\\Misfits_Gaming.png"
+    },
+    {
+        "name": "Excel",
+        "season": "2021_Season",
+        "imagen_url": "miweb\\Resources\\Images\\TeamsLEC\\Excel.png"
+    },
+    {
+        "name": "Astralis",
+        "season": "2021_Season",
+        "imagen_url": "miweb\\Resources\\Images\\TeamsLEC\\Astralis.png"
+    },
+    {
+        "name": "Team_Vitality",
+        "season": "2021_Season",
+        "imagen_url": "miweb\\Resources\\Images\\TeamsLEC\\Team_Vitality.png"
+    },
+    {
+        "name": "Fnatic",
+        "season": "Season_3",
+        "imagen_url": "miweb\\Resources\\Images\\TeamsLEC\\Fnatic.png"
+    },
+    {
+        "name": "Gambit_Gaming",
+        "season": "Season_3",
+        "imagen_url": "miweb\\Resources\\Images\\TeamsLEC\\Gambit_Gaming.png"
+    },
+    {
+        "name": "Lemondogs",
+        "season": "Season_3",
+        "imagen_url": "miweb\\Resources\\Images\\TeamsLEC\\Lemondogs.png"
+    },
+    {
+        "name": "Evil_Geniuses",
+        "season": "Season_3",
+        "imagen_url": "miweb\\Resources\\Images\\TeamsLEC\\Evil_Geniuses.png"
+    },
+    {
+        "name": "SK_Gaming",
+        "season": "Season_3",
+        "imagen_url": "miweb\\Resources\\Images\\TeamsLEC\\SK_Gaming.png"
+    },
+    {
+        "name": "Copenhagen_Wolves",
+        "season": "Season_3",
+        "imagen_url": "miweb\\Resources\\Images\\TeamsLEC\\Copenhagen_Wolves.png"
+    },
+    {
+        "name": "Team_ALTERNATE",
+        "season": "Season_3",
+        "imagen_url": "miweb\\Resources\\Images\\TeamsLEC\\Team_ALTERNATE.png"
+    },
+    {
+        "name": "against_All_authority",
+        "season": "Season_3",
+        "imagen_url": "miweb\\Resources\\Images\\TeamsLEC\\against_All_authority.png"
+    },
+    {
+        "name": "Ninjas_in_Pyjamas",
+        "season": "Season_3",
+        "imagen_url": "miweb\\Resources\\Images\\TeamsLEC\\Ninjas_in_Pyjamas.png"
+    },
+    {
+        "name": "Giants_Gaming",
+        "season": "Season_3",
+        "imagen_url": "miweb\\Resources\\Images\\TeamsLEC\\Giants_Gaming.png"
+    },
+    {
+        "name": "DragonBorns",
+        "season": "Season_3",
+        "imagen_url": "miweb\\Resources\\Images\\TeamsLEC\\DragonBorns.png"
+    },
+    {
+        "name": "MeetYourMakers",
+        "season": "Season_3",
+        "imagen_url": "miweb\\Resources\\Images\\TeamsLEC\\MeetYourMakers.png"
+    },
+    {
+        "name": "G2_Esports",
+        "season": "2024_Season",
+        "imagen_url": "miweb\\Resources\\Images\\TeamsLEC\\G2_Esports.png"
+    },
+    {
+        "name": "Team_BDS",
+        "season": "2024_Season",
+        "imagen_url": "miweb\\Resources\\Images\\TeamsLEC\\Team_BDS.png"
+    },
+    {
+        "name": "SK_Gaming",
+        "season": "2024_Season",
+        "imagen_url": "miweb\\Resources\\Images\\TeamsLEC\\SK_Gaming.png"
+    },
+    {
+        "name": "MAD_Lions_KOI",
+        "season": "2024_Season",
+        "imagen_url": "miweb\\Resources\\Images\\TeamsLEC\\MAD_Lions_KOI.png"
+    },
+    {
+        "name": "Fnatic",
+        "season": "2024_Season",
+        "imagen_url": "miweb\\Resources\\Images\\TeamsLEC\\Fnatic.png"
+    },
+    {
+        "name": "Team_Vitality",
+        "season": "2024_Season",
+        "imagen_url": "miweb\\Resources\\Images\\TeamsLEC\\Team_Vitality.png"
+    },
+    {
+        "name": "Team_Heretics",
+        "season": "2024_Season",
+        "imagen_url": "miweb\\Resources\\Images\\TeamsLEC\\Team_Heretics.png"
+    },
+    {
+        "name": "GIANTX",
+        "season": "2024_Season",
+        "imagen_url": "miweb\\Resources\\Images\\TeamsLEC\\GIANTX.png"
+    },
+    {
+        "name": "Rogue",
+        "season": "2024_Season",
+        "imagen_url": "miweb\\Resources\\Images\\TeamsLEC\\Rogue.png"
+    },
+    {
+        "name": "Karmine_Corp",
+        "season": "2024_Season",
+        "imagen_url": "miweb\\Resources\\Images\\TeamsLEC\\Karmine_Corp.png"
+    },
+    {
+        "name": "Team_Vitality",
+        "season": "2023_Season",
+        "imagen_url": "miweb\\Resources\\Images\\TeamsLEC\\Team_Vitality.png"
+    },
+    {
+        "name": "MAD_Lions",
+        "season": "2023_Season",
+        "imagen_url": "miweb\\Resources\\Images\\TeamsLEC\\MAD_Lions.png"
+    },
+    {
+        "name": "SK_Gaming",
+        "season": "2023_Season",
+        "imagen_url": "miweb\\Resources\\Images\\TeamsLEC\\SK_Gaming.png"
+    },
+    {
+        "name": "G2_Esports",
+        "season": "2023_Season",
+        "imagen_url": "miweb\\Resources\\Images\\TeamsLEC\\G2_Esports.png"
+    },
+    {
+        "name": "Team_BDS",
+        "season": "2023_Season",
+        "imagen_url": "miweb\\Resources\\Images\\TeamsLEC\\Team_BDS.png"
+    },
+    {
+        "name": "Team_Heretics",
+        "season": "2023_Season",
+        "imagen_url": "miweb\\Resources\\Images\\TeamsLEC\\Team_Heretics.png"
+    },
+    {
+        "name": "Astralis",
+        "season": "2023_Season",
+        "imagen_url": "miweb\\Resources\\Images\\TeamsLEC\\Astralis.png"
+    },
+    {
+        "name": "Fnatic",
+        "season": "2023_Season",
+        "imagen_url": "miweb\\Resources\\Images\\TeamsLEC\\Fnatic.png"
+    },
+    {
+        "name": "Excel",
+        "season": "2023_Season",
+        "imagen_url": "miweb\\Resources\\Images\\TeamsLEC\\Excel.png"
+    },
+    {
+        "name": "Fnatic",
+        "season": "2018_Season",
+        "imagen_url": "miweb\\Resources\\Images\\TeamsLEC\\Fnatic.png"
+    },
+    {
+        "name": "G2_Esports",
+        "season": "2018_Season",
+        "imagen_url": "miweb\\Resources\\Images\\TeamsLEC\\G2_Esports.png"
+    },
+    {
+        "name": "Splyce",
+        "season": "2018_Season",
+        "imagen_url": "miweb\\Resources\\Images\\TeamsLEC\\Splyce.png"
+    },
+    {
+        "name": "Team_Vitality",
+        "season": "2018_Season",
+        "imagen_url": "miweb\\Resources\\Images\\TeamsLEC\\Team_Vitality.png"
+    },
+    {
+        "name": "H2k-Gaming",
+        "season": "2018_Season",
+        "imagen_url": "miweb\\Resources\\Images\\TeamsLEC\\H2k-Gaming.png"
+    },
+    {
+        "name": "Team_ROCCAT",
+        "season": "2018_Season",
+        "imagen_url": "miweb\\Resources\\Images\\TeamsLEC\\Team_ROCCAT.png"
+    },
+    {
+        "name": "Misfits_Gaming",
+        "season": "2018_Season",
+        "imagen_url": "miweb\\Resources\\Images\\TeamsLEC\\Misfits_Gaming.png"
+    },
+    {
+        "name": "Schalke_04",
+        "season": "2018_Season",
+        "imagen_url": "miweb\\Resources\\Images\\TeamsLEC\\Schalke_04.png"
+    },
+    {
+        "name": "Giants_Gaming",
+        "season": "2018_Season",
+        "imagen_url": "miweb\\Resources\\Images\\TeamsLEC\\Giants_Gaming.png"
+    },
+    {
+        "name": "Unicorns_of_Love",
+        "season": "2018_Season",
+        "imagen_url": "miweb\\Resources\\Images\\TeamsLEC\\Unicorns_of_Love.png"
+    }
+]
