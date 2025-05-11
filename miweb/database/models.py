@@ -1,13 +1,7 @@
 from django.db import models
 
 class SplitLEC(models.Model):
-    SPLIT_CHOICES = [
-        ('Spring', 'Spring'),
-        ('Summer', 'Summer'),
-        ('Winter', 'Winter'),
-    ]
-    
-    nombre = models.CharField(max_length=10, choices=SPLIT_CHOICES)
+    nombre = models.CharField()
     año = models.PositiveIntegerField()
     fecha_inicio = models.DateField()
     fecha_fin = models.DateField()
