@@ -304,9 +304,9 @@ if __name__ == '__main__':
     
     # Agregar los nuevos IDs a los jugadores
     agregar_ids_jugadores(JSON_JUGADORES, lista_final_jugadores)
-    
+    '''
     # Crear JSON para los splits
     for csv in obtener_rutas_csv(CARPETA_CSV_LEC):
         split_json_creation(csv)
-    '''
+    
         
