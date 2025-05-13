@@ -66,7 +66,8 @@ class Jugador(models.Model):
         return model_to_dict(self)
     
 class Campeon(models.Model):
-    nombre = models.CharField(max_length=100, primary_key=True)  # Usamos 'nombre' como el ID principal
+    id = models.CharField(max_length=200, primary_key=True)
+    nombre = models.CharField(max_length=100, null=True, blank=True) 
     imagen = models.CharField(max_length=100, null=True, blank=True)
 
     def __str__(self):

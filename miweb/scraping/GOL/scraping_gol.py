@@ -10,18 +10,17 @@ import time
 import sys
 import requests
 import re
+import uuid
 
 # Ubiciaciones de los archivos json:
 BASE_DIR = os.path.abspath(os.path.join(os.path.dirname(__file__), '..', '..', '..'))
 sys.path.insert(0, BASE_DIR)
-from scraping.Scripts.driver import iniciar_driver
+from scraping.driver import iniciar_driver
 from Resources.rutas import *
 
 JSON_DIR = os.path.join(BASE_DIR, "Resources", "JSON")
-JSON_INSTALATION = os.path.join(JSON_DIR, "Instalation")
-JSON_CHAMPIONS_INSTALATION = os.path.join(JSON_INSTALATION, "Champions")
-JSON_UPDATES = os.path.join(JSON_DIR, "Updates")
 CHAMPIONS_FOLDER_PATH = os.path.join(BASE_DIR, CARPETA_IMAGENES_CHAMPIONS)
+CHAMPION_DICCIONARIY_ID = os.path.join(BASE_DIR, DICCIONARIO_CLAVES, "champions_ids.json")
 
 BASE_URL = "https://gol.gg"
 CHAMPIONS_URL = "https://gol.gg/champion/list/season-S15/split-Spring/tournament-ALL/sort-1/"
@@ -60,16 +59,6 @@ def obtener_headers_dinamicos():
     headers["Referer"] = random.choice(referers)
     
     return headers
-
-def write_json(nombre_archivo, datos):
-    try:
-        with open(nombre_archivo, 'w', encoding='utf-8') as f:
-            json.dump(datos, f, ensure_ascii=False, indent=4)
-        print(f"Archivo JSON guardado correctamente en: {nombre_archivo}")
-    except (IOError, OSError) as e:
-        print(f"Error de escritura en el archivo {nombre_archivo}: {e}")
-    except TypeError as e:
-        print(f"Error de serialización de JSON: {e}")
         
 def accept_cookies(driver):
     try:
@@ -132,7 +121,6 @@ def get_champions_information(driver):
                         continue
                     
                     nombre = re.sub(r'[\\/*?:"<>|]', "", img['alt'])   
-                    nombre = re.sub(r'\s+', '_', nombre.strip()) 
                     url_relativa = img['src']
 
                     champion = {
@@ -189,8 +177,7 @@ def verificar_existencia_imagen(nombre_campeon, ruta_json):
 if __name__ == '__main__':
     driver = iniciar_driver()
     try:
-        '''champions = get_champions_information(driver)
-        write_json(os.path.join(JSON_CHAMPIONS_INSTALATION, 'champions.json'), champions)
-        verificar_existencia_imagen("Nami", os.path.join(JSON_CHAMPIONS_INSTALATION, 'champions.json'))'''
+        champions = get_champions_information(driver)
+        #verificar_existencia_imagen("Nami", os.path.join(JSON_CHAMPIONS_INSTALATION, 'champions.json'))
     finally:
         driver.quit()

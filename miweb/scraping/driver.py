@@ -1,20 +1,21 @@
 import undetected_chromedriver as UC
 import os
 import sys
-BASE_DIR = os.path.abspath(os.path.join(os.path.dirname(__file__), '..', '..'))
+BASE_DIR = os.path.abspath(os.path.join(os.path.dirname(__file__), '..'))
 sys.path.insert(0, BASE_DIR)
+# Obtener ruta del script y archivos
+script_dir = os.path.dirname(os.path.abspath(__file__))
+chromedriver_path = os.path.join(script_dir, "ChromeDriver", "chromedriver.exe")
+extension_path = os.path.join(script_dir, "Extension", "uBlock-Origin-Lite")
+print(extension_path)
 
 def iniciar_driver(): 
     try:
-        # Obtener ruta del script y archivos
-        script_dir = os.path.dirname(os.path.abspath(__file__))
-        chromedriver_path = os.path.join(script_dir, "ChromeDriver", "chromedriver.exe")
-        project_root = os.path.join(script_dir, "..")
-        extension_path = os.path.join(project_root, "Extension", "uBlock-Origin-Lite")
         # Verificar que la extensión tenga el archivo manifest.json
         if not os.path.exists(os.path.join(extension_path, "manifest.json")):
-            print("El archivo manifest.json no se encuentra en la extensión", script_name='Driver')
+            print("El archivo manifest.json no se encuentra en la extensión")
             return
+        
         # Configurar opciones de Chrome
         chrome_options = UC.ChromeOptions()
         chrome_options.add_experimental_option(
@@ -42,7 +43,10 @@ def iniciar_driver():
             print("🔄 Intenta actualizar Chrome o usa WebDriver Manager para manejarlo automáticamente.")
 
         elif "cannot connect to chrome" in str(e):
-            print("⚠ No se pudo conectar a Chrome. Asegúrate de que no haya instancias abiertas y vuelve a intentarlo.", script_name='Driver')
+            print("⚠ No se pudo conectar a Chrome. Asegúrate de que no haya instancias abiertas y vuelve a intentarlo.")
 
         print("❌ No se pudo iniciar el driver. Cerrando el programa...")
         
+if __name__ == '__main__':
+    driver = iniciar_driver()
+    
