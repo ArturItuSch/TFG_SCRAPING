@@ -1,0 +1,5377 @@
+{
+    "2015_unknown_TRLH3/1001300011": {
+        "split_id": "2015unknown",
+        "num_partidos": 3,
+        "patch": 5.14
+    },
+    "2015_unknown_TRLH3/1001300036": {
+        "split_id": "2015unknown",
+        "num_partidos": 1,
+        "patch": 5.14
+    },
+    "2015_unknown_TRLH3/1001310008": {
+        "split_id": "2015unknown",
+        "num_partidos": 5,
+        "patch": 5.14
+    },
+    "2016_unknown_TRLH3/1001810023": {
+        "split_id": "2016unknown",
+        "num_partidos": 3,
+        "patch": 6.15
+    },
+    "2016_unknown_TRLH3/1001810055": {
+        "split_id": "2016unknown",
+        "num_partidos": 5,
+        "patch": 6.15
+    },
+    "2016_unknown_TRLH3/1001820029": {
+        "split_id": "2016unknown",
+        "num_partidos": 1,
+        "patch": 6.15
+    },
+    "2017_unknown_TRLH3/1002250012": {
+        "split_id": "2017unknown",
+        "num_partidos": 5,
+        "patch": 7.16
+    },
+    "2017_unknown_TRLH3/1002260018": {
+        "split_id": "2017unknown",
+        "num_partidos": 2,
+        "patch": 7.16
+    },
+    "2017_unknown_TRLH3/1002260044": {
+        "split_id": "2017unknown",
+        "num_partidos": 1,
+        "patch": 7.16
+    },
+    "2018_unknown_TRLH3/1002710023": {
+        "split_id": "2018unknown",
+        "num_partidos": 5,
+        "patch": 8.16
+    },
+    "2018_unknown_TRLH3/1002720002": {
+        "split_id": "2018unknown",
+        "num_partidos": 5,
+        "patch": 8.16
+    },
+    "2018_unknown_TRLH3/1002720036": {
+        "split_id": "2018unknown",
+        "num_partidos": 4,
+        "patch": 8.16
+    },
+    "2019_summer_ESPORTSTMNT01/1144497": {
+        "split_id": "2019summer",
+        "num_partidos": 1,
+        "patch": 9.11
+    },
+    "2019_summer_ESPORTSTMNT01/1144513": {
+        "split_id": "2019summer",
+        "num_partidos": 1,
+        "patch": 9.11
+    },
+    "2019_summer_ESPORTSTMNT01/1144530": {
+        "split_id": "2019summer",
+        "num_partidos": 1,
+        "patch": 9.11
+    },
+    "2019_summer_ESPORTSTMNT01/1144560": {
+        "split_id": "2019summer",
+        "num_partidos": 2,
+        "patch": 9.11
+    },
+    "2019_spring_ESPORTSTMNT02/980560": {
+        "split_id": "2019spring",
+        "num_partidos": 1,
+        "patch": 9.01
+    },
+    "2019_spring_ESPORTSTMNT02/980572": {
+        "split_id": "2019spring",
+        "num_partidos": 1,
+        "patch": 9.01
+    },
+    "2019_spring_ESPORTSTMNT02/980590": {
+        "split_id": "2019spring",
+        "num_partidos": 1,
+        "patch": 9.01
+    },
+    "2019_spring_ESPORTSTMNT02/980683": {
+        "split_id": "2019spring",
+        "num_partidos": 1,
+        "patch": 9.01
+    },
+    "2019_spring_ESPORTSTMNT02/980693": {
+        "split_id": "2019spring",
+        "num_partidos": 1,
+        "patch": 9.01
+    },
+    "2019_spring_ESPORTSTMNT02/980700": {
+        "split_id": "2019spring",
+        "num_partidos": 1,
+        "patch": 9.01
+    },
+    "2019_spring_ESPORTSTMNT02/980715": {
+        "split_id": "2019spring",
+        "num_partidos": 1,
+        "patch": 9.01
+    },
+    "2019_spring_ESPORTSTMNT02/980728": {
+        "split_id": "2019spring",
+        "num_partidos": 1,
+        "patch": 9.01
+    },
+    "2019_spring_ESPORTSTMNT02/990708": {
+        "split_id": "2019spring",
+        "num_partidos": 1,
+        "patch": 9.01
+    },
+    "2019_spring_ESPORTSTMNT02/990721": {
+        "split_id": "2019spring",
+        "num_partidos": 1,
+        "patch": 9.01
+    },
+    "2019_spring_ESPORTSTMNT04/880970": {
+        "split_id": "2019spring",
+        "num_partidos": 1,
+        "patch": 9.02
+    },
+    "2019_spring_ESPORTSTMNT04/880992": {
+        "split_id": "2019spring",
+        "num_partidos": 1,
+        "patch": 9.02
+    },
+    "2019_spring_ESPORTSTMNT04/881008": {
+        "split_id": "2019spring",
+        "num_partidos": 1,
+        "patch": 9.02
+    },
+    "2019_spring_ESPORTSTMNT04/881015": {
+        "split_id": "2019spring",
+        "num_partidos": 1,
+        "patch": 9.02
+    },
+    "2019_spring_ESPORTSTMNT04/881025": {
+        "split_id": "2019spring",
+        "num_partidos": 1,
+        "patch": 9.02
+    },
+    "2019_spring_ESPORTSTMNT04/890228": {
+        "split_id": "2019spring",
+        "num_partidos": 1,
+        "patch": 9.02
+    },
+    "2019_spring_ESPORTSTMNT04/890242": {
+        "split_id": "2019spring",
+        "num_partidos": 1,
+        "patch": 9.02
+    },
+    "2019_spring_ESPORTSTMNT04/890254": {
+        "split_id": "2019spring",
+        "num_partidos": 1,
+        "patch": 9.02
+    },
+    "2019_spring_ESPORTSTMNT04/890269": {
+        "split_id": "2019spring",
+        "num_partidos": 1,
+        "patch": 9.02
+    },
+    "2019_spring_ESPORTSTMNT04/890276": {
+        "split_id": "2019spring",
+        "num_partidos": 1,
+        "patch": 9.02
+    },
+    "2019_spring_ESPORTSTMNT04/890340": {
+        "split_id": "2019spring",
+        "num_partidos": 1,
+        "patch": 9.02
+    },
+    "2019_spring_ESPORTSTMNT04/890353": {
+        "split_id": "2019spring",
+        "num_partidos": 1,
+        "patch": 9.02
+    },
+    "2019_spring_ESPORTSTMNT04/890362": {
+        "split_id": "2019spring",
+        "num_partidos": 1,
+        "patch": 9.02
+    },
+    "2019_spring_ESPORTSTMNT04/890368": {
+        "split_id": "2019spring",
+        "num_partidos": 1,
+        "patch": 9.02
+    },
+    "2019_spring_ESPORTSTMNT04/890377": {
+        "split_id": "2019spring",
+        "num_partidos": 1,
+        "patch": 9.02
+    },
+    "2019_spring_ESPORTSTMNT04/890823": {
+        "split_id": "2019spring",
+        "num_partidos": 1,
+        "patch": 9.02
+    },
+    "2019_spring_ESPORTSTMNT04/890839": {
+        "split_id": "2019spring",
+        "num_partidos": 1,
+        "patch": 9.02
+    },
+    "2019_spring_ESPORTSTMNT04/890855": {
+        "split_id": "2019spring",
+        "num_partidos": 1,
+        "patch": 9.02
+    },
+    "2019_spring_ESPORTSTMNT04/890870": {
+        "split_id": "2019spring",
+        "num_partidos": 1,
+        "patch": 9.02
+    },
+    "2019_spring_ESPORTSTMNT04/890890": {
+        "split_id": "2019spring",
+        "num_partidos": 1,
+        "patch": 9.02
+    },
+    "2019_spring_ESPORTSTMNT04/900357": {
+        "split_id": "2019spring",
+        "num_partidos": 1,
+        "patch": 9.05
+    },
+    "2019_spring_ESPORTSTMNT04/900365": {
+        "split_id": "2019spring",
+        "num_partidos": 1,
+        "patch": 9.05
+    },
+    "2019_spring_ESPORTSTMNT04/900373": {
+        "split_id": "2019spring",
+        "num_partidos": 1,
+        "patch": 9.05
+    },
+    "2019_spring_ESPORTSTMNT04/900377": {
+        "split_id": "2019spring",
+        "num_partidos": 1,
+        "patch": 9.05
+    },
+    "2019_spring_ESPORTSTMNT04/900381": {
+        "split_id": "2019spring",
+        "num_partidos": 1,
+        "patch": 9.05
+    },
+    "2019_spring_ESPORTSTMNT04/900392": {
+        "split_id": "2019spring",
+        "num_partidos": 1,
+        "patch": 9.05
+    },
+    "2019_spring_ESPORTSTMNT04/910229": {
+        "split_id": "2019spring",
+        "num_partidos": 1,
+        "patch": 9.05
+    },
+    "2019_spring_ESPORTSTMNT04/910246": {
+        "split_id": "2019spring",
+        "num_partidos": 1,
+        "patch": 9.05
+    },
+    "2019_spring_ESPORTSTMNT04/910257": {
+        "split_id": "2019spring",
+        "num_partidos": 1,
+        "patch": 9.05
+    },
+    "2019_spring_ESPORTSTMNT04/910266": {
+        "split_id": "2019spring",
+        "num_partidos": 1,
+        "patch": 9.05
+    },
+    "2019_spring_ESPORTSTMNT04/910276": {
+        "split_id": "2019spring",
+        "num_partidos": 1,
+        "patch": 9.05
+    },
+    "2019_summer_ESPORTSTMNT04/960730": {
+        "split_id": "2019summer",
+        "num_partidos": 1,
+        "patch": 9.11
+    },
+    "2019_summer_ESPORTSTMNT04/960767": {
+        "split_id": "2019summer",
+        "num_partidos": 1,
+        "patch": 9.11
+    },
+    "2019_summer_ESPORTSTMNT04/960777": {
+        "split_id": "2019summer",
+        "num_partidos": 1,
+        "patch": 9.11
+    },
+    "2019_summer_ESPORTSTMNT04/960826": {
+        "split_id": "2019summer",
+        "num_partidos": 1,
+        "patch": 9.11
+    },
+    "2019_summer_ESPORTSTMNT04/970306": {
+        "split_id": "2019summer",
+        "num_partidos": 1,
+        "patch": 9.11
+    },
+    "2019_summer_ESPORTSTMNT04/970340": {
+        "split_id": "2019summer",
+        "num_partidos": 1,
+        "patch": 9.11
+    },
+    "2019_summer_ESPORTSTMNT04/970352": {
+        "split_id": "2019summer",
+        "num_partidos": 1,
+        "patch": 9.11
+    },
+    "2019_summer_ESPORTSTMNT04/970364": {
+        "split_id": "2019summer",
+        "num_partidos": 1,
+        "patch": 9.11
+    },
+    "2019_summer_ESPORTSTMNT04/970378": {
+        "split_id": "2019summer",
+        "num_partidos": 1,
+        "patch": 9.11
+    },
+    "2019_summer_ESPORTSTMNT04/970435": {
+        "split_id": "2019summer",
+        "num_partidos": 1,
+        "patch": 9.11
+    },
+    "2019_summer_ESPORTSTMNT04/970456": {
+        "split_id": "2019summer",
+        "num_partidos": 1,
+        "patch": 9.11
+    },
+    "2019_summer_ESPORTSTMNT04/970463": {
+        "split_id": "2019summer",
+        "num_partidos": 1,
+        "patch": 9.11
+    },
+    "2019_summer_ESPORTSTMNT04/970468": {
+        "split_id": "2019summer",
+        "num_partidos": 1,
+        "patch": 9.11
+    },
+    "2019_summer_ESPORTSTMNT04/970478": {
+        "split_id": "2019summer",
+        "num_partidos": 1,
+        "patch": 9.11
+    },
+    "2019_summer_ESPORTSTMNT04/970776": {
+        "split_id": "2019summer",
+        "num_partidos": 1,
+        "patch": 9.11
+    },
+    "2019_summer_ESPORTSTMNT04/970789": {
+        "split_id": "2019summer",
+        "num_partidos": 1,
+        "patch": 9.11
+    },
+    "2019_summer_ESPORTSTMNT04/980198": {
+        "split_id": "2019summer",
+        "num_partidos": 1,
+        "patch": 9.14
+    },
+    "2019_summer_ESPORTSTMNT04/980212": {
+        "split_id": "2019summer",
+        "num_partidos": 1,
+        "patch": 9.14
+    },
+    "2019_summer_ESPORTSTMNT04/980223": {
+        "split_id": "2019summer",
+        "num_partidos": 1,
+        "patch": 9.14
+    },
+    "2019_summer_ESPORTSTMNT04/980240": {
+        "split_id": "2019summer",
+        "num_partidos": 1,
+        "patch": 9.14
+    },
+    "2019_summer_ESPORTSTMNT04/980243": {
+        "split_id": "2019summer",
+        "num_partidos": 1,
+        "patch": 9.14
+    },
+    "2019_summer_ESPORTSTMNT04/980803": {
+        "split_id": "2019summer",
+        "num_partidos": 1,
+        "patch": 9.14
+    },
+    "2019_summer_ESPORTSTMNT04/980808": {
+        "split_id": "2019summer",
+        "num_partidos": 1,
+        "patch": 9.14
+    },
+    "2019_summer_ESPORTSTMNT04/990379": {
+        "split_id": "2019summer",
+        "num_partidos": 1,
+        "patch": 9.14
+    },
+    "2019_summer_ESPORTSTMNT04/990415": {
+        "split_id": "2019summer",
+        "num_partidos": 1,
+        "patch": 9.14
+    },
+    "2019_summer_ESPORTSTMNT04/990439": {
+        "split_id": "2019summer",
+        "num_partidos": 1,
+        "patch": 9.14
+    },
+    "2019_summer_ESPORTSTMNT04/990452": {
+        "split_id": "2019summer",
+        "num_partidos": 1,
+        "patch": 9.14
+    },
+    "2019_summer_ESPORTSTMNT04/990469": {
+        "split_id": "2019summer",
+        "num_partidos": 1,
+        "patch": 9.14
+    },
+    "2019_summer_ESPORTSTMNT04/990628": {
+        "split_id": "2019summer",
+        "num_partidos": 1,
+        "patch": 9.14
+    },
+    "2019_summer_ESPORTSTMNT04/990638": {
+        "split_id": "2019summer",
+        "num_partidos": 1,
+        "patch": 9.14
+    },
+    "2019_summer_ESPORTSTMNT04/990652": {
+        "split_id": "2019summer",
+        "num_partidos": 1,
+        "patch": 9.14
+    },
+    "2019_summer_ESPORTSTMNT04/990663": {
+        "split_id": "2019summer",
+        "num_partidos": 1,
+        "patch": 9.14
+    },
+    "2019_summer_ESPORTSTMNT04/990671": {
+        "split_id": "2019summer",
+        "num_partidos": 1,
+        "patch": 9.14
+    },
+    "2019_summer_ESPORTSTMNT04/990733": {
+        "split_id": "2019summer",
+        "num_partidos": 1,
+        "patch": 9.14
+    },
+    "2019_summer_ESPORTSTMNT04/990745": {
+        "split_id": "2019summer",
+        "num_partidos": 1,
+        "patch": 9.14
+    },
+    "2019_summer_ESPORTSTMNT04/990770": {
+        "split_id": "2019summer",
+        "num_partidos": 1,
+        "patch": 9.14
+    },
+    "2019_spring_ESPORTSTMNT05/1070616": {
+        "split_id": "2019spring",
+        "num_partidos": 1,
+        "patch": 9.01
+    },
+    "2019_spring_ESPORTSTMNT05/1070772": {
+        "split_id": "2019spring",
+        "num_partidos": 1,
+        "patch": 9.01
+    },
+    "2019_spring_ESPORTSTMNT05/1070799": {
+        "split_id": "2019spring",
+        "num_partidos": 1,
+        "patch": 9.01
+    },
+    "2019_spring_ESPORTSTMNT05/1070822": {
+        "split_id": "2019spring",
+        "num_partidos": 1,
+        "patch": 9.01
+    },
+    "2019_spring_ESPORTSTMNT05/1070838": {
+        "split_id": "2019spring",
+        "num_partidos": 1,
+        "patch": 9.01
+    },
+    "2019_spring_ESPORTSTMNT05/1070856": {
+        "split_id": "2019spring",
+        "num_partidos": 1,
+        "patch": 9.01
+    },
+    "2019_spring_ESPORTSTMNT05/1080609": {
+        "split_id": "2019spring",
+        "num_partidos": 1,
+        "patch": 9.01
+    },
+    "2019_spring_ESPORTSTMNT05/1080616": {
+        "split_id": "2019spring",
+        "num_partidos": 1,
+        "patch": 9.01
+    },
+    "2019_spring_ESPORTSTMNT05/1080623": {
+        "split_id": "2019spring",
+        "num_partidos": 1,
+        "patch": 9.01
+    },
+    "2019_spring_ESPORTSTMNT05/1080636": {
+        "split_id": "2019spring",
+        "num_partidos": 1,
+        "patch": 9.01
+    },
+    "2019_spring_ESPORTSTMNT05/1090306": {
+        "split_id": "2019spring",
+        "num_partidos": 1,
+        "patch": 9.03
+    },
+    "2019_spring_ESPORTSTMNT05/1090919": {
+        "split_id": "2019spring",
+        "num_partidos": 1,
+        "patch": 9.03
+    },
+    "2019_spring_ESPORTSTMNT05/1090936": {
+        "split_id": "2019spring",
+        "num_partidos": 1,
+        "patch": 9.03
+    },
+    "2019_spring_ESPORTSTMNT05/1090953": {
+        "split_id": "2019spring",
+        "num_partidos": 1,
+        "patch": 9.03
+    },
+    "2019_spring_ESPORTSTMNT05/1090969": {
+        "split_id": "2019spring",
+        "num_partidos": 1,
+        "patch": 9.03
+    },
+    "2019_spring_ESPORTSTMNT05/1100283": {
+        "split_id": "2019spring",
+        "num_partidos": 1,
+        "patch": 9.03
+    },
+    "2019_spring_ESPORTSTMNT05/1100294": {
+        "split_id": "2019spring",
+        "num_partidos": 1,
+        "patch": 9.03
+    },
+    "2019_spring_ESPORTSTMNT05/1100307": {
+        "split_id": "2019spring",
+        "num_partidos": 1,
+        "patch": 9.03
+    },
+    "2019_spring_ESPORTSTMNT05/1100320": {
+        "split_id": "2019spring",
+        "num_partidos": 1,
+        "patch": 9.03
+    },
+    "2019_spring_ESPORTSTMNT05/1100411": {
+        "split_id": "2019spring",
+        "num_partidos": 1,
+        "patch": 9.03
+    },
+    "2019_spring_ESPORTSTMNT05/1100427": {
+        "split_id": "2019spring",
+        "num_partidos": 1,
+        "patch": 9.03
+    },
+    "2019_spring_ESPORTSTMNT05/1100437": {
+        "split_id": "2019spring",
+        "num_partidos": 1,
+        "patch": 9.03
+    },
+    "2019_spring_ESPORTSTMNT05/1100450": {
+        "split_id": "2019spring",
+        "num_partidos": 1,
+        "patch": 9.03
+    },
+    "2019_spring_ESPORTSTMNT05/1100458": {
+        "split_id": "2019spring",
+        "num_partidos": 1,
+        "patch": 9.03
+    },
+    "2019_spring_ESPORTSTMNT05/1100997": {
+        "split_id": "2019spring",
+        "num_partidos": 1,
+        "patch": 9.03
+    },
+    "2019_spring_ESPORTSTMNT05/1101060": {
+        "split_id": "2019spring",
+        "num_partidos": 1,
+        "patch": 9.03
+    },
+    "2019_spring_ESPORTSTMNT05/1101069": {
+        "split_id": "2019spring",
+        "num_partidos": 1,
+        "patch": 9.03
+    },
+    "2019_spring_ESPORTSTMNT05/1101076": {
+        "split_id": "2019spring",
+        "num_partidos": 1,
+        "patch": 9.03
+    },
+    "2019_spring_ESPORTSTMNT05/1101085": {
+        "split_id": "2019spring",
+        "num_partidos": 1,
+        "patch": 9.03
+    },
+    "2019_spring_ESPORTSTMNT05/1101095": {
+        "split_id": "2019spring",
+        "num_partidos": 1,
+        "patch": 9.03
+    },
+    "2019_spring_ESPORTSTMNT05/1110253": {
+        "split_id": "2019spring",
+        "num_partidos": 3,
+        "patch": 9.06
+    },
+    "2019_spring_ESPORTSTMNT05/1110382": {
+        "split_id": "2019spring",
+        "num_partidos": 4,
+        "patch": 9.06
+    },
+    "2019_spring_ESPORTSTMNT05/1110451": {
+        "split_id": "2019spring",
+        "num_partidos": 3,
+        "patch": 9.06
+    },
+    "2019_spring_ESPORTSTMNT05/1110704": {
+        "split_id": "2019spring",
+        "num_partidos": 4,
+        "patch": 9.06
+    },
+    "2019_spring_ESPORTSTMNT05/1120199": {
+        "split_id": "2019spring",
+        "num_partidos": 3,
+        "patch": 9.06
+    },
+    "2019_spring_ESPORTSTMNT05/1120656": {
+        "split_id": "2019spring",
+        "num_partidos": 3,
+        "patch": 9.06
+    },
+    "2019_summer_ESPORTSTMNT05/1180210": {
+        "split_id": "2019summer",
+        "num_partidos": 1,
+        "patch": 9.12
+    },
+    "2019_summer_ESPORTSTMNT05/1180275": {
+        "split_id": "2019summer",
+        "num_partidos": 1,
+        "patch": 9.12
+    },
+    "2019_summer_ESPORTSTMNT05/1180360": {
+        "split_id": "2019summer",
+        "num_partidos": 1,
+        "patch": 9.12
+    },
+    "2019_summer_ESPORTSTMNT05/1180401": {
+        "split_id": "2019summer",
+        "num_partidos": 1,
+        "patch": 9.12
+    },
+    "2019_summer_ESPORTSTMNT05/1180439": {
+        "split_id": "2019summer",
+        "num_partidos": 1,
+        "patch": 9.12
+    },
+    "2019_summer_ESPORTSTMNT05/1180640": {
+        "split_id": "2019summer",
+        "num_partidos": 1,
+        "patch": 9.12
+    },
+    "2019_summer_ESPORTSTMNT05/1180713": {
+        "split_id": "2019summer",
+        "num_partidos": 1,
+        "patch": 9.12
+    },
+    "2019_summer_ESPORTSTMNT05/1180736": {
+        "split_id": "2019summer",
+        "num_partidos": 1,
+        "patch": 9.12
+    },
+    "2019_summer_ESPORTSTMNT05/1180770": {
+        "split_id": "2019summer",
+        "num_partidos": 1,
+        "patch": 9.12
+    },
+    "2019_summer_ESPORTSTMNT05/1180788": {
+        "split_id": "2019summer",
+        "num_partidos": 1,
+        "patch": 9.12
+    },
+    "2019_summer_ESPORTSTMNT05/1210053": {
+        "split_id": "2019summer",
+        "num_partidos": 1,
+        "patch": 9.15
+    },
+    "2019_summer_ESPORTSTMNT05/1210063": {
+        "split_id": "2019summer",
+        "num_partidos": 1,
+        "patch": 9.15
+    },
+    "2019_summer_ESPORTSTMNT05/1210069": {
+        "split_id": "2019summer",
+        "num_partidos": 1,
+        "patch": 9.15
+    },
+    "2019_summer_ESPORTSTMNT05/1210076": {
+        "split_id": "2019summer",
+        "num_partidos": 1,
+        "patch": 9.15
+    },
+    "2019_summer_ESPORTSTMNT05/1210083": {
+        "split_id": "2019summer",
+        "num_partidos": 1,
+        "patch": 9.15
+    },
+    "2019_summer_ESPORTSTMNT05/1210366": {
+        "split_id": "2019summer",
+        "num_partidos": 1,
+        "patch": 9.15
+    },
+    "2019_summer_ESPORTSTMNT05/1210372": {
+        "split_id": "2019summer",
+        "num_partidos": 1,
+        "patch": 9.15
+    },
+    "2019_summer_ESPORTSTMNT05/1210376": {
+        "split_id": "2019summer",
+        "num_partidos": 1,
+        "patch": 9.15
+    },
+    "2019_summer_ESPORTSTMNT05/1210389": {
+        "split_id": "2019summer",
+        "num_partidos": 1,
+        "patch": 9.15
+    },
+    "2019_summer_ESPORTSTMNT05/1210394": {
+        "split_id": "2019summer",
+        "num_partidos": 1,
+        "patch": 9.15
+    },
+    "2019_summer_ESPORTSTMNT05/1210460": {
+        "split_id": "2019summer",
+        "num_partidos": 1,
+        "patch": 9.15
+    },
+    "2019_summer_ESPORTSTMNT05/1210474": {
+        "split_id": "2019summer",
+        "num_partidos": 1,
+        "patch": 9.15
+    },
+    "2019_summer_ESPORTSTMNT05/1210488": {
+        "split_id": "2019summer",
+        "num_partidos": 1,
+        "patch": 9.15
+    },
+    "2019_summer_ESPORTSTMNT05/1210503": {
+        "split_id": "2019summer",
+        "num_partidos": 1,
+        "patch": 9.15
+    },
+    "2019_summer_ESPORTSTMNT05/1210514": {
+        "split_id": "2019summer",
+        "num_partidos": 1,
+        "patch": 9.15
+    },
+    "2019_summer_ESPORTSTMNT05/1210521": {
+        "split_id": "2019summer",
+        "num_partidos": 1,
+        "patch": 9.15
+    },
+    "2019_summer_ESPORTSTMNT05/1220167": {
+        "split_id": "2019summer",
+        "num_partidos": 1,
+        "patch": 9.15
+    },
+    "2019_summer_ESPORTSTMNT05/1220174": {
+        "split_id": "2019summer",
+        "num_partidos": 1,
+        "patch": 9.15
+    },
+    "2019_summer_ESPORTSTMNT05/1220188": {
+        "split_id": "2019summer",
+        "num_partidos": 1,
+        "patch": 9.15
+    },
+    "2019_summer_ESPORTSTMNT05/1220206": {
+        "split_id": "2019summer",
+        "num_partidos": 1,
+        "patch": 9.15
+    },
+    "2019_summer_ESPORTSTMNT05/1220213": {
+        "split_id": "2019summer",
+        "num_partidos": 1,
+        "patch": 9.15
+    },
+    "2019_summer_ESPORTSTMNT06/1020629": {
+        "split_id": "2019summer",
+        "num_partidos": 1,
+        "patch": 9.13
+    },
+    "2019_summer_ESPORTSTMNT06/1020635": {
+        "split_id": "2019summer",
+        "num_partidos": 1,
+        "patch": 9.13
+    },
+    "2019_summer_ESPORTSTMNT06/1020643": {
+        "split_id": "2019summer",
+        "num_partidos": 1,
+        "patch": 9.13
+    },
+    "2019_summer_ESPORTSTMNT06/1020649": {
+        "split_id": "2019summer",
+        "num_partidos": 1,
+        "patch": 9.13
+    },
+    "2019_summer_ESPORTSTMNT06/1020659": {
+        "split_id": "2019summer",
+        "num_partidos": 1,
+        "patch": 9.13
+    },
+    "2019_summer_ESPORTSTMNT06/1020754": {
+        "split_id": "2019summer",
+        "num_partidos": 1,
+        "patch": 9.13
+    },
+    "2019_summer_ESPORTSTMNT06/1020774": {
+        "split_id": "2019summer",
+        "num_partidos": 1,
+        "patch": 9.13
+    },
+    "2019_summer_ESPORTSTMNT06/1020780": {
+        "split_id": "2019summer",
+        "num_partidos": 1,
+        "patch": 9.13
+    },
+    "2019_summer_ESPORTSTMNT06/1020796": {
+        "split_id": "2019summer",
+        "num_partidos": 1,
+        "patch": 9.13
+    },
+    "2019_summer_ESPORTSTMNT06/1020806": {
+        "split_id": "2019summer",
+        "num_partidos": 1,
+        "patch": 9.13
+    },
+    "2019_summer_ESPORTSTMNT06/1021333": {
+        "split_id": "2019summer",
+        "num_partidos": 1,
+        "patch": 9.13
+    },
+    "2019_summer_ESPORTSTMNT06/1021379": {
+        "split_id": "2019summer",
+        "num_partidos": 1,
+        "patch": 9.13
+    },
+    "2019_summer_ESPORTSTMNT06/1021443": {
+        "split_id": "2019summer",
+        "num_partidos": 1,
+        "patch": 9.13
+    },
+    "2019_summer_ESPORTSTMNT06/1031189": {
+        "split_id": "2019summer",
+        "num_partidos": 1,
+        "patch": 9.13
+    },
+    "2019_summer_ESPORTSTMNT06/1031204": {
+        "split_id": "2019summer",
+        "num_partidos": 1,
+        "patch": 9.13
+    },
+    "2019_summer_ESPORTSTMNT06/1031228": {
+        "split_id": "2019summer",
+        "num_partidos": 1,
+        "patch": 9.13
+    },
+    "2019_summer_ESPORTSTMNT06/1031229": {
+        "split_id": "2019summer",
+        "num_partidos": 1,
+        "patch": 9.13
+    },
+    "2019_summer_ESPORTSTMNT06/1031345": {
+        "split_id": "2019summer",
+        "num_partidos": 1,
+        "patch": 9.13
+    },
+    "2019_summer_ESPORTSTMNT06/1031363": {
+        "split_id": "2019summer",
+        "num_partidos": 1,
+        "patch": 9.13
+    },
+    "2019_summer_ESPORTSTMNT06/1031395": {
+        "split_id": "2019summer",
+        "num_partidos": 1,
+        "patch": 9.13
+    },
+    "2019_summer_ESPORTSTMNT06/1040496": {
+        "split_id": "2019summer",
+        "num_partidos": 1,
+        "patch": 9.16
+    },
+    "2019_summer_ESPORTSTMNT06/1040760": {
+        "split_id": "2019summer",
+        "num_partidos": 4,
+        "patch": 9.16
+    },
+    "2019_summer_ESPORTSTMNT06/1041084": {
+        "split_id": "2019summer",
+        "num_partidos": 4,
+        "patch": 9.16
+    },
+    "2019_unknown_ESPORTSTMNT06/1041158": {
+        "split_id": "2019unknown",
+        "num_partidos": 3,
+        "patch": 9.16
+    },
+    "2019_summer_ESPORTSTMNT06/1050983": {
+        "split_id": "2019summer",
+        "num_partidos": 4,
+        "patch": 9.16
+    },
+    "2019_summer_ESPORTSTMNT06/1051056": {
+        "split_id": "2019summer",
+        "num_partidos": 5,
+        "patch": 9.16
+    },
+    "2019_summer_ESPORTSTMNT06/1051186": {
+        "split_id": "2019summer",
+        "num_partidos": 3,
+        "patch": 9.16
+    },
+    "2019_unknown_ESPORTSTMNT06/1051228": {
+        "split_id": "2019unknown",
+        "num_partidos": 4,
+        "patch": 9.16
+    },
+    "2019_unknown_ESPORTSTMNT06/1051246": {
+        "split_id": "2019unknown",
+        "num_partidos": 2,
+        "patch": 9.16
+    },
+    "2019_spring_ESPORTSTMNT06/960189": {
+        "split_id": "2019spring",
+        "num_partidos": 1,
+        "patch": 9.04
+    },
+    "2019_spring_ESPORTSTMNT06/960258": {
+        "split_id": "2019spring",
+        "num_partidos": 1,
+        "patch": 9.04
+    },
+    "2019_spring_ESPORTSTMNT06/960268": {
+        "split_id": "2019spring",
+        "num_partidos": 1,
+        "patch": 9.04
+    },
+    "2019_spring_ESPORTSTMNT06/960277": {
+        "split_id": "2019spring",
+        "num_partidos": 1,
+        "patch": 9.04
+    },
+    "2019_spring_ESPORTSTMNT06/960288": {
+        "split_id": "2019spring",
+        "num_partidos": 1,
+        "patch": 9.04
+    },
+    "2019_spring_ESPORTSTMNT06/960292": {
+        "split_id": "2019spring",
+        "num_partidos": 1,
+        "patch": 9.04
+    },
+    "2019_spring_ESPORTSTMNT06/960681": {
+        "split_id": "2019spring",
+        "num_partidos": 1,
+        "patch": 9.04
+    },
+    "2019_spring_ESPORTSTMNT06/960823": {
+        "split_id": "2019spring",
+        "num_partidos": 1,
+        "patch": 9.04
+    },
+    "2019_spring_ESPORTSTMNT06/960833": {
+        "split_id": "2019spring",
+        "num_partidos": 1,
+        "patch": 9.04
+    },
+    "2019_spring_ESPORTSTMNT06/960841": {
+        "split_id": "2019spring",
+        "num_partidos": 1,
+        "patch": 9.04
+    },
+    "2019_spring_ESPORTSTMNT06/960848": {
+        "split_id": "2019spring",
+        "num_partidos": 1,
+        "patch": 9.04
+    },
+    "2019_spring_ESPORTSTMNT06/960856": {
+        "split_id": "2019spring",
+        "num_partidos": 1,
+        "patch": 9.04
+    },
+    "2019_spring_ESPORTSTMNT06/970162": {
+        "split_id": "2019spring",
+        "num_partidos": 1,
+        "patch": 9.04
+    },
+    "2019_spring_ESPORTSTMNT06/970180": {
+        "split_id": "2019spring",
+        "num_partidos": 1,
+        "patch": 9.04
+    },
+    "2019_spring_ESPORTSTMNT06/970203": {
+        "split_id": "2019spring",
+        "num_partidos": 1,
+        "patch": 9.04
+    },
+    "2019_spring_ESPORTSTMNT06/970217": {
+        "split_id": "2019spring",
+        "num_partidos": 1,
+        "patch": 9.04
+    },
+    "2019_spring_ESPORTSTMNT06/970740": {
+        "split_id": "2019spring",
+        "num_partidos": 1,
+        "patch": 9.04
+    },
+    "2019_spring_ESPORTSTMNT06/970748": {
+        "split_id": "2019spring",
+        "num_partidos": 1,
+        "patch": 9.04
+    },
+    "2019_spring_ESPORTSTMNT06/970756": {
+        "split_id": "2019spring",
+        "num_partidos": 1,
+        "patch": 9.04
+    },
+    "2019_spring_ESPORTSTMNT06/970764": {
+        "split_id": "2019spring",
+        "num_partidos": 1,
+        "patch": 9.04
+    },
+    "2020_spring_ESPORTSTMNT04/1120126": {
+        "split_id": "2020spring",
+        "num_partidos": 1,
+        "patch": 10.02
+    },
+    "2020_spring_ESPORTSTMNT04/1120145": {
+        "split_id": "2020spring",
+        "num_partidos": 1,
+        "patch": 10.02
+    },
+    "2020_spring_ESPORTSTMNT04/1120150": {
+        "split_id": "2020spring",
+        "num_partidos": 1,
+        "patch": 10.02
+    },
+    "2020_spring_ESPORTSTMNT04/1120155": {
+        "split_id": "2020spring",
+        "num_partidos": 1,
+        "patch": 10.02
+    },
+    "2020_spring_ESPORTSTMNT04/1120173": {
+        "split_id": "2020spring",
+        "num_partidos": 1,
+        "patch": 10.02
+    },
+    "2020_spring_ESPORTSTMNT04/1120607": {
+        "split_id": "2020spring",
+        "num_partidos": 1,
+        "patch": 10.02
+    },
+    "2020_spring_ESPORTSTMNT04/1120622": {
+        "split_id": "2020spring",
+        "num_partidos": 1,
+        "patch": 10.02
+    },
+    "2020_spring_ESPORTSTMNT04/1120629": {
+        "split_id": "2020spring",
+        "num_partidos": 1,
+        "patch": 10.02
+    },
+    "2020_spring_ESPORTSTMNT04/1120638": {
+        "split_id": "2020spring",
+        "num_partidos": 1,
+        "patch": 10.02
+    },
+    "2020_spring_ESPORTSTMNT04/1120649": {
+        "split_id": "2020spring",
+        "num_partidos": 1,
+        "patch": 10.02
+    },
+    "2020_spring_ESPORTSTMNT04/1120705": {
+        "split_id": "2020spring",
+        "num_partidos": 1,
+        "patch": 10.02
+    },
+    "2020_spring_ESPORTSTMNT04/1120711": {
+        "split_id": "2020spring",
+        "num_partidos": 1,
+        "patch": 10.02
+    },
+    "2020_spring_ESPORTSTMNT04/1130193": {
+        "split_id": "2020spring",
+        "num_partidos": 1,
+        "patch": 10.02
+    },
+    "2020_spring_ESPORTSTMNT04/1130196": {
+        "split_id": "2020spring",
+        "num_partidos": 1,
+        "patch": 10.02
+    },
+    "2020_spring_ESPORTSTMNT04/1130201": {
+        "split_id": "2020spring",
+        "num_partidos": 1,
+        "patch": 10.02
+    },
+    "2020_spring_ESPORTSTMNT04/1130210": {
+        "split_id": "2020spring",
+        "num_partidos": 1,
+        "patch": 10.02
+    },
+    "2020_spring_ESPORTSTMNT04/1130221": {
+        "split_id": "2020spring",
+        "num_partidos": 1,
+        "patch": 10.02
+    },
+    "2020_spring_ESPORTSTMNT04/1130676": {
+        "split_id": "2020spring",
+        "num_partidos": 1,
+        "patch": 10.02
+    },
+    "2020_spring_ESPORTSTMNT04/1130696": {
+        "split_id": "2020spring",
+        "num_partidos": 1,
+        "patch": 10.02
+    },
+    "2020_spring_ESPORTSTMNT04/1130709": {
+        "split_id": "2020spring",
+        "num_partidos": 1,
+        "patch": 10.02
+    },
+    "2020_spring_ESPORTSTMNT04/1140340": {
+        "split_id": "2020spring",
+        "num_partidos": 1,
+        "patch": 10.05
+    },
+    "2020_spring_ESPORTSTMNT04/1140351": {
+        "split_id": "2020spring",
+        "num_partidos": 1,
+        "patch": 10.05
+    },
+    "2020_spring_ESPORTSTMNT04/1140380": {
+        "split_id": "2020spring",
+        "num_partidos": 1,
+        "patch": 10.05
+    },
+    "2020_spring_ESPORTSTMNT04/1140423": {
+        "split_id": "2020spring",
+        "num_partidos": 1,
+        "patch": 10.05
+    },
+    "2020_spring_ESPORTSTMNT04/1140431": {
+        "split_id": "2020spring",
+        "num_partidos": 1,
+        "patch": 10.05
+    },
+    "2020_spring_ESPORTSTMNT04/1150374": {
+        "split_id": "2020spring",
+        "num_partidos": 1,
+        "patch": 10.05
+    },
+    "2020_spring_ESPORTSTMNT04/1150442": {
+        "split_id": "2020spring",
+        "num_partidos": 1,
+        "patch": 10.05
+    },
+    "2020_spring_ESPORTSTMNT04/1150471": {
+        "split_id": "2020spring",
+        "num_partidos": 1,
+        "patch": 10.05
+    },
+    "2020_spring_ESPORTSTMNT04/1150486": {
+        "split_id": "2020spring",
+        "num_partidos": 1,
+        "patch": 10.05
+    },
+    "2020_spring_ESPORTSTMNT04/1150490": {
+        "split_id": "2020spring",
+        "num_partidos": 1,
+        "patch": 10.05
+    },
+    "2020_summer_ESPORTSTMNT04/1220706": {
+        "split_id": "2020summer",
+        "num_partidos": 1,
+        "patch": 10.11
+    },
+    "2020_summer_ESPORTSTMNT04/1220728": {
+        "split_id": "2020summer",
+        "num_partidos": 1,
+        "patch": 10.11
+    },
+    "2020_summer_ESPORTSTMNT04/1220749": {
+        "split_id": "2020summer",
+        "num_partidos": 1,
+        "patch": 10.11
+    },
+    "2020_summer_ESPORTSTMNT04/1220754": {
+        "split_id": "2020summer",
+        "num_partidos": 1,
+        "patch": 10.11
+    },
+    "2020_summer_ESPORTSTMNT04/1220812": {
+        "split_id": "2020summer",
+        "num_partidos": 1,
+        "patch": 10.11
+    },
+    "2020_summer_ESPORTSTMNT04/1220836": {
+        "split_id": "2020summer",
+        "num_partidos": 1,
+        "patch": 10.11
+    },
+    "2020_summer_ESPORTSTMNT04/1220942": {
+        "split_id": "2020summer",
+        "num_partidos": 1,
+        "patch": 10.11
+    },
+    "2020_summer_ESPORTSTMNT04/1220970": {
+        "split_id": "2020summer",
+        "num_partidos": 1,
+        "patch": 10.11
+    },
+    "2020_summer_ESPORTSTMNT04/1230688": {
+        "split_id": "2020summer",
+        "num_partidos": 1,
+        "patch": 10.11
+    },
+    "2020_summer_ESPORTSTMNT04/1230782": {
+        "split_id": "2020summer",
+        "num_partidos": 1,
+        "patch": 10.11
+    },
+    "2020_summer_ESPORTSTMNT04/1230797": {
+        "split_id": "2020summer",
+        "num_partidos": 1,
+        "patch": 10.11
+    },
+    "2020_summer_ESPORTSTMNT04/1230801": {
+        "split_id": "2020summer",
+        "num_partidos": 1,
+        "patch": 10.11
+    },
+    "2020_summer_ESPORTSTMNT04/1230869": {
+        "split_id": "2020summer",
+        "num_partidos": 1,
+        "patch": 10.11
+    },
+    "2020_summer_ESPORTSTMNT04/1230881": {
+        "split_id": "2020summer",
+        "num_partidos": 1,
+        "patch": 10.11
+    },
+    "2020_summer_ESPORTSTMNT04/1230904": {
+        "split_id": "2020summer",
+        "num_partidos": 1,
+        "patch": 10.11
+    },
+    "2020_summer_ESPORTSTMNT04/1240386": {
+        "split_id": "2020summer",
+        "num_partidos": 1,
+        "patch": 10.14
+    },
+    "2020_summer_ESPORTSTMNT04/1240401": {
+        "split_id": "2020summer",
+        "num_partidos": 1,
+        "patch": 10.14
+    },
+    "2020_summer_ESPORTSTMNT04/1240457": {
+        "split_id": "2020summer",
+        "num_partidos": 1,
+        "patch": 10.14
+    },
+    "2020_summer_ESPORTSTMNT04/1240464": {
+        "split_id": "2020summer",
+        "num_partidos": 1,
+        "patch": 10.14
+    },
+    "2020_summer_ESPORTSTMNT04/1250157": {
+        "split_id": "2020summer",
+        "num_partidos": 1,
+        "patch": 10.14
+    },
+    "2020_summer_ESPORTSTMNT04/1250160": {
+        "split_id": "2020summer",
+        "num_partidos": 1,
+        "patch": 10.14
+    },
+    "2020_summer_ESPORTSTMNT04/1250170": {
+        "split_id": "2020summer",
+        "num_partidos": 1,
+        "patch": 10.14
+    },
+    "2020_summer_ESPORTSTMNT04/1250185": {
+        "split_id": "2020summer",
+        "num_partidos": 1,
+        "patch": 10.14
+    },
+    "2020_summer_ESPORTSTMNT04/1250191": {
+        "split_id": "2020summer",
+        "num_partidos": 1,
+        "patch": 10.14
+    },
+    "2020_summer_ESPORTSTMNT04/1250224": {
+        "split_id": "2020summer",
+        "num_partidos": 1,
+        "patch": 10.14
+    },
+    "2020_summer_ESPORTSTMNT04/1250226": {
+        "split_id": "2020summer",
+        "num_partidos": 1,
+        "patch": 10.14
+    },
+    "2020_summer_ESPORTSTMNT04/1250229": {
+        "split_id": "2020summer",
+        "num_partidos": 1,
+        "patch": 10.14
+    },
+    "2020_summer_ESPORTSTMNT04/1250234": {
+        "split_id": "2020summer",
+        "num_partidos": 1,
+        "patch": 10.14
+    },
+    "2020_summer_ESPORTSTMNT04/1250235": {
+        "split_id": "2020summer",
+        "num_partidos": 1,
+        "patch": 10.14
+    },
+    "2020_summer_ESPORTSTMNT04/1250395": {
+        "split_id": "2020summer",
+        "num_partidos": 1,
+        "patch": 10.14
+    },
+    "2020_summer_ESPORTSTMNT04/1250400": {
+        "split_id": "2020summer",
+        "num_partidos": 1,
+        "patch": 10.14
+    },
+    "2020_summer_ESPORTSTMNT04/1250405": {
+        "split_id": "2020summer",
+        "num_partidos": 1,
+        "patch": 10.14
+    },
+    "2020_summer_ESPORTSTMNT04/1250450": {
+        "split_id": "2020summer",
+        "num_partidos": 1,
+        "patch": 10.14
+    },
+    "2020_summer_ESPORTSTMNT04/1250455": {
+        "split_id": "2020summer",
+        "num_partidos": 1,
+        "patch": 10.14
+    },
+    "2020_summer_ESPORTSTMNT04/1250460": {
+        "split_id": "2020summer",
+        "num_partidos": 1,
+        "patch": 10.14
+    },
+    "2020_spring_ESPORTSTMNT05/1390161": {
+        "split_id": "2020spring",
+        "num_partidos": 1,
+        "patch": 10.01
+    },
+    "2020_spring_ESPORTSTMNT05/1390170": {
+        "split_id": "2020spring",
+        "num_partidos": 1,
+        "patch": 10.01
+    },
+    "2020_spring_ESPORTSTMNT05/1390196": {
+        "split_id": "2020spring",
+        "num_partidos": 1,
+        "patch": 10.01
+    },
+    "2020_spring_ESPORTSTMNT05/1390202": {
+        "split_id": "2020spring",
+        "num_partidos": 1,
+        "patch": 10.01
+    },
+    "2020_spring_ESPORTSTMNT05/1390213": {
+        "split_id": "2020spring",
+        "num_partidos": 1,
+        "patch": 10.01
+    },
+    "2020_spring_ESPORTSTMNT05/1390233": {
+        "split_id": "2020spring",
+        "num_partidos": 1,
+        "patch": 10.01
+    },
+    "2020_spring_ESPORTSTMNT05/1390241": {
+        "split_id": "2020spring",
+        "num_partidos": 1,
+        "patch": 10.01
+    },
+    "2020_spring_ESPORTSTMNT05/1390249": {
+        "split_id": "2020spring",
+        "num_partidos": 1,
+        "patch": 10.01
+    },
+    "2020_spring_ESPORTSTMNT05/1390257": {
+        "split_id": "2020spring",
+        "num_partidos": 1,
+        "patch": 10.01
+    },
+    "2020_spring_ESPORTSTMNT05/1390263": {
+        "split_id": "2020spring",
+        "num_partidos": 1,
+        "patch": 10.01
+    },
+    "2020_spring_ESPORTSTMNT05/1400204": {
+        "split_id": "2020spring",
+        "num_partidos": 1,
+        "patch": 10.03
+    },
+    "2020_spring_ESPORTSTMNT05/1400210": {
+        "split_id": "2020spring",
+        "num_partidos": 1,
+        "patch": 10.03
+    },
+    "2020_spring_ESPORTSTMNT05/1400217": {
+        "split_id": "2020spring",
+        "num_partidos": 1,
+        "patch": 10.03
+    },
+    "2020_spring_ESPORTSTMNT05/1400226": {
+        "split_id": "2020spring",
+        "num_partidos": 1,
+        "patch": 10.03
+    },
+    "2020_spring_ESPORTSTMNT05/1400247": {
+        "split_id": "2020spring",
+        "num_partidos": 1,
+        "patch": 10.03
+    },
+    "2020_spring_ESPORTSTMNT05/1400857": {
+        "split_id": "2020spring",
+        "num_partidos": 1,
+        "patch": 10.03
+    },
+    "2020_spring_ESPORTSTMNT05/1400885": {
+        "split_id": "2020spring",
+        "num_partidos": 1,
+        "patch": 10.03
+    },
+    "2020_spring_ESPORTSTMNT05/1400896": {
+        "split_id": "2020spring",
+        "num_partidos": 1,
+        "patch": 10.03
+    },
+    "2020_spring_ESPORTSTMNT05/1400908": {
+        "split_id": "2020spring",
+        "num_partidos": 1,
+        "patch": 10.03
+    },
+    "2020_spring_ESPORTSTMNT05/1400914": {
+        "split_id": "2020spring",
+        "num_partidos": 1,
+        "patch": 10.03
+    },
+    "2020_spring_ESPORTSTMNT05/1410116": {
+        "split_id": "2020spring",
+        "num_partidos": 1,
+        "patch": 10.03
+    },
+    "2020_spring_ESPORTSTMNT05/1410131": {
+        "split_id": "2020spring",
+        "num_partidos": 1,
+        "patch": 10.03
+    },
+    "2020_spring_ESPORTSTMNT05/1410132": {
+        "split_id": "2020spring",
+        "num_partidos": 1,
+        "patch": 10.03
+    },
+    "2020_spring_ESPORTSTMNT05/1410141": {
+        "split_id": "2020spring",
+        "num_partidos": 1,
+        "patch": 10.03
+    },
+    "2020_spring_ESPORTSTMNT05/1410145": {
+        "split_id": "2020spring",
+        "num_partidos": 1,
+        "patch": 10.03
+    },
+    "2020_spring_ESPORTSTMNT05/1410715": {
+        "split_id": "2020spring",
+        "num_partidos": 1,
+        "patch": 10.03
+    },
+    "2020_spring_ESPORTSTMNT05/1410735": {
+        "split_id": "2020spring",
+        "num_partidos": 1,
+        "patch": 10.03
+    },
+    "2020_spring_ESPORTSTMNT05/1410740": {
+        "split_id": "2020spring",
+        "num_partidos": 1,
+        "patch": 10.03
+    },
+    "2020_spring_ESPORTSTMNT05/1410760": {
+        "split_id": "2020spring",
+        "num_partidos": 1,
+        "patch": 10.03
+    },
+    "2020_spring_ESPORTSTMNT05/1410772": {
+        "split_id": "2020spring",
+        "num_partidos": 1,
+        "patch": 10.03
+    },
+    "2020_spring_ESPORTSTMNT05/1430079": {
+        "split_id": "2020spring",
+        "num_partidos": 1,
+        "patch": 10.06
+    },
+    "2020_spring_ESPORTSTMNT05/1430090": {
+        "split_id": "2020spring",
+        "num_partidos": 1,
+        "patch": 10.06
+    },
+    "2020_spring_ESPORTSTMNT05/1430102": {
+        "split_id": "2020spring",
+        "num_partidos": 1,
+        "patch": 10.06
+    },
+    "2020_spring_ESPORTSTMNT05/1430120": {
+        "split_id": "2020spring",
+        "num_partidos": 1,
+        "patch": 10.06
+    },
+    "2020_spring_ESPORTSTMNT05/1430156": {
+        "split_id": "2020spring",
+        "num_partidos": 1,
+        "patch": 10.06
+    },
+    "2020_spring_ESPORTSTMNT05/1430160": {
+        "split_id": "2020spring",
+        "num_partidos": 1,
+        "patch": 10.06
+    },
+    "2020_spring_ESPORTSTMNT05/1430374": {
+        "split_id": "2020spring",
+        "num_partidos": 3,
+        "patch": 10.06
+    },
+    "2020_spring_ESPORTSTMNT05/1430441": {
+        "split_id": "2020spring",
+        "num_partidos": 3,
+        "patch": 10.06
+    },
+    "2020_spring_ESPORTSTMNT05/1430674": {
+        "split_id": "2020spring",
+        "num_partidos": 3,
+        "patch": 10.06
+    },
+    "2020_spring_ESPORTSTMNT05/1430701": {
+        "split_id": "2020spring",
+        "num_partidos": 1,
+        "patch": 10.06
+    },
+    "2020_spring_ESPORTSTMNT05/1430768": {
+        "split_id": "2020spring",
+        "num_partidos": 3,
+        "patch": 10.06
+    },
+    "2020_spring_ESPORTSTMNT05/1440118": {
+        "split_id": "2020spring",
+        "num_partidos": 1,
+        "patch": 10.06
+    },
+    "2020_spring_ESPORTSTMNT05/1440156": {
+        "split_id": "2020spring",
+        "num_partidos": 1,
+        "patch": 10.06
+    },
+    "2020_spring_ESPORTSTMNT05/1440168": {
+        "split_id": "2020spring",
+        "num_partidos": 1,
+        "patch": 10.06
+    },
+    "2020_spring_ESPORTSTMNT05/1440187": {
+        "split_id": "2020spring",
+        "num_partidos": 3,
+        "patch": 10.06
+    },
+    "2020_spring_ESPORTSTMNT05/1440444": {
+        "split_id": "2020spring",
+        "num_partidos": 4,
+        "patch": 10.06
+    },
+    "2020_spring_ESPORTSTMNT05/1440635": {
+        "split_id": "2020spring",
+        "num_partidos": 4,
+        "patch": 10.06
+    },
+    "2020_spring_ESPORTSTMNT05/1440751": {
+        "split_id": "2020spring",
+        "num_partidos": 3,
+        "patch": 10.06
+    },
+    "2020_summer_ESPORTSTMNT05/1510106": {
+        "split_id": "2020summer",
+        "num_partidos": 1,
+        "patch": 10.12
+    },
+    "2020_summer_ESPORTSTMNT05/1510125": {
+        "split_id": "2020summer",
+        "num_partidos": 1,
+        "patch": 10.12
+    },
+    "2020_summer_ESPORTSTMNT05/1510184": {
+        "split_id": "2020summer",
+        "num_partidos": 1,
+        "patch": 10.12
+    },
+    "2020_summer_ESPORTSTMNT05/1510201": {
+        "split_id": "2020summer",
+        "num_partidos": 1,
+        "patch": 10.12
+    },
+    "2020_summer_ESPORTSTMNT05/1510206": {
+        "split_id": "2020summer",
+        "num_partidos": 1,
+        "patch": 10.12
+    },
+    "2020_summer_ESPORTSTMNT05/1510545": {
+        "split_id": "2020summer",
+        "num_partidos": 1,
+        "patch": 10.12
+    },
+    "2020_summer_ESPORTSTMNT05/1510554": {
+        "split_id": "2020summer",
+        "num_partidos": 1,
+        "patch": 10.12
+    },
+    "2020_summer_ESPORTSTMNT05/1510605": {
+        "split_id": "2020summer",
+        "num_partidos": 1,
+        "patch": 10.12
+    },
+    "2020_summer_ESPORTSTMNT05/1510613": {
+        "split_id": "2020summer",
+        "num_partidos": 1,
+        "patch": 10.12
+    },
+    "2020_summer_ESPORTSTMNT05/1520105": {
+        "split_id": "2020summer",
+        "num_partidos": 1,
+        "patch": 10.12
+    },
+    "2020_summer_ESPORTSTMNT05/1520117": {
+        "split_id": "2020summer",
+        "num_partidos": 1,
+        "patch": 10.12
+    },
+    "2020_summer_ESPORTSTMNT05/1520124": {
+        "split_id": "2020summer",
+        "num_partidos": 1,
+        "patch": 10.12
+    },
+    "2020_summer_ESPORTSTMNT05/1520193": {
+        "split_id": "2020summer",
+        "num_partidos": 1,
+        "patch": 10.12
+    },
+    "2020_summer_ESPORTSTMNT05/1520196": {
+        "split_id": "2020summer",
+        "num_partidos": 1,
+        "patch": 10.12
+    },
+    "2020_summer_ESPORTSTMNT05/1520560": {
+        "split_id": "2020summer",
+        "num_partidos": 1,
+        "patch": 10.12
+    },
+    "2020_summer_ESPORTSTMNT05/1520564": {
+        "split_id": "2020summer",
+        "num_partidos": 1,
+        "patch": 10.12
+    },
+    "2020_summer_ESPORTSTMNT05/1520575": {
+        "split_id": "2020summer",
+        "num_partidos": 1,
+        "patch": 10.12
+    },
+    "2020_summer_ESPORTSTMNT05/1520613": {
+        "split_id": "2020summer",
+        "num_partidos": 1,
+        "patch": 10.12
+    },
+    "2020_summer_ESPORTSTMNT05/1520623": {
+        "split_id": "2020summer",
+        "num_partidos": 1,
+        "patch": 10.12
+    },
+    "2020_summer_ESPORTSTMNT05/1520634": {
+        "split_id": "2020summer",
+        "num_partidos": 1,
+        "patch": 10.12
+    },
+    "2020_summer_ESPORTSTMNT05/1530156": {
+        "split_id": "2020summer",
+        "num_partidos": 1,
+        "patch": 10.15
+    },
+    "2020_summer_ESPORTSTMNT05/1530158": {
+        "split_id": "2020summer",
+        "num_partidos": 1,
+        "patch": 10.15
+    },
+    "2020_summer_ESPORTSTMNT05/1530170": {
+        "split_id": "2020summer",
+        "num_partidos": 1,
+        "patch": 10.15
+    },
+    "2020_summer_ESPORTSTMNT05/1530174": {
+        "split_id": "2020summer",
+        "num_partidos": 1,
+        "patch": 10.15
+    },
+    "2020_summer_ESPORTSTMNT05/1530266": {
+        "split_id": "2020summer",
+        "num_partidos": 1,
+        "patch": 10.15
+    },
+    "2020_summer_ESPORTSTMNT05/1530299": {
+        "split_id": "2020summer",
+        "num_partidos": 1,
+        "patch": 10.15
+    },
+    "2020_summer_ESPORTSTMNT05/1530392": {
+        "split_id": "2020summer",
+        "num_partidos": 1,
+        "patch": 10.15
+    },
+    "2020_summer_ESPORTSTMNT05/1530408": {
+        "split_id": "2020summer",
+        "num_partidos": 1,
+        "patch": 10.15
+    },
+    "2020_summer_ESPORTSTMNT05/1530426": {
+        "split_id": "2020summer",
+        "num_partidos": 1,
+        "patch": 10.15
+    },
+    "2020_summer_ESPORTSTMNT05/1530434": {
+        "split_id": "2020summer",
+        "num_partidos": 1,
+        "patch": 10.15
+    },
+    "2020_summer_ESPORTSTMNT05/1530436": {
+        "split_id": "2020summer",
+        "num_partidos": 1,
+        "patch": 10.15
+    },
+    "2020_summer_ESPORTSTMNT05/1540082": {
+        "split_id": "2020summer",
+        "num_partidos": 1,
+        "patch": 10.15
+    },
+    "2020_summer_ESPORTSTMNT05/1540091": {
+        "split_id": "2020summer",
+        "num_partidos": 1,
+        "patch": 10.15
+    },
+    "2020_summer_ESPORTSTMNT05/1540097": {
+        "split_id": "2020summer",
+        "num_partidos": 1,
+        "patch": 10.15
+    },
+    "2020_summer_ESPORTSTMNT05/1540104": {
+        "split_id": "2020summer",
+        "num_partidos": 1,
+        "patch": 10.15
+    },
+    "2020_summer_ESPORTSTMNT05/1540114": {
+        "split_id": "2020summer",
+        "num_partidos": 1,
+        "patch": 10.15
+    },
+    "2020_summer_ESPORTSTMNT05/1540143": {
+        "split_id": "2020summer",
+        "num_partidos": 1,
+        "patch": 10.15
+    },
+    "2020_summer_ESPORTSTMNT05/1540260": {
+        "split_id": "2020summer",
+        "num_partidos": 1,
+        "patch": 10.15
+    },
+    "2020_summer_ESPORTSTMNT05/1540330": {
+        "split_id": "2020summer",
+        "num_partidos": 1,
+        "patch": 10.15
+    },
+    "2020_summer_ESPORTSTMNT05/1540336": {
+        "split_id": "2020summer",
+        "num_partidos": 1,
+        "patch": 10.15
+    },
+    "2020_summer_ESPORTSTMNT05/1540404": {
+        "split_id": "2020summer",
+        "num_partidos": 1,
+        "patch": 10.15
+    },
+    "2020_summer_ESPORTSTMNT05/1540409": {
+        "split_id": "2020summer",
+        "num_partidos": 1,
+        "patch": 10.15
+    },
+    "2020_summer_ESPORTSTMNT05/1540418": {
+        "split_id": "2020summer",
+        "num_partidos": 1,
+        "patch": 10.15
+    },
+    "2020_summer_ESPORTSTMNT05/1540458": {
+        "split_id": "2020summer",
+        "num_partidos": 1,
+        "patch": 10.15
+    },
+    "2020_summer_ESPORTSTMNT05/1540474": {
+        "split_id": "2020summer",
+        "num_partidos": 1,
+        "patch": 10.15
+    },
+    "2020_spring_ESPORTSTMNT06/1160095": {
+        "split_id": "2020spring",
+        "num_partidos": 1,
+        "patch": 10.04
+    },
+    "2020_spring_ESPORTSTMNT06/1160112": {
+        "split_id": "2020spring",
+        "num_partidos": 1,
+        "patch": 10.04
+    },
+    "2020_spring_ESPORTSTMNT06/1160117": {
+        "split_id": "2020spring",
+        "num_partidos": 1,
+        "patch": 10.04
+    },
+    "2020_spring_ESPORTSTMNT06/1160126": {
+        "split_id": "2020spring",
+        "num_partidos": 1,
+        "patch": 10.04
+    },
+    "2020_spring_ESPORTSTMNT06/1160134": {
+        "split_id": "2020spring",
+        "num_partidos": 1,
+        "patch": 10.04
+    },
+    "2020_spring_ESPORTSTMNT06/1160553": {
+        "split_id": "2020spring",
+        "num_partidos": 1,
+        "patch": 10.04
+    },
+    "2020_spring_ESPORTSTMNT06/1160571": {
+        "split_id": "2020spring",
+        "num_partidos": 1,
+        "patch": 10.04
+    },
+    "2020_spring_ESPORTSTMNT06/1160581": {
+        "split_id": "2020spring",
+        "num_partidos": 1,
+        "patch": 10.04
+    },
+    "2020_spring_ESPORTSTMNT06/1160590": {
+        "split_id": "2020spring",
+        "num_partidos": 1,
+        "patch": 10.04
+    },
+    "2020_spring_ESPORTSTMNT06/1160600": {
+        "split_id": "2020spring",
+        "num_partidos": 1,
+        "patch": 10.04
+    },
+    "2020_spring_ESPORTSTMNT06/1170201": {
+        "split_id": "2020spring",
+        "num_partidos": 1,
+        "patch": 10.04
+    },
+    "2020_spring_ESPORTSTMNT06/1170219": {
+        "split_id": "2020spring",
+        "num_partidos": 1,
+        "patch": 10.04
+    },
+    "2020_spring_ESPORTSTMNT06/1170225": {
+        "split_id": "2020spring",
+        "num_partidos": 1,
+        "patch": 10.04
+    },
+    "2020_spring_ESPORTSTMNT06/1170233": {
+        "split_id": "2020spring",
+        "num_partidos": 1,
+        "patch": 10.04
+    },
+    "2020_spring_ESPORTSTMNT06/1170241": {
+        "split_id": "2020spring",
+        "num_partidos": 1,
+        "patch": 10.04
+    },
+    "2020_spring_ESPORTSTMNT06/1170600": {
+        "split_id": "2020spring",
+        "num_partidos": 1,
+        "patch": 10.04
+    },
+    "2020_spring_ESPORTSTMNT06/1170617": {
+        "split_id": "2020spring",
+        "num_partidos": 1,
+        "patch": 10.04
+    },
+    "2020_spring_ESPORTSTMNT06/1170627": {
+        "split_id": "2020spring",
+        "num_partidos": 1,
+        "patch": 10.04
+    },
+    "2020_spring_ESPORTSTMNT06/1170633": {
+        "split_id": "2020spring",
+        "num_partidos": 1,
+        "patch": 10.04
+    },
+    "2020_spring_ESPORTSTMNT06/1170642": {
+        "split_id": "2020spring",
+        "num_partidos": 1,
+        "patch": 10.04
+    },
+    "2020_summer_ESPORTSTMNT06/1270273": {
+        "split_id": "2020summer",
+        "num_partidos": 1,
+        "patch": 10.13
+    },
+    "2020_summer_ESPORTSTMNT06/1270318": {
+        "split_id": "2020summer",
+        "num_partidos": 1,
+        "patch": 10.13
+    },
+    "2020_summer_ESPORTSTMNT06/1270325": {
+        "split_id": "2020summer",
+        "num_partidos": 1,
+        "patch": 10.13
+    },
+    "2020_summer_ESPORTSTMNT06/1270341": {
+        "split_id": "2020summer",
+        "num_partidos": 1,
+        "patch": 10.13
+    },
+    "2020_summer_ESPORTSTMNT06/1300288": {
+        "split_id": "2020summer",
+        "num_partidos": 1,
+        "patch": 10.13
+    },
+    "2020_summer_ESPORTSTMNT06/1300295": {
+        "split_id": "2020summer",
+        "num_partidos": 1,
+        "patch": 10.13
+    },
+    "2020_summer_ESPORTSTMNT06/1300305": {
+        "split_id": "2020summer",
+        "num_partidos": 1,
+        "patch": 10.13
+    },
+    "2020_summer_ESPORTSTMNT06/1300316": {
+        "split_id": "2020summer",
+        "num_partidos": 1,
+        "patch": 10.13
+    },
+    "2020_summer_ESPORTSTMNT06/1300373": {
+        "split_id": "2020summer",
+        "num_partidos": 1,
+        "patch": 10.13
+    },
+    "2020_summer_ESPORTSTMNT06/1300386": {
+        "split_id": "2020summer",
+        "num_partidos": 1,
+        "patch": 10.13
+    },
+    "2020_summer_ESPORTSTMNT06/1310402": {
+        "split_id": "2020summer",
+        "num_partidos": 2,
+        "patch": 10.16
+    },
+    "2020_summer_ESPORTSTMNT06/1310719": {
+        "split_id": "2020summer",
+        "num_partidos": 4,
+        "patch": 10.16
+    },
+    "2020_summer_ESPORTSTMNT06/1310757": {
+        "split_id": "2020summer",
+        "num_partidos": 2,
+        "patch": 10.16
+    },
+    "2020_summer_ESPORTSTMNT06/1310860": {
+        "split_id": "2020summer",
+        "num_partidos": 3,
+        "patch": 10.16
+    },
+    "2020_summer_ESPORTSTMNT06/1310886": {
+        "split_id": "2020summer",
+        "num_partidos": 2,
+        "patch": 10.16
+    },
+    "2020_summer_ESPORTSTMNT06/1320437": {
+        "split_id": "2020summer",
+        "num_partidos": 3,
+        "patch": 10.16
+    },
+    "2020_summer_ESPORTSTMNT06/1320512": {
+        "split_id": "2020summer",
+        "num_partidos": 3,
+        "patch": 10.16
+    },
+    "2020_summer_ESPORTSTMNT06/1320688": {
+        "split_id": "2020summer",
+        "num_partidos": 5,
+        "patch": 10.16
+    },
+    "2022_spring_ESPORTSTMNT01_2692407": {
+        "split_id": "2022spring",
+        "num_partidos": 1,
+        "patch": 12.01
+    },
+    "2022_spring_ESPORTSTMNT01_2692425": {
+        "split_id": "2022spring",
+        "num_partidos": 1,
+        "patch": 12.01
+    },
+    "2022_spring_ESPORTSTMNT01_2692441": {
+        "split_id": "2022spring",
+        "num_partidos": 1,
+        "patch": 12.01
+    },
+    "2022_spring_ESPORTSTMNT01_2695682": {
+        "split_id": "2022spring",
+        "num_partidos": 1,
+        "patch": 12.01
+    },
+    "2022_spring_ESPORTSTMNT01_2695722": {
+        "split_id": "2022spring",
+        "num_partidos": 1,
+        "patch": 12.01
+    },
+    "2022_spring_ESPORTSTMNT01_2695805": {
+        "split_id": "2022spring",
+        "num_partidos": 1,
+        "patch": 12.01
+    },
+    "2022_spring_ESPORTSTMNT01_2701805": {
+        "split_id": "2022spring",
+        "num_partidos": 1,
+        "patch": 12.01
+    },
+    "2022_spring_ESPORTSTMNT01_2702406": {
+        "split_id": "2022spring",
+        "num_partidos": 1,
+        "patch": 12.01
+    },
+    "2022_spring_ESPORTSTMNT01_2702451": {
+        "split_id": "2022spring",
+        "num_partidos": 1,
+        "patch": 12.01
+    },
+    "2022_spring_ESPORTSTMNT01_2705039": {
+        "split_id": "2022spring",
+        "num_partidos": 1,
+        "patch": 12.01
+    },
+    "2022_spring_ESPORTSTMNT01_2705072": {
+        "split_id": "2022spring",
+        "num_partidos": 1,
+        "patch": 12.01
+    },
+    "2022_spring_ESPORTSTMNT01_2705102": {
+        "split_id": "2022spring",
+        "num_partidos": 1,
+        "patch": 12.01
+    },
+    "2022_spring_ESPORTSTMNT01_2705156": {
+        "split_id": "2022spring",
+        "num_partidos": 1,
+        "patch": 12.01
+    },
+    "2022_spring_ESPORTSTMNT01_2705190": {
+        "split_id": "2022spring",
+        "num_partidos": 1,
+        "patch": 12.01
+    },
+    "2022_spring_ESPORTSTMNT01_2705675": {
+        "split_id": "2022spring",
+        "num_partidos": 1,
+        "patch": 12.01
+    },
+    "2022_spring_ESPORTSTMNT01_2705762": {
+        "split_id": "2022spring",
+        "num_partidos": 1,
+        "patch": 12.01
+    },
+    "2022_spring_ESPORTSTMNT02_2552091": {
+        "split_id": "2022spring",
+        "num_partidos": 1,
+        "patch": 12.02
+    },
+    "2022_spring_ESPORTSTMNT02_2552210": {
+        "split_id": "2022spring",
+        "num_partidos": 1,
+        "patch": 12.02
+    },
+    "2022_spring_ESPORTSTMNT02_2555302": {
+        "split_id": "2022spring",
+        "num_partidos": 1,
+        "patch": 12.02
+    },
+    "2022_spring_ESPORTSTMNT02_2572200": {
+        "split_id": "2022spring",
+        "num_partidos": 1,
+        "patch": 12.02
+    },
+    "2022_spring_ESPORTSTMNT02_2572232": {
+        "split_id": "2022spring",
+        "num_partidos": 1,
+        "patch": 12.02
+    },
+    "2022_spring_ESPORTSTMNT02_2572311": {
+        "split_id": "2022spring",
+        "num_partidos": 1,
+        "patch": 12.02
+    },
+    "2022_spring_ESPORTSTMNT02_2575285": {
+        "split_id": "2022spring",
+        "num_partidos": 1,
+        "patch": 12.02
+    },
+    "2022_spring_ESPORTSTMNT02_2575318": {
+        "split_id": "2022spring",
+        "num_partidos": 1,
+        "patch": 12.02
+    },
+    "2022_spring_ESPORTSTMNT02_2575377": {
+        "split_id": "2022spring",
+        "num_partidos": 1,
+        "patch": 12.02
+    },
+    "2022_spring_ESPORTSTMNT02_2575406": {
+        "split_id": "2022spring",
+        "num_partidos": 1,
+        "patch": 12.02
+    },
+    "2022_spring_ESPORTSTMNT02_2575790": {
+        "split_id": "2022spring",
+        "num_partidos": 1,
+        "patch": 12.02
+    },
+    "2022_spring_ESPORTSTMNT02_2575831": {
+        "split_id": "2022spring",
+        "num_partidos": 1,
+        "patch": 12.02
+    },
+    "2022_spring_ESPORTSTMNT02_2575868": {
+        "split_id": "2022spring",
+        "num_partidos": 1,
+        "patch": 12.02
+    },
+    "2022_spring_ESPORTSTMNT02_2575912": {
+        "split_id": "2022spring",
+        "num_partidos": 1,
+        "patch": 12.02
+    },
+    "2022_spring_ESPORTSTMNT02_2575935": {
+        "split_id": "2022spring",
+        "num_partidos": 1,
+        "patch": 12.02
+    },
+    "2022_summer_ESPORTSTMNT03_2780949": {
+        "split_id": "2022summer",
+        "num_partidos": 1,
+        "patch": 12.11
+    },
+    "2022_summer_ESPORTSTMNT03_2780993": {
+        "split_id": "2022summer",
+        "num_partidos": 1,
+        "patch": 12.11
+    },
+    "2022_summer_ESPORTSTMNT03_2781030": {
+        "split_id": "2022summer",
+        "num_partidos": 1,
+        "patch": 12.11
+    },
+    "2022_spring_ESPORTSTMNT04_2090326": {
+        "split_id": "2022spring",
+        "num_partidos": 1,
+        "patch": 12.01
+    },
+    "2022_spring_ESPORTSTMNT04_2090342": {
+        "split_id": "2022spring",
+        "num_partidos": 1,
+        "patch": 12.01
+    },
+    "2022_spring_ESPORTSTMNT04_2090354": {
+        "split_id": "2022spring",
+        "num_partidos": 1,
+        "patch": 12.01
+    },
+    "2022_spring_ESPORTSTMNT04_2090358": {
+        "split_id": "2022spring",
+        "num_partidos": 1,
+        "patch": 12.01
+    },
+    "2022_spring_ESPORTSTMNT04_2090389": {
+        "split_id": "2022spring",
+        "num_partidos": 1,
+        "patch": 12.01
+    },
+    "2022_spring_ESPORTSTMNT04_2090394": {
+        "split_id": "2022spring",
+        "num_partidos": 1,
+        "patch": 12.01
+    },
+    "2022_spring_ESPORTSTMNT04_2090404": {
+        "split_id": "2022spring",
+        "num_partidos": 1,
+        "patch": 12.01
+    },
+    "2022_spring_ESPORTSTMNT04_2110359": {
+        "split_id": "2022spring",
+        "num_partidos": 1,
+        "patch": 12.01
+    },
+    "2022_spring_ESPORTSTMNT04_2110375": {
+        "split_id": "2022spring",
+        "num_partidos": 1,
+        "patch": 12.01
+    },
+    "2022_spring_ESPORTSTMNT04_2170183": {
+        "split_id": "2022spring",
+        "num_partidos": 1,
+        "patch": 12.04
+    },
+    "2022_spring_ESPORTSTMNT04_2170190": {
+        "split_id": "2022spring",
+        "num_partidos": 1,
+        "patch": 12.04
+    },
+    "2022_spring_ESPORTSTMNT04_2170194": {
+        "split_id": "2022spring",
+        "num_partidos": 1,
+        "patch": 12.04
+    },
+    "2022_spring_ESPORTSTMNT04_2170273": {
+        "split_id": "2022spring",
+        "num_partidos": 1,
+        "patch": 12.04
+    },
+    "2022_spring_ESPORTSTMNT04_2200195": {
+        "split_id": "2022spring",
+        "num_partidos": 1,
+        "patch": 12.04
+    },
+    "2022_spring_ESPORTSTMNT04_2200212": {
+        "split_id": "2022spring",
+        "num_partidos": 1,
+        "patch": 12.04
+    },
+    "2022_spring_ESPORTSTMNT04_2200279": {
+        "split_id": "2022spring",
+        "num_partidos": 1,
+        "patch": 12.04
+    },
+    "2022_spring_ESPORTSTMNT04_2200304": {
+        "split_id": "2022spring",
+        "num_partidos": 1,
+        "patch": 12.04
+    },
+    "2022_spring_ESPORTSTMNT04_2200308": {
+        "split_id": "2022spring",
+        "num_partidos": 1,
+        "patch": 12.04
+    },
+    "2022_spring_ESPORTSTMNT04_2200313": {
+        "split_id": "2022spring",
+        "num_partidos": 1,
+        "patch": 12.04
+    },
+    "2022_spring_ESPORTSTMNT04_2210072": {
+        "split_id": "2022spring",
+        "num_partidos": 1,
+        "patch": 12.04
+    },
+    "2022_spring_ESPORTSTMNT04_2210081": {
+        "split_id": "2022spring",
+        "num_partidos": 1,
+        "patch": 12.04
+    },
+    "2022_spring_ESPORTSTMNT04_2210140": {
+        "split_id": "2022spring",
+        "num_partidos": 1,
+        "patch": 12.04
+    },
+    "2022_spring_ESPORTSTMNT04_2210177": {
+        "split_id": "2022spring",
+        "num_partidos": 1,
+        "patch": 12.04
+    },
+    "2022_spring_ESPORTSTMNT04_2210197": {
+        "split_id": "2022spring",
+        "num_partidos": 1,
+        "patch": 12.04
+    },
+    "2022_spring_ESPORTSTMNT04_2210200": {
+        "split_id": "2022spring",
+        "num_partidos": 1,
+        "patch": 12.04
+    },
+    "2022_spring_ESPORTSTMNT04_2220030": {
+        "split_id": "2022spring",
+        "num_partidos": 1,
+        "patch": 12.04
+    },
+    "2022_spring_ESPORTSTMNT04_2220058": {
+        "split_id": "2022spring",
+        "num_partidos": 1,
+        "patch": 12.04
+    },
+    "2022_spring_ESPORTSTMNT04_2220085": {
+        "split_id": "2022spring",
+        "num_partidos": 1,
+        "patch": 12.04
+    },
+    "2022_spring_ESPORTSTMNT04_2220145": {
+        "split_id": "2022spring",
+        "num_partidos": 1,
+        "patch": 12.04
+    },
+    "2022_spring_ESPORTSTMNT04_2220150": {
+        "split_id": "2022spring",
+        "num_partidos": 1,
+        "patch": 12.04
+    },
+    "2022_spring_ESPORTSTMNT04_2220155": {
+        "split_id": "2022spring",
+        "num_partidos": 1,
+        "patch": 12.04
+    },
+    "2022_spring_ESPORTSTMNT04_2220213": {
+        "split_id": "2022spring",
+        "num_partidos": 1,
+        "patch": 12.04
+    },
+    "2022_spring_ESPORTSTMNT04_2220231": {
+        "split_id": "2022spring",
+        "num_partidos": 1,
+        "patch": 12.04
+    },
+    "2022_spring_ESPORTSTMNT04_2220236": {
+        "split_id": "2022spring",
+        "num_partidos": 1,
+        "patch": 12.04
+    },
+    "2022_summer_ESPORTSTMNT04_2410253": {
+        "split_id": "2022summer",
+        "num_partidos": 1,
+        "patch": 12.12
+    },
+    "2022_summer_ESPORTSTMNT04_2410268": {
+        "split_id": "2022summer",
+        "num_partidos": 1,
+        "patch": 12.12
+    },
+    "2022_summer_ESPORTSTMNT04_2410280": {
+        "split_id": "2022summer",
+        "num_partidos": 1,
+        "patch": 12.12
+    },
+    "2022_summer_ESPORTSTMNT04_2410292": {
+        "split_id": "2022summer",
+        "num_partidos": 1,
+        "patch": 12.12
+    },
+    "2022_summer_ESPORTSTMNT04_2410305": {
+        "split_id": "2022summer",
+        "num_partidos": 1,
+        "patch": 12.12
+    },
+    "2022_summer_ESPORTSTMNT04_2410385": {
+        "split_id": "2022summer",
+        "num_partidos": 1,
+        "patch": 12.12
+    },
+    "2022_summer_ESPORTSTMNT04_2410408": {
+        "split_id": "2022summer",
+        "num_partidos": 1,
+        "patch": 12.12
+    },
+    "2022_summer_ESPORTSTMNT04_2410419": {
+        "split_id": "2022summer",
+        "num_partidos": 1,
+        "patch": 12.12
+    },
+    "2022_summer_ESPORTSTMNT04_2410437": {
+        "split_id": "2022summer",
+        "num_partidos": 1,
+        "patch": 12.12
+    },
+    "2022_summer_ESPORTSTMNT04_2410452": {
+        "split_id": "2022summer",
+        "num_partidos": 1,
+        "patch": 12.12
+    },
+    "2022_summer_ESPORTSTMNT04_2450123": {
+        "split_id": "2022summer",
+        "num_partidos": 1,
+        "patch": 12.14
+    },
+    "2022_summer_ESPORTSTMNT04_2450129": {
+        "split_id": "2022summer",
+        "num_partidos": 1,
+        "patch": 12.14
+    },
+    "2022_summer_ESPORTSTMNT04_2450140": {
+        "split_id": "2022summer",
+        "num_partidos": 1,
+        "patch": 12.14
+    },
+    "2022_summer_ESPORTSTMNT04_2450146": {
+        "split_id": "2022summer",
+        "num_partidos": 1,
+        "patch": 12.14
+    },
+    "2022_summer_ESPORTSTMNT04_2450215": {
+        "split_id": "2022summer",
+        "num_partidos": 1,
+        "patch": 12.14
+    },
+    "2022_summer_ESPORTSTMNT04_2450238": {
+        "split_id": "2022summer",
+        "num_partidos": 1,
+        "patch": 12.14
+    },
+    "2022_summer_ESPORTSTMNT04_2450271": {
+        "split_id": "2022summer",
+        "num_partidos": 1,
+        "patch": 12.14
+    },
+    "2022_summer_ESPORTSTMNT04_2450295": {
+        "split_id": "2022summer",
+        "num_partidos": 1,
+        "patch": 12.14
+    },
+    "2022_summer_ESPORTSTMNT04_2450315": {
+        "split_id": "2022summer",
+        "num_partidos": 1,
+        "patch": 12.14
+    },
+    "2022_summer_ESPORTSTMNT04_2470150": {
+        "split_id": "2022summer",
+        "num_partidos": 1,
+        "patch": 12.14
+    },
+    "2022_summer_ESPORTSTMNT04_2471074": {
+        "split_id": "2022summer",
+        "num_partidos": 1,
+        "patch": 12.14
+    },
+    "2022_summer_ESPORTSTMNT04_2471120": {
+        "split_id": "2022summer",
+        "num_partidos": 1,
+        "patch": 12.14
+    },
+    "2022_summer_ESPORTSTMNT04_2471136": {
+        "split_id": "2022summer",
+        "num_partidos": 1,
+        "patch": 12.14
+    },
+    "2022_summer_ESPORTSTMNT04_2471154": {
+        "split_id": "2022summer",
+        "num_partidos": 1,
+        "patch": 12.14
+    },
+    "2022_summer_ESPORTSTMNT04_2471173": {
+        "split_id": "2022summer",
+        "num_partidos": 1,
+        "patch": 12.14
+    },
+    "2022_summer_ESPORTSTMNT04_2471276": {
+        "split_id": "2022summer",
+        "num_partidos": 1,
+        "patch": 12.14
+    },
+    "2022_summer_ESPORTSTMNT04_2471307": {
+        "split_id": "2022summer",
+        "num_partidos": 1,
+        "patch": 12.14
+    },
+    "2022_summer_ESPORTSTMNT04_2471329": {
+        "split_id": "2022summer",
+        "num_partidos": 1,
+        "patch": 12.14
+    },
+    "2022_summer_ESPORTSTMNT04_2471343": {
+        "split_id": "2022summer",
+        "num_partidos": 1,
+        "patch": 12.14
+    },
+    "2022_summer_ESPORTSTMNT04_2471359": {
+        "split_id": "2022summer",
+        "num_partidos": 1,
+        "patch": 12.14
+    },
+    "2022_summer_ESPORTSTMNT04_2471427": {
+        "split_id": "2022summer",
+        "num_partidos": 1,
+        "patch": 12.14
+    },
+    "2022_summer_ESPORTSTMNT04_2471438": {
+        "split_id": "2022summer",
+        "num_partidos": 1,
+        "patch": 12.14
+    },
+    "2022_summer_ESPORTSTMNT04_2471455": {
+        "split_id": "2022summer",
+        "num_partidos": 1,
+        "patch": 12.14
+    },
+    "2022_summer_ESPORTSTMNT04_2471465": {
+        "split_id": "2022summer",
+        "num_partidos": 1,
+        "patch": 12.14
+    },
+    "2022_summer_ESPORTSTMNT04_2471479": {
+        "split_id": "2022summer",
+        "num_partidos": 1,
+        "patch": 12.14
+    },
+    "2022_summer_ESPORTSTMNT04_2471493": {
+        "split_id": "2022summer",
+        "num_partidos": 1,
+        "patch": 12.14
+    },
+    "2022_summer_ESPORTSTMNT04_2471498": {
+        "split_id": "2022summer",
+        "num_partidos": 1,
+        "patch": 12.14
+    },
+    "2022_spring_ESPORTSTMNT05_2520280": {
+        "split_id": "2022spring",
+        "num_partidos": 1,
+        "patch": 12.02
+    },
+    "2022_spring_ESPORTSTMNT05_2530235": {
+        "split_id": "2022spring",
+        "num_partidos": 1,
+        "patch": 12.02
+    },
+    "2022_spring_ESPORTSTMNT05_2530245": {
+        "split_id": "2022spring",
+        "num_partidos": 1,
+        "patch": 12.02
+    },
+    "2022_spring_ESPORTSTMNT05_2530261": {
+        "split_id": "2022spring",
+        "num_partidos": 1,
+        "patch": 12.02
+    },
+    "2022_spring_ESPORTSTMNT05_2530265": {
+        "split_id": "2022spring",
+        "num_partidos": 1,
+        "patch": 12.02
+    },
+    "2022_summer_ESPORTSTMNT05_2942241": {
+        "split_id": "2022summer",
+        "num_partidos": 1,
+        "patch": 12.12
+    },
+    "2022_summer_ESPORTSTMNT05_2942250": {
+        "split_id": "2022summer",
+        "num_partidos": 1,
+        "patch": 12.12
+    },
+    "2022_summer_ESPORTSTMNT05_2942258": {
+        "split_id": "2022summer",
+        "num_partidos": 1,
+        "patch": 12.12
+    },
+    "2022_summer_ESPORTSTMNT05_2942299": {
+        "split_id": "2022summer",
+        "num_partidos": 1,
+        "patch": 12.12
+    },
+    "2022_summer_ESPORTSTMNT05_2942323": {
+        "split_id": "2022summer",
+        "num_partidos": 1,
+        "patch": 12.12
+    },
+    "2022_summer_ESPORTSTMNT05_2942587": {
+        "split_id": "2022summer",
+        "num_partidos": 1,
+        "patch": 12.12
+    },
+    "2022_summer_ESPORTSTMNT05_2952637": {
+        "split_id": "2022summer",
+        "num_partidos": 1,
+        "patch": 12.12
+    },
+    "2022_summer_ESPORTSTMNT05_2952660": {
+        "split_id": "2022summer",
+        "num_partidos": 1,
+        "patch": 12.12
+    },
+    "2022_summer_ESPORTSTMNT05_2952686": {
+        "split_id": "2022summer",
+        "num_partidos": 1,
+        "patch": 12.12
+    },
+    "2022_summer_ESPORTSTMNT05_2952701": {
+        "split_id": "2022summer",
+        "num_partidos": 1,
+        "patch": 12.12
+    },
+    "2022_summer_ESPORTSTMNT05_3060364": {
+        "split_id": "2022summer",
+        "num_partidos": 5,
+        "patch": 12.15
+    },
+    "2022_summer_ESPORTSTMNT05_3060402": {
+        "split_id": "2022summer",
+        "num_partidos": 4,
+        "patch": 12.15
+    },
+    "2022_summer_ESPORTSTMNT05_3060429": {
+        "split_id": "2022summer",
+        "num_partidos": 5,
+        "patch": 12.15
+    },
+    "2022_summer_ESPORTSTMNT05_3060629": {
+        "split_id": "2022summer",
+        "num_partidos": 4,
+        "patch": 12.15
+    },
+    "2022_summer_ESPORTSTMNT05_3090627": {
+        "split_id": "2022summer",
+        "num_partidos": 3,
+        "patch": 12.15
+    },
+    "2022_summer_ESPORTSTMNT05_3090659": {
+        "split_id": "2022summer",
+        "num_partidos": 3,
+        "patch": 12.15
+    },
+    "2022_summer_ESPORTSTMNT05_3090821": {
+        "split_id": "2022summer",
+        "num_partidos": 4,
+        "patch": 12.15
+    },
+    "2022_summer_ESPORTSTMNT05_3090891": {
+        "split_id": "2022summer",
+        "num_partidos": 3,
+        "patch": 12.15
+    },
+    "2022_spring_ESPORTSTMNT06_2190198": {
+        "split_id": "2022spring",
+        "num_partidos": 1,
+        "patch": 12.03
+    },
+    "2022_spring_ESPORTSTMNT06_2190291": {
+        "split_id": "2022spring",
+        "num_partidos": 1,
+        "patch": 12.03
+    },
+    "2022_spring_ESPORTSTMNT06_2190345": {
+        "split_id": "2022spring",
+        "num_partidos": 1,
+        "patch": 12.03
+    },
+    "2022_spring_ESPORTSTMNT06_2190727": {
+        "split_id": "2022spring",
+        "num_partidos": 1,
+        "patch": 12.03
+    },
+    "2022_spring_ESPORTSTMNT06_2190764": {
+        "split_id": "2022spring",
+        "num_partidos": 1,
+        "patch": 12.03
+    },
+    "2022_spring_ESPORTSTMNT06_2210164": {
+        "split_id": "2022spring",
+        "num_partidos": 1,
+        "patch": 12.03
+    },
+    "2022_spring_ESPORTSTMNT06_2210170": {
+        "split_id": "2022spring",
+        "num_partidos": 1,
+        "patch": 12.03
+    },
+    "2022_spring_ESPORTSTMNT06_2210177": {
+        "split_id": "2022spring",
+        "num_partidos": 1,
+        "patch": 12.03
+    },
+    "2022_spring_ESPORTSTMNT06_2210192": {
+        "split_id": "2022spring",
+        "num_partidos": 1,
+        "patch": 12.03
+    },
+    "2022_spring_ESPORTSTMNT06_2210305": {
+        "split_id": "2022spring",
+        "num_partidos": 1,
+        "patch": 12.03
+    },
+    "2022_spring_ESPORTSTMNT06_2210313": {
+        "split_id": "2022spring",
+        "num_partidos": 1,
+        "patch": 12.03
+    },
+    "2022_spring_ESPORTSTMNT06_2210314": {
+        "split_id": "2022spring",
+        "num_partidos": 1,
+        "patch": 12.03
+    },
+    "2022_spring_ESPORTSTMNT06_2210740": {
+        "split_id": "2022spring",
+        "num_partidos": 1,
+        "patch": 12.03
+    },
+    "2022_spring_ESPORTSTMNT06_2210746": {
+        "split_id": "2022spring",
+        "num_partidos": 1,
+        "patch": 12.03
+    },
+    "2022_spring_ESPORTSTMNT06_2210751": {
+        "split_id": "2022spring",
+        "num_partidos": 1,
+        "patch": 12.03
+    },
+    "2022_spring_ESPORTSTMNT06_2210807": {
+        "split_id": "2022spring",
+        "num_partidos": 1,
+        "patch": 12.03
+    },
+    "2022_spring_ESPORTSTMNT06_2210821": {
+        "split_id": "2022spring",
+        "num_partidos": 1,
+        "patch": 12.03
+    },
+    "2022_spring_ESPORTSTMNT06_2210835": {
+        "split_id": "2022spring",
+        "num_partidos": 1,
+        "patch": 12.03
+    },
+    "2022_spring_ESPORTSTMNT06_2210839": {
+        "split_id": "2022spring",
+        "num_partidos": 1,
+        "patch": 12.03
+    },
+    "2022_spring_ESPORTSTMNT06_2210847": {
+        "split_id": "2022spring",
+        "num_partidos": 1,
+        "patch": 12.03
+    },
+    "2022_spring_ESPORTSTMNT06_2260237": {
+        "split_id": "2022spring",
+        "num_partidos": 4,
+        "patch": 12.05
+    },
+    "2022_spring_ESPORTSTMNT06_2260320": {
+        "split_id": "2022spring",
+        "num_partidos": 5,
+        "patch": 12.05
+    },
+    "2022_spring_ESPORTSTMNT06_2260360": {
+        "split_id": "2022spring",
+        "num_partidos": 3,
+        "patch": 12.05
+    },
+    "2022_spring_ESPORTSTMNT06_2260391": {
+        "split_id": "2022spring",
+        "num_partidos": 5,
+        "patch": 12.05
+    },
+    "2022_spring_ESPORTSTMNT06_2260413": {
+        "split_id": "2022spring",
+        "num_partidos": 3,
+        "patch": 12.05
+    },
+    "2022_spring_ESPORTSTMNT06_2260679": {
+        "split_id": "2022spring",
+        "num_partidos": 3,
+        "patch": 12.05
+    },
+    "2022_spring_ESPORTSTMNT06_2260691": {
+        "split_id": "2022spring",
+        "num_partidos": 3,
+        "patch": 12.05
+    },
+    "2022_spring_ESPORTSTMNT06_2290286": {
+        "split_id": "2022spring",
+        "num_partidos": 4,
+        "patch": 12.05
+    },
+    "2022_summer_ESPORTSTMNT06_2420119": {
+        "split_id": "2022summer",
+        "num_partidos": 1,
+        "patch": 12.11
+    },
+    "2022_summer_ESPORTSTMNT06_2420131": {
+        "split_id": "2022summer",
+        "num_partidos": 1,
+        "patch": 12.11
+    },
+    "2022_summer_ESPORTSTMNT06_2460579": {
+        "split_id": "2022summer",
+        "num_partidos": 1,
+        "patch": 12.11
+    },
+    "2022_summer_ESPORTSTMNT06_2460588": {
+        "split_id": "2022summer",
+        "num_partidos": 1,
+        "patch": 12.11
+    },
+    "2022_summer_ESPORTSTMNT06_2460614": {
+        "split_id": "2022summer",
+        "num_partidos": 1,
+        "patch": 12.11
+    },
+    "2022_summer_ESPORTSTMNT06_2460615": {
+        "split_id": "2022summer",
+        "num_partidos": 1,
+        "patch": 12.11
+    },
+    "2022_summer_ESPORTSTMNT06_2460638": {
+        "split_id": "2022summer",
+        "num_partidos": 1,
+        "patch": 12.11
+    },
+    "2022_summer_ESPORTSTMNT06_2470076": {
+        "split_id": "2022summer",
+        "num_partidos": 1,
+        "patch": 12.11
+    },
+    "2022_summer_ESPORTSTMNT06_2470101": {
+        "split_id": "2022summer",
+        "num_partidos": 1,
+        "patch": 12.11
+    },
+    "2022_summer_ESPORTSTMNT06_2470122": {
+        "split_id": "2022summer",
+        "num_partidos": 1,
+        "patch": 12.11
+    },
+    "2022_summer_ESPORTSTMNT06_2470149": {
+        "split_id": "2022summer",
+        "num_partidos": 1,
+        "patch": 12.11
+    },
+    "2022_summer_ESPORTSTMNT06_2470157": {
+        "split_id": "2022summer",
+        "num_partidos": 1,
+        "patch": 12.11
+    },
+    "2022_summer_ESPORTSTMNT06_2470217": {
+        "split_id": "2022summer",
+        "num_partidos": 1,
+        "patch": 12.11
+    },
+    "2022_summer_ESPORTSTMNT06_2470229": {
+        "split_id": "2022summer",
+        "num_partidos": 1,
+        "patch": 12.11
+    },
+    "2022_summer_ESPORTSTMNT06_2470249": {
+        "split_id": "2022summer",
+        "num_partidos": 1,
+        "patch": 12.11
+    },
+    "2022_summer_ESPORTSTMNT06_2470255": {
+        "split_id": "2022summer",
+        "num_partidos": 1,
+        "patch": 12.11
+    },
+    "2022_summer_ESPORTSTMNT06_2470261": {
+        "split_id": "2022summer",
+        "num_partidos": 1,
+        "patch": 12.11
+    },
+    "2022_summer_ESPORTSTMNT06_2470532": {
+        "split_id": "2022summer",
+        "num_partidos": 1,
+        "patch": 12.11
+    },
+    "2022_summer_ESPORTSTMNT06_2470580": {
+        "split_id": "2022summer",
+        "num_partidos": 1,
+        "patch": 12.11
+    },
+    "2022_summer_ESPORTSTMNT06_2470582": {
+        "split_id": "2022summer",
+        "num_partidos": 1,
+        "patch": 12.11
+    },
+    "2022_summer_ESPORTSTMNT06_2470599": {
+        "split_id": "2022summer",
+        "num_partidos": 1,
+        "patch": 12.11
+    },
+    "2022_summer_ESPORTSTMNT06_2470606": {
+        "split_id": "2022summer",
+        "num_partidos": 1,
+        "patch": 12.11
+    },
+    "2022_summer_ESPORTSTMNT06_2530217": {
+        "split_id": "2022summer",
+        "num_partidos": 1,
+        "patch": 12.13
+    },
+    "2022_summer_ESPORTSTMNT06_2530232": {
+        "split_id": "2022summer",
+        "num_partidos": 1,
+        "patch": 12.13
+    },
+    "2022_summer_ESPORTSTMNT06_2530241": {
+        "split_id": "2022summer",
+        "num_partidos": 1,
+        "patch": 12.13
+    },
+    "2022_summer_ESPORTSTMNT06_2530249": {
+        "split_id": "2022summer",
+        "num_partidos": 1,
+        "patch": 12.13
+    },
+    "2022_summer_ESPORTSTMNT06_2530395": {
+        "split_id": "2022summer",
+        "num_partidos": 1,
+        "patch": 12.13
+    },
+    "2022_summer_ESPORTSTMNT06_2530440": {
+        "split_id": "2022summer",
+        "num_partidos": 1,
+        "patch": 12.13
+    },
+    "2022_summer_ESPORTSTMNT06_2530452": {
+        "split_id": "2022summer",
+        "num_partidos": 1,
+        "patch": 12.13
+    },
+    "2022_summer_ESPORTSTMNT06_2531353": {
+        "split_id": "2022summer",
+        "num_partidos": 1,
+        "patch": 12.13
+    },
+    "2022_summer_ESPORTSTMNT06_2531359": {
+        "split_id": "2022summer",
+        "num_partidos": 1,
+        "patch": 12.13
+    },
+    "2022_summer_ESPORTSTMNT06_2531384": {
+        "split_id": "2022summer",
+        "num_partidos": 1,
+        "patch": 12.13
+    },
+    "2022_summer_ESPORTSTMNT06_2531396": {
+        "split_id": "2022summer",
+        "num_partidos": 1,
+        "patch": 12.13
+    },
+    "2022_summer_ESPORTSTMNT06_2531409": {
+        "split_id": "2022summer",
+        "num_partidos": 1,
+        "patch": 12.13
+    },
+    "2022_summer_ESPORTSTMNT06_2540233": {
+        "split_id": "2022summer",
+        "num_partidos": 1,
+        "patch": 12.13
+    },
+    "2022_summer_ESPORTSTMNT06_2540366": {
+        "split_id": "2022summer",
+        "num_partidos": 1,
+        "patch": 12.13
+    },
+    "2022_summer_ESPORTSTMNT06_2540390": {
+        "split_id": "2022summer",
+        "num_partidos": 1,
+        "patch": 12.13
+    },
+    "2022_summer_ESPORTSTMNT06_2541470": {
+        "split_id": "2022summer",
+        "num_partidos": 1,
+        "patch": 12.13
+    },
+    "2022_summer_ESPORTSTMNT06_2541495": {
+        "split_id": "2022summer",
+        "num_partidos": 1,
+        "patch": 12.13
+    },
+    "2022_summer_ESPORTSTMNT06_2541504": {
+        "split_id": "2022summer",
+        "num_partidos": 1,
+        "patch": 12.13
+    },
+    "2022_summer_ESPORTSTMNT06_2541519": {
+        "split_id": "2022summer",
+        "num_partidos": 1,
+        "patch": 12.13
+    },
+    "2022_summer_ESPORTSTMNT06_2541533": {
+        "split_id": "2022summer",
+        "num_partidos": 1,
+        "patch": 12.13
+    },
+    "2023_finals_ESPORTSTMNT02_3232892": {
+        "split_id": "2023finals",
+        "num_partidos": 3,
+        "patch": 13.15
+    },
+    "2023_spring_ESPORTSTMNT03_3131863": {
+        "split_id": "2023spring",
+        "num_partidos": 3,
+        "patch": 13.04
+    },
+    "2023_winter_ESPORTSTMNT04_2663880": {
+        "split_id": "2023winter",
+        "num_partidos": 3,
+        "patch": 13.01
+    },
+    "2023_winter_ESPORTSTMNT04_2664764": {
+        "split_id": "2023winter",
+        "num_partidos": 3,
+        "patch": 13.01
+    },
+    "2023_winter_ESPORTSTMNT04_2664918": {
+        "split_id": "2023winter",
+        "num_partidos": 2,
+        "patch": 13.01
+    },
+    "2023_winter_ESPORTSTMNT04_2665780": {
+        "split_id": "2023winter",
+        "num_partidos": 1,
+        "patch": 13.01
+    },
+    "2023_winter_ESPORTSTMNT04_2665863": {
+        "split_id": "2023winter",
+        "num_partidos": 2,
+        "patch": 13.01
+    },
+    "2023_winter_ESPORTSTMNT04_2665906": {
+        "split_id": "2023winter",
+        "num_partidos": 2,
+        "patch": 13.01
+    },
+    "2023_winter_ESPORTSTMNT04_2666152": {
+        "split_id": "2023winter",
+        "num_partidos": 2,
+        "patch": 13.01
+    },
+    "2023_winter_ESPORTSTMNT04_2666184": {
+        "split_id": "2023winter",
+        "num_partidos": 3,
+        "patch": 13.01
+    },
+    "2023_winter_ESPORTSTMNT04_2666269": {
+        "split_id": "2023winter",
+        "num_partidos": 3,
+        "patch": 13.01
+    },
+    "2023_winter_ESPORTSTMNT04_2667200": {
+        "split_id": "2023winter",
+        "num_partidos": 2,
+        "patch": 13.01
+    },
+    "2023_winter_ESPORTSTMNT04_2667226": {
+        "split_id": "2023winter",
+        "num_partidos": 5,
+        "patch": 13.01
+    },
+    "2023_winter_ESPORTSTMNT04_2668106": {
+        "split_id": "2023winter",
+        "num_partidos": 1,
+        "patch": 13.01
+    },
+    "2023_winter_ESPORTSTMNT04_2668132": {
+        "split_id": "2023winter",
+        "num_partidos": 3,
+        "patch": 13.01
+    },
+    "2023_winter_ESPORTSTMNT04_2668245": {
+        "split_id": "2023winter",
+        "num_partidos": 1,
+        "patch": 13.01
+    },
+    "2023_summer_ESPORTSTMNT04_2683466": {
+        "split_id": "2023summer",
+        "num_partidos": 1,
+        "patch": 13.11
+    },
+    "2023_summer_ESPORTSTMNT04_2683600": {
+        "split_id": "2023summer",
+        "num_partidos": 1,
+        "patch": 13.11
+    },
+    "2023_summer_ESPORTSTMNT04_2684543": {
+        "split_id": "2023summer",
+        "num_partidos": 1,
+        "patch": 13.11
+    },
+    "2023_summer_ESPORTSTMNT04_2684566": {
+        "split_id": "2023summer",
+        "num_partidos": 1,
+        "patch": 13.11
+    },
+    "2023_summer_ESPORTSTMNT04_2684610": {
+        "split_id": "2023summer",
+        "num_partidos": 1,
+        "patch": 13.11
+    },
+    "2023_summer_ESPORTSTMNT04_2684636": {
+        "split_id": "2023summer",
+        "num_partidos": 1,
+        "patch": 13.11
+    },
+    "2023_summer_ESPORTSTMNT04_2684645": {
+        "split_id": "2023summer",
+        "num_partidos": 1,
+        "patch": 13.11
+    },
+    "2023_summer_ESPORTSTMNT04_2685458": {
+        "split_id": "2023summer",
+        "num_partidos": 1,
+        "patch": 13.11
+    },
+    "2023_summer_ESPORTSTMNT04_2685469": {
+        "split_id": "2023summer",
+        "num_partidos": 1,
+        "patch": 13.11
+    },
+    "2023_summer_ESPORTSTMNT04_2685487": {
+        "split_id": "2023summer",
+        "num_partidos": 1,
+        "patch": 13.11
+    },
+    "2023_summer_ESPORTSTMNT04_2685496": {
+        "split_id": "2023summer",
+        "num_partidos": 1,
+        "patch": 13.11
+    },
+    "2023_summer_ESPORTSTMNT04_2685544": {
+        "split_id": "2023summer",
+        "num_partidos": 1,
+        "patch": 13.11
+    },
+    "2023_summer_ESPORTSTMNT04_2685564": {
+        "split_id": "2023summer",
+        "num_partidos": 1,
+        "patch": 13.11
+    },
+    "2023_summer_ESPORTSTMNT04_2685587": {
+        "split_id": "2023summer",
+        "num_partidos": 1,
+        "patch": 13.11
+    },
+    "2023_summer_ESPORTSTMNT04_2685607": {
+        "split_id": "2023summer",
+        "num_partidos": 1,
+        "patch": 13.11
+    },
+    "2023_summer_ESPORTSTMNT04_2686073": {
+        "split_id": "2023summer",
+        "num_partidos": 1,
+        "patch": 13.11
+    },
+    "2023_summer_ESPORTSTMNT04_2686175": {
+        "split_id": "2023summer",
+        "num_partidos": 1,
+        "patch": 13.11
+    },
+    "2023_summer_ESPORTSTMNT04_2686529": {
+        "split_id": "2023summer",
+        "num_partidos": 1,
+        "patch": 13.11
+    },
+    "2023_summer_ESPORTSTMNT04_2686559": {
+        "split_id": "2023summer",
+        "num_partidos": 1,
+        "patch": 13.11
+    },
+    "2023_summer_ESPORTSTMNT04_2686566": {
+        "split_id": "2023summer",
+        "num_partidos": 1,
+        "patch": 13.11
+    },
+    "2023_summer_ESPORTSTMNT04_2686611": {
+        "split_id": "2023summer",
+        "num_partidos": 1,
+        "patch": 13.11
+    },
+    "2023_summer_ESPORTSTMNT04_2687063": {
+        "split_id": "2023summer",
+        "num_partidos": 1,
+        "patch": 13.11
+    },
+    "2023_summer_ESPORTSTMNT04_2687112": {
+        "split_id": "2023summer",
+        "num_partidos": 1,
+        "patch": 13.11
+    },
+    "2023_summer_ESPORTSTMNT04_2687123": {
+        "split_id": "2023summer",
+        "num_partidos": 1,
+        "patch": 13.11
+    },
+    "2023_summer_ESPORTSTMNT04_2687131": {
+        "split_id": "2023summer",
+        "num_partidos": 1,
+        "patch": 13.11
+    },
+    "2023_summer_ESPORTSTMNT04_2687160": {
+        "split_id": "2023summer",
+        "num_partidos": 1,
+        "patch": 13.11
+    },
+    "2023_summer_ESPORTSTMNT04_2687183": {
+        "split_id": "2023summer",
+        "num_partidos": 1,
+        "patch": 13.11
+    },
+    "2023_summer_ESPORTSTMNT04_2687192": {
+        "split_id": "2023summer",
+        "num_partidos": 1,
+        "patch": 13.11
+    },
+    "2023_summer_ESPORTSTMNT04_2687512": {
+        "split_id": "2023summer",
+        "num_partidos": 1,
+        "patch": 13.11
+    },
+    "2023_summer_ESPORTSTMNT04_2687518": {
+        "split_id": "2023summer",
+        "num_partidos": 1,
+        "patch": 13.11
+    },
+    "2023_summer_ESPORTSTMNT04_2687523": {
+        "split_id": "2023summer",
+        "num_partidos": 1,
+        "patch": 13.11
+    },
+    "2023_summer_ESPORTSTMNT04_2687570": {
+        "split_id": "2023summer",
+        "num_partidos": 1,
+        "patch": 13.11
+    },
+    "2023_summer_ESPORTSTMNT04_2687575": {
+        "split_id": "2023summer",
+        "num_partidos": 1,
+        "patch": 13.11
+    },
+    "2023_summer_ESPORTSTMNT04_2687585": {
+        "split_id": "2023summer",
+        "num_partidos": 1,
+        "patch": 13.11
+    },
+    "2023_summer_ESPORTSTMNT04_2687596": {
+        "split_id": "2023summer",
+        "num_partidos": 1,
+        "patch": 13.11
+    },
+    "2023_summer_ESPORTSTMNT04_2688038": {
+        "split_id": "2023summer",
+        "num_partidos": 1,
+        "patch": 13.11
+    },
+    "2023_summer_ESPORTSTMNT04_2688068": {
+        "split_id": "2023summer",
+        "num_partidos": 1,
+        "patch": 13.11
+    },
+    "2023_summer_ESPORTSTMNT04_2688085": {
+        "split_id": "2023summer",
+        "num_partidos": 1,
+        "patch": 13.11
+    },
+    "2023_summer_ESPORTSTMNT04_2688106": {
+        "split_id": "2023summer",
+        "num_partidos": 1,
+        "patch": 13.11
+    },
+    "2023_summer_ESPORTSTMNT04_2688138": {
+        "split_id": "2023summer",
+        "num_partidos": 1,
+        "patch": 13.11
+    },
+    "2023_summer_ESPORTSTMNT04_2688165": {
+        "split_id": "2023summer",
+        "num_partidos": 1,
+        "patch": 13.11
+    },
+    "2023_summer_ESPORTSTMNT04_2688524": {
+        "split_id": "2023summer",
+        "num_partidos": 1,
+        "patch": 13.11
+    },
+    "2023_summer_ESPORTSTMNT04_2688552": {
+        "split_id": "2023summer",
+        "num_partidos": 1,
+        "patch": 13.11
+    },
+    "2023_summer_ESPORTSTMNT04_2688612": {
+        "split_id": "2023summer",
+        "num_partidos": 1,
+        "patch": 13.11
+    },
+    "2023_summer_ESPORTSTMNT04_2688621": {
+        "split_id": "2023summer",
+        "num_partidos": 3,
+        "patch": 13.11
+    },
+    "2023_spring_ESPORTSTMNT05_3220263": {
+        "split_id": "2023spring",
+        "num_partidos": 2,
+        "patch": 13.06
+    },
+    "2023_spring_ESPORTSTMNT05_3220282": {
+        "split_id": "2023spring",
+        "num_partidos": 2,
+        "patch": 13.06
+    },
+    "2023_spring_ESPORTSTMNT05_3220425": {
+        "split_id": "2023spring",
+        "num_partidos": 1,
+        "patch": 13.06
+    },
+    "2023_spring_ESPORTSTMNT05_3220498": {
+        "split_id": "2023spring",
+        "num_partidos": 4,
+        "patch": 13.06
+    },
+    "2023_spring_ESPORTSTMNT05_3221203": {
+        "split_id": "2023spring",
+        "num_partidos": 1,
+        "patch": 13.06
+    },
+    "2023_spring_ESPORTSTMNT05_3221222": {
+        "split_id": "2023spring",
+        "num_partidos": 1,
+        "patch": 13.06
+    },
+    "2023_spring_ESPORTSTMNT05_3221239": {
+        "split_id": "2023spring",
+        "num_partidos": 3,
+        "patch": 13.06
+    },
+    "2023_spring_ESPORTSTMNT05_3222228": {
+        "split_id": "2023spring",
+        "num_partidos": 2,
+        "patch": 13.06
+    },
+    "2023_spring_ESPORTSTMNT05_3222595": {
+        "split_id": "2023spring",
+        "num_partidos": 4,
+        "patch": 13.06
+    },
+    "2023_spring_ESPORTSTMNT05_3223113": {
+        "split_id": "2023spring",
+        "num_partidos": 2,
+        "patch": 13.06
+    },
+    "2023_spring_ESPORTSTMNT05_3223181": {
+        "split_id": "2023spring",
+        "num_partidos": 2,
+        "patch": 13.06
+    },
+    "2023_spring_ESPORTSTMNT05_3223249": {
+        "split_id": "2023spring",
+        "num_partidos": 2,
+        "patch": 13.06
+    },
+    "2023_spring_ESPORTSTMNT05_3223343": {
+        "split_id": "2023spring",
+        "num_partidos": 2,
+        "patch": 13.06
+    },
+    "2023_spring_ESPORTSTMNT05_3223371": {
+        "split_id": "2023spring",
+        "num_partidos": 2,
+        "patch": 13.06
+    },
+    "2023_finals_ESPORTSTMNT05_3239367": {
+        "split_id": "2023finals",
+        "num_partidos": 4,
+        "patch": 13.15
+    },
+    "2023_finals_ESPORTSTMNT05_3239589": {
+        "split_id": "2023finals",
+        "num_partidos": 4,
+        "patch": 13.15
+    },
+    "2023_finals_ESPORTSTMNT05_3241433": {
+        "split_id": "2023finals",
+        "num_partidos": 2,
+        "patch": 13.15
+    },
+    "2023_finals_ESPORTSTMNT05_3241555": {
+        "split_id": "2023finals",
+        "num_partidos": 1,
+        "patch": 13.15
+    },
+    "2023_finals_ESPORTSTMNT05_3241568": {
+        "split_id": "2023finals",
+        "num_partidos": 2,
+        "patch": 13.15
+    },
+    "2023_finals_ESPORTSTMNT05_3241617": {
+        "split_id": "2023finals",
+        "num_partidos": 3,
+        "patch": 13.15
+    },
+    "2023_finals_ESPORTSTMNT05_3241712": {
+        "split_id": "2023finals",
+        "num_partidos": 1,
+        "patch": 13.15
+    },
+    "2023_winter_ESPORTSTMNT06_2767073": {
+        "split_id": "2023winter",
+        "num_partidos": 1,
+        "patch": 13.01
+    },
+    "2023_winter_ESPORTSTMNT06_2767108": {
+        "split_id": "2023winter",
+        "num_partidos": 1,
+        "patch": 13.01
+    },
+    "2023_winter_ESPORTSTMNT06_2767120": {
+        "split_id": "2023winter",
+        "num_partidos": 1,
+        "patch": 13.01
+    },
+    "2023_winter_ESPORTSTMNT06_2767145": {
+        "split_id": "2023winter",
+        "num_partidos": 1,
+        "patch": 13.01
+    },
+    "2023_winter_ESPORTSTMNT06_2767173": {
+        "split_id": "2023winter",
+        "num_partidos": 1,
+        "patch": 13.01
+    },
+    "2023_winter_ESPORTSTMNT06_2767214": {
+        "split_id": "2023winter",
+        "num_partidos": 1,
+        "patch": 13.01
+    },
+    "2023_winter_ESPORTSTMNT06_2767440": {
+        "split_id": "2023winter",
+        "num_partidos": 1,
+        "patch": 13.01
+    },
+    "2023_winter_ESPORTSTMNT06_2767464": {
+        "split_id": "2023winter",
+        "num_partidos": 1,
+        "patch": 13.01
+    },
+    "2023_winter_ESPORTSTMNT06_2767567": {
+        "split_id": "2023winter",
+        "num_partidos": 1,
+        "patch": 13.01
+    },
+    "2023_winter_ESPORTSTMNT06_2767939": {
+        "split_id": "2023winter",
+        "num_partidos": 1,
+        "patch": 13.01
+    },
+    "2023_winter_ESPORTSTMNT06_2767959": {
+        "split_id": "2023winter",
+        "num_partidos": 1,
+        "patch": 13.01
+    },
+    "2023_winter_ESPORTSTMNT06_2768092": {
+        "split_id": "2023winter",
+        "num_partidos": 1,
+        "patch": 13.01
+    },
+    "2023_winter_ESPORTSTMNT06_2768101": {
+        "split_id": "2023winter",
+        "num_partidos": 1,
+        "patch": 13.01
+    },
+    "2023_winter_ESPORTSTMNT06_2768108": {
+        "split_id": "2023winter",
+        "num_partidos": 1,
+        "patch": 13.01
+    },
+    "2023_winter_ESPORTSTMNT06_2768209": {
+        "split_id": "2023winter",
+        "num_partidos": 1,
+        "patch": 13.01
+    },
+    "2023_winter_ESPORTSTMNT06_2768430": {
+        "split_id": "2023winter",
+        "num_partidos": 1,
+        "patch": 13.01
+    },
+    "2023_winter_ESPORTSTMNT06_2768445": {
+        "split_id": "2023winter",
+        "num_partidos": 1,
+        "patch": 13.01
+    },
+    "2023_winter_ESPORTSTMNT06_2768454": {
+        "split_id": "2023winter",
+        "num_partidos": 1,
+        "patch": 13.01
+    },
+    "2023_winter_ESPORTSTMNT06_2768513": {
+        "split_id": "2023winter",
+        "num_partidos": 1,
+        "patch": 13.01
+    },
+    "2023_winter_ESPORTSTMNT06_2768541": {
+        "split_id": "2023winter",
+        "num_partidos": 1,
+        "patch": 13.01
+    },
+    "2023_winter_ESPORTSTMNT06_2768575": {
+        "split_id": "2023winter",
+        "num_partidos": 1,
+        "patch": 13.01
+    },
+    "2023_winter_ESPORTSTMNT06_2768583": {
+        "split_id": "2023winter",
+        "num_partidos": 1,
+        "patch": 13.01
+    },
+    "2023_winter_ESPORTSTMNT06_2768861": {
+        "split_id": "2023winter",
+        "num_partidos": 1,
+        "patch": 13.01
+    },
+    "2023_winter_ESPORTSTMNT06_2768870": {
+        "split_id": "2023winter",
+        "num_partidos": 1,
+        "patch": 13.01
+    },
+    "2023_winter_ESPORTSTMNT06_2768877": {
+        "split_id": "2023winter",
+        "num_partidos": 1,
+        "patch": 13.01
+    },
+    "2023_winter_ESPORTSTMNT06_2768899": {
+        "split_id": "2023winter",
+        "num_partidos": 1,
+        "patch": 13.01
+    },
+    "2023_winter_ESPORTSTMNT06_2768914": {
+        "split_id": "2023winter",
+        "num_partidos": 1,
+        "patch": 13.01
+    },
+    "2023_winter_ESPORTSTMNT06_2768924": {
+        "split_id": "2023winter",
+        "num_partidos": 1,
+        "patch": 13.01
+    },
+    "2023_winter_ESPORTSTMNT06_2768966": {
+        "split_id": "2023winter",
+        "num_partidos": 1,
+        "patch": 13.01
+    },
+    "2023_winter_ESPORTSTMNT06_2768984": {
+        "split_id": "2023winter",
+        "num_partidos": 1,
+        "patch": 13.01
+    },
+    "2023_winter_ESPORTSTMNT06_2769135": {
+        "split_id": "2023winter",
+        "num_partidos": 1,
+        "patch": 13.01
+    },
+    "2023_winter_ESPORTSTMNT06_2769151": {
+        "split_id": "2023winter",
+        "num_partidos": 1,
+        "patch": 13.01
+    },
+    "2023_winter_ESPORTSTMNT06_2769159": {
+        "split_id": "2023winter",
+        "num_partidos": 1,
+        "patch": 13.01
+    },
+    "2023_winter_ESPORTSTMNT06_2769191": {
+        "split_id": "2023winter",
+        "num_partidos": 1,
+        "patch": 13.01
+    },
+    "2023_winter_ESPORTSTMNT06_2769231": {
+        "split_id": "2023winter",
+        "num_partidos": 1,
+        "patch": 13.01
+    },
+    "2023_winter_ESPORTSTMNT06_2769446": {
+        "split_id": "2023winter",
+        "num_partidos": 1,
+        "patch": 13.01
+    },
+    "2023_winter_ESPORTSTMNT06_2769501": {
+        "split_id": "2023winter",
+        "num_partidos": 1,
+        "patch": 13.01
+    },
+    "2023_winter_ESPORTSTMNT06_2769509": {
+        "split_id": "2023winter",
+        "num_partidos": 1,
+        "patch": 13.01
+    },
+    "2023_winter_ESPORTSTMNT06_2769531": {
+        "split_id": "2023winter",
+        "num_partidos": 1,
+        "patch": 13.01
+    },
+    "2023_winter_ESPORTSTMNT06_2769596": {
+        "split_id": "2023winter",
+        "num_partidos": 1,
+        "patch": 13.01
+    },
+    "2023_winter_ESPORTSTMNT06_2769830": {
+        "split_id": "2023winter",
+        "num_partidos": 1,
+        "patch": 13.01
+    },
+    "2023_winter_ESPORTSTMNT06_2769839": {
+        "split_id": "2023winter",
+        "num_partidos": 1,
+        "patch": 13.01
+    },
+    "2023_winter_ESPORTSTMNT06_2769911": {
+        "split_id": "2023winter",
+        "num_partidos": 1,
+        "patch": 13.01
+    },
+    "2023_winter_ESPORTSTMNT06_2769916": {
+        "split_id": "2023winter",
+        "num_partidos": 1,
+        "patch": 13.01
+    },
+    "2023_winter_ESPORTSTMNT06_2769929": {
+        "split_id": "2023winter",
+        "num_partidos": 1,
+        "patch": 13.01
+    },
+    "2023_spring_ESPORTSTMNT06_2773449": {
+        "split_id": "2023spring",
+        "num_partidos": 1,
+        "patch": 13.04
+    },
+    "2023_spring_ESPORTSTMNT06_2773457": {
+        "split_id": "2023spring",
+        "num_partidos": 1,
+        "patch": 13.04
+    },
+    "2023_spring_ESPORTSTMNT06_2773526": {
+        "split_id": "2023spring",
+        "num_partidos": 1,
+        "patch": 13.04
+    },
+    "2023_spring_ESPORTSTMNT06_2773569": {
+        "split_id": "2023spring",
+        "num_partidos": 1,
+        "patch": 13.04
+    },
+    "2023_spring_ESPORTSTMNT06_2773618": {
+        "split_id": "2023spring",
+        "num_partidos": 1,
+        "patch": 13.04
+    },
+    "2023_spring_ESPORTSTMNT06_2773628": {
+        "split_id": "2023spring",
+        "num_partidos": 1,
+        "patch": 13.04
+    },
+    "2023_spring_ESPORTSTMNT06_2773874": {
+        "split_id": "2023spring",
+        "num_partidos": 1,
+        "patch": 13.04
+    },
+    "2023_spring_ESPORTSTMNT06_2773941": {
+        "split_id": "2023spring",
+        "num_partidos": 1,
+        "patch": 13.04
+    },
+    "2023_spring_ESPORTSTMNT06_2773955": {
+        "split_id": "2023spring",
+        "num_partidos": 1,
+        "patch": 13.04
+    },
+    "2023_spring_ESPORTSTMNT06_2773965": {
+        "split_id": "2023spring",
+        "num_partidos": 1,
+        "patch": 13.04
+    },
+    "2023_spring_ESPORTSTMNT06_2773972": {
+        "split_id": "2023spring",
+        "num_partidos": 1,
+        "patch": 13.04
+    },
+    "2023_spring_ESPORTSTMNT06_2774534": {
+        "split_id": "2023spring",
+        "num_partidos": 1,
+        "patch": 13.04
+    },
+    "2023_spring_ESPORTSTMNT06_2774603": {
+        "split_id": "2023spring",
+        "num_partidos": 1,
+        "patch": 13.04
+    },
+    "2023_spring_ESPORTSTMNT06_2774623": {
+        "split_id": "2023spring",
+        "num_partidos": 1,
+        "patch": 13.04
+    },
+    "2023_spring_ESPORTSTMNT06_2774857": {
+        "split_id": "2023spring",
+        "num_partidos": 1,
+        "patch": 13.04
+    },
+    "2023_spring_ESPORTSTMNT06_2774880": {
+        "split_id": "2023spring",
+        "num_partidos": 1,
+        "patch": 13.04
+    },
+    "2023_spring_ESPORTSTMNT06_2774885": {
+        "split_id": "2023spring",
+        "num_partidos": 1,
+        "patch": 13.04
+    },
+    "2023_spring_ESPORTSTMNT06_2774912": {
+        "split_id": "2023spring",
+        "num_partidos": 1,
+        "patch": 13.04
+    },
+    "2023_spring_ESPORTSTMNT06_2774934": {
+        "split_id": "2023spring",
+        "num_partidos": 1,
+        "patch": 13.04
+    },
+    "2023_spring_ESPORTSTMNT06_2775428": {
+        "split_id": "2023spring",
+        "num_partidos": 1,
+        "patch": 13.04
+    },
+    "2023_spring_ESPORTSTMNT06_2775434": {
+        "split_id": "2023spring",
+        "num_partidos": 1,
+        "patch": 13.04
+    },
+    "2023_spring_ESPORTSTMNT06_2775460": {
+        "split_id": "2023spring",
+        "num_partidos": 1,
+        "patch": 13.04
+    },
+    "2023_spring_ESPORTSTMNT06_2775495": {
+        "split_id": "2023spring",
+        "num_partidos": 1,
+        "patch": 13.04
+    },
+    "2023_spring_ESPORTSTMNT06_2775522": {
+        "split_id": "2023spring",
+        "num_partidos": 1,
+        "patch": 13.04
+    },
+    "2023_spring_ESPORTSTMNT06_2775531": {
+        "split_id": "2023spring",
+        "num_partidos": 1,
+        "patch": 13.04
+    },
+    "2023_spring_ESPORTSTMNT06_2775833": {
+        "split_id": "2023spring",
+        "num_partidos": 1,
+        "patch": 13.04
+    },
+    "2023_spring_ESPORTSTMNT06_2775881": {
+        "split_id": "2023spring",
+        "num_partidos": 1,
+        "patch": 13.04
+    },
+    "2023_spring_ESPORTSTMNT06_2775898": {
+        "split_id": "2023spring",
+        "num_partidos": 1,
+        "patch": 13.04
+    },
+    "2023_spring_ESPORTSTMNT06_2775908": {
+        "split_id": "2023spring",
+        "num_partidos": 1,
+        "patch": 13.04
+    },
+    "2023_spring_ESPORTSTMNT06_2776059": {
+        "split_id": "2023spring",
+        "num_partidos": 1,
+        "patch": 13.04
+    },
+    "2023_spring_ESPORTSTMNT06_2776067": {
+        "split_id": "2023spring",
+        "num_partidos": 1,
+        "patch": 13.04
+    },
+    "2023_spring_ESPORTSTMNT06_2776133": {
+        "split_id": "2023spring",
+        "num_partidos": 1,
+        "patch": 13.04
+    },
+    "2023_spring_ESPORTSTMNT06_2777029": {
+        "split_id": "2023spring",
+        "num_partidos": 1,
+        "patch": 13.04
+    },
+    "2023_spring_ESPORTSTMNT06_2777051": {
+        "split_id": "2023spring",
+        "num_partidos": 1,
+        "patch": 13.04
+    },
+    "2023_spring_ESPORTSTMNT06_2777070": {
+        "split_id": "2023spring",
+        "num_partidos": 1,
+        "patch": 13.04
+    },
+    "2023_spring_ESPORTSTMNT06_2777089": {
+        "split_id": "2023spring",
+        "num_partidos": 1,
+        "patch": 13.04
+    },
+    "2023_spring_ESPORTSTMNT06_2777097": {
+        "split_id": "2023spring",
+        "num_partidos": 1,
+        "patch": 13.04
+    },
+    "2023_spring_ESPORTSTMNT06_2777123": {
+        "split_id": "2023spring",
+        "num_partidos": 1,
+        "patch": 13.04
+    },
+    "2023_spring_ESPORTSTMNT06_2777132": {
+        "split_id": "2023spring",
+        "num_partidos": 1,
+        "patch": 13.04
+    },
+    "2023_spring_ESPORTSTMNT06_2778032": {
+        "split_id": "2023spring",
+        "num_partidos": 1,
+        "patch": 13.04
+    },
+    "2023_spring_ESPORTSTMNT06_2778069": {
+        "split_id": "2023spring",
+        "num_partidos": 1,
+        "patch": 13.04
+    },
+    "2023_spring_ESPORTSTMNT06_2778074": {
+        "split_id": "2023spring",
+        "num_partidos": 1,
+        "patch": 13.04
+    },
+    "2023_spring_ESPORTSTMNT06_2778084": {
+        "split_id": "2023spring",
+        "num_partidos": 1,
+        "patch": 13.04
+    },
+    "2023_spring_ESPORTSTMNT06_2778102": {
+        "split_id": "2023spring",
+        "num_partidos": 1,
+        "patch": 13.04
+    },
+    "2023_spring_ESPORTSTMNT06_2778117": {
+        "split_id": "2023spring",
+        "num_partidos": 1,
+        "patch": 13.04
+    },
+    "2023_summer_ESPORTSTMNT06_2818965": {
+        "split_id": "2023summer",
+        "num_partidos": 2,
+        "patch": 13.13
+    },
+    "2023_summer_ESPORTSTMNT06_2820985": {
+        "split_id": "2023summer",
+        "num_partidos": 1,
+        "patch": 13.13
+    },
+    "2023_summer_ESPORTSTMNT06_2821034": {
+        "split_id": "2023summer",
+        "num_partidos": 1,
+        "patch": 13.13
+    },
+    "2023_summer_ESPORTSTMNT06_2821052": {
+        "split_id": "2023summer",
+        "num_partidos": 2,
+        "patch": 13.13
+    },
+    "2023_summer_ESPORTSTMNT06_2821347": {
+        "split_id": "2023summer",
+        "num_partidos": 4,
+        "patch": 13.13
+    },
+    "2023_summer_ESPORTSTMNT06_2821457": {
+        "split_id": "2023summer",
+        "num_partidos": 3,
+        "patch": 13.13
+    },
+    "2023_summer_ESPORTSTMNT06_2822069": {
+        "split_id": "2023summer",
+        "num_partidos": 3,
+        "patch": 13.13
+    },
+    "2023_summer_ESPORTSTMNT06_2822453": {
+        "split_id": "2023summer",
+        "num_partidos": 3,
+        "patch": 13.13
+    },
+    "2023_summer_ESPORTSTMNT06_2823099": {
+        "split_id": "2023summer",
+        "num_partidos": 1,
+        "patch": 13.13
+    },
+    "2023_summer_ESPORTSTMNT06_2823350": {
+        "split_id": "2023summer",
+        "num_partidos": 2,
+        "patch": 13.13
+    },
+    "2023_summer_ESPORTSTMNT06_2823368": {
+        "split_id": "2023summer",
+        "num_partidos": 2,
+        "patch": 13.13
+    },
+    "2023_summer_ESPORTSTMNT06_2823386": {
+        "split_id": "2023summer",
+        "num_partidos": 1,
+        "patch": 13.13
+    },
+    "2023_summer_ESPORTSTMNT06_2823396": {
+        "split_id": "2023summer",
+        "num_partidos": 3,
+        "patch": 13.13
+    },
+    "2023_summer_ESPORTSTMNT06_2823469": {
+        "split_id": "2023summer",
+        "num_partidos": 3,
+        "patch": 13.13
+    },
+    "2024_winter_LOLTMNT04_24249": {
+        "split_id": "2024winter",
+        "num_partidos": 2,
+        "patch": 14.02
+    },
+    "2024_winter_LOLTMNT04_24340": {
+        "split_id": "2024winter",
+        "num_partidos": 2,
+        "patch": 14.02
+    },
+    "2024_winter_LOLTMNT04_24439": {
+        "split_id": "2024winter",
+        "num_partidos": 2,
+        "patch": 14.02
+    },
+    "2024_winter_LOLTMNT04_24460": {
+        "split_id": "2024winter",
+        "num_partidos": 3,
+        "patch": 14.02
+    },
+    "2024_winter_LOLTMNT04_25269": {
+        "split_id": "2024winter",
+        "num_partidos": 1,
+        "patch": 14.02
+    },
+    "2024_winter_LOLTMNT04_25373": {
+        "split_id": "2024winter",
+        "num_partidos": 1,
+        "patch": 14.02
+    },
+    "2024_winter_LOLTMNT04_26250": {
+        "split_id": "2024winter",
+        "num_partidos": 2,
+        "patch": 14.02
+    },
+    "2024_winter_LOLTMNT04_26271": {
+        "split_id": "2024winter",
+        "num_partidos": 2,
+        "patch": 14.02
+    },
+    "2024_winter_LOLTMNT04_26326": {
+        "split_id": "2024winter",
+        "num_partidos": 2,
+        "patch": 14.02
+    },
+    "2024_winter_LOLTMNT04_26359": {
+        "split_id": "2024winter",
+        "num_partidos": 2,
+        "patch": 14.02
+    },
+    "2024_winter_LOLTMNT04_26385": {
+        "split_id": "2024winter",
+        "num_partidos": 2,
+        "patch": 14.02
+    },
+    "2024_winter_LOLTMNT04_26686": {
+        "split_id": "2024winter",
+        "num_partidos": 1,
+        "patch": 14.02
+    },
+    "2024_winter_LOLTMNT04_26706": {
+        "split_id": "2024winter",
+        "num_partidos": 5,
+        "patch": 14.02
+    },
+    "2024_winter_LOLTMNT04_28061": {
+        "split_id": "2024winter",
+        "num_partidos": 4,
+        "patch": 14.02
+    },
+    "2024_spring_LOLTMNT04_31074": {
+        "split_id": "2024spring",
+        "num_partidos": 1,
+        "patch": 14.05
+    },
+    "2024_spring_LOLTMNT04_31104": {
+        "split_id": "2024spring",
+        "num_partidos": 1,
+        "patch": 14.05
+    },
+    "2024_spring_LOLTMNT04_31142": {
+        "split_id": "2024spring",
+        "num_partidos": 1,
+        "patch": 14.05
+    },
+    "2024_spring_LOLTMNT04_31163": {
+        "split_id": "2024spring",
+        "num_partidos": 1,
+        "patch": 14.05
+    },
+    "2024_spring_LOLTMNT04_31174": {
+        "split_id": "2024spring",
+        "num_partidos": 1,
+        "patch": 14.05
+    },
+    "2024_spring_LOLTMNT04_31245": {
+        "split_id": "2024spring",
+        "num_partidos": 1,
+        "patch": 14.05
+    },
+    "2024_spring_LOLTMNT04_31287": {
+        "split_id": "2024spring",
+        "num_partidos": 1,
+        "patch": 14.05
+    },
+    "2024_spring_LOLTMNT04_31576": {
+        "split_id": "2024spring",
+        "num_partidos": 1,
+        "patch": 14.05
+    },
+    "2024_spring_LOLTMNT04_31630": {
+        "split_id": "2024spring",
+        "num_partidos": 1,
+        "patch": 14.05
+    },
+    "2024_spring_LOLTMNT04_31649": {
+        "split_id": "2024spring",
+        "num_partidos": 1,
+        "patch": 14.05
+    },
+    "2024_spring_LOLTMNT04_31736": {
+        "split_id": "2024spring",
+        "num_partidos": 1,
+        "patch": 14.05
+    },
+    "2024_spring_LOLTMNT04_31748": {
+        "split_id": "2024spring",
+        "num_partidos": 1,
+        "patch": 14.05
+    },
+    "2024_spring_LOLTMNT04_31757": {
+        "split_id": "2024spring",
+        "num_partidos": 1,
+        "patch": 14.05
+    },
+    "2024_spring_LOLTMNT04_31805": {
+        "split_id": "2024spring",
+        "num_partidos": 1,
+        "patch": 14.05
+    },
+    "2024_spring_LOLTMNT04_31838": {
+        "split_id": "2024spring",
+        "num_partidos": 1,
+        "patch": 14.05
+    },
+    "2024_spring_LOLTMNT04_31920": {
+        "split_id": "2024spring",
+        "num_partidos": 1,
+        "patch": 14.05
+    },
+    "2024_spring_LOLTMNT04_31942": {
+        "split_id": "2024spring",
+        "num_partidos": 1,
+        "patch": 14.05
+    },
+    "2024_spring_LOLTMNT04_31987": {
+        "split_id": "2024spring",
+        "num_partidos": 1,
+        "patch": 14.05
+    },
+    "2024_spring_LOLTMNT04_32069": {
+        "split_id": "2024spring",
+        "num_partidos": 1,
+        "patch": 14.05
+    },
+    "2024_spring_LOLTMNT04_32078": {
+        "split_id": "2024spring",
+        "num_partidos": 1,
+        "patch": 14.05
+    },
+    "2024_spring_LOLTMNT04_32093": {
+        "split_id": "2024spring",
+        "num_partidos": 1,
+        "patch": 14.05
+    },
+    "2024_spring_LOLTMNT04_32127": {
+        "split_id": "2024spring",
+        "num_partidos": 1,
+        "patch": 14.05
+    },
+    "2024_spring_LOLTMNT04_32149": {
+        "split_id": "2024spring",
+        "num_partidos": 1,
+        "patch": 14.05
+    },
+    "2024_spring_LOLTMNT04_32184": {
+        "split_id": "2024spring",
+        "num_partidos": 1,
+        "patch": 14.05
+    },
+    "2024_spring_LOLTMNT04_32203": {
+        "split_id": "2024spring",
+        "num_partidos": 1,
+        "patch": 14.05
+    },
+    "2024_spring_LOLTMNT04_32216": {
+        "split_id": "2024spring",
+        "num_partidos": 1,
+        "patch": 14.05
+    },
+    "2024_spring_LOLTMNT04_32530": {
+        "split_id": "2024spring",
+        "num_partidos": 1,
+        "patch": 14.05
+    },
+    "2024_spring_LOLTMNT04_32546": {
+        "split_id": "2024spring",
+        "num_partidos": 1,
+        "patch": 14.05
+    },
+    "2024_spring_LOLTMNT04_32637": {
+        "split_id": "2024spring",
+        "num_partidos": 1,
+        "patch": 14.05
+    },
+    "2024_spring_LOLTMNT04_32683": {
+        "split_id": "2024spring",
+        "num_partidos": 1,
+        "patch": 14.05
+    },
+    "2024_spring_LOLTMNT04_32720": {
+        "split_id": "2024spring",
+        "num_partidos": 1,
+        "patch": 14.05
+    },
+    "2024_spring_LOLTMNT04_32726": {
+        "split_id": "2024spring",
+        "num_partidos": 1,
+        "patch": 14.05
+    },
+    "2024_spring_LOLTMNT04_32734": {
+        "split_id": "2024spring",
+        "num_partidos": 1,
+        "patch": 14.05
+    },
+    "2024_spring_LOLTMNT04_32837": {
+        "split_id": "2024spring",
+        "num_partidos": 1,
+        "patch": 14.05
+    },
+    "2024_spring_LOLTMNT04_32863": {
+        "split_id": "2024spring",
+        "num_partidos": 1,
+        "patch": 14.05
+    },
+    "2024_spring_LOLTMNT04_32870": {
+        "split_id": "2024spring",
+        "num_partidos": 1,
+        "patch": 14.05
+    },
+    "2024_spring_LOLTMNT04_32907": {
+        "split_id": "2024spring",
+        "num_partidos": 1,
+        "patch": 14.05
+    },
+    "2024_spring_LOLTMNT04_32925": {
+        "split_id": "2024spring",
+        "num_partidos": 1,
+        "patch": 14.05
+    },
+    "2024_spring_LOLTMNT04_32993": {
+        "split_id": "2024spring",
+        "num_partidos": 1,
+        "patch": 14.05
+    },
+    "2024_spring_LOLTMNT04_33001": {
+        "split_id": "2024spring",
+        "num_partidos": 1,
+        "patch": 14.05
+    },
+    "2024_spring_LOLTMNT04_33020": {
+        "split_id": "2024spring",
+        "num_partidos": 1,
+        "patch": 14.05
+    },
+    "2024_spring_LOLTMNT04_33059": {
+        "split_id": "2024spring",
+        "num_partidos": 1,
+        "patch": 14.05
+    },
+    "2024_spring_LOLTMNT04_33065": {
+        "split_id": "2024spring",
+        "num_partidos": 1,
+        "patch": 14.05
+    },
+    "2024_spring_LOLTMNT04_33071": {
+        "split_id": "2024spring",
+        "num_partidos": 1,
+        "patch": 14.05
+    },
+    "2024_spring_LOLTMNT04_33099": {
+        "split_id": "2024spring",
+        "num_partidos": 1,
+        "patch": 14.05
+    },
+    "2024_spring_LOLTMNT04_34003": {
+        "split_id": "2024spring",
+        "num_partidos": 1,
+        "patch": 14.05
+    },
+    "2024_summer_LOLTMNT04_49223": {
+        "split_id": "2024summer",
+        "num_partidos": 1,
+        "patch": 14.11
+    },
+    "2024_summer_LOLTMNT04_49235": {
+        "split_id": "2024summer",
+        "num_partidos": 1,
+        "patch": 14.11
+    },
+    "2024_summer_LOLTMNT04_49248": {
+        "split_id": "2024summer",
+        "num_partidos": 1,
+        "patch": 14.11
+    },
+    "2024_summer_LOLTMNT04_49294": {
+        "split_id": "2024summer",
+        "num_partidos": 1,
+        "patch": 14.11
+    },
+    "2024_summer_LOLTMNT04_49300": {
+        "split_id": "2024summer",
+        "num_partidos": 1,
+        "patch": 14.11
+    },
+    "2024_summer_LOLTMNT04_50103": {
+        "split_id": "2024summer",
+        "num_partidos": 1,
+        "patch": 14.11
+    },
+    "2024_summer_LOLTMNT04_50122": {
+        "split_id": "2024summer",
+        "num_partidos": 1,
+        "patch": 14.11
+    },
+    "2024_summer_LOLTMNT04_50175": {
+        "split_id": "2024summer",
+        "num_partidos": 1,
+        "patch": 14.11
+    },
+    "2024_summer_LOLTMNT04_50182": {
+        "split_id": "2024summer",
+        "num_partidos": 1,
+        "patch": 14.11
+    },
+    "2024_summer_LOLTMNT04_50205": {
+        "split_id": "2024summer",
+        "num_partidos": 1,
+        "patch": 14.11
+    },
+    "2024_summer_LOLTMNT04_51028": {
+        "split_id": "2024summer",
+        "num_partidos": 1,
+        "patch": 14.11
+    },
+    "2024_summer_LOLTMNT04_51053": {
+        "split_id": "2024summer",
+        "num_partidos": 1,
+        "patch": 14.11
+    },
+    "2024_summer_LOLTMNT04_52024": {
+        "split_id": "2024summer",
+        "num_partidos": 1,
+        "patch": 14.11
+    },
+    "2024_summer_LOLTMNT04_52038": {
+        "split_id": "2024summer",
+        "num_partidos": 1,
+        "patch": 14.11
+    },
+    "2024_summer_LOLTMNT04_52046": {
+        "split_id": "2024summer",
+        "num_partidos": 1,
+        "patch": 14.11
+    },
+    "2024_summer_LOLTMNT04_52448": {
+        "split_id": "2024summer",
+        "num_partidos": 1,
+        "patch": 14.11
+    },
+    "2024_summer_LOLTMNT04_52452": {
+        "split_id": "2024summer",
+        "num_partidos": 1,
+        "patch": 14.11
+    },
+    "2024_summer_LOLTMNT04_52459": {
+        "split_id": "2024summer",
+        "num_partidos": 1,
+        "patch": 14.11
+    },
+    "2024_summer_LOLTMNT04_52471": {
+        "split_id": "2024summer",
+        "num_partidos": 1,
+        "patch": 14.11
+    },
+    "2024_summer_LOLTMNT04_52500": {
+        "split_id": "2024summer",
+        "num_partidos": 1,
+        "patch": 14.11
+    },
+    "2024_summer_LOLTMNT04_52506": {
+        "split_id": "2024summer",
+        "num_partidos": 1,
+        "patch": 14.11
+    },
+    "2024_summer_LOLTMNT04_52519": {
+        "split_id": "2024summer",
+        "num_partidos": 1,
+        "patch": 14.11
+    },
+    "2024_summer_LOLTMNT04_52526": {
+        "split_id": "2024summer",
+        "num_partidos": 1,
+        "patch": 14.11
+    },
+    "2024_summer_LOLTMNT04_53159": {
+        "split_id": "2024summer",
+        "num_partidos": 1,
+        "patch": 14.11
+    },
+    "2024_summer_LOLTMNT04_53179": {
+        "split_id": "2024summer",
+        "num_partidos": 1,
+        "patch": 14.11
+    },
+    "2024_winter_LOLTMNT05_13097": {
+        "split_id": "2024winter",
+        "num_partidos": 1,
+        "patch": 14.01
+    },
+    "2024_winter_LOLTMNT05_13105": {
+        "split_id": "2024winter",
+        "num_partidos": 1,
+        "patch": 14.01
+    },
+    "2024_winter_LOLTMNT05_13119": {
+        "split_id": "2024winter",
+        "num_partidos": 1,
+        "patch": 14.01
+    },
+    "2024_winter_LOLTMNT05_13165": {
+        "split_id": "2024winter",
+        "num_partidos": 1,
+        "patch": 14.01
+    },
+    "2024_winter_LOLTMNT05_13239": {
+        "split_id": "2024winter",
+        "num_partidos": 1,
+        "patch": 14.01
+    },
+    "2024_winter_LOLTMNT05_13240": {
+        "split_id": "2024winter",
+        "num_partidos": 1,
+        "patch": 14.01
+    },
+    "2024_winter_LOLTMNT05_13247": {
+        "split_id": "2024winter",
+        "num_partidos": 1,
+        "patch": 14.01
+    },
+    "2024_winter_LOLTMNT05_13717": {
+        "split_id": "2024winter",
+        "num_partidos": 1,
+        "patch": 14.01
+    },
+    "2024_winter_LOLTMNT05_13733": {
+        "split_id": "2024winter",
+        "num_partidos": 1,
+        "patch": 14.01
+    },
+    "2024_winter_LOLTMNT05_13741": {
+        "split_id": "2024winter",
+        "num_partidos": 1,
+        "patch": 14.01
+    },
+    "2024_winter_LOLTMNT05_13758": {
+        "split_id": "2024winter",
+        "num_partidos": 1,
+        "patch": 14.01
+    },
+    "2024_winter_LOLTMNT05_13780": {
+        "split_id": "2024winter",
+        "num_partidos": 1,
+        "patch": 14.01
+    },
+    "2024_winter_LOLTMNT05_13795": {
+        "split_id": "2024winter",
+        "num_partidos": 1,
+        "patch": 14.01
+    },
+    "2024_winter_LOLTMNT05_13869": {
+        "split_id": "2024winter",
+        "num_partidos": 1,
+        "patch": 14.01
+    },
+    "2024_winter_LOLTMNT05_14124": {
+        "split_id": "2024winter",
+        "num_partidos": 1,
+        "patch": 14.01
+    },
+    "2024_winter_LOLTMNT05_14130": {
+        "split_id": "2024winter",
+        "num_partidos": 1,
+        "patch": 14.01
+    },
+    "2024_winter_LOLTMNT05_14228": {
+        "split_id": "2024winter",
+        "num_partidos": 1,
+        "patch": 14.01
+    },
+    "2024_winter_LOLTMNT05_14237": {
+        "split_id": "2024winter",
+        "num_partidos": 1,
+        "patch": 14.01
+    },
+    "2024_winter_LOLTMNT05_14246": {
+        "split_id": "2024winter",
+        "num_partidos": 1,
+        "patch": 14.01
+    },
+    "2024_winter_LOLTMNT05_14253": {
+        "split_id": "2024winter",
+        "num_partidos": 1,
+        "patch": 14.01
+    },
+    "2024_winter_LOLTMNT05_14302": {
+        "split_id": "2024winter",
+        "num_partidos": 1,
+        "patch": 14.01
+    },
+    "2024_winter_LOLTMNT05_14310": {
+        "split_id": "2024winter",
+        "num_partidos": 1,
+        "patch": 14.01
+    },
+    "2024_winter_LOLTMNT05_14768": {
+        "split_id": "2024winter",
+        "num_partidos": 1,
+        "patch": 14.01
+    },
+    "2024_winter_LOLTMNT05_14822": {
+        "split_id": "2024winter",
+        "num_partidos": 1,
+        "patch": 14.01
+    },
+    "2024_winter_LOLTMNT05_14831": {
+        "split_id": "2024winter",
+        "num_partidos": 1,
+        "patch": 14.01
+    },
+    "2024_winter_LOLTMNT05_14840": {
+        "split_id": "2024winter",
+        "num_partidos": 1,
+        "patch": 14.01
+    },
+    "2024_winter_LOLTMNT05_14882": {
+        "split_id": "2024winter",
+        "num_partidos": 1,
+        "patch": 14.01
+    },
+    "2024_winter_LOLTMNT05_14894": {
+        "split_id": "2024winter",
+        "num_partidos": 1,
+        "patch": 14.01
+    },
+    "2024_winter_LOLTMNT05_14904": {
+        "split_id": "2024winter",
+        "num_partidos": 1,
+        "patch": 14.01
+    },
+    "2024_winter_LOLTMNT05_14916": {
+        "split_id": "2024winter",
+        "num_partidos": 3,
+        "patch": 14.01
+    },
+    "2024_spring_LOLTMNT05_27462": {
+        "split_id": "2024spring",
+        "num_partidos": 2,
+        "patch": 14.06
+    },
+    "2024_spring_LOLTMNT05_27480": {
+        "split_id": "2024spring",
+        "num_partidos": 2,
+        "patch": 14.06
+    },
+    "2024_spring_LOLTMNT05_27504": {
+        "split_id": "2024spring",
+        "num_partidos": 3,
+        "patch": 14.06
+    },
+    "2024_spring_LOLTMNT05_27707": {
+        "split_id": "2024spring",
+        "num_partidos": 4,
+        "patch": 14.06
+    },
+    "2024_spring_LOLTMNT05_27770": {
+        "split_id": "2024spring",
+        "num_partidos": 3,
+        "patch": 14.06
+    },
+    "2024_spring_LOLTMNT05_28400": {
+        "split_id": "2024spring",
+        "num_partidos": 2,
+        "patch": 14.06
+    },
+    "2024_spring_LOLTMNT05_28407": {
+        "split_id": "2024spring",
+        "num_partidos": 2,
+        "patch": 14.06
+    },
+    "2024_spring_LOLTMNT05_28439": {
+        "split_id": "2024spring",
+        "num_partidos": 2,
+        "patch": 14.06
+    },
+    "2024_spring_LOLTMNT05_28460": {
+        "split_id": "2024spring",
+        "num_partidos": 2,
+        "patch": 14.06
+    },
+    "2024_spring_LOLTMNT05_28531": {
+        "split_id": "2024spring",
+        "num_partidos": 1,
+        "patch": 14.06
+    },
+    "2024_spring_LOLTMNT05_28711": {
+        "split_id": "2024spring",
+        "num_partidos": 2,
+        "patch": 14.06
+    },
+    "2024_spring_LOLTMNT05_28757": {
+        "split_id": "2024spring",
+        "num_partidos": 3,
+        "patch": 14.06
+    },
+    "2024_spring_LOLTMNT05_31072": {
+        "split_id": "2024spring",
+        "num_partidos": 1,
+        "patch": 14.06
+    },
+    "2024_spring_LOLTMNT05_32052": {
+        "split_id": "2024spring",
+        "num_partidos": 5,
+        "patch": 14.06
+    },
+    "2024_summer_LOLTMNT05_51676": {
+        "split_id": "2024summer",
+        "num_partidos": 1,
+        "patch": 14.12
+    },
+    "2024_summer_LOLTMNT05_52424": {
+        "split_id": "2024summer",
+        "num_partidos": 1,
+        "patch": 14.12
+    },
+    "2024_summer_LOLTMNT05_52438": {
+        "split_id": "2024summer",
+        "num_partidos": 1,
+        "patch": 14.12
+    },
+    "2024_summer_LOLTMNT05_52456": {
+        "split_id": "2024summer",
+        "num_partidos": 1,
+        "patch": 14.12
+    },
+    "2024_summer_LOLTMNT05_52466": {
+        "split_id": "2024summer",
+        "num_partidos": 1,
+        "patch": 14.12
+    },
+    "2024_summer_LOLTMNT05_53011": {
+        "split_id": "2024summer",
+        "num_partidos": 1,
+        "patch": 14.12
+    },
+    "2024_summer_LOLTMNT05_53062": {
+        "split_id": "2024summer",
+        "num_partidos": 1,
+        "patch": 14.12
+    },
+    "2024_summer_LOLTMNT05_54025": {
+        "split_id": "2024summer",
+        "num_partidos": 1,
+        "patch": 14.12
+    },
+    "2024_summer_LOLTMNT05_54039": {
+        "split_id": "2024summer",
+        "num_partidos": 1,
+        "patch": 14.12
+    },
+    "2024_summer_LOLTMNT05_54047": {
+        "split_id": "2024summer",
+        "num_partidos": 1,
+        "patch": 14.12
+    },
+    "2024_summer_LOLTMNT05_57436": {
+        "split_id": "2024summer",
+        "num_partidos": 1,
+        "patch": 14.12
+    },
+    "2024_summer_LOLTMNT05_57443": {
+        "split_id": "2024summer",
+        "num_partidos": 1,
+        "patch": 14.12
+    },
+    "2024_summer_LOLTMNT05_57450": {
+        "split_id": "2024summer",
+        "num_partidos": 1,
+        "patch": 14.12
+    },
+    "2024_summer_LOLTMNT05_57484": {
+        "split_id": "2024summer",
+        "num_partidos": 1,
+        "patch": 14.12
+    },
+    "2024_summer_LOLTMNT05_57516": {
+        "split_id": "2024summer",
+        "num_partidos": 1,
+        "patch": 14.12
+    },
+    "2024_summer_LOLTMNT05_57548": {
+        "split_id": "2024summer",
+        "num_partidos": 1,
+        "patch": 14.12
+    },
+    "2024_summer_LOLTMNT05_57557": {
+        "split_id": "2024summer",
+        "num_partidos": 1,
+        "patch": 14.12
+    },
+    "2024_summer_LOLTMNT05_58387": {
+        "split_id": "2024summer",
+        "num_partidos": 1,
+        "patch": 14.12
+    },
+    "2024_summer_LOLTMNT05_58717": {
+        "split_id": "2024summer",
+        "num_partidos": 1,
+        "patch": 14.12
+    },
+    "2024_summer_LOLTMNT05_59689": {
+        "split_id": "2024summer",
+        "num_partidos": 1,
+        "patch": 14.12
+    },
+    "2024_summer_LOLTMNT05_59705": {
+        "split_id": "2024summer",
+        "num_partidos": 1,
+        "patch": 14.12
+    },
+    "2024_summer_LOLTMNT05_59739": {
+        "split_id": "2024summer",
+        "num_partidos": 1,
+        "patch": 14.12
+    },
+    "2024_finals_LOLTMNT05_73594": {
+        "split_id": "2024finals",
+        "num_partidos": 3,
+        "patch": 14.15
+    },
+    "2024_finals_LOLTMNT05_73676": {
+        "split_id": "2024finals",
+        "num_partidos": 5,
+        "patch": 14.15
+    },
+    "2024_finals_LOLTMNT05_75025": {
+        "split_id": "2024finals",
+        "num_partidos": 2,
+        "patch": 14.15
+    },
+    "2024_finals_LOLTMNT05_75065": {
+        "split_id": "2024finals",
+        "num_partidos": 3,
+        "patch": 14.15
+    },
+    "2024_finals_LOLTMNT05_75182": {
+        "split_id": "2024finals",
+        "num_partidos": 4,
+        "patch": 14.15
+    },
+    "2024_finals_LOLTMNT05_75207": {
+        "split_id": "2024finals",
+        "num_partidos": 3,
+        "patch": 14.15
+    },
+    "2024_finals_LOLTMNT05_75315": {
+        "split_id": "2024finals",
+        "num_partidos": 2,
+        "patch": 14.15
+    },
+    "2024_finals_LOLTMNT05_75329": {
+        "split_id": "2024finals",
+        "num_partidos": 4,
+        "patch": 14.15
+    },
+    "2024_winter_LOLTMNT06_12701": {
+        "split_id": "2024winter",
+        "num_partidos": 1,
+        "patch": 14.01
+    },
+    "2024_winter_LOLTMNT06_12743": {
+        "split_id": "2024winter",
+        "num_partidos": 1,
+        "patch": 14.01
+    },
+    "2024_winter_LOLTMNT06_12814": {
+        "split_id": "2024winter",
+        "num_partidos": 1,
+        "patch": 14.01
+    },
+    "2024_winter_LOLTMNT06_12845": {
+        "split_id": "2024winter",
+        "num_partidos": 1,
+        "patch": 14.01
+    },
+    "2024_winter_LOLTMNT06_12874": {
+        "split_id": "2024winter",
+        "num_partidos": 1,
+        "patch": 14.01
+    },
+    "2024_winter_LOLTMNT06_12924": {
+        "split_id": "2024winter",
+        "num_partidos": 1,
+        "patch": 14.01
+    },
+    "2024_winter_LOLTMNT06_12963": {
+        "split_id": "2024winter",
+        "num_partidos": 1,
+        "patch": 14.01
+    },
+    "2024_winter_LOLTMNT06_13630": {
+        "split_id": "2024winter",
+        "num_partidos": 1,
+        "patch": 14.01
+    },
+    "2024_winter_LOLTMNT06_13667": {
+        "split_id": "2024winter",
+        "num_partidos": 1,
+        "patch": 14.01
+    },
+    "2024_winter_LOLTMNT06_13695": {
+        "split_id": "2024winter",
+        "num_partidos": 1,
+        "patch": 14.01
+    },
+    "2024_winter_LOLTMNT06_13803": {
+        "split_id": "2024winter",
+        "num_partidos": 1,
+        "patch": 14.01
+    },
+    "2024_winter_LOLTMNT06_13841": {
+        "split_id": "2024winter",
+        "num_partidos": 1,
+        "patch": 14.01
+    },
+    "2024_winter_LOLTMNT06_13896": {
+        "split_id": "2024winter",
+        "num_partidos": 1,
+        "patch": 14.01
+    },
+    "2024_winter_LOLTMNT06_13904": {
+        "split_id": "2024winter",
+        "num_partidos": 1,
+        "patch": 14.01
+    },
+    "2024_winter_LOLTMNT06_13954": {
+        "split_id": "2024winter",
+        "num_partidos": 1,
+        "patch": 14.01
+    },
+    "2024_summer_LOLTMNT06_60283": {
+        "split_id": "2024summer",
+        "num_partidos": 2,
+        "patch": 14.13
+    },
+    "2024_summer_LOLTMNT06_61286": {
+        "split_id": "2024summer",
+        "num_partidos": 3,
+        "patch": 14.13
+    },
+    "2024_summer_LOLTMNT06_62062": {
+        "split_id": "2024summer",
+        "num_partidos": 1,
+        "patch": 14.13
+    },
+    "2024_summer_LOLTMNT06_62076": {
+        "split_id": "2024summer",
+        "num_partidos": 1,
+        "patch": 14.13
+    },
+    "2024_summer_LOLTMNT06_63020": {
+        "split_id": "2024summer",
+        "num_partidos": 2,
+        "patch": 14.13
+    },
+    "2024_summer_LOLTMNT06_63036": {
+        "split_id": "2024summer",
+        "num_partidos": 3,
+        "patch": 14.13
+    },
+    "2024_summer_LOLTMNT06_64279": {
+        "split_id": "2024summer",
+        "num_partidos": 4,
+        "patch": 14.13
+    },
+    "2024_summer_LOLTMNT06_65205": {
+        "split_id": "2024summer",
+        "num_partidos": 1,
+        "patch": 14.13
+    },
+    "2024_summer_LOLTMNT06_65229": {
+        "split_id": "2024summer",
+        "num_partidos": 3,
+        "patch": 14.13
+    },
+    "2024_summer_LOLTMNT06_66027": {
+        "split_id": "2024summer",
+        "num_partidos": 3,
+        "patch": 14.13
+    },
+    "2024_summer_LOLTMNT06_66167": {
+        "split_id": "2024summer",
+        "num_partidos": 4,
+        "patch": 14.13
+    },
+    "2024_summer_LOLTMNT06_66234": {
+        "split_id": "2024summer",
+        "num_partidos": 3,
+        "patch": 14.13
+    },
+    "2024_summer_LOLTMNT06_67042": {
+        "split_id": "2024summer",
+        "num_partidos": 2,
+        "patch": 14.13
+    },
+    "2024_summer_LOLTMNT06_67198": {
+        "split_id": "2024summer",
+        "num_partidos": 3,
+        "patch": 14.13
+    },
+    "2025_spring_LOLTMNT04_106064": {
+        "split_id": "2025spring",
+        "num_partidos": 2,
+        "patch": 15.08
+    },
+    "2025_spring_LOLTMNT04_106127": {
+        "split_id": "2025spring",
+        "num_partidos": 1,
+        "patch": 15.08
+    },
+    "2025_spring_LOLTMNT04_106164": {
+        "split_id": "2025spring",
+        "num_partidos": 3,
+        "patch": 15.08
+    },
+    "2025_spring_LOLTMNT04_106173": {
+        "split_id": "2025spring",
+        "num_partidos": 2,
+        "patch": 15.08
+    },
+    "2025_spring_LOLTMNT04_106797": {
+        "split_id": "2025spring",
+        "num_partidos": 2,
+        "patch": 15.08
+    },
+    "2025_spring_LOLTMNT04_106845": {
+        "split_id": "2025spring",
+        "num_partidos": 2,
+        "patch": 15.08
+    },
+    "2025_spring_LOLTMNT04_106881": {
+        "split_id": "2025spring",
+        "num_partidos": 3,
+        "patch": 15.08
+    },
+    "2025_spring_LOLTMNT04_107072": {
+        "split_id": "2025spring",
+        "num_partidos": 3,
+        "patch": 15.08
+    },
+    "2025_spring_LOLTMNT04_107126": {
+        "split_id": "2025spring",
+        "num_partidos": 2,
+        "patch": 15.08
+    },
+    "2025_spring_LOLTMNT04_108350": {
+        "split_id": "2025spring",
+        "num_partidos": 3,
+        "patch": 15.08
+    },
+    "2025_spring_LOLTMNT04_108493": {
+        "split_id": "2025spring",
+        "num_partidos": 1,
+        "patch": 15.08
+    },
+    "2025_spring_LOLTMNT04_108498": {
+        "split_id": "2025spring",
+        "num_partidos": 1,
+        "patch": 15.08
+    },
+    "2025_winter_LOLTMNT04_92110": {
+        "split_id": "2025winter",
+        "num_partidos": 1,
+        "patch": 15.02
+    },
+    "2025_winter_LOLTMNT04_92114": {
+        "split_id": "2025winter",
+        "num_partidos": 1,
+        "patch": 15.02
+    },
+    "2025_winter_LOLTMNT04_92126": {
+        "split_id": "2025winter",
+        "num_partidos": 1,
+        "patch": 15.02
+    },
+    "2025_winter_LOLTMNT04_92133": {
+        "split_id": "2025winter",
+        "num_partidos": 1,
+        "patch": 15.02
+    },
+    "2025_winter_LOLTMNT04_92142": {
+        "split_id": "2025winter",
+        "num_partidos": 1,
+        "patch": 15.02
+    },
+    "2025_winter_LOLTMNT04_92193": {
+        "split_id": "2025winter",
+        "num_partidos": 1,
+        "patch": 15.02
+    },
+    "2025_winter_LOLTMNT04_92211": {
+        "split_id": "2025winter",
+        "num_partidos": 1,
+        "patch": 15.02
+    },
+    "2025_winter_LOLTMNT04_92219": {
+        "split_id": "2025winter",
+        "num_partidos": 1,
+        "patch": 15.02
+    },
+    "2025_winter_LOLTMNT04_92277": {
+        "split_id": "2025winter",
+        "num_partidos": 1,
+        "patch": 15.02
+    },
+    "2025_winter_LOLTMNT04_92679": {
+        "split_id": "2025winter",
+        "num_partidos": 1,
+        "patch": 15.02
+    },
+    "2025_winter_LOLTMNT04_92696": {
+        "split_id": "2025winter",
+        "num_partidos": 1,
+        "patch": 15.02
+    },
+    "2025_winter_LOLTMNT04_92709": {
+        "split_id": "2025winter",
+        "num_partidos": 1,
+        "patch": 15.02
+    },
+    "2025_winter_LOLTMNT04_92728": {
+        "split_id": "2025winter",
+        "num_partidos": 1,
+        "patch": 15.02
+    },
+    "2025_winter_LOLTMNT04_92827": {
+        "split_id": "2025winter",
+        "num_partidos": 1,
+        "patch": 15.02
+    },
+    "2025_winter_LOLTMNT04_92843": {
+        "split_id": "2025winter",
+        "num_partidos": 1,
+        "patch": 15.02
+    },
+    "2025_winter_LOLTMNT04_92941": {
+        "split_id": "2025winter",
+        "num_partidos": 1,
+        "patch": 15.02
+    },
+    "2025_winter_LOLTMNT04_92952": {
+        "split_id": "2025winter",
+        "num_partidos": 1,
+        "patch": 15.02
+    },
+    "2025_winter_LOLTMNT04_92975": {
+        "split_id": "2025winter",
+        "num_partidos": 1,
+        "patch": 15.02
+    },
+    "2025_winter_LOLTMNT04_92989": {
+        "split_id": "2025winter",
+        "num_partidos": 1,
+        "patch": 15.02
+    },
+    "2025_winter_LOLTMNT04_93166": {
+        "split_id": "2025winter",
+        "num_partidos": 1,
+        "patch": 15.02
+    },
+    "2025_winter_LOLTMNT04_93174": {
+        "split_id": "2025winter",
+        "num_partidos": 1,
+        "patch": 15.02
+    },
+    "2025_winter_LOLTMNT04_93276": {
+        "split_id": "2025winter",
+        "num_partidos": 1,
+        "patch": 15.02
+    },
+    "2025_winter_LOLTMNT04_93287": {
+        "split_id": "2025winter",
+        "num_partidos": 1,
+        "patch": 15.02
+    },
+    "2025_winter_LOLTMNT04_93299": {
+        "split_id": "2025winter",
+        "num_partidos": 1,
+        "patch": 15.02
+    },
+    "2025_winter_LOLTMNT04_93308": {
+        "split_id": "2025winter",
+        "num_partidos": 1,
+        "patch": 15.02
+    },
+    "2025_winter_LOLTMNT04_93750": {
+        "split_id": "2025winter",
+        "num_partidos": 1,
+        "patch": 15.02
+    },
+    "2025_winter_LOLTMNT04_93871": {
+        "split_id": "2025winter",
+        "num_partidos": 1,
+        "patch": 15.02
+    },
+    "2025_winter_LOLTMNT04_93883": {
+        "split_id": "2025winter",
+        "num_partidos": 1,
+        "patch": 15.02
+    },
+    "2025_winter_LOLTMNT04_93937": {
+        "split_id": "2025winter",
+        "num_partidos": 1,
+        "patch": 15.02
+    },
+    "2025_winter_LOLTMNT04_94054": {
+        "split_id": "2025winter",
+        "num_partidos": 1,
+        "patch": 15.02
+    },
+    "2025_winter_LOLTMNT05_111524": {
+        "split_id": "2025winter",
+        "num_partidos": 1,
+        "patch": 15.03
+    },
+    "2025_winter_LOLTMNT05_111721": {
+        "split_id": "2025winter",
+        "num_partidos": 2,
+        "patch": 15.03
+    },
+    "2025_winter_LOLTMNT05_111735": {
+        "split_id": "2025winter",
+        "num_partidos": 2,
+        "patch": 15.03
+    },
+    "2025_winter_LOLTMNT05_112400": {
+        "split_id": "2025winter",
+        "num_partidos": 2,
+        "patch": 15.03
+    },
+    "2025_winter_LOLTMNT05_112512": {
+        "split_id": "2025winter",
+        "num_partidos": 2,
+        "patch": 15.03
+    },
+    "2025_winter_LOLTMNT05_112521": {
+        "split_id": "2025winter",
+        "num_partidos": 3,
+        "patch": 15.03
+    },
+    "2025_winter_LOLTMNT05_113346": {
+        "split_id": "2025winter",
+        "num_partidos": 2,
+        "patch": 15.03
+    },
+    "2025_winter_LOLTMNT05_113387": {
+        "split_id": "2025winter",
+        "num_partidos": 2,
+        "patch": 15.03
+    },
+    "2025_winter_LOLTMNT05_114249": {
+        "split_id": "2025winter",
+        "num_partidos": 2,
+        "patch": 15.03
+    },
+    "2025_winter_LOLTMNT05_114277": {
+        "split_id": "2025winter",
+        "num_partidos": 2,
+        "patch": 15.03
+    },
+    "2025_winter_LOLTMNT05_114381": {
+        "split_id": "2025winter",
+        "num_partidos": 4,
+        "patch": 15.03
+    },
+    "2025_winter_LOLTMNT05_115018": {
+        "split_id": "2025winter",
+        "num_partidos": 4,
+        "patch": 15.03
+    },
+    "2025_winter_LOLTMNT05_115043": {
+        "split_id": "2025winter",
+        "num_partidos": 5,
+        "patch": 15.03
+    },
+    "2025_winter_LOLTMNT05_116057": {
+        "split_id": "2025winter",
+        "num_partidos": 3,
+        "patch": 15.03
+    },
+    "2025_spring_LOLTMNT05_121441": {
+        "split_id": "2025spring",
+        "num_partidos": 2,
+        "patch": 15.06
+    },
+    "2025_spring_LOLTMNT05_122323": {
+        "split_id": "2025spring",
+        "num_partidos": 2,
+        "patch": 15.06
+    },
+    "2025_spring_LOLTMNT05_122336": {
+        "split_id": "2025spring",
+        "num_partidos": 1,
+        "patch": 15.06
+    },
+    "2025_spring_LOLTMNT05_122345": {
+        "split_id": "2025spring",
+        "num_partidos": 2,
+        "patch": 15.06
+    },
+    "2025_spring_LOLTMNT05_122377": {
+        "split_id": "2025spring",
+        "num_partidos": 1,
+        "patch": 15.06
+    },
+    "2025_spring_LOLTMNT05_122381": {
+        "split_id": "2025spring",
+        "num_partidos": 3,
+        "patch": 15.06
+    },
+    "2025_spring_LOLTMNT05_122430": {
+        "split_id": "2025spring",
+        "num_partidos": 2,
+        "patch": 15.06
+    },
+    "2025_spring_LOLTMNT05_130051": {
+        "split_id": "2025spring",
+        "num_partidos": 2,
+        "patch": 15.09
+    },
+    "2025_spring_LOLTMNT05_130053": {
+        "split_id": "2025spring",
+        "num_partidos": 2,
+        "patch": 15.09
+    },
+    "2025_spring_LOLTMNT05_130075": {
+        "split_id": "2025spring",
+        "num_partidos": 2,
+        "patch": 15.09
+    },
+    "2025_spring_LOLTMNT05_131093": {
+        "split_id": "2025spring",
+        "num_partidos": 1,
+        "patch": 15.09
+    },
+    "2025_spring_LOLTMNT05_131176": {
+        "split_id": "2025spring",
+        "num_partidos": 2,
+        "patch": 15.09
+    },
+    "2025_spring_LOLTMNT05_131182": {
+        "split_id": "2025spring",
+        "num_partidos": 1,
+        "patch": 15.09
+    },
+    "2025_spring_LOLTMNT06_110083": {
+        "split_id": "2025spring",
+        "num_partidos": 2,
+        "patch": 15.07
+    },
+    "2025_spring_LOLTMNT06_110153": {
+        "split_id": "2025spring",
+        "num_partidos": 3,
+        "patch": 15.07
+    },
+    "2025_spring_LOLTMNT06_110205": {
+        "split_id": "2025spring",
+        "num_partidos": 2,
+        "patch": 15.07
+    },
+    "2025_spring_LOLTMNT06_110736": {
+        "split_id": "2025spring",
+        "num_partidos": 2,
+        "patch": 15.07
+    },
+    "2025_spring_LOLTMNT06_110946": {
+        "split_id": "2025spring",
+        "num_partidos": 1,
+        "patch": 15.07
+    },
+    "2025_spring_LOLTMNT06_110999": {
+        "split_id": "2025spring",
+        "num_partidos": 1,
+        "patch": 15.07
+    },
+    "2025_spring_LOLTMNT06_111070": {
+        "split_id": "2025spring",
+        "num_partidos": 2,
+        "patch": 15.07
+    },
+    "2025_spring_LOLTMNT06_111097": {
+        "split_id": "2025spring",
+        "num_partidos": 2,
+        "patch": 15.07
+    },
+    "2025_spring_LOLTMNT06_111156": {
+        "split_id": "2025spring",
+        "num_partidos": 1,
+        "patch": 15.07
+    },
+    "2025_spring_LOLTMNT06_111217": {
+        "split_id": "2025spring",
+        "num_partidos": 1,
+        "patch": 15.07
+    },
+    "2025_spring_LOLTMNT06_111761": {
+        "split_id": "2025spring",
+        "num_partidos": 2,
+        "patch": 15.07
+    },
+    "2025_spring_LOLTMNT06_111775": {
+        "split_id": "2025spring",
+        "num_partidos": 2,
+        "patch": 15.07
+    },
+    "2025_spring_LOLTMNT06_112003": {
+        "split_id": "2025spring",
+        "num_partidos": 2,
+        "patch": 15.07
+    },
+    "2025_spring_LOLTMNT06_112073": {
+        "split_id": "2025spring",
+        "num_partidos": 3,
+        "patch": 15.07
+    },
+    "2025_winter_LOLTMNT06_95363": {
+        "split_id": "2025winter",
+        "num_partidos": 1,
+        "patch": 15.01
+    },
+    "2025_winter_LOLTMNT06_95385": {
+        "split_id": "2025winter",
+        "num_partidos": 1,
+        "patch": 15.01
+    },
+    "2025_winter_LOLTMNT06_95435": {
+        "split_id": "2025winter",
+        "num_partidos": 1,
+        "patch": 15.01
+    },
+    "2025_winter_LOLTMNT06_95446": {
+        "split_id": "2025winter",
+        "num_partidos": 1,
+        "patch": 15.01
+    },
+    "2025_winter_LOLTMNT06_95500": {
+        "split_id": "2025winter",
+        "num_partidos": 1,
+        "patch": 15.01
+    },
+    "2025_winter_LOLTMNT06_95531": {
+        "split_id": "2025winter",
+        "num_partidos": 1,
+        "patch": 15.01
+    },
+    "2025_winter_LOLTMNT06_96344": {
+        "split_id": "2025winter",
+        "num_partidos": 1,
+        "patch": 15.01
+    },
+    "2025_winter_LOLTMNT06_96348": {
+        "split_id": "2025winter",
+        "num_partidos": 1,
+        "patch": 15.01
+    },
+    "2025_winter_LOLTMNT06_96368": {
+        "split_id": "2025winter",
+        "num_partidos": 1,
+        "patch": 15.01
+    },
+    "2025_winter_LOLTMNT06_96430": {
+        "split_id": "2025winter",
+        "num_partidos": 1,
+        "patch": 15.01
+    },
+    "2025_winter_LOLTMNT06_96459": {
+        "split_id": "2025winter",
+        "num_partidos": 1,
+        "patch": 15.01
+    },
+    "2025_winter_LOLTMNT06_96473": {
+        "split_id": "2025winter",
+        "num_partidos": 1,
+        "patch": 15.01
+    },
+    "2025_winter_LOLTMNT06_96516": {
+        "split_id": "2025winter",
+        "num_partidos": 1,
+        "patch": 15.01
+    },
+    "2025_winter_LOLTMNT06_96529": {
+        "split_id": "2025winter",
+        "num_partidos": 1,
+        "patch": 15.01
+    },
+    "2025_winter_LOLTMNT06_96548": {
+        "split_id": "2025winter",
+        "num_partidos": 1,
+        "patch": 15.01
+    }
+}

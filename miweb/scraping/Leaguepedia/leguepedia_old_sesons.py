@@ -99,13 +99,10 @@ def extraer_equipos(url):
 
             nombre = team_name_tag.get_text(strip=True).replace(" ", "_")
             if len(nombre) <= 4:
-                continue  # Ignorar nombres muy cortos
+                continue 
 
-            # Obtener URL completa del equipo
             team_url_relativa = team_name_tag.find('a').get('href') if team_name_tag.find('a') else None
             team_url_completa = urljoin(BASE_URL, team_url_relativa) if team_url_relativa else None
-
-            # Obtener logo desde la página del equipo
             logo_url = extraer_imagen_equipo(team_url_completa) if team_url_completa else None
 
             if logo_url:

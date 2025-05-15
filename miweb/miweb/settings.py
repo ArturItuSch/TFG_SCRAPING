@@ -40,6 +40,7 @@ INSTALLED_APPS = [
     'database',
     'frontend',
     'scraping',
+    'rest_framework',
 ]
 
 MIDDLEWARE = [

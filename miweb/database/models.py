@@ -3,11 +3,11 @@ from django.forms.models import model_to_dict
 
 
 class SplitLEC(models.Model):
+    split_id = models.CharField(max_length=200, unique=True, blank=True)  
     split_type = models.CharField(max_length=100)
     year = models.PositiveIntegerField()
     league = models.CharField(max_length=10)
-    split_id = models.CharField(max_length=200, unique=True, blank=True)  
-
+    
     def save(self, *args, **kwargs):
         # Generar el split_id combinando split_type y year
         self.split_id = f"{self.split_type}_{self.year}"
@@ -20,6 +20,7 @@ class SplitLEC(models.Model):
         return model_to_dict(self)
 
 class Serie(models.Model):
+    id = models.CharField(max_length=200, primary_key=True)    
     split = models.ForeignKey(SplitLEC, on_delete=models.CASCADE, related_name='series')
     num_partidos = models.IntegerField(null=True, blank=True)
     patch = models.FloatField(null=True, blank=True)
@@ -28,6 +29,7 @@ class Serie(models.Model):
         return model_to_dict(self)  
 
 class Partido(models.Model):
+    id = models.CharField(max_length=200, primary_key=True)
     serie = models.ForeignKey(Serie, on_delete=models.CASCADE, related_name='partidos')
     fecha = models.DateTimeField(null=True, blank=True)
     orden = models.IntegerField(null=True, blank=True)
@@ -37,6 +39,7 @@ class Partido(models.Model):
         return model_to_dict(self)
     
 class Equipo(models.Model):
+    id = models.CharField(max_length=200, primary_key=True)
     nombre = models.CharField(max_length=100)
     pais =  models.CharField(max_length=100, null=True, blank=True)
     region = models.CharField(max_length=100, null=True, blank=True)
@@ -50,6 +53,7 @@ class Equipo(models.Model):
         return model_to_dict(self)
     
 class Jugador(models.Model):
+    id = models.CharField(max_length=200, primary_key=True)
     nombre = models.CharField(max_length=100)
     real_name = models.CharField(max_length=100, null=True, blank=True)
     equipo = models.ForeignKey(Equipo, on_delete=models.SET_NULL, null=True, blank=True)

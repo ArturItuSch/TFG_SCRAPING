@@ -72,32 +72,46 @@ def accept_cookies(driver):
     except Exception as e:
         print("No se pudo aceptar cookies:", e)
 
-def crear_carpeta(ruta_carpeta):
-    try:
-        os.makedirs(ruta_carpeta, exist_ok=True)
-        print(f"Carpeta creada o ya existente: {ruta_carpeta}")
-    except Exception as e:
-        print(f"Error al crear la carpeta '{ruta_carpeta}': {e}")
-        
+def cargar_diccionario_ids():
+    if os.path.exists(CHAMPION_DICCIONARIY_ID):
+        with open(CHAMPION_DICCIONARIY_ID, "r", encoding="utf-8") as f:
+            return json.load(f)
+    else:
+        return {}
+
+def guardar_diccionario_ids(diccionario):
+    with open(CHAMPION_DICCIONARIY_ID, "w", encoding="utf-8") as f:
+        json.dump(diccionario, f, ensure_ascii=False, indent=4)
+
+
 def download_image(ruta_local, url_imagen):
     try:
+        # Si la imagen ya existe, no la volvemos a descargar
+        if os.path.exists(ruta_local):
+            print(f"⚠️ Imagen ya existente, se omite descarga: {ruta_local}")
+            return os.path.relpath(ruta_local, start=os.getcwd())
+
         headers = obtener_headers_dinamicos()
         response = requests.get(url_imagen, headers=headers, stream=True)
         response.raise_for_status()
+
         with open(ruta_local, 'wb') as f:
             for chunk in response.iter_content(1024):
                 f.write(chunk)
-        time.sleep(random.uniform(1,2))
-        print(f"Imagen: {url_imagen} descargada correctamente en {ruta_local}")
-        ruta_relativa = os.path.relpath(ruta_local, start=os.getcwd())
-        return ruta_relativa
+
+        time.sleep(random.uniform(1, 2))
+        print(f"✅ Imagen descargada: {ruta_local}")
+        return os.path.relpath(ruta_local, start=os.getcwd())
+
     except Exception as e:
-        print(f"Error al descargar la imagen: {e}")
-        time.sleep(random.uniform(1,2))
+        print(f"❌ Error al descargar la imagen: {e}")
+        time.sleep(random.uniform(1, 2))
         return None
 
 def get_champions_information(driver):
     champions = []
+    ids_existentes = cargar_diccionario_ids()
+    nuevos_ids = False 
     try:
         driver.get(CHAMPIONS_URL)
 
@@ -121,17 +135,24 @@ def get_champions_information(driver):
                         continue
                     
                     nombre = re.sub(r'[\\/*?:"<>|]', "", img['alt'])   
+                    if nombre in ids_existentes:
+                        champ_id = ids_existentes[nombre]
+                    else:
+                        champ_id = str(uuid.uuid4())
+                        ids_existentes[nombre] = champ_id
+                        nuevos_ids = True
+                        
                     url_relativa = img['src']
 
                     champion = {
+                        'id': champ_id,
                         'nombre': nombre,
                         'ruta_imagen': None
                     }
 
                     if not url_relativa.startswith("/"):
                         url_relativa = "/" + url_relativa
-                        crear_carpeta(os.path.join(CHAMPIONS_FOLDER_PATH, nombre))
-                        ruta_local = os.path.join(os.path.join(CHAMPIONS_FOLDER_PATH, nombre), f"{nombre}.png")
+                        ruta_local = os.path.join(CHAMPIONS_FOLDER_PATH, f"{nombre}.png")
                         url_absoluta = urljoin(BASE_URL, url_relativa)
                         champion["ruta_imagen"] = download_image(ruta_local, url_absoluta)
                     else:
@@ -146,6 +167,8 @@ def get_champions_information(driver):
             print("No se encontró la tabla.")
     except Exception as e:
         print(f"Error inesperado: {e}")
+    if nuevos_ids:
+        guardar_diccionario_ids(ids_existentes)
     return champions
 
 def verificar_existencia_imagen(nombre_campeon, ruta_json):

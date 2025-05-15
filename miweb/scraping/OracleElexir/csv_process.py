@@ -3,8 +3,9 @@ import sys
 import os
 import json
 import uuid
+import numpy as np
 
-PROJECT_ROOT = os.path.abspath(os.path.join(os.path.dirname(__file__), '..', '..', '..'))
+PROJECT_ROOT = os.path.abspath(os.path.join(os.path.dirname(__file__), '..', '..'))
 sys.path.insert(0, PROJECT_ROOT)
 
 from Resources.rutas import *
@@ -21,6 +22,12 @@ JSON_SPLITS_LEC = os.path.join(JSON_INSTALATION_SPLITS_LEC)
 def filtrar_ligas_automaticamente(carpeta_csv, carpeta_salida_base, project_root):
     os.makedirs(carpeta_salida_base, exist_ok=True)
 
+    equivalencias_ligas = {
+        'EU LCS': 'LEC',
+        'LEC': 'LEC',
+        # Puedes añadir más equivalencias aquí si quieres agrupar otras ligas
+    }
+
     archivos_csv = [
         os.path.relpath(os.path.join(carpeta_csv, archivo), start=project_root)
         for archivo in os.listdir(carpeta_csv)
@@ -36,15 +43,26 @@ def filtrar_ligas_automaticamente(carpeta_csv, carpeta_salida_base, project_root
                 nombre_base = os.path.splitext(os.path.basename(archivo))[0]
                 anio = nombre_base[:4] if nombre_base[:4].isdigit() else 'unknown'
 
-                # Filtrar por cada liga encontrada en el archivo
-                for liga in df['league'].unique():
-                    datos_filtrados = df[df['league'] == liga]
+                # Obtener las ligas únicas reales
+                ligas_reales = df['league'].unique()
+
+                # Crear un diccionario para agrupar ligas por equivalencia
+                ligas_agrupadas = {}
+                for liga_real in ligas_reales:
+                    grupo = equivalencias_ligas.get(liga_real, liga_real)
+                    if grupo not in ligas_agrupadas:
+                        ligas_agrupadas[grupo] = []
+                    ligas_agrupadas[grupo].append(liga_real)
+
+                # Ahora iteramos por grupos (por ejemplo, 'LEC') y procesamos todos los archivos que pertenezcan a esos nombres originales
+                for grupo, ligas_del_grupo in ligas_agrupadas.items():
+                    datos_filtrados = df[df['league'].isin(ligas_del_grupo)]
 
                     if not datos_filtrados.empty:
-                        carpeta_salida = os.path.join(carpeta_salida_base, liga, anio)
+                        carpeta_salida = os.path.join(carpeta_salida_base, grupo, anio)
                         os.makedirs(carpeta_salida, exist_ok=True)
 
-                        nombre_archivo = f"{nombre_base}_{liga}.csv"
+                        nombre_archivo = f"{nombre_base}_{grupo}.csv"
                         ruta_salida = os.path.join(carpeta_salida, nombre_archivo)
 
                         datos_filtrados.to_csv(ruta_salida, index=False)
@@ -190,7 +208,6 @@ def agregar_ids_jugadores(archivo, nuevos_ids):
         no_encontrados = []
 
         for jugador in jugadores_original:
-            # Cambiar 'nombre_jugador' por 'jugador' aquí
             nombre_jugador = normalizar_nombre(jugador.get('jugador', ''))
             nuevo_id_calculado = id_dict.get(nombre_jugador)
 
@@ -225,70 +242,84 @@ def obtener_rutas_csv(carpeta):
 
     return rutas_csv
 
-def split_json_creation(csv_file_path):
-    archivo_nombre = os.path.basename(csv_file_path)
-    year = archivo_nombre.split('match')[0]
+def extract_all_splits():
+    all_splits = {}
+
+    rutas_csv = obtener_rutas_csv(CARPETA_CSV_LEC)
+
+    for csv_file_path in rutas_csv:
+        archivo_nombre = os.path.basename(csv_file_path)
+        year = archivo_nombre.split('_')[0]
+
+        try:
+            df = pd.read_csv(csv_file_path)
+            df['split'] = df['split'].fillna('unknown')
+            splits = df['split'].drop_duplicates()
+
+            for split in splits:
+                split = str(split).strip().lower() if split else 'unknown'
+                split_id = f"{year}{split}"
+
+                # Evitamos sobreescribir si ya existe
+                if split_id not in all_splits:
+                    all_splits[split_id] = {
+                        "id": split_id,
+                        "league": "LEC",
+                        "year": year,
+                        "season": split
+                    }
+
+        except Exception as e:
+            print(f"Error al procesar el archivo {csv_file_path}: {e}")
+
+    return all_splits
     
-    try:
-        # Leemos el archivo CSV
-        df = pd.read_csv(csv_file_path)
-        
-        # Comprobamos si hay valores vacíos en la columna 'split' y les asignamos 'unknown'
-        df['split'] = df['split'].fillna('unknown')  # Reemplazamos NaN por 'unknown'
+def extract_all_series():
+    all_series = {}
 
-        # Obtenemos los valores únicos de la columna 'split'
-        splits = df['split'].drop_duplicates()
-        
-        # Creamos una lista para almacenar los datos JSON que vamos a agregar
-        new_splits_data = []
+    rutas_csv = obtener_rutas_csv(CARPETA_CSV_LEC)
+    for csv_file_path in rutas_csv:
+        try:
+            df = pd.read_csv(csv_file_path)
+            df = df.sort_values(['gameid', 'game']).reset_index(drop=True)
 
-        for split in splits:
-            # Aseguramos que el valor sea una cadena no vacía y lo convertimos a minúsculas
-            split = str(split).strip().lower() if split else 'unknown'
+            # Encuentra índices donde comienza cada serie (game == 1)
+            start_indices = df.index[df['game'] == 1].tolist()
+            start_indices.append(len(df))  # Añade final para cortar la última serie
 
-            # Creamos el diccionario con los datos del JSON
-            json_data = {
-                "id": f"{year}{split}", 
-                "league": "LEC",  
-                "year": year,  
-                "season": split  
-            }
-            
-            # Agregamos el nuevo item a la lista
-            new_splits_data.append(json_data)
-        
-        # Ruta del archivo JSON
-        json_file_path = os.path.join(JSON_SPLITS_LEC, "SplitsLEC.json")
-        
-        # Si el archivo ya existe, leemos los datos actuales, sino, iniciamos una lista vacía
-        if os.path.exists(json_file_path):
-            with open(json_file_path, mode='r', encoding='utf-8') as json_file:
-                try:
-                    all_splits_data = json.load(json_file)
-                except json.JSONDecodeError:
-                    # Si el archivo está vacío o no es un JSON válido, iniciamos una lista vacía
-                    all_splits_data = []
-        else:
-            all_splits_data = []
-        
-        # Agregamos los nuevos datos al archivo existente
-        all_splits_data.extend(new_splits_data)
-        
-        # Guardamos el JSON actualizado
-        with open(json_file_path, mode='w', encoding='utf-8') as json_file:
-            json.dump(all_splits_data, json_file, indent=4, ensure_ascii=False)
-        
-        print(f"JSON actualizado: {json_file_path}")
-    
-    except Exception as e:
-        print(f"Error al procesar el archivo CSV o crear el JSON: {e}")
+            for i in range(len(start_indices) - 1):
+                start = start_indices[i]
+                end = start_indices[i+1]
 
+                serie_df = df.loc[start:end-1]
 
-               
+                # Construimos el id de la serie: puede ser año + split + primer gameid de la serie
+                year = serie_df['year'].iloc[0]
+                split = serie_df['split'].iloc[0]
+                if not isinstance(split, str):
+                    split = str(split) if pd.notnull(split) else 'unknown'
+                split = split.strip().lower()
+                patch = serie_df['patch'].iloc[0]
+
+                # El id puede ser único por ejemplo con primer gameid y split
+                serie_id = f"{year}_{split}_{serie_df['gameid'].iloc[0]}"
+
+                num_partidos = serie_df['game'].nunique()
+
+                # Guardamos los datos en el diccionario o haz aquí la creación de la instancia Serie
+                all_series[serie_id] = {
+                    'split_id': f"{year}{split}",
+                    'num_partidos': num_partidos,
+                    'patch': patch,
+                }
+        except Exception as e:
+            print(f"Error al procesar el archivo {csv_file_path}: {e}")
+
+    return all_series
+
 if __name__ == '__main__':
-    #filtrar_ligas_automaticamente(CARPETA_CSV, CARPETA_CSV, PROJECT_ROOT)
-    '''
-    equipos = obtener_equipos_o_jugadores(CARPETA_CSV_LEC, 'teamid', 'teamname')
+    filtrar_ligas_automaticamente(CARPETA_CSV, CARPETA_CSV, PROJECT_ROOT)
+    '''equipos = obtener_equipos_o_jugadores(CARPETA_CSV_LEC, 'teamid', 'teamname')
     ids_nuevos(equipos, IDS_EQUIPOS_DICCIONARIO)
     lista_final = nombre_newIDs(equipos, IDS_EQUIPOS_DICCIONARIO)
     for item in lista_final:
@@ -303,10 +334,21 @@ if __name__ == '__main__':
         print(item)
     
     # Agregar los nuevos IDs a los jugadores
-    agregar_ids_jugadores(JSON_JUGADORES, lista_final_jugadores)
-    '''
-    # Crear JSON para los splits
-    for csv in obtener_rutas_csv(CARPETA_CSV_LEC):
-        split_json_creation(csv)
+    agregar_ids_jugadores(JSON_JUGADORES, lista_final_jugadores)'''
+    series_data = extract_all_series()
+
+    def convert_types(obj):
+        if isinstance(obj, dict):
+            return {k: convert_types(v) for k, v in obj.items()}
+        elif isinstance(obj, np.float64):
+            return float(obj)
+        else:
+            return obj
+
+    series_data_clean = convert_types(series_data)
+
+    with open('series_data.json', 'w', encoding='utf-8') as f:
+        json.dump(series_data_clean, f, indent=4, ensure_ascii=False)
+    
     
         

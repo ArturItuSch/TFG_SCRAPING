@@ -124,5 +124,383 @@
         "league": "LEC",
         "year": "2025",
         "season": "spring"
+    },
+    {
+        "id": "2015unknown",
+        "league": "LEC",
+        "year": "2015",
+        "season": "unknown"
+    },
+    {
+        "id": "2016unknown",
+        "league": "LEC",
+        "year": "2016",
+        "season": "unknown"
+    },
+    {
+        "id": "2017unknown",
+        "league": "LEC",
+        "year": "2017",
+        "season": "unknown"
+    },
+    {
+        "id": "2018unknown",
+        "league": "LEC",
+        "year": "2018",
+        "season": "unknown"
+    },
+    {
+        "id": "2019spring",
+        "league": "LEC",
+        "year": "2019",
+        "season": "spring"
+    },
+    {
+        "id": "2019summer",
+        "league": "LEC",
+        "year": "2019",
+        "season": "summer"
+    },
+    {
+        "id": "2019unknown",
+        "league": "LEC",
+        "year": "2019",
+        "season": "unknown"
+    },
+    {
+        "id": "2020spring",
+        "league": "LEC",
+        "year": "2020",
+        "season": "spring"
+    },
+    {
+        "id": "2020summer",
+        "league": "LEC",
+        "year": "2020",
+        "season": "summer"
+    },
+    {
+        "id": "2022spring",
+        "league": "LEC",
+        "year": "2022",
+        "season": "spring"
+    },
+    {
+        "id": "2022summer",
+        "league": "LEC",
+        "year": "2022",
+        "season": "summer"
+    },
+    {
+        "id": "2023winter",
+        "league": "LEC",
+        "year": "2023",
+        "season": "winter"
+    },
+    {
+        "id": "2023spring",
+        "league": "LEC",
+        "year": "2023",
+        "season": "spring"
+    },
+    {
+        "id": "2023summer",
+        "league": "LEC",
+        "year": "2023",
+        "season": "summer"
+    },
+    {
+        "id": "2023finals",
+        "league": "LEC",
+        "year": "2023",
+        "season": "finals"
+    },
+    {
+        "id": "2024winter",
+        "league": "LEC",
+        "year": "2024",
+        "season": "winter"
+    },
+    {
+        "id": "2024spring",
+        "league": "LEC",
+        "year": "2024",
+        "season": "spring"
+    },
+    {
+        "id": "2024summer",
+        "league": "LEC",
+        "year": "2024",
+        "season": "summer"
+    },
+    {
+        "id": "2024finals",
+        "league": "LEC",
+        "year": "2024",
+        "season": "finals"
+    },
+    {
+        "id": "2025winter",
+        "league": "LEC",
+        "year": "2025",
+        "season": "winter"
+    },
+    {
+        "id": "2025spring",
+        "league": "LEC",
+        "year": "2025",
+        "season": "spring"
+    },
+    {
+        "id": "2015unknown",
+        "league": "LEC",
+        "year": "2015",
+        "season": "unknown"
+    },
+    {
+        "id": "2016unknown",
+        "league": "LEC",
+        "year": "2016",
+        "season": "unknown"
+    },
+    {
+        "id": "2017unknown",
+        "league": "LEC",
+        "year": "2017",
+        "season": "unknown"
+    },
+    {
+        "id": "2018unknown",
+        "league": "LEC",
+        "year": "2018",
+        "season": "unknown"
+    },
+    {
+        "id": "2019spring",
+        "league": "LEC",
+        "year": "2019",
+        "season": "spring"
+    },
+    {
+        "id": "2019summer",
+        "league": "LEC",
+        "year": "2019",
+        "season": "summer"
+    },
+    {
+        "id": "2019unknown",
+        "league": "LEC",
+        "year": "2019",
+        "season": "unknown"
+    },
+    {
+        "id": "2020spring",
+        "league": "LEC",
+        "year": "2020",
+        "season": "spring"
+    },
+    {
+        "id": "2020summer",
+        "league": "LEC",
+        "year": "2020",
+        "season": "summer"
+    },
+    {
+        "id": "2022spring",
+        "league": "LEC",
+        "year": "2022",
+        "season": "spring"
+    },
+    {
+        "id": "2022summer",
+        "league": "LEC",
+        "year": "2022",
+        "season": "summer"
+    },
+    {
+        "id": "2023winter",
+        "league": "LEC",
+        "year": "2023",
+        "season": "winter"
+    },
+    {
+        "id": "2023spring",
+        "league": "LEC",
+        "year": "2023",
+        "season": "spring"
+    },
+    {
+        "id": "2023summer",
+        "league": "LEC",
+        "year": "2023",
+        "season": "summer"
+    },
+    {
+        "id": "2023finals",
+        "league": "LEC",
+        "year": "2023",
+        "season": "finals"
+    },
+    {
+        "id": "2024winter",
+        "league": "LEC",
+        "year": "2024",
+        "season": "winter"
+    },
+    {
+        "id": "2024spring",
+        "league": "LEC",
+        "year": "2024",
+        "season": "spring"
+    },
+    {
+        "id": "2024summer",
+        "league": "LEC",
+        "year": "2024",
+        "season": "summer"
+    },
+    {
+        "id": "2024finals",
+        "league": "LEC",
+        "year": "2024",
+        "season": "finals"
+    },
+    {
+        "id": "2025winter",
+        "league": "LEC",
+        "year": "2025",
+        "season": "winter"
+    },
+    {
+        "id": "2025spring",
+        "league": "LEC",
+        "year": "2025",
+        "season": "spring"
+    },
+    {
+        "id": "2015unknown",
+        "league": "LEC",
+        "year": "2015",
+        "season": "unknown"
+    },
+    {
+        "id": "2016unknown",
+        "league": "LEC",
+        "year": "2016",
+        "season": "unknown"
+    },
+    {
+        "id": "2017unknown",
+        "league": "LEC",
+        "year": "2017",
+        "season": "unknown"
+    },
+    {
+        "id": "2018unknown",
+        "league": "LEC",
+        "year": "2018",
+        "season": "unknown"
+    },
+    {
+        "id": "2019spring",
+        "league": "LEC",
+        "year": "2019",
+        "season": "spring"
+    },
+    {
+        "id": "2019summer",
+        "league": "LEC",
+        "year": "2019",
+        "season": "summer"
+    },
+    {
+        "id": "2019unknown",
+        "league": "LEC",
+        "year": "2019",
+        "season": "unknown"
+    },
+    {
+        "id": "2020spring",
+        "league": "LEC",
+        "year": "2020",
+        "season": "spring"
+    },
+    {
+        "id": "2020summer",
+        "league": "LEC",
+        "year": "2020",
+        "season": "summer"
+    },
+    {
+        "id": "2022spring",
+        "league": "LEC",
+        "year": "2022",
+        "season": "spring"
+    },
+    {
+        "id": "2022summer",
+        "league": "LEC",
+        "year": "2022",
+        "season": "summer"
+    },
+    {
+        "id": "2023winter",
+        "league": "LEC",
+        "year": "2023",
+        "season": "winter"
+    },
+    {
+        "id": "2023spring",
+        "league": "LEC",
+        "year": "2023",
+        "season": "spring"
+    },
+    {
+        "id": "2023summer",
+        "league": "LEC",
+        "year": "2023",
+        "season": "summer"
+    },
+    {
+        "id": "2023finals",
+        "league": "LEC",
+        "year": "2023",
+        "season": "finals"
+    },
+    {
+        "id": "2024winter",
+        "league": "LEC",
+        "year": "2024",
+        "season": "winter"
+    },
+    {
+        "id": "2024spring",
+        "league": "LEC",
+        "year": "2024",
+        "season": "spring"
+    },
+    {
+        "id": "2024summer",
+        "league": "LEC",
+        "year": "2024",
+        "season": "summer"
+    },
+    {
+        "id": "2024finals",
+        "league": "LEC",
+        "year": "2024",
+        "season": "finals"
+    },
+    {
+        "id": "2025winter",
+        "league": "LEC",
+        "year": "2025",
+        "season": "winter"
+    },
+    {
+        "id": "2025spring",
+        "league": "LEC",
+        "year": "2025",
+        "season": "spring"
     }
 ]
