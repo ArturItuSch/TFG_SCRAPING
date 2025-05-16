@@ -274,48 +274,89 @@ def extract_all_splits():
 
     return all_splits
     
-def extract_all_series():
+def extract_all_series_and_partidos():
     all_series = {}
+    all_partidos = {}
 
     rutas_csv = obtener_rutas_csv(CARPETA_CSV_LEC)
+    serie_counters = {}
+
     for csv_file_path in rutas_csv:
         try:
             df = pd.read_csv(csv_file_path)
-            df = df.sort_values(['gameid', 'game']).reset_index(drop=True)
+            df = df.reset_index(drop=True)
 
-            # Encuentra índices donde comienza cada serie (game == 1)
-            start_indices = df.index[df['game'] == 1].tolist()
-            start_indices.append(len(df))  # Añade final para cortar la última serie
+            current_serie_id = None
+            current_serie_partidos = []
+            last_gameid = None
 
-            for i in range(len(start_indices) - 1):
-                start = start_indices[i]
-                end = start_indices[i+1]
+            for idx, row in df.iterrows():
+                gameid = row['gameid']
+                game = row['game']
+                year = row['year']
+                split = str(row['split']).strip().lower()
+                patch = row.get('patch')
 
-                serie_df = df.loc[start:end-1]
+                # Condición de nueva serie: cambia el gameid Y el game es 1
+                if (gameid != last_gameid and game == 1) or current_serie_id is None:
+                    # Guardar serie anterior si existía
+                    if current_serie_id and current_serie_partidos:
+                        all_series[current_serie_id] = {
+                            'split_id': f"{year}{split}",
+                            'num_partidos': len(current_serie_partidos),
+                            'patch': patch
+                        }
+                        for orden, partida_gameid in enumerate(current_serie_partidos, start=1):
+                            all_partidos[partida_gameid] = {
+                                'serie_id': current_serie_id,
+                                'orden': orden
+                            }
 
-                # Construimos el id de la serie: puede ser año + split + primer gameid de la serie
-                year = serie_df['year'].iloc[0]
-                split = serie_df['split'].iloc[0]
-                if not isinstance(split, str):
-                    split = str(split) if pd.notnull(split) else 'unknown'
-                split = split.strip().lower()
-                patch = serie_df['patch'].iloc[0]
+                    # Nueva serie
+                    key = (year, split)
+                    serie_counters[key] = serie_counters.get(key, 0) + 1
+                    current_serie_id = f"{year}_{split}_{serie_counters[key]}"
+                    current_serie_partidos = [gameid]
+                else:
+                    # Seguimos en la misma serie
+                    if gameid not in current_serie_partidos:
+                        current_serie_partidos.append(gameid)
 
-                # El id puede ser único por ejemplo con primer gameid y split
-                serie_id = f"{year}_{split}_{serie_df['gameid'].iloc[0]}"
+                last_gameid = gameid
 
-                num_partidos = serie_df['game'].nunique()
-
-                # Guardamos los datos en el diccionario o haz aquí la creación de la instancia Serie
-                all_series[serie_id] = {
+            # Guardar la última serie al final del archivo
+            if current_serie_id and current_serie_partidos:
+                all_series[current_serie_id] = {
                     'split_id': f"{year}{split}",
-                    'num_partidos': num_partidos,
-                    'patch': patch,
+                    'num_partidos': len(current_serie_partidos),
+                    'patch': patch
                 }
-        except Exception as e:
-            print(f"Error al procesar el archivo {csv_file_path}: {e}")
+                for orden, partida_gameid in enumerate(current_serie_partidos, start=1):
+                    all_partidos[partida_gameid] = {
+                        'serie_id': current_serie_id,
+                        'orden': orden
+                    }
 
-    return all_series
+        except Exception as e:
+            print(f"❌ Error al procesar archivo {csv_file_path}: {e}")
+
+    print(f"📊 Total series extraídas: {len(all_series)}")
+    print(f"📊 Total partidos extraídos: {len(all_partidos)}")
+
+    return all_series, all_partidos
+
+
+def extract_partidos_de_serie(serie_id, serie_df):
+    partidos = {}
+    for gameid in serie_df['gameid'].unique():
+        # Puedes extraer más datos si quieres
+        partidos[gameid] = {
+            'serie_id': serie_id,
+            # 'fecha': ...,
+            # 'orden': ...,
+            # 'duracion': ...,
+        }
+    return partidos
 
 if __name__ == '__main__':
     filtrar_ligas_automaticamente(CARPETA_CSV, CARPETA_CSV, PROJECT_ROOT)
@@ -335,20 +376,6 @@ if __name__ == '__main__':
     
     # Agregar los nuevos IDs a los jugadores
     agregar_ids_jugadores(JSON_JUGADORES, lista_final_jugadores)'''
-    series_data = extract_all_series()
 
-    def convert_types(obj):
-        if isinstance(obj, dict):
-            return {k: convert_types(v) for k, v in obj.items()}
-        elif isinstance(obj, np.float64):
-            return float(obj)
-        else:
-            return obj
-
-    series_data_clean = convert_types(series_data)
-
-    with open('series_data.json', 'w', encoding='utf-8') as f:
-        json.dump(series_data_clean, f, indent=4, ensure_ascii=False)
-    
-    
-        
+   
+    extract_all_series_and_partidos()      

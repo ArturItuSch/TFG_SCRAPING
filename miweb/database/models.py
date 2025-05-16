@@ -1,23 +1,15 @@
 from django.db import models
 from django.forms.models import model_to_dict
 
-
 class SplitLEC(models.Model):
-    split_id = models.CharField(max_length=200, unique=True, blank=True)  
+    split_id = models.CharField(max_length=200, primary_key=True, blank=True)
     split_type = models.CharField(max_length=100)
     year = models.PositiveIntegerField()
     league = models.CharField(max_length=10)
-    
+
     def save(self, *args, **kwargs):
-        # Generar el split_id combinando split_type y year
         self.split_id = f"{self.split_type}_{self.year}"
         super().save(*args, **kwargs)
-
-    def __str__(self):
-        return f"{self.split_type} {self.year}"
-    
-    def to_dict(self):
-        return model_to_dict(self)
 
 class Serie(models.Model):
     id = models.CharField(max_length=200, primary_key=True)    
