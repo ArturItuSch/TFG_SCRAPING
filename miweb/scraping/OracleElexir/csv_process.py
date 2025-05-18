@@ -249,16 +249,25 @@ def extract_all_splits():
 
     for csv_file_path in rutas_csv:
         try:
+            nombre_archivo = os.path.basename(csv_file_path)
+            year_from_filename = nombre_archivo.split('_')[0]
             df = pd.read_csv(csv_file_path)
+            if 'year' in df.columns:
+                df = df[df['year'].astype(str) == year_from_filename]
+            else:
+                continue
+
+            if df.empty:
+                continue
             df['split'] = df['split'].fillna('unknown')
             splits = df['split'].drop_duplicates()
-            year = df['year'].iloc[0] if 'year' in df.columns else 'unknown'
+            year = os.path.basename(csv_file_path).split('_')[0]
             league = df['league'].iloc[0] if 'league' in df.columns else 'unknown'
+
             for split in splits:
                 split = str(split).strip().lower() if split else 'unknown'
                 split_id = f"{year}{split}"
 
-                # Evitamos sobreescribir si ya existe
                 if split_id not in all_splits:
                     all_splits[split_id] = {
                         "id": split_id,
@@ -271,7 +280,7 @@ def extract_all_splits():
             print(f"Error al procesar el archivo {csv_file_path}: {e}")
 
     return all_splits
-    
+
 def extract_all_series_and_partidos():
     all_series = {}
     all_partidos = {}
@@ -291,7 +300,7 @@ def extract_all_series_and_partidos():
             for idx, row in df.iterrows():
                 gameid = row['gameid']
                 game = row['game']
-                year = row['year']
+                year = os.path.basename(csv_file_path).split('_')[0]
                 split = str(row['split']).strip().lower()
                 patch = row.get('patch')
                 fecha_completa = row.get('date')
@@ -299,13 +308,12 @@ def extract_all_series_and_partidos():
 
                 if pd.notna(fecha_completa):
                     try:
-                        # Convierte a datetime y luego extrae solo la fecha
                         fecha_solo_dia = datetime.strptime(fecha_completa, '%Y-%m-%d %H:%M:%S').date()
                     except ValueError:
                         print(f"❌ Formato de fecha inválido: {fecha_completa}")
-                # Condición de nueva serie: cambia el gameid Y el game es 1
+
                 if (gameid != last_gameid and game == 1) or current_serie_id is None:
-                    # Guardar serie anterior si existía
+                    # Guardar la serie anterior
                     if current_serie_id and current_serie_partidos:
                         all_series[current_serie_id] = {
                             'split_id': f"{year}{split}",
@@ -313,11 +321,10 @@ def extract_all_series_and_partidos():
                             'patch': patch,
                             'dia': fecha_solo_dia
                         }
-                        for orden, partida_gameid in enumerate(current_serie_partidos, start=1):
-                            all_partidos[partida_gameid] = {
-                                'serie_id': current_serie_id,
-                                'orden': orden
-                            }
+
+                        df_serie = df[df['gameid'].isin(current_serie_partidos)]
+                        partidos_en_serie = extract_partidos_de_serie(current_serie_id, df_serie)
+                        all_partidos.update(partidos_en_serie)
 
                     # Nueva serie
                     key = (year, split)
@@ -325,56 +332,88 @@ def extract_all_series_and_partidos():
                     current_serie_id = f"{year}_{split}_{serie_counters[key]}"
                     current_serie_partidos = [gameid]
                 else:
-                    # Seguimos en la misma serie
                     if gameid not in current_serie_partidos:
                         current_serie_partidos.append(gameid)
 
                 last_gameid = gameid
 
-            # Guardar la última serie al final del archivo
+            # Guardar última serie
             if current_serie_id and current_serie_partidos:
                 all_series[current_serie_id] = {
                     'split_id': f"{year}{split}",
                     'num_partidos': len(current_serie_partidos),
-                    'patch': patch
+                    'patch': patch,
+                    'dia': fecha_solo_dia
                 }
-                for orden, partida_gameid in enumerate(current_serie_partidos, start=1):
-                    all_partidos[partida_gameid] = {
-                        'serie_id': current_serie_id,
-                        'orden': orden
-                    }
+
+                df_serie = df[df['gameid'].isin(current_serie_partidos)]
+                partidos_en_serie = extract_partidos_de_serie(current_serie_id, df_serie)
+                all_partidos.update(partidos_en_serie)
 
         except Exception as e:
             print(f"❌ Error al procesar archivo {csv_file_path}: {e}")
 
     print(f"📊 Total series extraídas: {len(all_series)}")
     print(f"📊 Total partidos extraídos: {len(all_partidos)}")
-
     return all_series, all_partidos
+
 
 
 def extract_partidos_de_serie(serie_id, serie_df):
     partidos = {}
-    
-    for idx, row in serie_df.iterrows():
-        gameid = row['gameid']
+
+    grouped = serie_df.groupby('gameid')
+
+    for gameid, group in grouped:
         try:
-            hora = datetime.strptime(row['date'], "%Y-%m-%d %H:%M:%S").time()
+            hora = datetime.strptime(group.iloc[0]['date'], "%Y-%m-%d %H:%M:%S").time()
         except Exception as e:
             print(f"⚠️ Error al parsear hora para gameid {gameid}: {e}")
             hora = None
-        
-        orden = row.get('game', None)
-        duracion = row.get('gamelength', None)
+
+        equipo_azul = None
+        equipo_rojo = None
+        equipo_ganador = None
+        orden = group.iloc[0].get('game')
+        duracion = group.iloc[0].get('gamelength')
+
+        for _, row in group.iterrows():
+            side = row.get('side')
+            team_id = row.get('teamid')
+            team_name = row.get('teamname')
+
+            # Verificamos si el team_id está vacío, es nulo o NaN
+            if pd.isna(team_id) or team_id in [None, '', 'nan']:
+                team_id = f"Unknown_{team_name}"
+
+            result = row.get('result')
+
+            if side == 'Blue':
+                equipo_azul = team_id
+                if result == 1:
+                    equipo_ganador = team_id
+            elif side == 'Red':
+                equipo_rojo = team_id
+                if result == 1:
+                    equipo_ganador = team_id
+
+        # Validar que los campos mínimos existen
+        if None in (equipo_azul, equipo_rojo, equipo_ganador):
+            print(f"⚠️ Datos incompletos para partido {gameid}, se omite.")
+            continue
 
         partidos[gameid] = {
             'serie_id': serie_id,
             'hora': hora,
-            'orden': orden,
-            'duracion': duracion,
+            'orden': int(orden),
+            'duracion': int(duracion),
+            'equipo_azul': equipo_azul,
+            'equipo_rojo': equipo_rojo,
+            'equipo_ganador': equipo_ganador
         }
 
     return partidos
+
 
 def extract_all_teams():
     all_teams = {}

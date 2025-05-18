@@ -20,16 +20,6 @@ class Serie(models.Model):
     
     def to_dict(self):
         return model_to_dict(self)  
-
-class Partido(models.Model):
-    id = models.CharField(max_length=200, primary_key=True)
-    serie = models.ForeignKey(Serie, on_delete=models.CASCADE, related_name='partidos')
-    hora = models.TimeField(null=True, blank=True)
-    orden = models.IntegerField(null=True, blank=True)
-    duracion = models.IntegerField(null=True, blank=True)
-    
-    def to_dict(self):
-        return model_to_dict(self)
     
 class Equipo(models.Model):
     id = models.CharField(max_length=200, primary_key=True)
@@ -44,7 +34,22 @@ class Equipo(models.Model):
     activo = models.BooleanField(default=True)
     def to_dict(self):
         return model_to_dict(self)
-    
+
+class Partido(models.Model):
+    id = models.CharField(max_length=200, primary_key=True)
+    serie = models.ForeignKey(Serie, on_delete=models.CASCADE, related_name='partidos')
+    hora = models.TimeField(null=True, blank=True)
+    orden = models.IntegerField(null=True, blank=True)
+    duracion = models.IntegerField(null=True, blank=True)
+    equipo_azul = models.ForeignKey(Equipo, on_delete=models.SET_NULL, null=True, blank=True, related_name='partidos_azul')
+    equipo_rojo = models.ForeignKey(Equipo, on_delete=models.SET_NULL, null=True, blank=True, related_name='partidos_rojo')
+    equipo_ganador = models.ForeignKey(Equipo, on_delete=models.SET_NULL, null=True, blank=True, related_name='partidos_ganados')
+
+    def to_dict(self):
+        return model_to_dict(self)
+    def to_dict(self):
+        return model_to_dict(self)
+ 
 class Jugador(models.Model):
     id = models.CharField(max_length=200, primary_key=True)
     nombre = models.CharField(max_length=100)
@@ -92,16 +97,15 @@ class ObjetivosNeutralesMatados(models.Model):
 
 
 class JugadorEnPartida(models.Model):
-    jugador = models.OneToOneField(Jugador, on_delete=models.SET_NULL, null=True, blank=True)
-    partido = models.OneToOneField(Partido, on_delete=models.SET_NULL, null=True, blank=True)
-    campeon = models.OneToOneField(Campeon, on_delete=models.SET_NULL, null=True, blank=True)
-    side = models.CharField(max_length=10, null=True, blank=True)
-    position = models.CharField(max_length=10, null=True, blank=True)
-
-    kills = models.PositiveIntegerField(null=True, blank=True)
-    deaths = models.PositiveIntegerField(null=True, blank=True)
-    assists = models.PositiveIntegerField(null=True, blank=True)
-    doublekills = models.PositiveIntegerField(null=True, blank=True)
+    jugador = models.OneToOneField(Jugador, on_delete=models.SET_NULL, null=True, blank=True) #playerid
+    partido = models.OneToOneField(Partido, on_delete=models.SET_NULL, null=True, blank=True) #teamid
+    campeon = models.OneToOneField(Campeon, on_delete=models.SET_NULL, null=True, blank=True) #champion
+    side = models.CharField(max_length=10, null=True, blank=True) #side
+    position = models.CharField(max_length=10, null=True, blank=True) #position
+    kills = models.PositiveIntegerField(null=True, blank=True) #kills
+    deaths = models.PositiveIntegerField(null=True, blank=True) #deaths
+    assists = models.PositiveIntegerField(null=True, blank=True) #assists
+    doublekills = models.PositiveIntegerField(null=True, blank=True) #
     triplekills = models.PositiveIntegerField(null=True, blank=True)
     quadrakills = models.PositiveIntegerField(null=True, blank=True)
     pentakills = models.PositiveIntegerField(null=True, blank=True)

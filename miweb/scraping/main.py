@@ -138,12 +138,38 @@ def importar_series_y_partidos():
             omitted_partidos_ids.append(partido_id)
             continue
 
+        def get_equipo_obj(equipo_id):
+            if str(equipo_id).startswith("Unknown_"):
+                nombre_equipo = equipo_id.split("Unknown_")[1]
+                try:
+                    return Equipo.objects.get(nombre=nombre_equipo)
+                except Equipo.DoesNotExist:
+                    return None
+            try:
+                return Equipo.objects.get(id=equipo_id)
+            except Equipo.DoesNotExist:
+                return None
+
+        equipo_azul_obj = get_equipo_obj(partido_data['equipo_azul'])
+        equipo_rojo_obj = get_equipo_obj(partido_data['equipo_rojo'])
+        equipo_ganador_obj = get_equipo_obj(partido_data['equipo_ganador'])
+
+        # Si alguno de los equipos no existe, omitimos este partido
+        if None in (equipo_azul_obj, equipo_rojo_obj, equipo_ganador_obj):
+            print(f"⚠️ Uno o más equipos no encontrados para el partido {partido_id}")
+            num_omitted_partidos += 1
+            omitted_partidos_ids.append(partido_id)
+            continue
+
         serializer = PartidoSerializer(data={
             'id': partido_id,
             'serie': serie_obj.pk,
-            'fecha': None,
+            'hora': partido_data['hora'],
             'orden': partido_data['orden'],
-            'duracion': None,
+            'duracion': partido_data['duracion'],
+            'equipo_azul': equipo_azul_obj.pk,
+            'equipo_rojo': equipo_rojo_obj.pk,
+            'equipo_ganador': equipo_ganador_obj.pk
         })
 
         if serializer.is_valid():
@@ -237,6 +263,6 @@ def importar_jugadores():
 if __name__ == '__main__':
     #importar_campeones()
     #importar_splits()
-    #importar_series_y_partidos()
-    #importar_equipos()
-    #importar_jugadores() 
+    importar_equipos()
+    importar_jugadores() 
+    importar_series_y_partidos()
