@@ -499,6 +499,94 @@ def extract_all_players():
 
     return all_players
 
+def extract_all_jugadores_en_partida():
+    all_jugadores_en_partida = []
+    rutas_csv = obtener_rutas_csv(CARPETA_CSV_LEC)
+
+    if not rutas_csv:
+        return all_jugadores_en_partida
+
+    for csv_file_path in rutas_csv:
+        try:
+            df = pd.read_csv(csv_file_path)
+
+            # Asegurarse que las columnas necesarias existen
+            required_columns = ['gameid', 'playerid', 'champion', 'kills', 'deaths', 'assists']
+            if not all(col in df.columns for col in required_columns):
+                print(f"⚠️ El archivo {csv_file_path} no tiene las columnas necesarias.")
+                continue
+
+            grouped = df.groupby('gameid')
+
+            for gameid, group in grouped:
+                if len(group) < 10:
+                    continue  # No tiene suficientes jugadores
+
+                jugadores = group.iloc[:10]
+                posiciones = ["top", "jng", "mid", "bot", "sup"]
+
+                for i, (_, row) in enumerate(jugadores.iterrows()):
+                    jugador_data = {
+                        'jugador': row["playerid"],
+                        'partido': row.get("gameid"),
+                        'campeon': row.get("champion"),
+                        'position': str(row.get("position")).strip() if row.get("position") in posiciones else posiciones[i % len(posiciones)],
+                        'kills': row.get('kills'),
+                        'deaths': row.get('deaths'),
+                        'assists': row.get('assists'),
+                        'doublekills': row.get('doublekills'),
+                        'triplekills': row.get('triplekills'),
+                        'quadrakills': row.get('quadrakills'),
+                        'pentakills': row.get('pentakills'),
+                        'firstbloodkill': bool(row.get('firstbloodkill')),
+                        'firstbloodassist': bool(row.get('firstbloodassist')),
+                        'firstbloodvictim': bool(row.get('firstbloodvictim')),
+                        'damagetochampions': float(row.get('damagetochampions', 0)) if pd.notna(row.get('damagetochampions')) else None,
+                        'damagetaken': float(row.get('damagetaken', 0)) * float(row.get('gamelength', 0)) if pd.notna(row.get('damagetaken')) and pd.notna(row.get('gamelength')) else None,
+                        'wardsplaced': row.get('wardsplaced'),
+                        'wardskilled': row.get('wardskilled'),
+                        'controlwardsbought': row.get('controlwardsbought'),
+                        'visionscore': row.get('visionscore'),
+                        'totalgold': row.get('totalgold'),
+                        'total_cs': row.get('total_cs'),
+                        'minionkills': row.get('minionkills'),
+                        'monsterkills': row.get('monsterkills'),
+                        "goldat10": row.get("goldat10"),
+                        "xpat10": row.get("xpat10"),
+                        "csat10": row.get("csat10"),
+                        "killsat10": row.get("killsat10"),
+                        "assistsat10": row.get("assistsat10"),
+                        "deathsat10": row.get("deathsat10"),
+
+                        "goldat15": row.get("goldat15"),
+                        "xpat15": row.get("xpat15"),
+                        "csat15": row.get("csat15"),
+                        "killsat15": row.get("killsat15"),
+                        "assistsat15": row.get("assistsat15"),
+                        "deathsat15": row.get("deathsat15"),
+
+                        "goldat20": row.get("goldat20"),
+                        "xpat20": row.get("xpat20"),
+                        "csat20": row.get("csat20"),
+                        "killsat20": row.get("killsat20"),
+                        "assistsat20": row.get("assistsat20"),
+                        "deathsat20": row.get("deathsat20"),
+
+                        "goldat25": row.get("goldat25"),
+                        "xpat25": row.get("xpat25"),
+                        "csat25": row.get("csat25"),
+                        "killsat25": row.get("killsat25"),
+                        "assistsat25": row.get("assistsat25"),
+                        "deathsat25": row.get("deathsat25"),
+                    }
+
+                    all_jugadores_en_partida.append(jugador_data)
+
+        except Exception as e:
+            print(f"❌ Error al procesar el archivo {csv_file_path}: {e}")
+
+    return all_jugadores_en_partida
+
 if __name__ == '__main__':
     filtrar_ligas_automaticamente(CARPETA_CSV, CARPETA_CSV, PROJECT_ROOT)
     '''equipos = obtener_equipos_o_jugadores(CARPETA_CSV_LEC, 'teamid', 'teamname')
@@ -519,4 +607,5 @@ if __name__ == '__main__':
     agregar_ids_jugadores(JSON_JUGADORES, lista_final_jugadores)'''
 
    
-    extract_all_series_and_partidos()      
+    jugadores = extract_all_jugadores_en_partida()
+    print(f"Total de registros (jugadores en partidas): {len(jugadores)}")

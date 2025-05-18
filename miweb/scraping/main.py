@@ -2,7 +2,6 @@ import os
 import django
 import sys
 import math
-import numpy as np
 
 # Ruta a tu proyecto Django (donde está settings.py)
 BASE_DIR = os.path.abspath(os.path.join(os.path.dirname(__file__), '..'))
@@ -13,11 +12,14 @@ os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'miweb.settings')
 django.setup()
 from database.models import *
 from scraping.driver import iniciar_driver
-from scraping.OracleElexir.csv_process import extract_all_splits, extract_all_series_and_partidos, extract_all_teams, extract_all_players
+from scraping.OracleElexir.csv_process import extract_all_splits, extract_all_series_and_partidos, extract_all_teams, extract_all_players, extract_all_jugadores_en_partida
 from scraping.GOL.scraping_gol import get_champions_information
 from database.serializers import *
 
-
+def limpiar_valor(valor):
+    if isinstance(valor, float) and math.isnan(valor):
+        return None
+    return valor
 
 def importar_campeones():
     driver = iniciar_driver()
@@ -80,7 +82,6 @@ def importar_series_y_partidos():
     # 🔸 Primero importar series
     for serie_id, serie_data in series_dict.items():
         if serie_id in series_existentes:
-            print(f"La serie {serie_id} ya existe, no se inserta.")
             continue
         raw_split_id = str(serie_data['split_id']).strip().lower()
         if raw_split_id.endswith('nan') or raw_split_id in ('', 'none'):
@@ -128,7 +129,6 @@ def importar_series_y_partidos():
     # 🔸 Ahora importar partidos
     for partido_id, partido_data in partidos_dict.items():
         if partido_id in partidos_existentes:
-            print(f"El partido {partido_id} ya existe, no se inserta.")
             continue
 
         serie_obj = series_cache.get(partido_data['serie_id'])
@@ -259,10 +259,136 @@ def importar_jugadores():
 
     print(f"✅ Insertados {len(jugadores_objs)} jugadores nuevos.")
     print(f"🔄 Actualizados {actualizados} jugadores existentes con nuevo equipo.")
-           
+
+def importar_jugadores_en_partida():
+    jugadores_en_partida_data = extract_all_jugadores_en_partida()
+    jugadores_en_partida_objs = []
+    actualizados = 0
+
+    # Cache para FK
+    jugadores_cache = {j.id: j for j in Jugador.objects.all()}
+    partidos_cache = {p.id: p for p in Partido.objects.all()}
+    campeones_cache = {c.nombre.replace("'", "").lower(): c for c in Campeon.objects.all()}
+
+    print(f"Cache jugadores cargados: {len(jugadores_cache)}")
+    print(f"Cache partidos cargados: {len(partidos_cache)}")
+    print(f"Cache campeones cargados: {len(campeones_cache)}")
+
+    # Pre-cargar combinaciones existentes para evitar get() en loop
+    claves_existentes = set(
+        JugadorEnPartida.objects.values_list('jugador_id', 'partido_id', 'campeon_id')
+    )
+
+    batch_size = 1000
+
+    for i, data in enumerate(jugadores_en_partida_data):
+        jugador_id = data['jugador']
+        partido_id = data['partido']
+        campeon_nombre = data['campeon'].replace("'", "").lower()
+        if campeon_nombre == 'nunu & willump':
+            campeon_nombre = 'nunu'
+
+        jugador_obj = jugadores_cache.get(jugador_id)
+        partido_obj = partidos_cache.get(partido_id)
+        campeon_obj = campeones_cache.get(campeon_nombre)
+
+        if not jugador_obj:
+            print(f"⚠️  No se encontró jugador en cache para id: '{jugador_id}'. Se creará como Unknown.")
+            
+            # Crear jugador "Unknown"
+            jugador_obj = Jugador.objects.create(
+                id=jugador_id,
+                nombre="Unknown",
+                # Puedes añadir más campos si tu modelo lo requiere
+            )
+            
+            jugadores_cache[jugador_id] = jugador_obj
+        
+        if not partido_obj:
+            print(f"❌ No se encontró partido en cache para id: '{partido_id}' (tipo: {type(partido_id)})")
+            print(f"   Repr partido_id: {repr(partido_id)}")
+            continue
+
+        if not campeon_obj:
+            print(f"❌ No se encontró campeón en cache para nombre: '{campeon_nombre}' (tipo: {type(campeon_nombre)})")
+            print(f"   Repr campeon_nombre: {repr(campeon_nombre)}")
+            continue
+
+        clave = (jugador_obj.pk, partido_obj.pk, campeon_obj.pk)
+        if clave in claves_existentes:
+            actualizados += 1
+            continue  # Ya existe, no insertar
+
+        # Crear instancia para bulk_create
+        obj = JugadorEnPartida(
+            jugador=jugador_obj,
+            partido=partido_obj,
+            campeon=campeon_obj,
+            position=limpiar_valor(data.get('position')),
+            kills=limpiar_valor(data.get('kills')),
+            deaths=limpiar_valor(data.get('deaths')),
+            assists=limpiar_valor(data.get('assists')),
+            doublekills=limpiar_valor(data.get('doublekills')),
+            triplekills=limpiar_valor(data.get('triplekills')),
+            quadrakills=limpiar_valor(data.get('quadrakills')),
+            pentakills=limpiar_valor(data.get('pentakills')),
+            firstbloodkill=limpiar_valor(data.get('firstbloodkill')),
+            firstbloodassist=limpiar_valor(data.get('firstbloodassist')),
+            firstbloodvictim=limpiar_valor(data.get('firstbloodvictim')),
+            damagetochampions=limpiar_valor(data.get('damagetochampions')),
+            damagetaken=limpiar_valor(data.get('damagetaken')),
+            wardsplaced=limpiar_valor(data.get('wardsplaced')),
+            wardskilled=limpiar_valor(data.get('wardskilled')),
+            controlwardsbought=limpiar_valor(data.get('controlwardsbought')),
+            visionscore=limpiar_valor(data.get('visionscore')),
+            totalgold=limpiar_valor(data.get('totalgold')),
+            total_cs=limpiar_valor(data.get('total_cs')),
+            minionkills=limpiar_valor(data.get('minionkills')),
+            monsterkills=limpiar_valor(data.get('monsterkills')),
+            goldat10=limpiar_valor(data.get('goldat10')),
+            xpat10=limpiar_valor(data.get('xpat10')),
+            csat10=limpiar_valor(data.get('csat10')),
+            killsat10=limpiar_valor(data.get('killsat10')),
+            assistsat10=limpiar_valor(data.get('assistsat10')),
+            deathsat10=limpiar_valor(data.get('deathsat10')),
+            goldat15=limpiar_valor(data.get('goldat15')),
+            xpat15=limpiar_valor(data.get('xpat15')),
+            csat15=limpiar_valor(data.get('csat15')),
+            killsat15=limpiar_valor(data.get('killsat15')),
+            assistsat15=limpiar_valor(data.get('assistsat15')),
+            deathsat15=limpiar_valor(data.get('deathsat15')),
+            goldat20=limpiar_valor(data.get('goldat20')),
+            xpat20=limpiar_valor(data.get('xpat20')),
+            csat20=limpiar_valor(data.get('csat20')),
+            killsat20=limpiar_valor(data.get('killsat20')),
+            assistsat20=limpiar_valor(data.get('assistsat20')),
+            deathsat20=limpiar_valor(data.get('deathsat20')),
+            goldat25=limpiar_valor(data.get('goldat25')),
+            xpat25=limpiar_valor(data.get('xpat25')),
+            csat25=limpiar_valor(data.get('csat25')),
+            killsat25=limpiar_valor(data.get('killsat25')),
+            assistsat25=limpiar_valor(data.get('assistsat25')),
+            deathsat25=limpiar_valor(data.get('deathsat25')),
+        )
+        jugadores_en_partida_objs.append(obj)
+
+        # Insertar en bloques para evitar usar demasiada memoria
+        if len(jugadores_en_partida_objs) >= batch_size:
+            JugadorEnPartida.objects.bulk_create(jugadores_en_partida_objs)
+            jugadores_en_partida_objs = []
+
+    # Insertar los restantes
+    if jugadores_en_partida_objs:
+        JugadorEnPartida.objects.bulk_create(jugadores_en_partida_objs)
+
+    print(f"✅ Insertados {len(jugadores_en_partida_objs)} registros nuevos de jugadores en partida.")
+    print(f"🔄 Actualizados {actualizados} registros existentes.")
+
+       
 if __name__ == '__main__':
     #importar_campeones()
     #importar_splits()
-    importar_equipos()
-    importar_jugadores() 
-    importar_series_y_partidos()
+    #importar_equipos()
+    #importar_jugadores() 
+    #importar_series_y_partidos()
+    importar_jugadores_en_partida()

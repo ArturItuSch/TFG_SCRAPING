@@ -97,63 +97,63 @@ class ObjetivosNeutralesMatados(models.Model):
 
 
 class JugadorEnPartida(models.Model):
-    jugador = models.OneToOneField(Jugador, on_delete=models.SET_NULL, null=True, blank=True) #playerid
-    partido = models.OneToOneField(Partido, on_delete=models.SET_NULL, null=True, blank=True) #teamid
-    campeon = models.OneToOneField(Campeon, on_delete=models.SET_NULL, null=True, blank=True) #champion
-    side = models.CharField(max_length=10, null=True, blank=True) #side
+    jugador = models.ForeignKey(Jugador, on_delete=models.SET_NULL, null=True, blank=True)
+    partido = models.ForeignKey(Partido, on_delete=models.SET_NULL, null=True, blank=True)
+    campeon = models.ForeignKey(Campeon, on_delete=models.SET_NULL, null=True, blank=True) #champion
     position = models.CharField(max_length=10, null=True, blank=True) #position
     kills = models.PositiveIntegerField(null=True, blank=True) #kills
     deaths = models.PositiveIntegerField(null=True, blank=True) #deaths
     assists = models.PositiveIntegerField(null=True, blank=True) #assists
-    doublekills = models.PositiveIntegerField(null=True, blank=True) #
-    triplekills = models.PositiveIntegerField(null=True, blank=True)
-    quadrakills = models.PositiveIntegerField(null=True, blank=True)
-    pentakills = models.PositiveIntegerField(null=True, blank=True)
-    firstbloodkill = models.BooleanField(null=True, blank=True)
-    firstbloodassist = models.BooleanField(null=True, blank=True)
-    firstbloodvictim = models.BooleanField(null=True, blank=True)
+    doublekills = models.PositiveIntegerField(null=True, blank=True) #doublekills
+    triplekills = models.PositiveIntegerField(null=True, blank=True) #triplekills
+    quadrakills = models.PositiveIntegerField(null=True, blank=True) #quadrakills
+    pentakills = models.PositiveIntegerField(null=True, blank=True) #pentakills
+    firstbloodkill = models.BooleanField(null=True, blank=True) #firstbloodkill
+    firstbloodassist = models.BooleanField(null=True, blank=True) #firstbloodassist   
+    firstbloodvictim = models.BooleanField(null=True, blank=True) #firstbloodvictim
 
-    damagetochampions = models.PositiveIntegerField(null=True, blank=True)
-    wardsplaced = models.PositiveIntegerField(null=True, blank=True)
-    wardskilled = models.PositiveIntegerField(null=True, blank=True)
-    controlwardsbought = models.PositiveIntegerField(null=True, blank=True)
-    visionscore = models.PositiveIntegerField(null=True, blank=True)
-    totalgold = models.PositiveIntegerField(null=True, blank=True)
-    total_cs = models.PositiveIntegerField(null=True, blank=True)
-    minionkills = models.PositiveIntegerField(null=True, blank=True)
-    monsterkills = models.PositiveIntegerField(null=True, blank=True)
+    damagetochampions = models.FloatField(null=True, blank=True) #damagetochampions
+    damagetaken = models.FloatField(null=True, blank=True) #damagetaken
+    wardsplaced = models.PositiveIntegerField(null=True, blank=True) #wardsplaced
+    wardskilled = models.PositiveIntegerField(null=True, blank=True) #wardskilled 
+    controlwardsbought = models.PositiveIntegerField(null=True, blank=True) #controlwardsbought
+    visionscore = models.PositiveIntegerField(null=True, blank=True) #visionscore
+    totalgold = models.PositiveIntegerField(null=True, blank=True) #totalgold
+    total_cs = models.PositiveIntegerField(null=True, blank=True) #total_cs
+    minionkills = models.PositiveIntegerField(null=True, blank=True) #minionkills
+    monsterkills = models.PositiveIntegerField(null=True, blank=True) #monsterkills
 
-    goldat10 = models.IntegerField(null=True, blank=True)
-    xpat10 = models.IntegerField(null=True, blank=True)
-    csat10 = models.IntegerField(null=True, blank=True)
+    goldat10 = models.FloatField(null=True, blank=True) 
+    xpat10 = models.FloatField(null=True, blank=True)
+    csat10 = models.FloatField(null=True, blank=True)
 
-    killsat10 = models.IntegerField(null=True, blank=True)
-    assistsat10 = models.IntegerField(null=True, blank=True)
-    deathsat10 = models.IntegerField(null=True, blank=True)
+    killsat10 = models.FloatField(null=True, blank=True)
+    assistsat10 = models.FloatField(null=True, blank=True)
+    deathsat10 = models.FloatField(null=True, blank=True)
 
-    goldat15 = models.IntegerField(null=True, blank=True)
-    xpat15 = models.IntegerField(null=True, blank=True)
-    csat15 = models.IntegerField(null=True, blank=True)
+    goldat15 = models.FloatField(null=True, blank=True)
+    xpat15 = models.FloatField(null=True, blank=True)
+    csat15 = models.FloatField(null=True, blank=True)
 
-    killsat15 = models.IntegerField(null=True, blank=True)
-    assistsat15 = models.IntegerField(null=True, blank=True)
-    deathsat15 = models.IntegerField(null=True, blank=True)
+    killsat15 = models.FloatField(null=True, blank=True)
+    assistsat15 = models.FloatField(null=True, blank=True)
+    deathsat15 = models.FloatField(null=True, blank=True)
 
-    goldat20 = models.IntegerField(null=True, blank=True)
-    xpat20 = models.IntegerField(null=True, blank=True)
-    csat20 = models.IntegerField(null=True, blank=True)
+    goldat20 = models.FloatField(null=True, blank=True)
+    xpat20 = models.FloatField(null=True, blank=True)
+    csat20 = models.FloatField(null=True, blank=True)
 
-    killsat20 = models.IntegerField(null=True, blank=True)
-    assistsat20 = models.IntegerField(null=True, blank=True)
-    deathsat20 = models.IntegerField(null=True, blank=True)
+    killsat20 = models.FloatField(null=True, blank=True)
+    assistsat20 = models.FloatField(null=True, blank=True)
+    deathsat20 = models.FloatField(null=True, blank=True)
 
-    goldat25 = models.IntegerField(null=True, blank=True)
-    xpat25 = models.IntegerField(null=True, blank=True)
-    csat25 = models.IntegerField(null=True, blank=True)
+    goldat25 = models.FloatField(null=True, blank=True)
+    xpat25 = models.FloatField(null=True, blank=True)
+    csat25 = models.FloatField(null=True, blank=True)
 
-    killsat25 = models.IntegerField(null=True, blank=True)
-    assistsat25 = models.IntegerField(null=True, blank=True)
-    deathsat25 = models.IntegerField(null=True, blank=True)
+    killsat25 = models.FloatField(null=True, blank=True)
+    assistsat25 = models.FloatField(null=True, blank=True)
+    deathsat25 = models.FloatField(null=True, blank=True)
 
     def __str__(self):
         return f"{self.jugador} en {self.partido} ({self.position})"
@@ -165,7 +165,7 @@ class JugadorEnPartida(models.Model):
         ).exclude(jugador__equipo=self.jugador.equipo).first()
         
     class Meta:
-        unique_together = ('jugador', 'partido', 'campeon')
+        unique_together = ('jugador', 'partido')
 
 class Seleccion(models.Model):
     equipo = models.ForeignKey(Equipo, on_delete=models.SET_NULL, null=True, blank=True)
