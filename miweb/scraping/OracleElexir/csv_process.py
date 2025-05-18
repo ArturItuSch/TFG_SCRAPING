@@ -587,6 +587,41 @@ def extract_all_jugadores_en_partida():
 
     return all_jugadores_en_partida
 
+
+def extraer_lista_baneos_picks():
+    rutas_csv = obtener_rutas_csv(CARPETA_CSV_LEC)
+
+    resultados = []
+
+    for csv_file_path in rutas_csv:
+        try:
+            df = pd.read_csv(csv_file_path)
+            df_teams = df[df['position'] == 'team']
+
+            for _, row in df_teams.iterrows():
+                game_id = row['gameid']
+                team_id = row['teamid']
+
+                # Baneos: ban1-ban5
+                for i in range(1, 6):
+                    champ_b = row.get(f'ban{i}')
+                    champ_s = row.get(f'pick{i}')
+                    if pd.notna(champ_b) and pd.notna(champ_s):
+                        resultados.append({
+                            'equipo': team_id,
+                            'partido': game_id,
+                            'campeon_baneado': champ_b.strip(),
+                            'ban': i,   
+                            'campeon_seleccionado': champ_s.strip(),
+                            'seleccion': i,
+                            'equipo_nombre': row['teamname'],
+                        })
+
+        except Exception as e:
+            print(f"❌ Error procesando {csv_file_path}: {e}")
+
+    return resultados
+
 if __name__ == '__main__':
     filtrar_ligas_automaticamente(CARPETA_CSV, CARPETA_CSV, PROJECT_ROOT)
     '''equipos = obtener_equipos_o_jugadores(CARPETA_CSV_LEC, 'teamid', 'teamname')
@@ -607,5 +642,8 @@ if __name__ == '__main__':
     agregar_ids_jugadores(JSON_JUGADORES, lista_final_jugadores)'''
 
    
-    jugadores = extract_all_jugadores_en_partida()
-    print(f"Total de registros (jugadores en partidas): {len(jugadores)}")
+    resultados = extraer_lista_baneos_picks()
+
+    # Mostrar los primeros 10 registros, por ejemplo
+    for i, registro in enumerate(resultados[:100], 1):
+        print(f"{i}: {registro}")

@@ -12,7 +12,7 @@ os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'miweb.settings')
 django.setup()
 from database.models import *
 from scraping.driver import iniciar_driver
-from scraping.OracleElexir.csv_process import extract_all_splits, extract_all_series_and_partidos, extract_all_teams, extract_all_players, extract_all_jugadores_en_partida
+from scraping.OracleElexir.csv_process import *
 from scraping.GOL.scraping_gol import get_champions_information
 from database.serializers import *
 
@@ -295,11 +295,9 @@ def importar_jugadores_en_partida():
         if not jugador_obj:
             print(f"⚠️  No se encontró jugador en cache para id: '{jugador_id}'. Se creará como Unknown.")
             
-            # Crear jugador "Unknown"
             jugador_obj = Jugador.objects.create(
                 id=jugador_id,
                 nombre="Unknown",
-                # Puedes añadir más campos si tu modelo lo requiere
             )
             
             jugadores_cache[jugador_id] = jugador_obj
@@ -384,11 +382,85 @@ def importar_jugadores_en_partida():
     print(f"✅ Insertados {len(jugadores_en_partida_objs)} registros nuevos de jugadores en partida.")
     print(f"🔄 Actualizados {actualizados} registros existentes.")
 
-       
+def importar_selecciones():
+    datos = extraer_lista_baneos_picks()
+    selecciones_objs = []
+    actualizados = 0
+
+    # Cache para evitar múltiples queries
+    equipos_cache = {eq.id: eq for eq in Equipo.objects.all()}
+    equipos_nombre_cache = {eq.nombre.strip().lower(): eq for eq in Equipo.objects.all()}
+    partidos_cache = {p.id: p for p in Partido.objects.all()}
+    campeones_cache = {
+        c.nombre.replace("'", "").lower(): c
+        for c in Campeon.objects.all()
+    }
+
+    def normalizar_nombre(nombre):
+        if not nombre:
+            return ""
+        nombre = nombre.replace("'", "").lower().strip()
+        if nombre == "nunu & willump":
+            return "nunu"
+        return nombre
+
+    for registro in datos:
+        equipo_id = registro['equipo']
+        equipo_nombre = registro.get('equipo_nombre', '').strip().lower()
+        partido_id = registro['partido']
+        nombre_baneado = normalizar_nombre(registro.get('campeon_baneado'))
+        nombre_seleccionado = normalizar_nombre(registro.get('campeon_seleccionado'))
+
+        equipo = equipos_cache.get(equipo_id)
+
+        # Si no lo encuentra por ID, buscar por nombre
+        if not equipo and equipo_nombre:
+            equipo = equipos_nombre_cache.get(equipo_nombre)
+
+        partido = partidos_cache.get(partido_id)
+
+        if not equipo or not partido:
+            print(f"⚠️ FK faltante para game {partido_id}, team ID {equipo_id}, nombre '{equipo_nombre}'")
+            continue
+
+        campeon_baneado = campeones_cache.get(nombre_baneado)
+        campeon_seleccionado = campeones_cache.get(nombre_seleccionado)
+
+        if nombre_baneado and not campeon_baneado:
+            print(f"⚠️ Campeón baneado '{nombre_baneado}' no encontrado.")
+        if nombre_seleccionado and not campeon_seleccionado:
+            print(f"⚠️ Campeón seleccionado '{nombre_seleccionado}' no encontrado.")
+
+        if campeon_seleccionado:
+            existe = Seleccion.objects.filter(
+                equipo=equipo,
+                partido=partido,
+                campeon_seleccionado=campeon_seleccionado
+            ).exists()
+            if existe:
+                actualizados += 1
+                continue
+
+        selecciones_objs.append(Seleccion(
+            equipo=equipo,
+            partido=partido,
+            seleccion=registro.get('seleccion'),
+            campeon_seleccionado=campeon_seleccionado,
+            baneo=registro.get('ban'),
+            campeon_baneado=campeon_baneado
+        ))
+
+    if selecciones_objs:
+        Seleccion.objects.bulk_create(selecciones_objs)
+
+    print(f"✅ Insertadas {len(selecciones_objs)} selecciones nuevas.")
+    print(f"🔄 Ignorados {actualizados} registros ya existentes.")
+   
 if __name__ == '__main__':
     #importar_campeones()
     #importar_splits()
     #importar_equipos()
     #importar_jugadores() 
     #importar_series_y_partidos()
-    importar_jugadores_en_partida()
+    #importar_jugadores_en_partida()
+    importar_selecciones()

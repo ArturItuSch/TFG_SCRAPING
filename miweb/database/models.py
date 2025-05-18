@@ -169,17 +169,14 @@ class JugadorEnPartida(models.Model):
 
 class Seleccion(models.Model):
     equipo = models.ForeignKey(Equipo, on_delete=models.SET_NULL, null=True, blank=True)
-    partido = models.ForeignKey(Partido, on_delete=models.SET_NULL, null=True, blank=True)
-    campeon = models.ForeignKey(Campeon, on_delete=models.SET_NULL, null=True, blank=True, related_name='selecciones_base')
-    
-    seleccion = models.IntegerField()  # Orden de selección 1, 2, 3, 4, 5
+    partido = models.ForeignKey(Partido, on_delete=models.SET_NULL, null=True, blank=True)    
+    seleccion = models.IntegerField() 
     campeon_seleccionado = models.ForeignKey(Campeon, on_delete=models.SET_NULL, null=True, blank=True, related_name='selecciones')
-    
-    baneo = models.IntegerField(null=True, blank=True)  # Orden de baneo
+    baneo = models.IntegerField(null=True, blank=True)  
     campeon_baneado = models.ForeignKey(Campeon, on_delete=models.SET_NULL, null=True, blank=True, related_name='baneos')
 
     class Meta:
-        unique_together = ('equipo', 'partido', 'campeon')
+        unique_together = ('equipo', 'partido', 'campeon_seleccionado')
 
     def __str__(self):
         return f"{self.equipo} seleccionó {self.campeon_seleccionado} y baneó {self.campeon_baneado} en {self.partido}"

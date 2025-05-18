@@ -88,3 +88,23 @@ class JugadorEnPartidaSerializer(serializers.ModelSerializer):
             'assistsat25',
             'deathsat25',
         ]
+
+class SeleccionSerializer(serializers.ModelSerializer):
+    equipo = serializers.PrimaryKeyRelatedField(queryset=Equipo.objects.all())
+    partido = serializers.PrimaryKeyRelatedField(queryset=Partido.objects.all())
+    campeon_seleccionado = serializers.PrimaryKeyRelatedField(queryset=Campeon.objects.all())
+    campeon_baneado = serializers.PrimaryKeyRelatedField(
+        queryset=Campeon.objects.all(), required=False, allow_null=True
+    )
+
+    class Meta:
+        model = Seleccion
+        fields = [
+            'id',
+            'equipo',
+            'partido',
+            'seleccion',
+            'campeon_seleccionado',
+            'baneo',
+            'campeon_baneado',
+        ]
