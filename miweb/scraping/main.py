@@ -13,7 +13,7 @@ os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'miweb.settings')
 django.setup()
 from database.models import *
 from scraping.driver import iniciar_driver
-from scraping.OracleElexir.csv_process import extract_all_splits, extract_all_series_and_partidos
+from scraping.OracleElexir.csv_process import extract_all_splits, extract_all_series_and_partidos, extract_all_teams, extract_all_players
 from scraping.GOL.scraping_gol import get_champions_information
 from database.serializers import *
 
@@ -68,6 +68,7 @@ def importar_series_y_partidos():
     series_dict, partidos_dict = extract_all_series_and_partidos()
     series_objs = []
     partidos_objs = []
+    omitted_partidos_ids = []
     num_omitted_series = 0
     num_omitted_partidos = 0
 
@@ -81,10 +82,16 @@ def importar_series_y_partidos():
         if serie_id in series_existentes:
             print(f"La serie {serie_id} ya existe, no se inserta.")
             continue
+        raw_split_id = str(serie_data['split_id']).strip().lower()
+        if raw_split_id.endswith('nan') or raw_split_id in ('', 'none'):
+            year_part = ''.join(filter(str.isdigit, raw_split_id[:4])) or serie_data.get('year', 'unknown')
+            split_id_fixed = f"{year_part}unknown"
+        else:
+            split_id_fixed = raw_split_id
 
-        split_obj = splits.get(serie_data['split_id'])
+        split_obj = splits.get(split_id_fixed)
         if not split_obj:
-            print(f"Split {serie_data['split_id']} no existe para la serie {serie_id}, se omite.")
+            print(f"Split {split_id_fixed} no existe para la serie {serie_id}, se omite.")
             num_omitted_series += 1
             continue
 
@@ -97,6 +104,7 @@ def importar_series_y_partidos():
             'split': split_obj.pk,
             'num_partidos': serie_data.get('num_partidos'),
             'patch': patch,
+            'dia': serie_data.get('dia'),
         })
 
         if serializer.is_valid():
@@ -127,6 +135,7 @@ def importar_series_y_partidos():
         if not serie_obj:
             print(f"La serie {partido_data['serie_id']} no existe para el partido {partido_id}, se omite.")
             num_omitted_partidos += 1
+            omitted_partidos_ids.append(partido_id)
             continue
 
         serializer = PartidoSerializer(data={
@@ -149,9 +158,85 @@ def importar_series_y_partidos():
 
     print(f"✅ Total partidos insertados: {len(partidos_objs)}")
     print(f"❌ Partidos omitidos por serie no encontrada: {num_omitted_partidos}")
+    if omitted_partidos_ids:
+        print(f"IDs de partidos omitidos por serie no encontrada: {omitted_partidos_ids}")
 
+def importar_equipos():
+    equipos_dict = extract_all_teams()
 
+    equipos_objs = []
+    for equipo_id, equipo_data in equipos_dict.items():
+        if not Equipo.objects.filter(id=equipo_id).exists():
+            serializer = EquipoSerializer(data={
+                'id': equipo_data['id'],
+                'nombre': equipo_data['name'],
+                'pais': None,
+                'region': None,
+                'propietario': None,
+                'head_coach': None,
+                'partners': None,
+                'fecha_fundacion': None,
+                'logo': None,
+                'activo': equipo_data.get('activo', False)
+            })
+            if serializer.is_valid():
+                equipos_objs.append(Equipo(**serializer.validated_data))
+            else:
+                print(f"❌ Error en datos del equipo {equipo_id}: {serializer.errors}")
+
+    if equipos_objs:
+        Equipo.objects.bulk_create(equipos_objs)
+    print(f"✅ Insertados {len(equipos_objs)} equipos nuevos.")
+
+def importar_jugadores():
+    jugadores_dict = extract_all_players()  
+    jugadores_objs = []
+    actualizados = 0
+
+    # Cacheamos equipos para asignar FK sin consultas repetidas
+    equipos_cache = {eq.id: eq for eq in Equipo.objects.all()}
+
+    for jugador_id, jugador_data in jugadores_dict.items():
+        equipo_obj = equipos_cache.get(jugador_data['equipo_id'])
+
+        jugador_qs = Jugador.objects.filter(id=jugador_id)
+        if jugador_qs.exists():
+            # Actualizamos equipo si cambió
+            jugador = jugador_qs.first()
+            if jugador.equipo != equipo_obj:
+                jugador.equipo = equipo_obj
+                jugador.save(update_fields=['equipo'])
+                actualizados += 1
+        else:
+            serializer = JugadorSerializer(data={
+                'id': jugador_id,
+                'nombre': jugador_data.get('nombre'),
+                'equipo': equipo_obj.pk if equipo_obj else None,
+                'real_name': None,
+                'residencia': None,
+                'rol': None,
+                'pais': None,
+                'nacimiento': None,
+                'soloqueue_ids': None,
+                'contratado_hasta': None,
+                'contratado_desde': None,
+                'imagen': None,
+                'activo': jugador_data.get('activo', False)
+            })
+            if serializer.is_valid():
+                jugadores_objs.append(Jugador(**serializer.validated_data))
+            else:
+                print(f"❌ Error en datos del jugador {jugador_id}: {serializer.errors}")
+
+    if jugadores_objs:
+        Jugador.objects.bulk_create(jugadores_objs)
+
+    print(f"✅ Insertados {len(jugadores_objs)} jugadores nuevos.")
+    print(f"🔄 Actualizados {actualizados} jugadores existentes con nuevo equipo.")
+           
 if __name__ == '__main__':
     #importar_campeones()
     #importar_splits()
-    importar_series_y_partidos()
+    #importar_series_y_partidos()
+    #importar_equipos()
+    #importar_jugadores() 

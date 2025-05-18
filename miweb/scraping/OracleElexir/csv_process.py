@@ -4,6 +4,7 @@ import os
 import json
 import uuid
 import numpy as np
+from datetime import datetime
 
 PROJECT_ROOT = os.path.abspath(os.path.join(os.path.dirname(__file__), '..', '..'))
 sys.path.insert(0, PROJECT_ROOT)
@@ -233,13 +234,12 @@ def obtener_rutas_csv(carpeta):
     rutas_csv = []
     for year in os.listdir(carpeta):
         year_path = os.path.join(carpeta, year)
-
         if os.path.isdir(year_path):
             for archivo in os.listdir(year_path):
                 if archivo.endswith('.csv'):
-                    archivo_path = os.path.join(year_path, archivo) 
-                    rutas_csv.append(archivo_path)  
-
+                    archivo_path = os.path.join(year_path, archivo)
+                    rutas_csv.append(archivo_path)
+    rutas_csv.sort() 
     return rutas_csv
 
 def extract_all_splits():
@@ -248,14 +248,12 @@ def extract_all_splits():
     rutas_csv = obtener_rutas_csv(CARPETA_CSV_LEC)
 
     for csv_file_path in rutas_csv:
-        archivo_nombre = os.path.basename(csv_file_path)
-        year = archivo_nombre.split('_')[0]
-
         try:
             df = pd.read_csv(csv_file_path)
             df['split'] = df['split'].fillna('unknown')
             splits = df['split'].drop_duplicates()
-
+            year = df['year'].iloc[0] if 'year' in df.columns else 'unknown'
+            league = df['league'].iloc[0] if 'league' in df.columns else 'unknown'
             for split in splits:
                 split = str(split).strip().lower() if split else 'unknown'
                 split_id = f"{year}{split}"
@@ -264,7 +262,7 @@ def extract_all_splits():
                 if split_id not in all_splits:
                     all_splits[split_id] = {
                         "id": split_id,
-                        "league": "LEC",
+                        "league": league,
                         "year": year,
                         "season": split
                     }
@@ -296,7 +294,15 @@ def extract_all_series_and_partidos():
                 year = row['year']
                 split = str(row['split']).strip().lower()
                 patch = row.get('patch')
+                fecha_completa = row.get('date')
+                fecha_solo_dia = None
 
+                if pd.notna(fecha_completa):
+                    try:
+                        # Convierte a datetime y luego extrae solo la fecha
+                        fecha_solo_dia = datetime.strptime(fecha_completa, '%Y-%m-%d %H:%M:%S').date()
+                    except ValueError:
+                        print(f"❌ Formato de fecha inválido: {fecha_completa}")
                 # Condición de nueva serie: cambia el gameid Y el game es 1
                 if (gameid != last_gameid and game == 1) or current_serie_id is None:
                     # Guardar serie anterior si existía
@@ -304,7 +310,8 @@ def extract_all_series_and_partidos():
                         all_series[current_serie_id] = {
                             'split_id': f"{year}{split}",
                             'num_partidos': len(current_serie_partidos),
-                            'patch': patch
+                            'patch': patch,
+                            'dia': fecha_solo_dia
                         }
                         for orden, partida_gameid in enumerate(current_serie_partidos, start=1):
                             all_partidos[partida_gameid] = {
@@ -348,15 +355,110 @@ def extract_all_series_and_partidos():
 
 def extract_partidos_de_serie(serie_id, serie_df):
     partidos = {}
-    for gameid in serie_df['gameid'].unique():
-        # Puedes extraer más datos si quieres
+    
+    for idx, row in serie_df.iterrows():
+        gameid = row['gameid']
+        try:
+            hora = datetime.strptime(row['date'], "%Y-%m-%d %H:%M:%S").time()
+        except Exception as e:
+            print(f"⚠️ Error al parsear hora para gameid {gameid}: {e}")
+            hora = None
+        
+        orden = row.get('game', None)
+        duracion = row.get('gamelength', None)
+
         partidos[gameid] = {
             'serie_id': serie_id,
-            # 'fecha': ...,
-            # 'orden': ...,
-            # 'duracion': ...,
+            'hora': hora,
+            'orden': orden,
+            'duracion': duracion,
         }
+
     return partidos
+
+def extract_all_teams():
+    all_teams = {}
+    rutas_csv = obtener_rutas_csv(CARPETA_CSV_LEC)
+
+    if not rutas_csv:
+        return all_teams
+
+    # La ruta más reciente será la última en la lista
+    latest_csv_path = rutas_csv[-1]
+    latest_team_ids = set()
+
+    for csv_file_path in rutas_csv:
+        try:
+            df = pd.read_csv(csv_file_path)
+
+            if 'teamname' not in df.columns or 'teamid' not in df.columns:
+                print(f"⚠️  El archivo {csv_file_path} no contiene columnas 'teamname' o 'teamid'.")
+                continue
+
+            df_filtered = df[['teamid', 'teamname']].dropna().drop_duplicates()
+
+            for _, row in df_filtered.iterrows():
+                team_id = str(row['teamid']).strip()
+                team_name = str(row['teamname']).strip()
+
+                if csv_file_path == latest_csv_path:
+                    latest_team_ids.add(team_id)
+
+                if team_id not in all_teams:
+                    all_teams[team_id] = {
+                        'id': team_id,
+                        'name': team_name,
+                        'activo': False
+                    }
+
+        except Exception as e:
+            print(f"❌ Error al procesar el archivo {csv_file_path}: {e}")
+
+    for team_id in latest_team_ids:
+        if team_id in all_teams:
+            all_teams[team_id]['activo'] = True
+
+    return all_teams
+
+def extract_all_players():
+    all_players = {} 
+    last_appearance = {} 
+
+    rutas_csv = obtener_rutas_csv(CARPETA_CSV_LEC)
+
+    max_year = 0
+
+    for csv_file_path in rutas_csv:
+        try:
+            df = pd.read_csv(csv_file_path)
+            df_players = df[df['playerid'].notna() & df['teamid'].notna()]
+
+            for _, row in df_players.iterrows():
+                player_id = row['playerid']
+                player_name = row['playername']
+                team_id = row['teamid']
+                year = int(row['year'])
+
+                if not player_id:
+                    continue
+
+                if player_id not in last_appearance or year > last_appearance[player_id]:
+                    last_appearance[player_id] = year
+
+                all_players[player_id] = {
+                    'id': player_id,
+                    'nombre': player_name,
+                    'equipo_id': team_id
+                }
+                max_year = max(max_year, year)
+
+        except Exception as e:
+            print(f"⚠️ Error al procesar el archivo {csv_file_path}: {e}")
+
+    for player_id in all_players:
+        all_players[player_id]['activo'] = last_appearance[player_id] == max_year
+
+    return all_players
 
 if __name__ == '__main__':
     filtrar_ligas_automaticamente(CARPETA_CSV, CARPETA_CSV, PROJECT_ROOT)

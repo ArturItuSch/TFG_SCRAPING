@@ -14,9 +14,19 @@ class SplitLECSerializer(serializers.ModelSerializer):
 class SerieSerializer(serializers.ModelSerializer):
     class Meta:
         model = Serie
-        fields = ['id', 'split', 'num_partidos', 'patch']
+        fields = ['id', 'split', 'num_partidos', 'patch', 'dia']
 
 class PartidoSerializer(serializers.ModelSerializer):
     class Meta:
         model = Partido
-        fields = ['id', 'serie', 'fecha', 'orden', 'duracion']
+        fields = ['id', 'serie', 'hora', 'orden', 'duracion']
+        
+class EquipoSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Equipo
+        fields = ['id', 'nombre', 'pais', 'region', 'propietario', 'head_coach', 'partners', 'fecha_fundacion', 'logo', 'activo']
+    
+class JugadorSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Jugador
+        fields = ['id', 'nombre', 'real_name', 'equipo', 'residencia', 'rol', 'pais', 'nacimiento', 'soloqueue_ids', 'contratado_hasta', 'contratado_desde', 'imagen', 'activo']

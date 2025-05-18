@@ -16,6 +16,7 @@ class Serie(models.Model):
     split = models.ForeignKey(SplitLEC, on_delete=models.CASCADE, related_name='series')
     num_partidos = models.IntegerField(null=True, blank=True)
     patch = models.FloatField(null=True, blank=True)
+    dia = models.DateField(null=True, blank=True)
     
     def to_dict(self):
         return model_to_dict(self)  
@@ -23,7 +24,7 @@ class Serie(models.Model):
 class Partido(models.Model):
     id = models.CharField(max_length=200, primary_key=True)
     serie = models.ForeignKey(Serie, on_delete=models.CASCADE, related_name='partidos')
-    fecha = models.DateTimeField(null=True, blank=True)
+    hora = models.TimeField(null=True, blank=True)
     orden = models.IntegerField(null=True, blank=True)
     duracion = models.IntegerField(null=True, blank=True)
     
@@ -40,7 +41,7 @@ class Equipo(models.Model):
     partners = models.CharField(max_length=100, null=True, blank=True)
     fecha_fundacion = models.DateField(null=True, blank=True)
     logo = models.CharField(max_length=100, null=True, blank=True)
-    
+    activo = models.BooleanField(default=True)
     def to_dict(self):
         return model_to_dict(self)
     
@@ -57,7 +58,7 @@ class Jugador(models.Model):
     contratado_hasta = models.DateField(null=True, blank=True)
     contratado_desde = models.DateField(null=True, blank=True)
     imagen = models.CharField(max_length=100, null=True, blank=True)
-
+    activo = models.BooleanField(default=True)
     def to_dict(self):
         return model_to_dict(self)
     
