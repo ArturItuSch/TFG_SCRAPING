@@ -88,7 +88,6 @@ class ObjetivosNeutralesMatados(models.Model):
     equipo = models.ForeignKey(Equipo, on_delete=models.CASCADE, related_name='objetivos_neutrales_matados')
     objetivo_neutral = models.ForeignKey(ObjetivoNeutral, on_delete=models.CASCADE, related_name='muertes')
     cantidad = models.PositiveIntegerField(null=True, blank=True)
-    firstdragon = models.BooleanField(null=True, blank=True)
     class Meta:
         unique_together = ('partida', 'equipo', 'objetivo_neutral')
 

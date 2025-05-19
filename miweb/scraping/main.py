@@ -15,6 +15,8 @@ from scraping.driver import iniciar_driver
 from scraping.OracleElexir.csv_process import *
 from scraping.GOL.scraping_gol import get_champions_information
 from database.serializers import *
+from Resources.rutas import DICCIONARIO_CLAVES
+
 
 def limpiar_valor(valor):
     if isinstance(valor, float) and math.isnan(valor):
@@ -455,7 +457,98 @@ def importar_selecciones():
 
     print(f"✅ Insertadas {len(selecciones_objs)} selecciones nuevas.")
     print(f"🔄 Ignorados {actualizados} registros ya existentes.")
-   
+
+def importar_objetivos_neutrales():
+    archivo_json = os.path.join(DICCIONARIO_CLAVES, 'objetivosneutrales.json')
+
+    try:
+        with open(archivo_json, 'r', encoding='utf-8') as f:
+            data = json.load(f)
+    except Exception as e:
+        print(f"❌ Error al abrir el archivo JSON: {e}")
+        return
+
+    insertados = 0
+    ignorados = 0
+
+    for objetivo in data:
+        serializer = ObjetivoNeutralSerializer(data=objetivo)
+        if serializer.is_valid():
+            nombre = serializer.validated_data['nombre']
+            _, creado = ObjetivoNeutral.objects.get_or_create(nombre=nombre, defaults=serializer.validated_data)
+            if creado:
+                insertados += 1
+            else:
+                ignorados += 1
+        else:
+            print(f"⚠️ Error al validar el objetivo neutral: {serializer.errors}")
+
+    print(f"✅ Insertados {insertados} nuevos objetivos neutrales.")
+    print(f"🔄 Ignorados {ignorados} ya existentes.")
+
+def importar_objetivos_neutrales_matados(batch_size=1000):
+    datos = extract_objetivos_neutrales_matados()
+    objs = []
+    ya_existentes = 0
+
+    for dato in datos:
+        gameid = dato['gameid']
+        teamid = dato['teamid']
+        teamname = dato.get('teamname')  # Nuevo campo que puede venir en el diccionario
+        nombre_objetivo = dato['nombre']
+        cantidad = dato['cantidad']
+
+        try:
+            partido = Partido.objects.get(id=gameid)
+
+            try:
+                equipo = Equipo.objects.get(id=teamid)
+            except Equipo.DoesNotExist:
+                if teamname:
+                    try:
+                        equipo = Equipo.objects.get(nombre=teamname)
+                    except Equipo.DoesNotExist:
+                        print(f"❌ No se encontró Equipo con id {teamid} ni con nombre '{teamname}'")
+                        continue
+                else:
+                    print(f"❌ No se encontró Equipo con id {teamid} y no se proporcionó teamname")
+                    continue
+
+            objetivo_neutral = ObjetivoNeutral.objects.get(nombre=nombre_objetivo)
+
+            if not ObjetivosNeutralesMatados.objects.filter(
+                partida=partido,
+                equipo=equipo,
+                objetivo_neutral=objetivo_neutral
+            ).exists():
+                obj = ObjetivosNeutralesMatados(
+                    partida=partido,
+                    equipo=equipo,
+                    objetivo_neutral=objetivo_neutral,
+                    cantidad=cantidad
+                )
+                objs.append(obj)
+            else:
+                ya_existentes += 1
+
+        except Partido.DoesNotExist:
+            print(f"❌ No se encontró Partido con id {gameid}")
+        except ObjetivoNeutral.DoesNotExist:
+            print(f"❌ No se encontró ObjetivoNeutral con nombre {nombre_objetivo}")
+        except Exception as e:
+            print(f"❌ Error inesperado: {e}")
+
+        if len(objs) >= batch_size:
+            ObjetivosNeutralesMatados.objects.bulk_create(objs)
+            print(f"✅ Insertados {len(objs)} registros en lote.")
+            objs = []
+
+    if objs:
+        ObjetivosNeutralesMatados.objects.bulk_create(objs)
+        print(f"✅ Insertados {len(objs)} registros finales.")
+
+    print(f"🔄 Ignorados {ya_existentes} registros ya existentes.")
+
 if __name__ == '__main__':
     #importar_campeones()
     #importar_splits()
@@ -463,4 +556,6 @@ if __name__ == '__main__':
     #importar_jugadores() 
     #importar_series_y_partidos()
     #importar_jugadores_en_partida()
-    importar_selecciones()
+    #importar_selecciones()
+    #importar_objetivos_neutrales()
+    importar_objetivos_neutrales_matados()

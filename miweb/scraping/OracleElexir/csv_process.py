@@ -8,7 +8,6 @@ from datetime import datetime
 
 PROJECT_ROOT = os.path.abspath(os.path.join(os.path.dirname(__file__), '..', '..'))
 sys.path.insert(0, PROJECT_ROOT)
-
 from Resources.rutas import *
 
 CARPETA_CSV = os.path.join(CARPETA_CSV_GAMES)
@@ -622,6 +621,59 @@ def extraer_lista_baneos_picks():
 
     return resultados
 
+
+def extract_objetivos_neutrales_matados():
+    try:
+        with open(os.path.join(DICCIONARIO_CLAVES, 'objetivosneutrales.json'), 'r', encoding='utf-8') as f:
+            data = json.load(f)
+    except Exception as e:
+        print(f"Error cargando JSON: {e}")
+        return []
+
+    # Extraemos solo los nombres
+    nombres_objetivos = [obj['nombre'] for obj in data]
+
+    rutas_csv = obtener_rutas_csv(CARPETA_CSV_LEC)
+
+    resultados = []
+
+    for ruta_csv in rutas_csv:
+        try:
+            df = pd.read_csv(ruta_csv)
+
+            # Filtramos solo filas con position == 'team'
+            df_filtrado = df[df['position'] == 'team']
+
+            # Comprobamos que existen columnas necesarias
+            if not all(x in df_filtrado.columns for x in ['gameid', 'teamid']):
+                print(f"Faltan columnas 'gameid' o 'teamid' en {ruta_csv}")
+                continue
+
+            # Solo columnas que sí existan
+            columnas_objetivos = [col for col in nombres_objetivos if col in df_filtrado.columns]
+
+            for _, fila in df_filtrado.iterrows():
+                gameid = fila['gameid']
+                teamid = fila['teamid']
+                teamname = fila['teamname']
+                for objetivo in columnas_objetivos:
+                    cantidad = fila[objetivo]
+                    # En caso de valores nulos o NaN, asumimos 0
+                    if pd.isna(cantidad):
+                        cantidad = 0
+                    resultados.append({
+                        "nombre": objetivo,
+                        "gameid": gameid,
+                        "teamid": teamid,
+                        "cantidad": int(cantidad),
+                        "teamname": teamname,
+                    })
+
+        except Exception as e:
+            print(f"Error procesando {ruta_csv}: {e}")
+
+    return resultados 
+        
 if __name__ == '__main__':
     filtrar_ligas_automaticamente(CARPETA_CSV, CARPETA_CSV, PROJECT_ROOT)
     '''equipos = obtener_equipos_o_jugadores(CARPETA_CSV_LEC, 'teamid', 'teamname')
@@ -642,8 +694,10 @@ if __name__ == '__main__':
     agregar_ids_jugadores(JSON_JUGADORES, lista_final_jugadores)'''
 
    
-    resultados = extraer_lista_baneos_picks()
+    resultados = extract_objetivos_neutrales_matados()
 
     # Mostrar los primeros 10 registros, por ejemplo
-    for i, registro in enumerate(resultados[:100], 1):
-        print(f"{i}: {registro}")
+    for resultado in resultados:
+        print(f"{resultado}")
+        
+        
