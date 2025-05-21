@@ -1,9 +1,10 @@
+from datetime import datetime
 import pandas as pd
 import sys
 import os
 import json
 import uuid
-from datetime import datetime
+import re
 
 PROJECT_ROOT = os.path.abspath(os.path.join(os.path.dirname(__file__), '..', '..'))
 sys.path.insert(0, PROJECT_ROOT)
@@ -11,6 +12,7 @@ from Resources.rutas import *
 
 CARPETA_CSV = os.path.join(CARPETA_CSV_GAMES)
 CARPETA_CSV_LEC = os.path.join(CARPETA_CSV, 'LEC')
+CARPETA_CSV_LCK = os.path.join(CARPETA_CSV, 'LCK')
 IDS_EQUIPOS_DICCIONARIO = os.path.join(DICCIONARIO_CLAVES, 'taem_ids.json')
 IDS_PLAYER_DICCIONARIO = os.path.join(DICCIONARIO_CLAVES, 'player_ids.json')
 IDS_PARTIDOS_DICCIONARIO = os.path.join(DICCIONARIO_CLAVES, 'partidos_ids.json')
@@ -87,52 +89,77 @@ def filtrar_ligas_automaticamente(carpeta_csv, carpeta_salida_base, project_root
 def cargar_diccionario(ruta):
     if os.path.exists(ruta):
         with open(ruta, 'r', encoding='utf-8') as f:
-            return json.load(f)
+            dic = json.load(f)
+            print(f"Diccionario cargado de {ruta} con {len(dic)} entradas.")
+            return dic
+    print(f"No existe el archivo {ruta}, se crea diccionario vacío.")
     return {}
-           
+
 # Función para guardar un diccionario en JSON
 def guardar_diccionario(diccionario, ruta):
-    with open(ruta, 'w', encoding='utf-8') as f:
-        json.dump(diccionario, f, ensure_ascii=False, indent=4)
+    try:
+        directorio = os.path.dirname(ruta)
+        if directorio and not os.path.exists(directorio):
+            os.makedirs(directorio, exist_ok=True)
 
-# Función para obtener o crear un UUID
-def obtener_o_crear_id(diccionario, clave):
-    if not clave or pd.isna(clave) or str(clave).lower().strip() == 'nan':
-        # Genera un nuevo UUID anónimo (sin asociarlo a una clave original)
-        nuevo_id = str(uuid.uuid4())
-        return nuevo_id
-    if clave not in diccionario:
-        diccionario[clave] = str(uuid.uuid4())
-    return diccionario[clave]
+        with open(ruta, 'w', encoding='utf-8') as f:
+            json.dump(diccionario, f, ensure_ascii=False, indent=4)
 
-# Función principal para procesar CSVs
-def procesar_csvs_y_reemplazar_ids(carpeta_csv):
-    dicc_teams = cargar_diccionario(IDS_EQUIPOS_DICCIONARIO)
-    dicc_players = cargar_diccionario(IDS_PLAYER_DICCIONARIO)
-    dicc_games = cargar_diccionario(IDS_PARTIDOS_DICCIONARIO)
-
-    archivos_csv = [f for f in os.listdir(carpeta_csv) if f.endswith('.csv')]
-
-    for archivo in archivos_csv:
-        ruta = os.path.join(carpeta_csv, archivo)
-        df = pd.read_csv(ruta, dtype=str)
-
-        if 'teamid' in df.columns and 'teamname' in df.columns:
-            df['teamid'] = df['teamid'].apply(lambda x: obtener_o_crear_id(dicc_teams, x))
-        if 'playerid' in df.columns and 'playername' in df.columns:
-            df['playerid'] = df['playerid'].apply(lambda x: obtener_o_crear_id(dicc_players, x))
-        if 'gameid' in df.columns:
-            df['gameid'] = df['gameid'].apply(lambda x: obtener_o_crear_id(dicc_games, x))
-
-        df.to_csv(ruta, index=False)
-
-    guardar_diccionario(dicc_teams, IDS_EQUIPOS_DICCIONARIO)
-    guardar_diccionario(dicc_players, IDS_PLAYER_DICCIONARIO)
-    guardar_diccionario(dicc_games, IDS_PARTIDOS_DICCIONARIO)
-
-    return f"✅ Procesados {len(archivos_csv)} CSVs y actualizados los IDs."
+        print(f"✅ Diccionario guardado correctamente en {ruta} con {len(diccionario)} entradas.")
+    except Exception as e:
+        print(f"❌ Error al guardar el diccionario en {ruta}: {e}")
         
         
+def es_uuid(valor):
+    if not isinstance(valor, str):
+        return False
+    patron_uuid = re.compile(
+        r'^[a-f0-9]{8}-[a-f0-9]{4}-[a-f0-9]{4}-[a-f0-9]{4}-[a-f0-9]{12}$', re.I
+    )
+    return bool(patron_uuid.match(valor))
+
+def extraer_hash_o_uuid(valor):
+    if not isinstance(valor, str):
+        return None
+    valor = valor.strip()
+
+    if es_uuid(valor):
+        return valor
+
+    # Si el valor es tipo "oe:player:..." -> extrae la parte final
+    if ":" in valor:
+        partes = valor.split(":")
+        posible_hash = partes[-1]
+        if re.fullmatch(r"[a-fA-F0-9]{32}", posible_hash):
+            return posible_hash
+
+    # Si parece ser un hash directamente (32 chars hex)
+    if re.fullmatch(r"[a-fA-F0-9]{32}", valor):
+        return valor
+
+    return None  # No se puede usar como clave
+
+def obtener_o_crear_id(diccionario, valor_original):
+    id_base = extraer_hash_o_uuid(valor_original)
+
+    if id_base is None:
+        # Aquí usamos el valor original como clave para mapear un UUID persistente
+        if valor_original not in diccionario:
+            nuevo_uuid = str(uuid.uuid4())
+            diccionario[valor_original] = nuevo_uuid
+            print(f"Clave no estándar '{valor_original}' añadida con UUID: {nuevo_uuid}")
+        return diccionario[valor_original]
+
+    if es_uuid(valor_original):
+        return valor_original
+
+    if id_base not in diccionario:
+        nuevo_uuid = str(uuid.uuid4())
+        diccionario[id_base] = nuevo_uuid
+        print(f"Añadido nuevo mapeo: {id_base} -> {nuevo_uuid}")
+
+    return diccionario[id_base]
+         
 def obtener_rutas_csv(carpeta):
     rutas_csv = []
     for year in os.listdir(carpeta):
@@ -145,6 +172,14 @@ def obtener_rutas_csv(carpeta):
     rutas_csv.sort() 
     return rutas_csv
 
+def reemplazar_ids(df, columna, diccionario):
+    if columna not in df.columns:
+        return
+    nuevos_ids = []
+    for val in df[columna]:
+        nuevos_ids.append(obtener_o_crear_id(diccionario, val))
+    df[columna] = nuevos_ids
+
 def procesar_todos_los_csvs_en_lec():
     dicc_teams = cargar_diccionario(IDS_EQUIPOS_DICCIONARIO)
     dicc_players = cargar_diccionario(IDS_PLAYER_DICCIONARIO)
@@ -155,11 +190,11 @@ def procesar_todos_los_csvs_en_lec():
         df = pd.read_csv(ruta, dtype=str)
 
         if 'teamid' in df.columns and 'teamname' in df.columns:
-            df['teamid'] = df['teamid'].apply(lambda x: obtener_o_crear_id(dicc_teams, x))
+            reemplazar_ids(df, 'teamid', dicc_teams)
         if 'playerid' in df.columns and 'playername' in df.columns:
-            df['playerid'] = df['playerid'].apply(lambda x: obtener_o_crear_id(dicc_players, x))
+            reemplazar_ids(df, 'playerid', dicc_players)
         if 'gameid' in df.columns:
-            df['gameid'] = df['gameid'].apply(lambda x: obtener_o_crear_id(dicc_games, x))
+            reemplazar_ids(df, 'gameid', dicc_games)
 
         df.to_csv(ruta, index=False)
 
@@ -168,23 +203,6 @@ def procesar_todos_los_csvs_en_lec():
     guardar_diccionario(dicc_games, IDS_PARTIDOS_DICCIONARIO)
 
     return f"✅ Procesados {len(rutas_csv)} CSVs y actualizados los IDs."
-
-def limpiar_playerid_en_filas_team(ruta_csv):
-    df = pd.read_csv(ruta_csv, dtype=str)
-
-    if 'position' in df.columns and 'playerid' in df.columns:
-        filas_team = df['position'].str.lower() == 'team'
-        df.loc[filas_team, 'playerid'] = ''
-
-        df.to_csv(ruta_csv, index=False)
-        return f"✅ Limpieza completa en: {ruta_csv} — {filas_team.sum()} filas actualizadas."
-    else:
-        return f"⚠️ No se encontraron columnas necesarias en: {ruta_csv}"
-
-def limpiar_playerid_en_todos_los_csvs():
-    rutas_csv = obtener_rutas_csv(CARPETA_CSV_LEC)
-    for ruta in rutas_csv:
-        print(limpiar_playerid_en_filas_team(ruta))
         
             
 def extract_all_splits():
@@ -621,23 +639,6 @@ def extract_objetivos_neutrales_matados():
 
     return resultados
         
-if __name__ == '__main__':
-    #filtrar_ligas_automaticamente(CARPETA_CSV, CARPETA_CSV, PROJECT_ROOT)
-    '''equipos = obtener_equipos_o_jugadores(CARPETA_CSV_LEC, 'teamid', 'teamname')
-    ids_nuevos(equipos, IDS_EQUIPOS_DICCIONARIO)
-    lista_final = nombre_newIDs(equipos, IDS_EQUIPOS_DICCIONARIO)
-    for item in lista_final:
-        print(item)
-    agregar_ids_equipos(JSON_EQUIPOS, lista_final)
-    jugadores = obtener_equipos_o_jugadores(CARPETA_CSV_LEC, 'playerid', 'playername')
-    ids_nuevos_jugadores(jugadores, IDS_PLAYER_DICCIONARIO)
-    
-    # Mapeo de IDs antiguos a nuevos
-    lista_final_jugadores = nombre_newIDs(jugadores, IDS_PLAYER_DICCIONARIO)
-    for item in lista_final_jugadores:
-        print(item)
-    
-    # Agregar los nuevos IDs a los jugadores
-    agregar_ids_jugadores(JSON_JUGADORES, lista_final_jugadores)'''
+
 
    
