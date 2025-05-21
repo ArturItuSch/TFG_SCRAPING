@@ -99,15 +99,20 @@ def descargar_todos_los_csv(api_key, folder_id, carpeta_destino):
 
         descargar_archivo(file_id, filename, carpeta_destino)
         
-def borrar_archivo_csv(ruta_archivo):
-    if os.path.exists(ruta_archivo) and ruta_archivo.endswith('.csv'):
+def borrar_csv_en_carpeta(carpeta):
+    if not os.path.isdir(carpeta):
+        print(f"La ruta proporcionada no es una carpeta válida: {carpeta}")
+        return
+
+    archivos = [f for f in os.listdir(carpeta) if f.endswith('.csv')]
+    
+    for archivo in archivos:
+        ruta_archivo = os.path.join(carpeta, archivo)
         try:
             os.remove(ruta_archivo)
-            print(f"Archivo borrado: {ruta_archivo}")
+            print(f"✅ Archivo borrado: {ruta_archivo}")
         except Exception as e:
-            print(f"No se pudo borrar el archivo {ruta_archivo}: {e}")
-    else:
-        print(f"El archivo no existe o no es un CSV: {ruta_archivo}")
+            print(f"❌ No se pudo borrar el archivo {ruta_archivo}: {e}")
         
         
 if __name__ == "__main__":
@@ -118,9 +123,9 @@ if __name__ == "__main__":
    
     descargar_todos_los_csv(API_KEY, FOLDER_ID, CARPETA_CSV)
     filtrar_ligas_automaticamente(CARPETA_CSV, CARPETA_CSV, BASE_DIR)    
-    #borrar_archivo_csv(archivo_descargado)
-    procesar_todos_los_csvs_en_lec()
-'''
+    borrar_archivo_csv(archivo_descargado)  
+    procesar_todos_los_csvs_en_lec() 
+    borrar_csv_en_carpeta(CARPETA_CSV)
     importar_campeones()
     importar_splits()
     importar_equipos()
@@ -128,4 +133,4 @@ if __name__ == "__main__":
     importar_series_y_partidos()
     importar_jugadores_en_partida()
     importar_selecciones()
-    importar_objetivos_neutrales()
+    importar_objetivos_neutrales()    '''
