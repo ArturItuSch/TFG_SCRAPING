@@ -1,0 +1,24 @@
+<!-- templates/equipos.html -->
+{% extends 'base.html' %}
+{% block title %}Equipos - LEC Stats{% endblock %}
+
+{% block content %}
+<h1>Equipos Activos</h1>
+<div class="row">
+  {% for equipo in equipos %}
+    <div class="col-md-4 mb-3">
+      <div class="card">
+        {% if equipo.logo %}
+          <img src="{{ equipo.logo }}" class="card-img-top" alt="{{ equipo.nombre }}">
+        {% endif %}
+        <div class="card-body">
+          <h5 class="card-title">{{ equipo.nombre }}</h5>
+          <p class="card-text">{{ equipo.region }}</p>
+        </div>
+      </div>
+    </div>
+  {% empty %}
+    <p>No hay equipos registrados.</p>
+  {% endfor %}
+</div>
+{% endblock %}

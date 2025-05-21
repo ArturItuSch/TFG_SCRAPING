@@ -1,0 +1,21 @@
+<!-- templates/equipos.html -->
+{% extends 'base.html' %}
+{% block title %}Splits - LEC Stats{% endblock %}
+
+{% block content %}
+<h1>Splits</h1>
+<div class="row">
+  {% for split in splits %}
+    <div class="col-md-4 mb-3">
+      <div class="card">
+        <div class="card-body">
+          <h5 class="card-title">{{ split.nombre }}</h5>
+          <p class="card-text">{{ split.region }}</p>
+        </div>
+      </div>
+    </div>
+  {% empty %}
+    <p>No hay splits registrados.</p>
+  {% endfor %}
+</div>
+{% endblock %}
