@@ -3,7 +3,6 @@ import sys
 import os
 import json
 import uuid
-import numpy as np
 from datetime import datetime
 
 PROJECT_ROOT = os.path.abspath(os.path.join(os.path.dirname(__file__), '..', '..'))
@@ -14,11 +13,23 @@ CARPETA_CSV = os.path.join(CARPETA_CSV_GAMES)
 CARPETA_CSV_LEC = os.path.join(CARPETA_CSV, 'LEC')
 IDS_EQUIPOS_DICCIONARIO = os.path.join(DICCIONARIO_CLAVES, 'taem_ids.json')
 IDS_PLAYER_DICCIONARIO = os.path.join(DICCIONARIO_CLAVES, 'player_ids.json')
+IDS_PARTIDOS_DICCIONARIO = os.path.join(DICCIONARIO_CLAVES, 'partidos_ids.json')
 JSON_EQUIPOS = os.path.join(JSON_INSTALATION_TEAMS, 'teams_data_leguepedia.json')
 JSON_JUGADORES = os.path.join(JSON_INSTALATION_PLAYERS, 'players_data_leguepedia.json')
 JSON_PARTIDOS = os.path.join(JSON_GAMES)
 JSON_SPLITS_LEC = os.path.join(JSON_INSTALATION_SPLITS_LEC)
 
+def borrar_csv_2025_lol_esports(carpeta_base):
+    for root, dirs, files in os.walk(carpeta_base):
+        for file in files:
+            if file.startswith("2025_LoL_esports") and file.endswith(".csv"):
+                ruta_completa = os.path.join(root, file)
+                try:
+                    os.remove(ruta_completa)
+                    print(f"Archivo eliminado: {ruta_completa}")
+                except Exception as e:
+                    print(f"No se pudo eliminar {ruta_completa}: {e}")
+                    
 def filtrar_ligas_automaticamente(carpeta_csv, carpeta_salida_base, project_root):
     os.makedirs(carpeta_salida_base, exist_ok=True)
 
@@ -71,164 +82,57 @@ def filtrar_ligas_automaticamente(carpeta_csv, carpeta_salida_base, project_root
                 print(f"El archivo {archivo} no contiene la columna 'league'.")
         except Exception as e:
             print(f"Error procesando {archivo}: {e}")
-            
-            
-def obtener_equipos_o_jugadores(carpeta_csv, columna_id, columna_nombre):
-    archivos_csv = [
-        os.path.relpath(os.path.join(carpeta_csv, archivo), start=PROJECT_ROOT)
-        for archivo in os.listdir(carpeta_csv)
-        if archivo.endswith('.csv') and os.path.isfile(os.path.join(carpeta_csv, archivo))
-    ]
+ 
+# Función para cargar o inicializar un diccionario desde JSON
+def cargar_diccionario(ruta):
+    if os.path.exists(ruta):
+        with open(ruta, 'r', encoding='utf-8') as f:
+            return json.load(f)
+    return {}
+           
+# Función para guardar un diccionario en JSON
+def guardar_diccionario(diccionario, ruta):
+    with open(ruta, 'w', encoding='utf-8') as f:
+        json.dump(diccionario, f, ensure_ascii=False, indent=4)
 
-    elementos = {}
-    
+# Función para obtener o crear un UUID
+def obtener_o_crear_id(diccionario, clave):
+    if not clave or pd.isna(clave) or str(clave).lower().strip() == 'nan':
+        # Genera un nuevo UUID anónimo (sin asociarlo a una clave original)
+        nuevo_id = str(uuid.uuid4())
+        return nuevo_id
+    if clave not in diccionario:
+        diccionario[clave] = str(uuid.uuid4())
+    return diccionario[clave]
+
+# Función principal para procesar CSVs
+def procesar_csvs_y_reemplazar_ids(carpeta_csv):
+    dicc_teams = cargar_diccionario(IDS_EQUIPOS_DICCIONARIO)
+    dicc_players = cargar_diccionario(IDS_PLAYER_DICCIONARIO)
+    dicc_games = cargar_diccionario(IDS_PARTIDOS_DICCIONARIO)
+
+    archivos_csv = [f for f in os.listdir(carpeta_csv) if f.endswith('.csv')]
+
     for archivo in archivos_csv:
-        ruta_absoluta = os.path.join(PROJECT_ROOT, archivo)
-        try:
-            df = pd.read_csv(ruta_absoluta, dtype=str)
-            if columna_id in df.columns and columna_nombre in df.columns:
-                for _, row in df[[columna_id, columna_nombre]].dropna().drop_duplicates().iterrows():
-                    elementos[row[columna_id]] = row[columna_nombre]
-            else:
-                print(f"El archivo {archivo} no contiene las columnas necesarias.")
-        except Exception as e:
-            print(f"Error procesando {archivo}: {e}")
-    
-    lista_elementos = [{'id': tid.strip().split(':')[-1], 'nombre': nombre} for tid, nombre in elementos.items()]
-    return lista_elementos
+        ruta = os.path.join(carpeta_csv, archivo)
+        df = pd.read_csv(ruta, dtype=str)
 
-def ids_nuevos(lista, archivo_salida):
-    if os.path.exists(archivo_salida):
-        with open(archivo_salida, "r", encoding="utf-8") as f:
-            id_dict = json.load(f)
-    else:
-        id_dict = {}
-    nuevos = 0
-    for entry in lista:
-        old_id = entry["id"]
-        if old_id not in id_dict:
-            id_dict[old_id] = uuid.uuid4().hex
-            nuevos += 1
-    with open(archivo_salida, "w", encoding="utf-8") as f:
-        json.dump(id_dict, f, indent=4)
+        if 'teamid' in df.columns and 'teamname' in df.columns:
+            df['teamid'] = df['teamid'].apply(lambda x: obtener_o_crear_id(dicc_teams, x))
+        if 'playerid' in df.columns and 'playername' in df.columns:
+            df['playerid'] = df['playerid'].apply(lambda x: obtener_o_crear_id(dicc_players, x))
+        if 'gameid' in df.columns:
+            df['gameid'] = df['gameid'].apply(lambda x: obtener_o_crear_id(dicc_games, x))
 
-    print(f"{nuevos} nuevos IDs añadidos.")
-    print(f"Archivo actualizado guardado en {archivo_salida}")
-    
-def nombre_newIDs(nombres, archivo_ids):
-    if not os.path.exists(archivo_ids):
-        print("El archivo de IDs no existe.")
-        return []
+        df.to_csv(ruta, index=False)
 
-    with open(archivo_ids, "r", encoding="utf-8") as f:
-        id_dict = json.load(f)
+    guardar_diccionario(dicc_teams, IDS_EQUIPOS_DICCIONARIO)
+    guardar_diccionario(dicc_players, IDS_PLAYER_DICCIONARIO)
+    guardar_diccionario(dicc_games, IDS_PARTIDOS_DICCIONARIO)
 
-    resultado = []
-    for nombre in nombres:
-        old_id = nombre["id"]
-        name = nombre["nombre"]
-        nuevo_id = id_dict.get(old_id)
-        if nuevo_id:
-            resultado.append({'nombre': name, 'nuevo_id': nuevo_id})
-        else:
-            print(f"ID antiguo no encontrado en el archivo: {old_id}")
-
-    return resultado
-
-def normalizar_nombre(nombre):
-    """Convierte un nombre a minúsculas, reemplaza guiones bajos por espacios y quita espacios extras."""
-    return nombre.lower().replace('_', ' ').strip()
-
-def agregar_ids_equipos(archivo, nuevos_ids):
-    try:
-        with open(archivo, 'r', encoding='utf-8') as f:
-            equipos_original = json.load(f)
-
-        id_dict = {
-            normalizar_nombre(e['nombre']): e['nuevo_id']
-            for e in nuevos_ids
-        }
-
-        no_encontrados = []
-
-        for equipo in equipos_original:
-            nombre_eq = normalizar_nombre(equipo.get('nombre_equipo', ''))
-            nuevo_id_calculado = id_dict.get(nombre_eq)
-
-            if nuevo_id_calculado:
-                if equipo.get('nuevo_id') != nuevo_id_calculado:
-                    equipo['nuevo_id'] = nuevo_id_calculado
-            else:
-                no_encontrados.append(equipo.get('nombre_equipo', 'NOMBRE DESCONOCIDO'))
-
-        with open(archivo, 'w', encoding='utf-8') as f:
-            json.dump(equipos_original, f, ensure_ascii=False, indent=4)
-
-        print(f"IDs añadidos correctamente en: {archivo}")
-        if no_encontrados:
-            print("⚠️ No se encontraron IDs para los siguientes equipos:")
-            for nombre in no_encontrados:
-                print(f" - {nombre}")
-
-    except Exception as e:
-        print(f"Error al procesar el archivo '{archivo}': {e}")
-
-def ids_nuevos_jugadores(lista, archivo_salida):
-    """Genera nuevos IDs para jugadores que no tengan uno y los guarda en el archivo de salida."""
-    if os.path.exists(archivo_salida):
-        with open(archivo_salida, "r", encoding="utf-8") as f:
-            id_dict = json.load(f)
-    else:
-        id_dict = {}
-    
-    nuevos = 0
-    for entry in lista:
-        old_id = entry["id"]
-        if old_id not in id_dict:
-            id_dict[old_id] = uuid.uuid4().hex  # Genera un nuevo ID único
-            nuevos += 1
-
-    # Guarda los nuevos IDs en el archivo
-    with open(archivo_salida, "w", encoding="utf-8") as f:
-        json.dump(id_dict, f, indent=4)
-
-    print(f"{nuevos} nuevos IDs añadidos a los jugadores.")
-    print(f"Archivo actualizado guardado en {archivo_salida}") 
-
-def agregar_ids_jugadores(archivo, nuevos_ids):
-    try:
-        with open(archivo, 'r', encoding='utf-8') as f:
-            jugadores_original = json.load(f)
-
-        id_dict = {
-            normalizar_nombre(j['nombre']): j['nuevo_id']
-            for j in nuevos_ids
-        }
-
-        no_encontrados = []
-
-        for jugador in jugadores_original:
-            nombre_jugador = normalizar_nombre(jugador.get('jugador', ''))
-            nuevo_id_calculado = id_dict.get(nombre_jugador)
-
-            if nuevo_id_calculado:
-                if jugador.get('nuevo_id') != nuevo_id_calculado:
-                    jugador['nuevo_id'] = nuevo_id_calculado
-            else:
-                no_encontrados.append(jugador.get('jugador', 'NOMBRE DESCONOCIDO'))
-
-        with open(archivo, 'w', encoding='utf-8') as f:
-            json.dump(jugadores_original, f, ensure_ascii=False, indent=4)
-
-        print(f"IDs añadidos correctamente en: {archivo}")
-        if no_encontrados:
-            print("⚠️ No se encontraron IDs para los siguientes jugadores:")
-            for nombre in no_encontrados:
-                print(f" - {nombre}")
-
-    except Exception as e:
-        print(f"Error al procesar el archivo '{archivo}': {e}")
-
+    return f"✅ Procesados {len(archivos_csv)} CSVs y actualizados los IDs."
+        
+        
 def obtener_rutas_csv(carpeta):
     rutas_csv = []
     for year in os.listdir(carpeta):
@@ -241,6 +145,48 @@ def obtener_rutas_csv(carpeta):
     rutas_csv.sort() 
     return rutas_csv
 
+def procesar_todos_los_csvs_en_lec():
+    dicc_teams = cargar_diccionario(IDS_EQUIPOS_DICCIONARIO)
+    dicc_players = cargar_diccionario(IDS_PLAYER_DICCIONARIO)
+    dicc_games = cargar_diccionario(IDS_PARTIDOS_DICCIONARIO)
+
+    rutas_csv = obtener_rutas_csv(CARPETA_CSV_LEC)
+    for ruta in rutas_csv:
+        df = pd.read_csv(ruta, dtype=str)
+
+        if 'teamid' in df.columns and 'teamname' in df.columns:
+            df['teamid'] = df['teamid'].apply(lambda x: obtener_o_crear_id(dicc_teams, x))
+        if 'playerid' in df.columns and 'playername' in df.columns:
+            df['playerid'] = df['playerid'].apply(lambda x: obtener_o_crear_id(dicc_players, x))
+        if 'gameid' in df.columns:
+            df['gameid'] = df['gameid'].apply(lambda x: obtener_o_crear_id(dicc_games, x))
+
+        df.to_csv(ruta, index=False)
+
+    guardar_diccionario(dicc_teams, IDS_EQUIPOS_DICCIONARIO)
+    guardar_diccionario(dicc_players, IDS_PLAYER_DICCIONARIO)
+    guardar_diccionario(dicc_games, IDS_PARTIDOS_DICCIONARIO)
+
+    return f"✅ Procesados {len(rutas_csv)} CSVs y actualizados los IDs."
+
+def limpiar_playerid_en_filas_team(ruta_csv):
+    df = pd.read_csv(ruta_csv, dtype=str)
+
+    if 'position' in df.columns and 'playerid' in df.columns:
+        filas_team = df['position'].str.lower() == 'team'
+        df.loc[filas_team, 'playerid'] = ''
+
+        df.to_csv(ruta_csv, index=False)
+        return f"✅ Limpieza completa en: {ruta_csv} — {filas_team.sum()} filas actualizadas."
+    else:
+        return f"⚠️ No se encontraron columnas necesarias en: {ruta_csv}"
+
+def limpiar_playerid_en_todos_los_csvs():
+    rutas_csv = obtener_rutas_csv(CARPETA_CSV_LEC)
+    for ruta in rutas_csv:
+        print(limpiar_playerid_en_filas_team(ruta))
+        
+            
 def extract_all_splits():
     all_splits = {}
 
@@ -630,52 +576,53 @@ def extract_objetivos_neutrales_matados():
         print(f"Error cargando JSON: {e}")
         return []
 
-    # Extraemos solo los nombres
+    # Extraemos solo los nombres de objetivos neutrales
     nombres_objetivos = [obj['nombre'] for obj in data]
-
     rutas_csv = obtener_rutas_csv(CARPETA_CSV_LEC)
-
-    resultados = []
+    agrupados = {}
 
     for ruta_csv in rutas_csv:
         try:
             df = pd.read_csv(ruta_csv)
-
-            # Filtramos solo filas con position == 'team'
             df_filtrado = df[df['position'] == 'team']
-
-            # Comprobamos que existen columnas necesarias
             if not all(x in df_filtrado.columns for x in ['gameid', 'teamid']):
                 print(f"Faltan columnas 'gameid' o 'teamid' en {ruta_csv}")
                 continue
 
-            # Solo columnas que sí existan
             columnas_objetivos = [col for col in nombres_objetivos if col in df_filtrado.columns]
 
             for _, fila in df_filtrado.iterrows():
-                gameid = fila['gameid']
-                teamid = fila['teamid']
-                teamname = fila['teamname']
+                gameid = str(fila['gameid'])
+                teamid = str(fila['teamid'])
+                teamname = str(fila['teamname'])
+                key = (gameid, teamid)
+
+                if key not in agrupados:
+                    agrupados[key] = {obj: 0 for obj in nombres_objetivos}
+
                 for objetivo in columnas_objetivos:
                     cantidad = fila[objetivo]
-                    # En caso de valores nulos o NaN, asumimos 0
                     if pd.isna(cantidad):
                         cantidad = 0
-                    resultados.append({
-                        "nombre": objetivo,
-                        "gameid": gameid,
-                        "teamid": teamid,
-                        "cantidad": int(cantidad),
-                        "teamname": teamname,
-                    })
+                    agrupados[key][objetivo] = int(cantidad)
 
         except Exception as e:
             print(f"Error procesando {ruta_csv}: {e}")
 
-    return resultados 
+    resultados = []
+    for (gameid, teamid), objetivos in agrupados.items():
+        registro = {
+            "gameid": gameid,
+            "teamid": teamid,
+            "teamname": teamname
+        }
+        registro.update({k: str(v) for k, v in objetivos.items()})
+        resultados.append(registro)
+
+    return resultados
         
 if __name__ == '__main__':
-    filtrar_ligas_automaticamente(CARPETA_CSV, CARPETA_CSV, PROJECT_ROOT)
+    #filtrar_ligas_automaticamente(CARPETA_CSV, CARPETA_CSV, PROJECT_ROOT)
     '''equipos = obtener_equipos_o_jugadores(CARPETA_CSV_LEC, 'teamid', 'teamname')
     ids_nuevos(equipos, IDS_EQUIPOS_DICCIONARIO)
     lista_final = nombre_newIDs(equipos, IDS_EQUIPOS_DICCIONARIO)
@@ -694,10 +641,3 @@ if __name__ == '__main__':
     agregar_ids_jugadores(JSON_JUGADORES, lista_final_jugadores)'''
 
    
-    resultados = extract_objetivos_neutrales_matados()
-
-    # Mostrar los primeros 10 registros, por ejemplo
-    for resultado in resultados:
-        print(f"{resultado}")
-        
-        

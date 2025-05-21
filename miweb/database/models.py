@@ -76,23 +76,38 @@ class Campeon(models.Model):
         return self.nombre
     
     
-class ObjetivoNeutral(models.Model):
-    nombre = models.CharField(max_length=100, primary_key=True)
-    imagen = models.CharField(max_length=100, null=True, blank=True)
-    
-    def __str__(self):
-        return self.nombre
+class ObjetivosNeutrales(models.Model):
+    partida = models.ForeignKey(Partido, on_delete=models.CASCADE, related_name='objetivos_pivotados')
+    equipo = models.ForeignKey(Equipo, on_delete=models.CASCADE, related_name='objetivos_pivotados')
 
-class ObjetivosNeutralesMatados(models.Model):
-    partida = models.ForeignKey(Partido, on_delete=models.CASCADE, related_name='objetivos_neutrales_matados')
-    equipo = models.ForeignKey(Equipo, on_delete=models.CASCADE, related_name='objetivos_neutrales_matados')
-    objetivo_neutral = models.ForeignKey(ObjetivoNeutral, on_delete=models.CASCADE, related_name='muertes')
-    cantidad = models.PositiveIntegerField(null=True, blank=True)
+    firstdragon = models.PositiveIntegerField(default=0)
+    dragons = models.PositiveIntegerField(default=0)
+    elementaldrakes = models.PositiveIntegerField(default=0)
+    infernals = models.PositiveIntegerField(default=0)
+    mountains = models.PositiveIntegerField(default=0)
+    clouds = models.PositiveIntegerField(default=0)
+    oceans = models.PositiveIntegerField(default=0)
+    chemtechs = models.PositiveIntegerField(default=0)
+    hextechs = models.PositiveIntegerField(default=0)
+    dragons_type_unknown = models.PositiveIntegerField(default=0)
+    elders = models.PositiveIntegerField(default=0)
+    firstherald = models.PositiveIntegerField(default=0)
+    heralds = models.PositiveIntegerField(default=0)
+    void_grubs = models.PositiveIntegerField(default=0)
+    firstbaron = models.PositiveIntegerField(default=0)
+    barons = models.PositiveIntegerField(default=0)
+    firsttower = models.PositiveIntegerField(default=0)
+    towers = models.PositiveIntegerField(default=0)
+    firstmidtower = models.PositiveIntegerField(default=0)
+    firsttothreetowers = models.PositiveIntegerField(default=0)
+    turretplates = models.PositiveIntegerField(default=0)
+    inhibitors = models.PositiveIntegerField(default=0)
+
     class Meta:
-        unique_together = ('partida', 'equipo', 'objetivo_neutral')
+        unique_together = ('partida', 'equipo')
 
     def __str__(self):
-        return f"{self.partida.id} - {self.equipo.nombre} - {self.objetivo_neutral.nombre} x{self.cantidad}" 
+        return f"{self.partida.id} - {self.equipo.nombre} (pivotado)"
 
 
 class JugadorEnPartida(models.Model):
@@ -164,7 +179,7 @@ class JugadorEnPartida(models.Model):
         ).exclude(jugador__equipo=self.jugador.equipo).first()
         
     class Meta:
-        unique_together = ('jugador', 'partido')
+        unique_together = ('jugador', 'partido', 'campeon')
 
 class Seleccion(models.Model):
     equipo = models.ForeignKey(Equipo, on_delete=models.SET_NULL, null=True, blank=True)

@@ -282,7 +282,7 @@ def importar_jugadores_en_partida():
     )
 
     batch_size = 1000
-
+    DEFAULT_JUGADOR_ID = "unknown"
     for i, data in enumerate(jugadores_en_partida_data):
         jugador_id = data['jugador']
         partido_id = data['partido']
@@ -290,19 +290,21 @@ def importar_jugadores_en_partida():
         if campeon_nombre == 'nunu & willump':
             campeon_nombre = 'nunu'
 
+        if not jugador_id or str(jugador_id).lower() == 'nan':
+            print(f"⚠️  ID inválido detectado: '{jugador_id}', se usará jugador Unknown por defecto.")
+            jugador_id = DEFAULT_JUGADOR_ID
+            
         jugador_obj = jugadores_cache.get(jugador_id)
         partido_obj = partidos_cache.get(partido_id)
         campeon_obj = campeones_cache.get(campeon_nombre)
 
         if not jugador_obj:
-            print(f"⚠️  No se encontró jugador en cache para id: '{jugador_id}'. Se creará como Unknown.")
-            
-            jugador_obj = Jugador.objects.create(
+            jugador_obj, _ = Jugador.objects.get_or_create(
                 id=jugador_id,
-                nombre="Unknown",
+                defaults={"nombre": "Unknown"},
             )
-            
             jugadores_cache[jugador_id] = jugador_obj
+
         
         if not partido_obj:
             print(f"❌ No se encontró partido en cache para id: '{partido_id}' (tipo: {type(partido_id)})")
@@ -458,45 +460,18 @@ def importar_selecciones():
     print(f"✅ Insertadas {len(selecciones_objs)} selecciones nuevas.")
     print(f"🔄 Ignorados {actualizados} registros ya existentes.")
 
-def importar_objetivos_neutrales():
-    archivo_json = os.path.join(DICCIONARIO_CLAVES, 'objetivosneutrales.json')
 
-    try:
-        with open(archivo_json, 'r', encoding='utf-8') as f:
-            data = json.load(f)
-    except Exception as e:
-        print(f"❌ Error al abrir el archivo JSON: {e}")
-        return
+def importar_objetivos_neutrales(batch_size=1000):
+    datos = extract_objetivos_neutrales_matados()  # Ahora devuelve lista con dicts agrupados por equipo y partida
 
-    insertados = 0
-    ignorados = 0
-
-    for objetivo in data:
-        serializer = ObjetivoNeutralSerializer(data=objetivo)
-        if serializer.is_valid():
-            nombre = serializer.validated_data['nombre']
-            _, creado = ObjetivoNeutral.objects.get_or_create(nombre=nombre, defaults=serializer.validated_data)
-            if creado:
-                insertados += 1
-            else:
-                ignorados += 1
-        else:
-            print(f"⚠️ Error al validar el objetivo neutral: {serializer.errors}")
-
-    print(f"✅ Insertados {insertados} nuevos objetivos neutrales.")
-    print(f"🔄 Ignorados {ignorados} ya existentes.")
-
-def importar_objetivos_neutrales_matados(batch_size=1000):
-    datos = extract_objetivos_neutrales_matados()
-    objs = []
+    objs_to_create = []
+    objs_to_update = []
     ya_existentes = 0
 
     for dato in datos:
         gameid = dato['gameid']
         teamid = dato['teamid']
-        teamname = dato.get('teamname')  # Nuevo campo que puede venir en el diccionario
-        nombre_objetivo = dato['nombre']
-        cantidad = dato['cantidad']
+        teamname = dato.get('teamname')
 
         try:
             partido = Partido.objects.get(id=gameid)
@@ -514,48 +489,66 @@ def importar_objetivos_neutrales_matados(batch_size=1000):
                     print(f"❌ No se encontró Equipo con id {teamid} y no se proporcionó teamname")
                     continue
 
-            objetivo_neutral = ObjetivoNeutral.objects.get(nombre=nombre_objetivo)
-
-            if not ObjetivosNeutralesMatados.objects.filter(
-                partida=partido,
-                equipo=equipo,
-                objetivo_neutral=objetivo_neutral
-            ).exists():
-                obj = ObjetivosNeutralesMatados(
-                    partida=partido,
-                    equipo=equipo,
-                    objetivo_neutral=objetivo_neutral,
-                    cantidad=cantidad
-                )
-                objs.append(obj)
-            else:
+            # Buscamos si ya existe registro para esa partida y equipo
+            try:
+                obj = ObjetivosNeutrales.objects.get(partida=partido, equipo=equipo)
+                # Actualizamos campos con datos del diccionario
+                for campo, valor in dato.items():
+                    if campo not in ['gameid', 'teamid', 'teamname']:
+                        setattr(obj, campo, int(valor))
+                objs_to_update.append(obj)
                 ya_existentes += 1
+            except ObjetivosNeutrales.DoesNotExist:
+                # Creamos uno nuevo
+                campos = {campo: int(valor) for campo, valor in dato.items() if campo not in ['gameid', 'teamid', 'teamname']}
+                obj = ObjetivosNeutrales(partida=partido, equipo=equipo, **campos)
+                objs_to_create.append(obj)
 
         except Partido.DoesNotExist:
             print(f"❌ No se encontró Partido con id {gameid}")
-        except ObjetivoNeutral.DoesNotExist:
-            print(f"❌ No se encontró ObjetivoNeutral con nombre {nombre_objetivo}")
+            continue
         except Exception as e:
             print(f"❌ Error inesperado: {e}")
+            continue
 
-        if len(objs) >= batch_size:
-            ObjetivosNeutralesMatados.objects.bulk_create(objs)
-            print(f"✅ Insertados {len(objs)} registros en lote.")
-            objs = []
+        # Insertar/actualizar en lotes
+        if len(objs_to_create) >= batch_size:
+            ObjetivosNeutrales.objects.bulk_create(objs_to_create)
+            print(f"✅ Insertados {len(objs_to_create)} Objetivos Neutrales en lote.")
+            objs_to_create = []
 
-    if objs:
-        ObjetivosNeutralesMatados.objects.bulk_create(objs)
-        print(f"✅ Insertados {len(objs)} registros finales.")
+        if len(objs_to_update) >= batch_size:
+            ObjetivosNeutrales.objects.bulk_update(objs_to_update, fields=[
+                'firstdragon', 'dragons', 'elementaldrakes', 'infernals', 'mountains', 'clouds', 'oceans',
+                'chemtechs', 'hextechs', 'dragons_type_unknown', 'elders', 'firstherald', 'heralds',
+                'void_grubs', 'firstbaron', 'barons', 'firsttower', 'towers', 'firstmidtower',
+                'firsttothreetowers', 'turretplates', 'inhibitors'
+            ])
+            print(f"🔄 Actualizados {len(objs_to_update)} registros en lote.")
+            objs_to_update = []
+
+    # Insertar o actualizar lo que queda
+    if objs_to_create:
+        ObjetivosNeutrales.objects.bulk_create(objs_to_create)
+        print(f"✅ Insertados {len(objs_to_create)} registros de Objetivos Neutrales.")
+
+    if objs_to_update:
+        ObjetivosNeutrales.objects.bulk_update(objs_to_update, fields=[
+            'firstdragon', 'dragons', 'elementaldrakes', 'infernals', 'mountains', 'clouds', 'oceans',
+            'chemtechs', 'hextechs', 'dragons_type_unknown', 'elders', 'firstherald', 'heralds',
+            'void_grubs', 'firstbaron', 'barons', 'firsttower', 'towers', 'firstmidtower',
+            'firsttothreetowers', 'turretplates', 'inhibitors'
+        ])
+        print(f"🔄 Actualizados {len(objs_to_update)} registros finales.")
 
     print(f"🔄 Ignorados {ya_existentes} registros ya existentes.")
 
 if __name__ == '__main__':
-    #importar_campeones()
-    #importar_splits()
-    #importar_equipos()
-    #importar_jugadores() 
-    #importar_series_y_partidos()
-    #importar_jugadores_en_partida()
-    #importar_selecciones()
-    #importar_objetivos_neutrales()
-    importar_objetivos_neutrales_matados()
+    importar_campeones()
+    importar_splits()
+    importar_equipos()
+    importar_jugadores() 
+    importar_series_y_partidos()
+    importar_jugadores_en_partida()
+    importar_selecciones()
+    importar_objetivos_neutrales()

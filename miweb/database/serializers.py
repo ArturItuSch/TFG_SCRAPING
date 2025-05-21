@@ -52,14 +52,8 @@ class SeleccionSerializer(serializers.ModelSerializer):
         model = Seleccion
         fields = fields = '__all__'
         
-class ObjetivoNeutralSerializer(serializers.ModelSerializer):
+class ObjetivosNeutralesSerializer(serializers.ModelSerializer):
     class Meta:
-        model = ObjetivoNeutral
-        fields = fields = '__all__'
-    
-
-class ObjetivosNeutralesMatadosSerializer(serializers.ModelSerializer):
-    class Meta:
-        model = ObjetivosNeutralesMatados
+        model = ObjetivosNeutrales
         fields = '__all__'
 

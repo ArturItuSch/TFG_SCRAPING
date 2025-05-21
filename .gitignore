@@ -9,6 +9,7 @@ __pycache__/
 # Ignorar archivos de entorno virtual
 venv/
 env/
+.env
 *.env
 
 # Ignorar directorios de migraciones de Django
