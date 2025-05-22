@@ -31,9 +31,7 @@ class JugadorSerializer(serializers.ModelSerializer):
     class Meta:
         model = Jugador
         fields = '__all__'
-        
-from rest_framework import serializers
-from .models import JugadorEnPartida
+
 
 class JugadorEnPartidaSerializer(serializers.ModelSerializer):
     class Meta:

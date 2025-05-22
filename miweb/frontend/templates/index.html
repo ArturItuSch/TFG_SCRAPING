@@ -1,19 +1,57 @@
-<!-- templates/index.html -->
-<!DOCTYPE html>
-<html lang="es">
-<head>
-    <meta charset="UTF-8">
-    <title>Página de Inicio</title>
-</head>
-<body>
-    <h1>Bienvenido a mi sitio Django</h1>
-    
-    <button onclick="saludar()">Haz clic aquí</button>
+{% extends 'base.html' %}
+{% load static %}
+{% load static custom_filters %}
+{% block extra_css %}
+{% endblock %}
+{% block title %}Partidos - LEC{% endblock %}
 
-    <script>
-        function saludar() {
-            alert("¡Hola desde JavaScript!");
-        }
-    </script>
-</body>
-</html>
+{% block content %}
+<link rel="stylesheet" href="{% static 'css/partidos.css' %}">
+
+<div class="container mt-5">
+  <h2 class="text-white mb-4">Partidos Recientes</h2>
+  <div class="scrollable-list">
+    {% for serie in ultimas_series %}
+      {% for partido in serie.partidos.all %}
+            <div class="card partido-card">
+                <div class="card-body text-center">
+                    <p class="fecha mb-1">
+                    {{ serie.dia|date:"d M Y" }} - {{ partido.hora|default:"--:--" }}
+                    </p>
+                    <div class="d-flex justify-content-around align-items-center mb-3">
+                        <div class="text-center">
+                        {% if partido.equipo_azul.logo %}
+                            <img src="{{ partido.equipo_azul.logo }}" alt="{{ partido.equipo_azul.nombre }}" class="team-logo">
+                        {% endif %}
+                        <p class="mt-2">{{ partido.equipo_azul.nombre }}</p>
+                        </div>
+
+                        <strong class="vs-text">
+                            {% if partido.equipo_azul and partido.equipo_rojo %}
+                                {% with resultados=resultados_por_serie|dictget:serie.id %}
+                                {{ resultados.azul.victorias }} - {{ resultados.rojo.victorias }}
+                                {% endwith %}
+                            {% else %}
+                                VS
+                            {% endif %}
+                        </strong>
+
+                    <div class="text-center">
+                    {% if partido.equipo_rojo.logo %}
+                        <img src="{{ partido.equipo_rojo.logo }}" alt="{{ partido.equipo_rojo.nombre }}" class="team-logo">
+                    {% endif %}
+                    <p class="mt-2">{{ partido.equipo_rojo.nombre }}</p>
+                    </div>
+                </div>
+                <span class="badge estado {{ partido.estado|default_if_none:'proximo' }}">
+                    {% if partido.equipo_ganador %}Finalizado
+                    {% elif partido.hora and serie.dia == today %}En directo
+                    {% else %}Próximo{% endif %}
+                </span>
+                </div>
+            </div>
+      {% endfor %}
+    {% endfor %}
+  </div>
+</div>
+{% endblock %}

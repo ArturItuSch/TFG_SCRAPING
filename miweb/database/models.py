@@ -18,8 +18,31 @@ class Serie(models.Model):
     patch = models.FloatField(null=True, blank=True)
     dia = models.DateField(null=True, blank=True)
     
-    def to_dict(self):
-        return model_to_dict(self)  
+    def resultados_por_equipos(self):
+        """
+        Retorna un dict con claves 'azul' y 'rojo', 
+        cada una con un dict con 'equipo' y 'victorias'.
+        """
+        victorias = {
+            'azul': {'equipo': None, 'victorias': 0},
+            'rojo': {'equipo': None, 'victorias': 0},
+        }
+
+        # Asignamos los equipos (por ejemplo tomando el primer partido si hay)
+        primer_partido = self.partidos.first()
+        if primer_partido:
+            victorias['azul']['equipo'] = primer_partido.equipo_azul
+            victorias['rojo']['equipo'] = primer_partido.equipo_rojo
+
+        # Contar victorias
+        for partido in self.partidos.all():
+            ganador = partido.equipo_ganador
+            if ganador == victorias['azul']['equipo']:
+                victorias['azul']['victorias'] += 1
+            elif ganador == victorias['rojo']['equipo']:
+                victorias['rojo']['victorias'] += 1
+
+        return victorias 
     
 class Equipo(models.Model):
     id = models.CharField(max_length=200, primary_key=True)

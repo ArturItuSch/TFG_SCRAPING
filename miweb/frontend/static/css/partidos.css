@@ -1,0 +1,129 @@
+body {
+    background-color: #0e0e10;
+    color: #ffffff;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    margin: 0;
+    padding: 0;
+}
+
+.container {
+    max-width: 1200px;
+    margin: 2rem auto;
+    padding: 0 1rem;
+}
+
+.row.g-4 {
+    display: flex;
+    flex-direction: column; /* Para que los hijos estén verticales */
+    gap: 1rem; /* separación entre tarjetas */
+}
+
+.scrollable-list {
+    max-height: 600px;
+    overflow-y: auto;
+    width: 400px;
+    border: 2px solid #0d6efd;
+    border-radius: 12px;
+    padding: 1rem;
+    background-color: #888888; /* gris medio para el fondo */
+
+    box-sizing: border-box;
+
+    /* Scrollbar para navegadores webkit (Chrome, Edge, Safari) */
+    scrollbar-width: thin;           /* para Firefox */
+    scrollbar-color: #000000 #bbbbbb; /* thumb negro, track gris claro en Firefox */
+}
+
+/* Webkit scrollbar */
+.scrollable-list::-webkit-scrollbar {
+    width: 10px;
+}
+
+.scrollable-list::-webkit-scrollbar-track {
+    background: #bbbbbb; /* gris claro */
+    border-radius: 12px;
+}
+
+.scrollable-list::-webkit-scrollbar-thumb {
+    background-color: #000000; /* negro */
+    border-radius: 12px;
+    border: 2px solid #bbbbbb; /* para separar un poco del track */
+}
+
+.partido-card {
+    
+    background-color: #1c1c1f;
+    border: 2px solid #0d6efd;
+    border-radius: 12px;
+    padding: 1rem;
+    margin-bottom: 1rem;
+
+    display: flex;
+    flex-direction: column;  
+    align-items: center;  /* Cambiado de flex-start a center */
+    justify-content: flex-start;
+
+    max-width: 100% !important;
+    margin-left: 0;
+    margin-right: 0;
+
+    transition: transform 0.2s ease;
+    color: white;
+}
+
+.partido-card:hover {
+    transform: scale(1.02);
+}
+
+.team {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    max-width: 100%;
+    justify-content: center; 
+    flex: none; 
+    width: auto;
+}
+
+.team img {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+}
+
+.team-name {
+    font-weight: 600;
+    font-size: 1.1rem;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.partido-info {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    flex: 1;
+    text-align: center;
+    color: white; 
+}
+
+.partido-card .partido-info .fecha,
+.partido-card .partido-info .hora {
+    color: white;
+    text-align: center;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+    .partido-card {
+        background-color: #1c1c1f !important;
+        border: 2px solid #0d6efd !important;
+        color: white !important;
+    }
+
+    .team, .partido-info {
+        max-width: 100%;
+        margin: 0.5rem 0;
+    }
+}

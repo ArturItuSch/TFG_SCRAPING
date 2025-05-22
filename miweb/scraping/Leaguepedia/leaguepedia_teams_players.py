@@ -10,7 +10,7 @@ from datetime import datetime
 import random
 import time
 # Establece la ruta raíz del proyecto
-PROJECT_ROOT = os.path.abspath(os.path.join(os.path.dirname(__file__), '..','..','..'))
+PROJECT_ROOT = os.path.abspath(os.path.join(os.path.dirname(__file__), '..','..'))
 sys.path.insert(0, PROJECT_ROOT)
 
 # Importación de rutas desde archivo de configuración
@@ -70,22 +70,11 @@ def convertir_fecha(fecha_str):
         return None
 
 
-def write_json(nombre_archivo, datos):
-    try:
-        with open(nombre_archivo, 'w', encoding='utf-8') as f:
-            json.dump(datos, f, ensure_ascii=False, indent=4)
-        print(f"Archivo JSON guardado correctamente en: {nombre_archivo}")
-    except (IOError, OSError) as e:
-        print(f"Error de escritura en el archivo {nombre_archivo}: {e}")
-    except TypeError as e:
-        print(f"Error de serialización de JSON: {e}")
-
-
 def get_html(url, timeout=10):
     try:
         time.sleep(1)
         headers = obtener_headers_dinamicos()
-        response = requests.get(url, headers=headers, timeout=timeout)
+        response = requests.get(url, headers=headers)
         response.raise_for_status()
         return response
     except requests.exceptions.Timeout:
@@ -191,8 +180,9 @@ def get_extra_player_data(url):
             
 
 # Conseguir los datos de los jugadores de los equipos
-def get_player_data(urls):
-    all_player_data = []  
+def get_player_data():
+    all_player_data = []
+    urls = get_team_links("https://lol.fandom.com/wiki/LEC/2025_Season/Spring_Season")  
     for url in urls:
         try:
             response = get_html(url, headers)
@@ -268,7 +258,6 @@ def get_player_data(urls):
 
 def download_image(ruta_completa, url_imagen):
     try:
-        # Si la imagen ya existe, no volver a descargarla
         if os.path.exists(ruta_completa):
             print(f"Imagen ya existe en {ruta_completa}, se omite la descarga.")
             return os.path.relpath(ruta_completa, start=os.getcwd())
@@ -288,9 +277,12 @@ def download_image(ruta_completa, url_imagen):
         return None
     
 # Conseguir la información de los jugadores de los equipos que se pasan por una lista de urls y retorna una lista de diccionarios con la información de los jugadores
-def get_team_info(urls):
+def get_team_data():
     informacion_equipos = []
-
+    urls = get_team_links("https://lol.fandom.com/wiki/LEC/2025_Season/Spring_Season")
+    if not urls:
+        print("No se encontraron enlaces de equipos.")
+        return []
     for url in urls:
         try:
             response = get_html(url, headers)
@@ -374,15 +366,6 @@ def get_team_info(urls):
             continue
     return informacion_equipos
 
-if __name__ == "__main__":
-    equipos_url = get_team_links("https://lol.fandom.com/wiki/LEC/2025_Season/Spring_Season")  
-    
-    # Obtener los datos de los Jugadores
-    player_data = get_player_data(equipos_url)
-    write_json(PLAYER_INSTALATION_DATA, player_data)
-    
-    # Obtener los datos de los equipos descargar los logos y guardarlos en un JSON
-    '''team_data = get_team_info(equipos_url)
-    write_json(TEAMS_INSTALATION_JSON, team_data) '''   
-    
+
+
     
