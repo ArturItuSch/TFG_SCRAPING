@@ -1,24 +1,29 @@
 from django.shortcuts import render
+from django.conf import settings
 import os
 import sys
 from pathlib import Path
 from django.utils import timezone
 BASE_DIR = Path(__file__).resolve().parent.parent
 from database.models import *
+from django.db.models import Prefetch
 
 
 def index(request):
-    ultimas_series = Serie.objects.order_by('-dia')[:10]
+    ultimas_series = Serie.objects.order_by('-dia').prefetch_related(
+        Prefetch('partidos', queryset=Partido.objects.distinct())
+    )[:20]
 
     # Prepara un diccionario con resultados por serie para acceso rápido en template
     resultados_por_serie = {}
     for serie in ultimas_series:
-        resultados_por_serie[str(serie.id)] = serie.resultados_por_equipos()
+        resultados_por_serie[serie.id] = serie.resultados_por_equipos()
 
     context = {
         'ultimas_series': ultimas_series,
         'resultados_por_serie': resultados_por_serie,
         'today': timezone.localdate(),  
+        'MEDIA_URL': settings.MEDIA_URL,
     }
     return render(request, 'index.html', context)
 

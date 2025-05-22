@@ -6,52 +6,41 @@
 {% block title %}Partidos - LEC{% endblock %}
 
 {% block content %}
-<link rel="stylesheet" href="{% static 'css/partidos.css' %}">
+    <link rel="stylesheet" href="{% static 'css/partidos.css' %}">
+    <div class="container mt-5">
+    <h2 class="text-white mb-4">Resultados de las Series</h2>
+    <div class="scrollable-list">
+        {% for serie in ultimas_series %}
+        {% with resultados=resultados_por_serie|dictget:serie.id %}
+            <div class="card partido-card d-flex">
+            
+            <!-- Logo Equipo Azul -->
+            <div class="team-logo-wrapper">
+                {% if resultados.azul.equipo and resultados.azul.equipo.logo %}
+                <img src="{{ MEDIA_URL }}{{ resultados.azul.equipo.logo }}" alt="{{ resultados.azul.equipo.nombre }}" class="team-logo-vertical">
+                {% endif %}
+            </div>
 
-<div class="container mt-5">
-  <h2 class="text-white mb-4">Partidos Recientes</h2>
-  <div class="scrollable-list">
-    {% for serie in ultimas_series %}
-      {% for partido in serie.partidos.all %}
-            <div class="card partido-card">
-                <div class="card-body text-center">
-                    <p class="fecha mb-1">
-                    {{ serie.dia|date:"d M Y" }} - {{ partido.hora|default:"--:--" }}
-                    </p>
-                    <div class="d-flex justify-content-around align-items-center mb-3">
-                        <div class="text-center">
-                        {% if partido.equipo_azul.logo %}
-                            <img src="{{ partido.equipo_azul.logo }}" alt="{{ partido.equipo_azul.nombre }}" class="team-logo">
-                        {% endif %}
-                        <p class="mt-2">{{ partido.equipo_azul.nombre }}</p>
-                        </div>
-
-                        <strong class="vs-text">
-                            {% if partido.equipo_azul and partido.equipo_rojo %}
-                                {% with resultados=resultados_por_serie|dictget:serie.id %}
-                                {{ resultados.azul.victorias }} - {{ resultados.rojo.victorias }}
-                                {% endwith %}
-                            {% else %}
-                                VS
-                            {% endif %}
-                        </strong>
-
-                    <div class="text-center">
-                    {% if partido.equipo_rojo.logo %}
-                        <img src="{{ partido.equipo_rojo.logo }}" alt="{{ partido.equipo_rojo.nombre }}" class="team-logo">
-                    {% endif %}
-                    <p class="mt-2">{{ partido.equipo_rojo.nombre }}</p>
-                    </div>
+            <!-- Centro con fecha y resultado -->
+            <div class="center-content d-flex flex-column justify-content-center align-items-center text-white flex-grow-1">
+                <div class="fecha mb-2">
+                {{ serie.dia|date:"d M Y" }}
                 </div>
-                <span class="badge estado {{ partido.estado|default_if_none:'proximo' }}">
-                    {% if partido.equipo_ganador %}Finalizado
-                    {% elif partido.hora and serie.dia == today %}En directo
-                    {% else %}Próximo{% endif %}
-                </span>
+                <div class="resultado fs-4 fw-bold">
+                {{ resultados.azul.victorias }} : {{ resultados.rojo.victorias }}
                 </div>
             </div>
-      {% endfor %}
-    {% endfor %}
-  </div>
-</div>
+
+            <!-- Logo Equipo Rojo -->
+            <div class="team-logo-wrapper">
+                {% if resultados.rojo.equipo and resultados.rojo.equipo.logo %}
+                    <img src="{{ MEDIA_URL }}{{ resultados.rojo.equipo.logo }}" alt="{{ resultados.rojo.equipo.nombre }}" class="team-logo-vertical">
+                {% endif %}
+            </div>
+
+            </div>
+        {% endwith %}
+        {% endfor %}
+    </div>
+    </div>
 {% endblock %}

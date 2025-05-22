@@ -76,6 +76,7 @@ STATIC_URL = '/static/'
 
 STATICFILES_DIRS = [
     os.path.join(BASE_DIR, 'frontend/static'),
+
 ]
 
 # Database
@@ -135,6 +136,7 @@ STATIC_URL = 'static/'
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 # Static files (CSS, JavaScript, Images)
-MEDIA_URL = '/media/'
-MEDIA_ROOT = BASE_DIR / 'media'
+MEDIA_URL = '/Resources/'
+MEDIA_ROOT = os.path.join(BASE_DIR, 'Resources')
+
 

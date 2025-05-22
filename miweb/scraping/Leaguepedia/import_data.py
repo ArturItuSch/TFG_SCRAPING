@@ -98,17 +98,20 @@ def actualizar_equipos_activos(lista_equipos):
             print("Nombre de equipo no proporcionado, se omite.")
             continue
 
-        # Buscar el equipo por nombre (ignorando mayúsculas/minúsculas)
         equipo_obj = Equipo.objects.filter(nombre__iexact=nombre_equipo).first()
 
         if not equipo_obj:
             print(f"Equipo no encontrado en la base de datos: {nombre_equipo}, se omite.")
-            continue  # Continúa con el siguiente sin crear nuevo equipo
+            continue
 
         fecha = parse_fecha_equipo(equipo_data.get('fecha_fundacion'))
 
+        logo_raw = equipo_data.get('logo')
+        # Normalizar ruta logo para usar barras /
+        logo = logo_raw.replace('\\', '/') if logo_raw else None
+
         datos = {
-            'id': equipo_obj.id,  # Mantener el mismo id existente
+            'id': equipo_obj.id,
             'nombre': nombre_equipo,
             'pais': equipo_data.get('pais'),
             'region': equipo_data.get('region'),
@@ -116,7 +119,7 @@ def actualizar_equipos_activos(lista_equipos):
             'head_coach': equipo_data.get('head_coach'),
             'partners': equipo_data.get('partners')[:100] if equipo_data.get('partners') else None,
             'fecha_fundacion': fecha,
-            'logo': equipo_data.get('logo'),
+            'logo': logo,
             'activo': True,
         }
 
@@ -129,7 +132,7 @@ def actualizar_equipos_activos(lista_equipos):
             print(f"Errores al actualizar {nombre_equipo}: {serializer.errors}")
                        
 if __name__ == "__main__":
-    #data = get_player_data()
-    #actualizar_jugadores(data)
-    data = get_team_data()
-    actualizar_equipos_activos(data)
+    data = get_player_data()
+    actualizar_jugadores(data)
+    #data = get_team_data()
+    #actualizar_equipos_activos(data)

@@ -3,8 +3,6 @@ from bs4 import BeautifulSoup
 from urllib.parse import urljoin
 import os
 import sys
-import json
-from pathlib import Path
 import re
 from datetime import datetime
 import random
@@ -232,7 +230,7 @@ def get_player_data():
                         'nombre': nombre_real,
                         'residencia': residencia,
                         'rol': rol,
-                        'equipo': url.split('/')[-1].replace('_', ' ').replace('Season', '').strip(),
+                        'equipo': re.sub(r'\s*\(.*?\)\s*', '', url.split('/')[-1].replace('_', ' ').replace('Season', '').strip()),
                         'pais': pais,
                         'nacimiento': datos_complementarios.get('birthday', None),
                         'soloqueue_ids': datos_complementarios.get('soloqueue_ids', None),
@@ -256,21 +254,27 @@ def get_player_data():
 
     return all_player_data
 
+
 def download_image(ruta_completa, url_imagen):
     try:
         if os.path.exists(ruta_completa):
             print(f"Imagen ya existe en {ruta_completa}, se omite la descarga.")
-            return os.path.relpath(ruta_completa, start=os.getcwd())
-
-        print(f"Descargando imagen desde {url_imagen} a {ruta_completa}...")
-        img_data = requests.get(url_imagen, timeout=10)
-        img_data.raise_for_status()
+        else:
+            print(f"Descargando imagen desde {url_imagen} a {ruta_completa}...")
+            img_data = requests.get(url_imagen, timeout=10)
+            img_data.raise_for_status()
+            with open(ruta_completa, 'wb') as f:
+                f.write(img_data.content)
+            print(f"Imagen guardada correctamente en {ruta_completa}.")
         
-        with open(ruta_completa, 'wb') as f:
-            f.write(img_data.content)
-
-        print(f"Imagen guardada correctamente en {ruta_completa}.")
-        return os.path.relpath(ruta_completa, start=os.getcwd())
+        ruta_normalizada = ruta_completa.replace('\\', '/')
+        index = ruta_normalizada.find('Resources/')
+        if index != -1:
+            ruta_relativa = ruta_normalizada[index + len('Resources/'):]
+        else:
+            ruta_relativa = os.path.relpath(ruta_completa).replace('\\', '/')
+        
+        return ruta_relativa
 
     except Exception as e:
         print(f"Error al descargar la imagen: {e}")
@@ -311,7 +315,10 @@ def get_team_data():
             # Nombre del equipo
             nombre = table.select_one('th.infobox-title')
             if nombre:
-                equipo['nombre_equipo'] = nombre.get_text(strip=True).replace(' ', '_').replace('Season', '').strip()
+                texto = nombre.get_text(strip=True)
+                # Eliminar todo lo que esté entre paréntesis y los paréntesis
+                texto_sin_parentesis = re.sub(r'\s*\(.*?\)\s*', '', texto)
+                equipo['nombre_equipo'] = texto_sin_parentesis.replace(' ', '_').replace('Season', '').strip()
 
             # Logo
             logo_img = table.select_one('img[data-src]')

@@ -19,10 +19,7 @@ class Serie(models.Model):
     dia = models.DateField(null=True, blank=True)
     
     def resultados_por_equipos(self):
-        """
-        Retorna un dict con claves 'azul' y 'rojo', 
-        cada una con un dict con 'equipo' y 'victorias'.
-        """
+
         victorias = {
             'azul': {'equipo': None, 'victorias': 0},
             'rojo': {'equipo': None, 'victorias': 0},
