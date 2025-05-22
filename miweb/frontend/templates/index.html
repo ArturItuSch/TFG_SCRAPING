@@ -8,39 +8,71 @@
 {% block content %}
     <link rel="stylesheet" href="{% static 'css/partidos.css' %}">
     <div class="container mt-5">
-    <h2 class="text-white mb-4">Resultados de las Series</h2>
-    <div class="scrollable-list">
+  <div class="row">
+    <!-- Columna 1: Resultados de las Series -->
+    <div class="col-md-6">
+      <h2 class="text-white mb-4">Resultados de las Series</h2>
+      <div class="scrollable-list">
         {% for serie in ultimas_series %}
         {% with resultados=resultados_por_serie|dictget:serie.id %}
-            <div class="card partido-card d-flex">
-            
-            <!-- Logo Equipo Azul -->
+          <div class="card partido-card d-flex mb-3">
+            <!-- Logo Azul -->
             <div class="team-logo-wrapper">
-                {% if resultados.azul.equipo and resultados.azul.equipo.logo %}
-                <img src="{{ MEDIA_URL }}{{ resultados.azul.equipo.logo }}" alt="{{ resultados.azul.equipo.nombre }}" class="team-logo-vertical">
-                {% endif %}
+              {% if resultados.azul.equipo and resultados.azul.equipo.logo %}
+              <img src="{{ MEDIA_URL }}{{ resultados.azul.equipo.logo }}" alt="{{ resultados.azul.equipo.nombre }}" class="team-logo-vertical">
+              {% endif %}
             </div>
 
-            <!-- Centro con fecha y resultado -->
+            <!-- Centro -->
             <div class="center-content d-flex flex-column justify-content-center align-items-center text-white flex-grow-1">
-                <div class="fecha mb-2">
-                {{ serie.dia|date:"d M Y" }}
-                </div>
-                <div class="resultado fs-4 fw-bold">
+              <div class="fecha mb-2">{{ serie.dia|date:"d M Y" }}</div>
+              <div class="resultado fs-4 fw-bold">
                 {{ resultados.azul.victorias }} : {{ resultados.rojo.victorias }}
-                </div>
+              </div>
             </div>
 
-            <!-- Logo Equipo Rojo -->
+            <!-- Logo Rojo -->
             <div class="team-logo-wrapper">
-                {% if resultados.rojo.equipo and resultados.rojo.equipo.logo %}
-                    <img src="{{ MEDIA_URL }}{{ resultados.rojo.equipo.logo }}" alt="{{ resultados.rojo.equipo.nombre }}" class="team-logo-vertical">
-                {% endif %}
+              {% if resultados.rojo.equipo and resultados.rojo.equipo.logo %}
+              <img src="{{ MEDIA_URL }}{{ resultados.rojo.equipo.logo }}" alt="{{ resultados.rojo.equipo.nombre }}" class="team-logo-vertical">
+              {% endif %}
             </div>
-
-            </div>
+          </div>
         {% endwith %}
         {% endfor %}
+      </div>
     </div>
+
+    <!-- Columna 2: Clasificación -->
+    <div class="col-md-6">
+        <h2 class="text-white mb-4">
+            Clasificación del Split {{split.year}} {{ split.split_type|capfirst }}
+        </h2>
+        <table class="table table-dark table-striped">
+            <thead>
+            <tr>
+                <th>Equipo</th>
+                <th>Victorias</th>
+                <th>Derrotas</th>
+            </tr>
+            </thead>
+            <tbody>
+            {% for entry in clasificacion %}
+            <tr>
+                <td>
+                {% if entry.equipo.logo %}
+                <img src="{{ MEDIA_URL }}{{ entry.equipo.logo }}" alt="{{ entry.equipo.nombre }}" style="height: 30px;">
+                {% endif %}
+                {{ entry.equipo.nombre }}
+                </td>
+                <td>{{ entry.victorias }}</td>
+                <td>{{ entry.derrotas }}</td>
+            </tr>
+            {% endfor %}
+            </tbody>
+        </table>
     </div>
+  </div>
+</div>
+
 {% endblock %}
