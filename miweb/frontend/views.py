@@ -126,8 +126,40 @@ def index(request):
     return render(request, 'index.html', context)
 
 def splits(request):
-    all_splits = SplitLEC.objects.order_by('-year', '-split_type')
-    return render(request, 'splits.html', {'splits': all_splits})
+    # Obtener los parámetros GET para filtrar
+    split_type = request.GET.get('split_type', '').strip().lower()
+    league = request.GET.get('league', '').strip()
+    year = request.GET.get('year', '').strip()
+
+    # Empezar con todos los splits ordenados
+    all_splits = SplitLEC.objects.order_by('-year', 'split_type')
+
+    # Aplicar filtros si vienen en GET
+    if split_type:
+        all_splits = all_splits.filter(split_type__icontains=split_type)
+    if league:
+        all_splits = all_splits.filter(league=league)
+    if year.isdigit():
+        all_splits = all_splits.filter(year=int(year))
+
+    # Agrupar por año
+    splits_por_year = defaultdict(list)
+    for split in all_splits:
+        splits_por_year[split.year].append(split)
+
+    year_ordenados = sorted(splits_por_year.keys(), reverse=True)
+
+    # Obtener ligas distintas para el filtro
+    ligas_disponibles = SplitLEC.objects.values_list('league', flat=True).distinct()
+
+    context = {
+        'splits_por_year': splits_por_year,
+        'year_ordenados': year_ordenados,
+        'ligas_disponibles': ligas_disponibles,
+        'request': request,  # Para acceder a request.GET en template
+    }
+
+    return render(request, 'splits.html', context)
 
 def equipos(request):
     equipos = Equipo.objects.filter(activo=True).order_by('nombre')

@@ -79,7 +79,7 @@
     <div class="col-12 col-md-6">
       <h2>Top 10 Jugadores por KDA - {{ ultimo_split.year }} {{ ultimo_split.split_type|capfirst }}</h2>
       <div class="table-responsive" style="max-height: 500px; overflow-y: auto;">
-        <table class="table table-dark table-bordered align-middle">
+        <table id="top-jugadores-table" class="table table-dark table-bordered align-middle">
           <thead class="table-primary text-dark">
             <tr>
               <th>Jugador</th>
@@ -112,7 +112,7 @@
     <div class="col-12 col-md-6">
       <h2>Campeones más Jugados - {{ ultimo_split.year }} {{ ultimo_split.split_type|capfirst }}</h2>
       <div class="table-responsive" style="max-height: 500px; overflow-y: auto;">
-        <table class="table table-dark table-hover table-bordered align-middle">
+        <table id="campeones-table" class="table table-dark table-hover table-bordered align-middle">
           <thead class="table-primary text-dark">
             <tr>
               <th>Campeón</th>
@@ -132,9 +132,9 @@
                 {{ c.nombre }}
               </td>
               <td>{{ c.num_picks }}</td>
-              <td>{{ c.pick_rate|floatformat:2 }}</td>
+              <td>{{ c.pick_rate|floatformat:2 }}%</td>
               <td>{{ c.num_bans }}</td>
-              <td>{{ c.ban_rate|floatformat:2 }}</td>
+              <td>{{ c.ban_rate|floatformat:2 }}%</td>
             </tr>
             {% endfor %}
           </tbody>
@@ -156,8 +156,33 @@
     }
   }
 
-  // Ejecutar al cargar y al cambiar tamaño
-  window.addEventListener('load', ajustarAlturaSeries);
-  window.addEventListener('resize', ajustarAlturaSeries);
+  function igualarAlturaFilas() {
+    const filasJugadores = document.querySelectorAll('#top-jugadores-table tbody tr');
+    const filasCampeones = document.querySelectorAll('#campeones-table tbody tr');
+
+    const numFilas = Math.min(filasJugadores.length, filasCampeones.length);
+
+    for (let i = 0; i < numFilas; i++) {
+      filasJugadores[i].style.height = 'auto';
+      filasCampeones[i].style.height = 'auto';
+
+      const alturaJug = filasJugadores[i].offsetHeight;
+      const alturaCam = filasCampeones[i].offsetHeight;
+      const maxAltura = Math.max(alturaJug, alturaCam);
+
+      filasJugadores[i].style.height = maxAltura + 'px';
+      filasCampeones[i].style.height = maxAltura + 'px';
+    }
+  }
+
+  window.addEventListener('load', () => {
+    ajustarAlturaSeries();
+    igualarAlturaFilas();
+  });
+
+  window.addEventListener('resize', () => {
+    ajustarAlturaSeries();
+    igualarAlturaFilas();
+  });
 </script>
 {% endblock %}

@@ -13,8 +13,8 @@ class SplitLEC(models.Model):
             prioridad = {'Winter': 1, 'Spring': 2, 'Summer': 3}
             return sorted(splits, key=lambda s: prioridad.get(s.split_type, 0), reverse=True)
 
-        splits_ano = list(cls.objects.filter(year=year))
-        splits_ordenados = _ordenar_por_prioridad(splits_ano)
+        splits_year = list(cls.objects.filter(year=year))
+        splits_ordenados = _ordenar_por_prioridad(splits_year)
         return splits_ordenados[0] if splits_ordenados else None
 
     def save(self, *args, **kwargs):

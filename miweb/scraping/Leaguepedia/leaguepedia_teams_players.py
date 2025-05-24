@@ -242,16 +242,15 @@ def get_player_data():
 
                 except Exception as e:
                     print(f"Error al procesar una fila: {e}")
-                    continue  # Continuar con la siguiente fila si hay un error
+                    continue  
 
         except requests.exceptions.RequestException as e:
             print(f"Error de red al acceder a {url}: {e}")
-            continue  # Saltar a la siguiente URL si hay un error de red
+            continue 
 
         except Exception as e:
             print(f"Error inesperado al procesar los datos del equipo en {url}: {e}")
-            continue  # Saltar a la siguiente URL si hay un error inesperado
-
+            continue  
     return all_player_data
 
 
