@@ -27,23 +27,41 @@ def importar_campeones():
     driver = iniciar_driver()
     campeones_data = get_champions_information(driver)
     driver.quit()
-    
-    campeones_objs = []
+
+    campeones_nuevos = []
+    campeones_actualizados = 0
+
     for champ in campeones_data:
-        if not Campeon.objects.filter(nombre=champ['nombre']).exists():
-            serializer = CampeonSerializer(data={
-                'id': champ['id'],
-                'nombre': champ['nombre'],
-                'ruta_imagen': champ['ruta_imagen'],
-            })
-            if serializer.is_valid():
-                campeones_objs.append(Campeon(**serializer.validated_data))
+        try:
+            obj = Campeon.objects.get(nombre=champ['nombre'])
+            actualizado = False
+            if obj.imagen is None and champ['ruta_imagen']:
+                obj.imagen = champ['ruta_imagen']
+                actualizado = True
+
+            if actualizado:
+                obj.save()
+                campeones_actualizados += 1
+
+        except Campeon.DoesNotExist:
+            if champ['ruta_imagen']:  # Solo intentamos insertar si tiene ruta válida
+                serializer = CampeonSerializer(data={
+                    'id': champ['id'],
+                    'nombre': champ['nombre'],
+                    'imagen': champ['ruta_imagen'],
+                })
+                if serializer.is_valid():
+                    campeones_nuevos.append(Campeon(**serializer.validated_data))
+                else:
+                    print(f"❌ Error en datos de {champ['nombre']}: {serializer.errors}")
             else:
-                print(f"Error en datos de {champ['nombre']}: {serializer.errors}")
-    
-    if campeones_objs:
-        Campeon.objects.bulk_create(campeones_objs)
-    print(f"✅ Insertados {len(campeones_objs)} campeones nuevos.")
+                print(f"⏭️ Campeón '{champ['nombre']}' omitido: sin ruta de imagen.")
+    if campeones_nuevos:
+        Campeon.objects.bulk_create(campeones_nuevos)
+
+    print(f"✅ Insertados {len(campeones_nuevos)} campeones nuevos.")
+    print(f"🛠️  Actualizados {campeones_actualizados} campeones con datos faltantes.")
+
     
 def importar_splits():
     splits_dict = extract_all_splits()
@@ -545,10 +563,10 @@ def importar_objetivos_neutrales(batch_size=1000):
 
 if __name__ == '__main__':
     importar_campeones()
-    importar_splits()
+    '''importar_splits()
     importar_equipos()
     importar_jugadores() 
     importar_series_y_partidos()
     importar_jugadores_en_partida()
     importar_selecciones()
-    importar_objetivos_neutrales()
+    importar_objetivos_neutrales()'''

@@ -13,7 +13,7 @@ import re
 import uuid
 
 # Ubiciaciones de los archivos json:
-BASE_DIR = os.path.abspath(os.path.join(os.path.dirname(__file__), '..', '..', '..'))
+BASE_DIR = os.path.abspath(os.path.join(os.path.dirname(__file__), '..', '..'))
 sys.path.insert(0, BASE_DIR)
 from scraping.driver import iniciar_driver
 from Resources.rutas import *
@@ -86,22 +86,38 @@ def guardar_diccionario_ids(diccionario):
 
 def download_image(ruta_local, url_imagen):
     try:
-        # Si la imagen ya existe, no la volvemos a descargar
+        if not url_imagen:
+            return None
+
         if os.path.exists(ruta_local):
             print(f"⚠️ Imagen ya existente, se omite descarga: {ruta_local}")
-            return os.path.relpath(ruta_local, start=os.getcwd())
+        else:
+            headers = obtener_headers_dinamicos()
+            response = requests.get(url_imagen, headers=headers, stream=True)
+            response.raise_for_status()
 
-        headers = obtener_headers_dinamicos()
-        response = requests.get(url_imagen, headers=headers, stream=True)
-        response.raise_for_status()
+            with open(ruta_local, 'wb') as f:
+                for chunk in response.iter_content(1024):
+                    f.write(chunk)
 
-        with open(ruta_local, 'wb') as f:
-            for chunk in response.iter_content(1024):
-                f.write(chunk)
+            time.sleep(random.uniform(1, 2))
+            print(f"✅ Imagen descargada: {ruta_local}")
 
+        partes = ruta_local.split(os.sep)
+        if "Resources" in partes:
+            idx = partes.index("Resources")
+            ruta_relativa = os.path.join(*partes[idx + 1:])
+        else:
+            ruta_relativa = os.path.relpath(ruta_local, start=os.getcwd())
+
+        # Convertir a estilo URL con /
+        ruta_relativa = ruta_relativa.replace("\\", "/")
+        return ruta_relativa
+
+    except Exception as e:
+        print(f"❌ Error al descargar la imagen: {e}")
         time.sleep(random.uniform(1, 2))
-        print(f"✅ Imagen descargada: {ruta_local}")
-        return os.path.relpath(ruta_local, start=os.getcwd())
+        return None
 
     except Exception as e:
         print(f"❌ Error al descargar la imagen: {e}")
@@ -143,20 +159,27 @@ def get_champions_information(driver):
                         nuevos_ids = True
                         
                     url_relativa = img['src']
-
                     champion = {
                         'id': champ_id,
                         'nombre': nombre,
                         'ruta_imagen': None
                     }
+                    nombre_archivo = f"{nombre}.png"
+                    ruta_local = os.path.join(CHAMPIONS_FOLDER_PATH, nombre_archivo)
 
-                    if not url_relativa.startswith("/"):
-                        url_relativa = "/" + url_relativa
-                        ruta_local = os.path.join(CHAMPIONS_FOLDER_PATH, f"{nombre}.png")
+                    # Asegurar que la URL sea válida
+                    if not url_relativa.startswith("http"):
+                        url_relativa = url_relativa if url_relativa.startswith("/") else "/" + url_relativa
                         url_absoluta = urljoin(BASE_URL, url_relativa)
-                        champion["ruta_imagen"] = download_image(ruta_local, url_absoluta)
                     else:
-                        print(f"No se encontró la imagen de {nombre}")
+                        url_absoluta = url_relativa
+
+                    # Descargar imagen y guardar la ruta relativa
+                    ruta_relativa = download_image(ruta_local, url_absoluta)
+                    if ruta_relativa:
+                        champion["ruta_imagen"] = ruta_relativa
+                    else:
+                        print(f"No se pudo descargar la imagen de {nombre}")
 
                     champions.append(champion)
 
@@ -201,6 +224,8 @@ if __name__ == '__main__':
     driver = iniciar_driver()
     try:
         champions = get_champions_information(driver)
+        for champion in champions:
+            print(f"Campeón: {champion['nombre']}, ID: {champion['id']}, Ruta Imagen: {champion['ruta_imagen']}")
         #verificar_existencia_imagen("Nami", os.path.join(JSON_CHAMPIONS_INSTALATION, 'champions.json'))
     finally:
         driver.quit()
