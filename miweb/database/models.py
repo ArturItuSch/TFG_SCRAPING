@@ -6,6 +6,16 @@ class SplitLEC(models.Model):
     split_type = models.CharField(max_length=100)
     year = models.PositiveIntegerField()
     league = models.CharField(max_length=10)
+        
+    @classmethod
+    def obtener_ultimo_split(cls, year):
+        def _ordenar_por_prioridad(splits):
+            prioridad = {'Winter': 1, 'Spring': 2, 'Summer': 3}
+            return sorted(splits, key=lambda s: prioridad.get(s.split_type, 0), reverse=True)
+
+        splits_ano = list(cls.objects.filter(year=year))
+        splits_ordenados = _ordenar_por_prioridad(splits_ano)
+        return splits_ordenados[0] if splits_ordenados else None
 
     def save(self, *args, **kwargs):
         self.split_id = f"{self.split_type}_{self.year}"
@@ -19,19 +29,18 @@ class Serie(models.Model):
     dia = models.DateField(null=True, blank=True)
     
     def resultados_por_equipos(self):
-
         victorias = {
             'azul': {'equipo': None, 'victorias': 0},
             'rojo': {'equipo': None, 'victorias': 0},
         }
 
-        # Asignamos los equipos (por ejemplo tomando el primer partido si hay)
         primer_partido = self.partidos.first()
-        if primer_partido:
-            victorias['azul']['equipo'] = primer_partido.equipo_azul
-            victorias['rojo']['equipo'] = primer_partido.equipo_rojo
+        if not primer_partido or not primer_partido.equipo_azul or not primer_partido.equipo_rojo:
+            return victorias
 
-        # Contar victorias
+        victorias['azul']['equipo'] = primer_partido.equipo_azul
+        victorias['rojo']['equipo'] = primer_partido.equipo_rojo
+
         for partido in self.partidos.all():
             ganador = partido.equipo_ganador
             if ganador == victorias['azul']['equipo']:
@@ -39,7 +48,7 @@ class Serie(models.Model):
             elif ganador == victorias['rojo']['equipo']:
                 victorias['rojo']['victorias'] += 1
 
-        return victorias 
+        return victorias
     
 class Equipo(models.Model):
     id = models.CharField(max_length=200, primary_key=True)

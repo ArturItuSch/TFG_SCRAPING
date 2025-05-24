@@ -75,7 +75,7 @@ WSGI_APPLICATION = 'miweb.wsgi.application'
 STATIC_URL = '/static/'
 
 STATICFILES_DIRS = [
-    os.path.join(BASE_DIR, 'frontend/static'),
+    os.path.join(BASE_DIR),
 
 ]
 
