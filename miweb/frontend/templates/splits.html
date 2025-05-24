@@ -63,21 +63,22 @@
     <p>No hay splits registrados.</p>
   {% endif %}
 </div>
+
 <script>
   document.addEventListener('DOMContentLoaded', () => {
     const splitRows = document.querySelectorAll('[data-split-row]');
+    
     let maxSplits = 0;
-
-    // Calcular la cantidad máxima de splits en un año
+    
     splitRows.forEach(row => {
       const count = row.children.length;
       if (count > maxSplits) maxSplits = count;
     });
 
-    // Aplicar esa cantidad como columnas máximas
     splitRows.forEach(row => {
       row.style.gridTemplateColumns = `repeat(${maxSplits}, 1fr)`;
     });
   });
+
 </script>
 {% endblock %}
