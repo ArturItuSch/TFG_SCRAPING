@@ -31,18 +31,25 @@ def parse_fecha(fecha_str):
 def actualizar_jugadores(data):
     for jugador_data in data:
         nombre = jugador_data.get('jugador')
+        equipo_nombre = jugador_data.get('equipo')
 
-        try:
-            jugador_obj = Jugador.objects.get(nombre=nombre)
-        except Jugador.DoesNotExist:
-            print(f"Jugador no encontrado en la base de datos: {nombre}")
+        if not nombre or not equipo_nombre:
+            print(f"Faltan datos clave para el jugador: nombre={nombre}, equipo={equipo_nombre}")
             continue
 
-        equipo_nombre = jugador_data.get('equipo')
         equipo_obj = Equipo.objects.filter(nombre__iexact=equipo_nombre).first()
-
         if not equipo_obj:
             print(f"Equipo no encontrado para el jugador: {nombre} (equipo: {equipo_nombre})")
+            continue
+
+        jugadores = Jugador.objects.filter(nombre=nombre, equipo=equipo_obj)
+        if jugadores.count() == 1:
+            jugador_obj = jugadores.first()
+        elif jugadores.count() == 0:
+            print(f"Jugador no encontrado: {nombre} en equipo: {equipo_nombre}")
+            continue
+        else:
+            print(f"Jugador duplicado: múltiples resultados para '{nombre}' en '{equipo_nombre}', omitiendo actualización.")
             continue
 
         # Limitar soloqueue_ids a 100 caracteres
@@ -134,5 +141,5 @@ def actualizar_equipos_activos(lista_equipos):
 if __name__ == "__main__":
     data = get_player_data()
     actualizar_jugadores(data)
-    #data = get_team_data()
-    #actualizar_equipos_activos(data)
+    data = get_team_data()
+    actualizar_equipos_activos(data)

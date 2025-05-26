@@ -18,9 +18,13 @@
         <div class="card bg-dark text-white mb-3 border border-primary">
           <div class="d-flex align-items-center justify-content-between p-3">
             <div class="d-flex align-items-center me-2">
-              {% if resultados.azul.equipo and resultados.azul.equipo.logo %}
-              <img src="{{ MEDIA_URL }}{{ resultados.azul.equipo.logo }}" alt="{{ resultados.azul.equipo.nombre }}"
-                   class="img-fluid rounded-start" style="height: 60px;">
+              {% if resultados.azul.equipo %}
+                {% if resultados.azul.equipo.logo %}
+                  <img src="{{ MEDIA_URL }}{{ resultados.azul.equipo.logo }}" alt="{{ resultados.azul.equipo.nombre }}"
+                      class="img-fluid rounded-start" style="height: 60px;">
+                {% else %}
+                  <span class="text-white fw-bold">{{ resultados.azul.equipo.nombre }}</span>
+                {% endif %}
               {% endif %}
             </div>
             <div class="text-center flex-grow-1">
@@ -30,9 +34,13 @@
               </div>
             </div>
             <div class="d-flex align-items-center ms-2">
-              {% if resultados.rojo.equipo and resultados.rojo.equipo.logo %}
-              <img src="{{ MEDIA_URL }}{{ resultados.rojo.equipo.logo }}" alt="{{ resultados.rojo.equipo.nombre }}"
-                   class="img-fluid rounded-end" style="height: 60px;">
+              {% if resultados.rojo.equipo %}
+                {% if resultados.rojo.equipo.logo %}
+                  <img src="{{ MEDIA_URL }}{{ resultados.rojo.equipo.logo }}" alt="{{ resultados.rojo.equipo.nombre }}"
+                      class="img-fluid rounded-end" style="height: 60px;">
+                {% else %}
+                  <span class="text-white fw-bold">{{ resultados.rojo.equipo.nombre }}</span>
+                {% endif %}
               {% endif %}
             </div>
           </div>

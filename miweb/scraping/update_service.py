@@ -114,18 +114,37 @@ def borrar_csv_en_carpeta(carpeta):
         except Exception as e:
             print(f"❌ No se pudo borrar el archivo {ruta_archivo}: {e}")
         
+def actualizar_datos_desde_ultimo_csv():
+    # 1. Obtener el último CSV
+    archivo = obtener_ultimo_csv(API_KEY, FOLDER_ID)
+    if not archivo:
+        print("❌ No se encontró ningún archivo CSV.")
+        return
+
+    print(f"📦 Último archivo: {archivo['name']} (creado: {archivo['createdTime']})")
+    ruta_csv = descargar_archivo(archivo['id'], archivo['name'], CARPETA_CSV)
+    filtrar_ligas_automaticamente(CARPETA_CSV, CARPETA_CSV, BASE_DIR)
+    
+    # 4. Procesar e importar datos
+    procesar_todos_los_csvs_en_lec()
+    importar_campeones()
+    importar_splits()
+    importar_equipos()
+    importar_jugadores()
+    importar_series_y_partidos()
+    importar_jugadores_en_partida()
+    importar_selecciones()
+    importar_objetivos_neutrales()
+
+    borrar_csv_en_carpeta(CARPETA_CSV)
+
+    print("✅ Proceso completo de actualización desde último CSV.")
         
 if __name__ == "__main__":
-    '''archivo = obtener_ultimo_csv(API_KEY, FOLDER_ID)
-    if archivo:
-        print(f"Archivo más reciente: {archivo['name']} (creado: {archivo['createdTime']})")
-        archivo_descargado = descargar_archivo(archivo['id'], archivo['name'], CARPETA_CSV_GAMES)
-   
-    descargar_todos_los_csv(API_KEY, FOLDER_ID, CARPETA_CSV)
+    #descargar_todos_los_csv(API_KEY, FOLDER_ID, CARPETA_CSV)
     filtrar_ligas_automaticamente(CARPETA_CSV, CARPETA_CSV, BASE_DIR)    
-    borrar_archivo_csv(archivo_descargado)  
+    borrar_csv_en_carpeta(CARPETA_CSV)  
     procesar_todos_los_csvs_en_lec() 
-    borrar_csv_en_carpeta(CARPETA_CSV)
     importar_campeones()
     importar_splits()
     importar_equipos()
@@ -133,4 +152,4 @@ if __name__ == "__main__":
     importar_series_y_partidos()
     importar_jugadores_en_partida()
     importar_selecciones()
-    importar_objetivos_neutrales()    '''
+    importar_objetivos_neutrales()    
