@@ -172,3 +172,100 @@ def jugadores(request):
 def partidos(request):
     partidos = Partido.objects.order_by('-serie__dia', '-hora')[:50]
     return render(request, 'partidos.html', {'partidos': partidos})
+
+from django.db.models import Count, Q, F
+
+def campeones(request):
+    from django.conf import settings
+
+    query = request.GET.get('q', '').strip()
+    year = request.GET.get('year', '').strip()
+    split_type = request.GET.get('split_type', '').strip()
+
+    splits = SplitLEC.objects.all()
+    if year.isdigit():
+        splits = splits.filter(year=int(year))
+    if split_type:
+        splits = splits.filter(split_type__iexact=split_type)
+
+    partidos_filtrados = Partido.objects.all()
+    if splits.exists():
+        partidos_filtrados = partidos_filtrados.filter(serie__split__in=splits)
+
+    total_partidos = partidos_filtrados.count()
+
+    # Picks por campeón
+    picks = (
+        Seleccion.objects
+        .filter(partido__in=partidos_filtrados, campeon_seleccionado__isnull=False)
+        .values('campeon_seleccionado__id', 'campeon_seleccionado__nombre', 'campeon_seleccionado__imagen')
+        .annotate(
+            num_picks=Count('id'),
+            num_wins=Count('id', filter=Q(equipo=F('partido__equipo_ganador')))
+        )
+    )
+
+    # Bans por campeón
+    bans = (
+        Seleccion.objects
+        .filter(partido__in=partidos_filtrados, campeon_baneado__isnull=False)
+        .values('campeon_baneado__id')
+        .annotate(num_bans=Count('id'))
+    )
+    bans_dict = {b['campeon_baneado__id']: b['num_bans'] for b in bans if b['campeon_baneado__id']}
+
+    # Crear estadísticas por campeón
+    campeones_stats = []
+    for pick in picks:
+        cid = pick['campeon_seleccionado__id']
+        nombre = pick['campeon_seleccionado__nombre']
+        imagen = pick['campeon_seleccionado__imagen']
+        num_picks = pick['num_picks']
+        num_wins = pick['num_wins']
+
+        if not nombre or nombre.lower() == 'none' or not imagen or imagen.lower() == 'none':
+            continue
+        if query and query.lower() not in nombre.lower():
+            continue
+
+        campeones_stats.append({
+            'id': cid,
+            'nombre': nombre,
+            'imagen': imagen,
+            'num_picks': num_picks,
+            'num_bans': bans_dict.get(cid, 0),
+            'pick_rate': round((num_picks / total_partidos) * 100, 2) if total_partidos else 0,
+            'ban_rate': round((bans_dict.get(cid, 0) / total_partidos) * 100, 2) if total_partidos else 0,
+            'win_rate': round((num_wins / num_picks) * 100, 2) if num_picks else 0,
+        })
+
+    campeones_stats = sorted(campeones_stats, key=lambda c: c['pick_rate'], reverse=True)
+
+    orden = request.GET.get('orden', '')
+
+    if orden == 'nombre_asc':
+        campeones_stats = sorted(campeones_stats, key=lambda c: c['nombre'].lower())
+    elif orden == 'nombre_desc':
+        campeones_stats = sorted(campeones_stats, key=lambda c: c['nombre'].lower(), reverse=True)
+    elif orden == 'pickrate':
+        campeones_stats = sorted(campeones_stats, key=lambda c: c['pick_rate'], reverse=True)
+    elif orden == 'banrate':
+        campeones_stats = sorted(campeones_stats, key=lambda c: c['ban_rate'], reverse=True)
+    elif orden == 'winrate':
+        campeones_stats = sorted(campeones_stats, key=lambda c: c['win_rate'], reverse=True)
+    else:
+        campeones_stats = sorted(campeones_stats, key=lambda c: c['pick_rate'], reverse=True)
+        
+    years_disponibles = SplitLEC.objects.order_by('-year').values_list('year', flat=True).distinct()
+    splits_disponibles = ['Winter', 'Spring', 'Summer']
+
+    return render(request, 'campeones.html', {
+        'campeones': campeones_stats,
+        'MEDIA_URL': settings.MEDIA_URL,
+        'query': query,
+        'year': year,
+        'split_type': split_type,
+        'years_disponibles': years_disponibles,
+        'orden': orden,
+        'splits_disponibles': splits_disponibles,
+    })

@@ -27,6 +27,7 @@ class Serie(models.Model):
     num_partidos = models.IntegerField(null=True, blank=True)
     patch = models.FloatField(null=True, blank=True)
     dia = models.DateField(null=True, blank=True)
+    playoffs = models.BooleanField(default=False)
     
     def resultados_por_equipos(self):
         victorias = {
@@ -98,7 +99,7 @@ class Jugador(models.Model):
     
 class Campeon(models.Model):
     id = models.CharField(max_length=200, primary_key=True)
-    nombre = models.CharField(max_length=100, null=True, blank=True) 
+    nombre = models.CharField(max_length=100) 
     imagen = models.CharField(max_length=100, null=True, blank=True)
 
     def __str__(self):
@@ -213,7 +214,7 @@ class JugadorEnPartida(models.Model):
 class Seleccion(models.Model):
     equipo = models.ForeignKey(Equipo, on_delete=models.SET_NULL, null=True, blank=True)
     partido = models.ForeignKey(Partido, on_delete=models.SET_NULL, null=True, blank=True)    
-    seleccion = models.IntegerField() 
+    seleccion = models.IntegerField(null=True, blank=True) 
     campeon_seleccionado = models.ForeignKey(Campeon, on_delete=models.SET_NULL, null=True, blank=True, related_name='selecciones')
     baneo = models.IntegerField(null=True, blank=True)  
     campeon_baneado = models.ForeignKey(Campeon, on_delete=models.SET_NULL, null=True, blank=True, related_name='baneos')

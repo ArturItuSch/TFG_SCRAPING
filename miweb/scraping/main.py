@@ -1,3 +1,5 @@
+import unicodedata
+import re
 import os
 import django
 import sys
@@ -126,6 +128,7 @@ def importar_series_y_partidos():
             'num_partidos': serie_data.get('num_partidos'),
             'patch': patch,
             'dia': serie_data.get('dia'),
+            'playoffs': serie_data.get('playoffs', False),
         })
 
         if serializer.is_valid():
@@ -284,6 +287,8 @@ def importar_jugadores_en_partida():
     jugadores_en_partida_data = extract_all_jugadores_en_partida()
     jugadores_en_partida_objs = []
     actualizados = 0
+    insertados = 0
+
 
     # Cache para FK
     jugadores_cache = {j.id: j for j in Jugador.objects.all()}
@@ -395,38 +400,52 @@ def importar_jugadores_en_partida():
         # Insertar en bloques para evitar usar demasiada memoria
         if len(jugadores_en_partida_objs) >= batch_size:
             JugadorEnPartida.objects.bulk_create(jugadores_en_partida_objs)
+            insertados += len(jugadores_en_partida_objs)
             jugadores_en_partida_objs = []
 
     # Insertar los restantes
     if jugadores_en_partida_objs:
         JugadorEnPartida.objects.bulk_create(jugadores_en_partida_objs)
-
-    print(f"✅ Insertados {len(jugadores_en_partida_objs)} registros nuevos de jugadores en partida.")
+        insertados += len(jugadores_en_partida_objs)
+    
+    print(f"✅ Insertados {insertados} registros nuevos de jugadores en partida.")
     print(f"🔄 Actualizados {actualizados} registros existentes.")
-
-def importar_selecciones():
-    datos = extraer_lista_baneos_picks()
-    selecciones_objs = []
+    
+def importar_selecciones(batch_size=1000):
+    datos = extraer_all_baneos_picks()
     actualizados = 0
+    errores = 0
+    insertados = 0
+    lote_actual = []
+    selecciones_vistas = set()
 
-    # Cache para evitar múltiples queries
+    # Cache
     equipos_cache = {eq.id: eq for eq in Equipo.objects.all()}
     equipos_nombre_cache = {eq.nombre.strip().lower(): eq for eq in Equipo.objects.all()}
     partidos_cache = {p.id: p for p in Partido.objects.all()}
-    campeones_cache = {
-        c.nombre.replace("'", "").lower(): c
-        for c in Campeon.objects.all()
-    }
 
     def normalizar_nombre(nombre):
         if not nombre:
             return ""
-        nombre = nombre.replace("'", "").lower().strip()
-        if nombre == "nunu & willump":
-            return "nunu"
-        return nombre
 
-    for registro in datos:
+        nombre = nombre.lower().strip()
+        nombre = nombre.replace("&", "and")
+        nombre = nombre.replace("'", "")
+        nombre = unicodedata.normalize('NFKD', nombre).encode('ascii', 'ignore').decode('utf-8')
+        nombre = re.sub(r'[^a-z0-9]', '', nombre)
+
+        if nombre == "nunuandwillump":
+            return "nunu"
+
+        return nombre
+    
+    campeones_cache = {
+        normalizar_nombre(c.nombre): c
+        for c in Campeon.objects.all()
+    }
+    print(f"📦 Procesando {len(datos)} registros de selecciones en lotes de {batch_size}...")
+
+    for i, registro in enumerate(datos):
         equipo_id = registro['equipo']
         equipo_nombre = registro.get('equipo_nombre', '').strip().lower()
         partido_id = registro['partido']
@@ -434,24 +453,29 @@ def importar_selecciones():
         nombre_seleccionado = normalizar_nombre(registro.get('campeon_seleccionado'))
 
         equipo = equipos_cache.get(equipo_id)
-
-        # Si no lo encuentra por ID, buscar por nombre
         if not equipo and equipo_nombre:
             equipo = equipos_nombre_cache.get(equipo_nombre)
 
         partido = partidos_cache.get(partido_id)
 
         if not equipo or not partido:
-            print(f"⚠️ FK faltante para game {partido_id}, team ID {equipo_id}, nombre '{equipo_nombre}'")
+            print(f"[{i}] ⚠️ FK faltante: game={partido_id}, equipo_id={equipo_id}, nombre='{equipo_nombre}'")
+            errores += 1
             continue
 
         campeon_baneado = campeones_cache.get(nombre_baneado)
         campeon_seleccionado = campeones_cache.get(nombre_seleccionado)
 
         if nombre_baneado and not campeon_baneado:
-            print(f"⚠️ Campeón baneado '{nombre_baneado}' no encontrado.")
+            print(f"[{i}] ❗ Campeón baneado no encontrado: '{nombre_baneado}' (original: '{registro.get('campeon_baneado')}')")
+
         if nombre_seleccionado and not campeon_seleccionado:
-            print(f"⚠️ Campeón seleccionado '{nombre_seleccionado}' no encontrado.")
+            print(f"[{i}] ❗ Campeón seleccionado no encontrado: '{nombre_seleccionado}' (original: '{registro.get('campeon_seleccionado')}')")
+
+        if not campeon_baneado and not campeon_seleccionado:
+            print(f"[{i}] ⛔ Sin pick ni ban válido → se omite.")
+            errores += 1
+            continue
 
         if campeon_seleccionado:
             existe = Seleccion.objects.filter(
@@ -463,7 +487,13 @@ def importar_selecciones():
                 actualizados += 1
                 continue
 
-        selecciones_objs.append(Seleccion(
+        clave_unica = (equipo.id, partido.id, campeon_seleccionado.id if campeon_seleccionado else None)
+        if clave_unica in selecciones_vistas:
+            continue
+
+        selecciones_vistas.add(clave_unica)
+
+        lote_actual.append(Seleccion(
             equipo=equipo,
             partido=partido,
             seleccion=registro.get('seleccion'),
@@ -472,11 +502,23 @@ def importar_selecciones():
             campeon_baneado=campeon_baneado
         ))
 
-    if selecciones_objs:
-        Seleccion.objects.bulk_create(selecciones_objs)
+        if len(lote_actual) >= batch_size:
+            Seleccion.objects.bulk_create(lote_actual)
+            insertados += len(lote_actual)
+            print(f"✅ Insertado lote de {len(lote_actual)} → Total: {insertados}")
+            lote_actual = []
 
-    print(f"✅ Insertadas {len(selecciones_objs)} selecciones nuevas.")
-    print(f"🔄 Ignorados {actualizados} registros ya existentes.")
+    # Lote final
+    if lote_actual:
+        Seleccion.objects.bulk_create(lote_actual)
+        insertados += len(lote_actual)
+        print(f"✅ Insertado lote final de {len(lote_actual)} → Total: {insertados}")
+
+    # Resumen
+    print("\n📊 RESUMEN FINAL")
+    print(f"✅ Selecciones nuevas insertadas: {insertados}")
+    print(f"🔄 Ya existentes (omitidos): {actualizados}")
+    print(f"❌ Registros descartados por errores: {errores}")
 
 
 def importar_objetivos_neutrales(batch_size=1000):

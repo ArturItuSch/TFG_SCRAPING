@@ -268,6 +268,7 @@ def extract_all_series_and_partidos():
                 patch = row.get('patch')
                 fecha_completa = row.get('date')
                 fecha_solo_dia = None
+                playoffs = bool(row.get('playoffs', 0))
 
                 if pd.notna(fecha_completa):
                     try:
@@ -282,18 +283,20 @@ def extract_all_series_and_partidos():
                             'split_id': f"{year}{split}",
                             'num_partidos': len(current_serie_partidos),
                             'patch': patch,
-                            'dia': fecha_solo_dia
+                            'dia': fecha_solo_dia,
+                            'playoffs': playoffs
                         }
 
                         df_serie = df[df['gameid'].isin(current_serie_partidos)]
                         partidos_en_serie = extract_partidos_de_serie(current_serie_id, df_serie)
                         all_partidos.update(partidos_en_serie)
-
+                    
                     # Nueva serie
                     key = (year, split)
                     serie_counters[key] = serie_counters.get(key, 0) + 1
                     current_serie_id = f"{year}_{split}_{serie_counters[key]}"
                     current_serie_partidos = [gameid]
+                    current_playoffs = playoffs
                 else:
                     if gameid not in current_serie_partidos:
                         current_serie_partidos.append(gameid)
@@ -306,7 +309,8 @@ def extract_all_series_and_partidos():
                     'split_id': f"{year}{split}",
                     'num_partidos': len(current_serie_partidos),
                     'patch': patch,
-                    'dia': fecha_solo_dia
+                    'dia': fecha_solo_dia,
+                    'playoffs': current_playoffs
                 }
 
                 df_serie = df[df['gameid'].isin(current_serie_partidos)]
@@ -551,9 +555,8 @@ def extract_all_jugadores_en_partida():
     return all_jugadores_en_partida
 
 
-def extraer_lista_baneos_picks():
+def extraer_all_baneos_picks():
     rutas_csv = obtener_rutas_csv(CARPETA_CSV_LEC)
-
     resultados = []
 
     for csv_file_path in rutas_csv:
@@ -564,20 +567,47 @@ def extraer_lista_baneos_picks():
             for _, row in df_teams.iterrows():
                 game_id = row['gameid']
                 team_id = row['teamid']
+                team_name = row['teamname']
 
-                # Baneos: ban1-ban5
+                # Extraer picks del equipo
+                picks = []
                 for i in range(1, 6):
-                    champ_b = row.get(f'ban{i}')
                     champ_s = row.get(f'pick{i}')
-                    if pd.notna(champ_b) and pd.notna(champ_s):
+                    if pd.notna(champ_s) and champ_s.strip():
+                        picks.append((i, champ_s.strip()))
+
+                if len(picks) < 5:
+                    # Intentar recuperar picks desde la sección de jugadores
+                    df_jugadores = df[
+                        (df['position'].isin(['top', 'jng', 'mid', 'bot', 'sup'])) &
+                        (df['teamid'] == team_id)
+                    ]
+                    picks = []
+                    for i, (_, jugador_row) in enumerate(df_jugadores.iterrows(), start=1):
+                        champ_jugador = jugador_row.get('champion')
+                        if pd.notna(champ_jugador) and champ_jugador.strip():
+                            picks.append((i, champ_jugador.strip()))
+                        if len(picks) == 5:
+                            break
+
+                # Añadir 5 registros: pick + ban (si existe) en la misma fila
+                for i in range(1, 6):
+                    champ_s = next((c for j, c in picks if j == i), None)
+                    champ_b = row.get(f'ban{i}')
+                    if pd.notna(champ_b) and champ_b.strip():
+                        champ_b = champ_b.strip()
+                    else:
+                        champ_b = None
+
+                    if champ_s:  # solo incluir si hay pick
                         resultados.append({
                             'equipo': team_id,
                             'partido': game_id,
-                            'campeon_baneado': champ_b.strip(),
-                            'ban': i,   
-                            'campeon_seleccionado': champ_s.strip(),
+                            'campeon_baneado': champ_b,
+                            'ban': i if champ_b else None,
+                            'campeon_seleccionado': champ_s,
                             'seleccion': i,
-                            'equipo_nombre': row['teamname'],
+                            'equipo_nombre': team_name,
                         })
 
         except Exception as e:
@@ -642,3 +672,7 @@ def extract_objetivos_neutrales_matados():
 
 
    
+if __name__ == "__main__":
+    data = extraer_all_baneos_picks()
+    for item in data:
+        print(item)
