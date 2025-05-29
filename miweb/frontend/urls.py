@@ -1,4 +1,4 @@
-from django.urls import path
+from django.urls import path, include
 from django.shortcuts import redirect
 from django.conf.urls.static import static
 from django.conf import settings
@@ -27,7 +27,6 @@ urlpatterns = [
     #path('series/<str:id>/', views.detalle_serie, name='detalle_serie'),
     path('campeones/', views.campeones, name='campeones'),
     #path('campeones/<str:id>/', views.detalle_campeon, name='detalle_campeon'),
-
     #path('estadisticas/equipos/', views.estadisticas_equipos, name='estadisticas_equipos'),
     #path('estadisticas/jugadores/', views.estadisticas_jugadores, name='estadisticas_jugadores'),
 ]

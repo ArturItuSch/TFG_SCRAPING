@@ -4,10 +4,14 @@ import os
 import sys
 from pathlib import Path
 from django.utils import timezone
+
+
+
 BASE_DIR = Path(__file__).resolve().parent.parent
 from database.models import *
 from django.db.models import Prefetch, Sum, F, ExpressionWrapper, FloatField, Case, When, Value, Count, Q
 from collections import defaultdict
+
 
 
 def safe_division(numerator, denominator):
@@ -16,7 +20,7 @@ def safe_division(numerator, denominator):
         default=Value(0),
         output_field=FloatField()
     )
-    
+
 def index(request):
     ultimas_series = Serie.objects.order_by('-dia').prefetch_related(
         Prefetch('partidos', queryset=Partido.objects.select_related('equipo_azul', 'equipo_rojo', 'equipo_ganador'))
@@ -173,7 +177,6 @@ def partidos(request):
     partidos = Partido.objects.order_by('-serie__dia', '-hora')[:50]
     return render(request, 'partidos.html', {'partidos': partidos})
 
-from django.db.models import Count, Q, F
 
 def campeones(request):
     from django.conf import settings
@@ -194,7 +197,6 @@ def campeones(request):
 
     total_partidos = partidos_filtrados.count()
 
-    # Picks por campeón
     picks = (
         Seleccion.objects
         .filter(partido__in=partidos_filtrados, campeon_seleccionado__isnull=False)
@@ -205,7 +207,6 @@ def campeones(request):
         )
     )
 
-    # Bans por campeón
     bans = (
         Seleccion.objects
         .filter(partido__in=partidos_filtrados, campeon_baneado__isnull=False)
