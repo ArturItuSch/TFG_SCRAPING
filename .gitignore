@@ -1,21 +1,23 @@
-# Ignorar archivos de Python
+# Entornos virtuales
+env/
+venv/
+
+# Archivos de entorno
+.env
+.env.*
+*.env
+
+# Carpeta cloudflared dentro de Django
+miweb/cloudflared/
+
+# Cache Python
 *.pyc
 *.pyo
 __pycache__/
 
-# Ignorar la base de datos SQLite de Django
-*.sqlite3
-
-# Ignorar archivos de entorno virtual
-venv/
-env/
-.env
-*.env
-
-./cloudflared/*
-# Ignorar directorios de migraciones de Django
-myweb/*/migrations/
-
-# Ignorar archivos de configuración de IDEs como PyCharm o VSCode
-.idea/
+# IDEs
 .vscode/
+.idea/
+
+# Migraciones Django
+miweb/*/migrations/
