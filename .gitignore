@@ -12,6 +12,7 @@ env/
 .env
 *.env
 
+./cloudflared/*
 # Ignorar directorios de migraciones de Django
 myweb/*/migrations/
 
