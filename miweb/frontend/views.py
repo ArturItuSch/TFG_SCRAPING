@@ -1,7 +1,5 @@
-from django.shortcuts import render
+from django.shortcuts import render, get_object_or_404
 from django.conf import settings
-import os
-import sys
 from pathlib import Path
 from django.utils import timezone
 
@@ -166,9 +164,37 @@ def splits(request):
     return render(request, 'splits.html', context)
 
 def equipos(request):
-    equipos = Equipo.objects.filter(activo=True).order_by('nombre')
-    return render(request, 'equipos.html', {'equipos': equipos})
+    equipos_activos = Equipo.objects.filter(activo=True)
+    todos_equipos = Equipo.objects.filter(activo=False)
+    return render(request, 'equipos.html', {
+        'equipos_activos': equipos_activos,
+        'todos_equipos': todos_equipos,
+    })
 
+def obtener_orden_rol(jugador):
+    orden_roles = ['top', 'jung', 'mid', 'bot', 'supp']
+    if jugador.rol:
+        rol = jugador.rol.lower()
+        if rol in orden_roles:
+            return orden_roles.index(rol)
+    return 99  
+
+def detalle_equipo(request, equipo_id):
+    equipo = get_object_or_404(Equipo, id=equipo_id)
+    jugadores = Jugador.objects.filter(
+        equipo=equipo,
+        activo=True
+    ).exclude(rol__isnull=True).exclude(rol__exact='')
+
+    roles_deseados = ['Top Laner', 'Jungler', 'Mid Laner', 'Bot Laner', 'Support']
+    jugadores_por_rol = {rol: jugadores.filter(rol__iexact=rol) for rol in roles_deseados}
+
+    return render(request, 'detalle_equipo.html', {
+        'equipo': equipo,
+        'jugadores_por_rol': jugadores_por_rol,
+        'roles_deseados': roles_deseados,
+    })
+    
 def jugadores(request):
     jugadores = Jugador.objects.filter(activo=True).order_by('nombre')
     return render(request, 'jugadores.html', {'jugadores': jugadores})

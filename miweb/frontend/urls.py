@@ -14,7 +14,7 @@ urlpatterns = [
     #path('splits/<int:year>/<str:split_type>/', views.detalle_split, name='detalle_split'),
     
     path('equipos/', views.equipos, name='equipos'),
-    #path('equipos/<str:id>/', views.detalle_equipo, name='detalle_equipo'),
+    path('equipos/detalle/<str:equipo_id>/', views.detalle_equipo, name='detalle_equipo'),
     #path('equipos/<str:id>/jugadores/', views.jugadores_equipo, name='jugadores_equipo'),
 
     path('jugadores/', views.jugadores, name='jugadores'),

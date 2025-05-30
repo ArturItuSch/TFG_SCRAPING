@@ -1,5 +1,6 @@
 from rest_framework import serializers
 from .models import *
+import urllib.parse
 
 class CampeonSerializer(serializers.ModelSerializer):
     class Meta:
@@ -28,9 +29,16 @@ class EquipoSerializer(serializers.ModelSerializer):
         
     
 class JugadorSerializer(serializers.ModelSerializer):
+    imagen = serializers.SerializerMethodField()
+
     class Meta:
         model = Jugador
         fields = '__all__'
+
+    def get_imagen(self, obj):
+        if obj.imagen:
+            return urllib.parse.unquote(obj.imagen)
+        return None
 
 
 class JugadorEnPartidaSerializer(serializers.ModelSerializer):

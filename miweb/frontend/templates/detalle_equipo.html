@@ -1,0 +1,82 @@
+{% extends 'base.html' %}
+{% load static %}
+{% load custom_filters %}
+{% block title %}{{ equipo.nombre }} - LEC Stats{% endblock %}
+
+{% block content %}
+<div class="container mt-4">
+
+  <!-- ENCABEZADO -->
+  <div class="card mb-4 shadow-sm" style="background-color: #2c2c2c; color: #fff;">
+    <div class="card-body d-flex align-items-center justify-content-between flex-wrap">
+      <div class="d-flex align-items-center">
+        {% if equipo.logo %}
+          <img src="{{ MEDIA_URL }}{{ equipo.logo }}" alt="{{ equipo.nombre }}" class="me-3" style="height: 80px;">
+        {% endif %}
+        <h2 class="mb-0">{{ equipo.nombre }}</h2>
+      </div>
+      {% if equipo.region %}
+        <span class="badge bg-primary fs-6">{{ equipo.region }}</span>
+      {% endif %}
+    </div>
+  </div>
+
+  <!-- INFORMACIÓN DEL EQUIPO -->
+  <div class="col-12 mb-5">
+    <div class="card shadow-sm border-0 rounded-4" style="background-color: #1e1e1e; color: #e0e0e0;">
+      <div class="card-header text-white" style="background-color: #3b3b3b;">
+        <h5 class="mb-0">Información del Equipo</h5>
+      </div>
+      <div class="card-body">
+        <ul class="list-unstyled mb-0">
+          {% if equipo.region %}
+            <li class="mb-2"><strong>🌍 Región:</strong> {{ equipo.region }}</li>
+          {% endif %}
+          {% if equipo.pais %}
+            <li class="mb-2"><strong>🏳️ País:</strong> {{ equipo.pais }}</li>
+          {% endif %}
+          {% if equipo.head_coach %}
+            <li class="mb-2"><strong>🧠 Head Coach:</strong> {{ equipo.head_coach }}</li>
+          {% endif %}
+          {% if equipo.propietario %}
+            <li class="mb-2"><strong>💼 Propietario:</strong> {{ equipo.propietario }}</li>
+          {% endif %}
+          {% if equipo.fecha_fundacion %}
+            <li class="mb-2"><strong>📅 Fundado:</strong> {{ equipo.fecha_fundacion|date:"Y" }}</li>
+          {% endif %}
+          {% if equipo.partners %}
+            <li class="mb-0"><strong>🤝 Partners:</strong> {{ equipo.partners }}</li>
+          {% endif %}
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <!-- JUGADORES -->
+  <h4 class="mt-4 text-light">Jugadores Activos</h4>
+  <div class="row row-cols-2 row-cols-sm-3 row-cols-md-4 row-cols-lg-5 g-4">
+    {% for rol in roles_deseados %}
+      {% with jugadores_por_rol|dictget:rol as jugadores %}
+        {% for jugador in jugadores %}
+          <div class="col">
+            <div class="card h-100 shadow-sm text-center" style="background-color: #2a2a2a; color: #fff;">
+              <div class="card-header text-white" style="background-color: #3a3a3a;">
+                <strong>{{ jugador.nombre }}</strong>
+              </div>
+              {% if jugador.imagen %}
+                <img src="{{ MEDIA_URL }}{{ jugador.imagen }}" alt="{{ jugador.nombre }}"
+                  class="card-img-top img-fluid p-2 rounded"
+                  style="max-height: 120px; object-fit: contain; background-color: #1a1a1a; border: 2px solid #fff;">
+              {% endif %}
+              <div class="card-footer" style="background-color: #2e2e2e;">
+                <span class="badge bg-secondary">{{ jugador.rol }}</span>
+              </div>
+            </div>
+          </div>
+        {% endfor %}
+      {% endwith %}
+    {% endfor %}
+  </div>
+
+</div>
+{% endblock %}

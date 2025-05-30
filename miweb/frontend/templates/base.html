@@ -96,6 +96,9 @@
                     <li class="nav-item">
                         <a class="nav-link {% if request.resolver_match.url_name == 'splits' %}active{% endif %}" href="{% url 'splits' %}">Splits</a>
                     </li>
+                    <li class="nav-item">
+                        <a class="nav-link {% if request.resolver_match.url_name == 'campeones' %}active{% endif %}" href="{% url 'campeones' %}">Campeones</a>
+                    </li>                    
                 </ul>
             </div>
         </div>

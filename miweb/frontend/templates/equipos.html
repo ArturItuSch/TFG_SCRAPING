@@ -1,24 +1,92 @@
-<!-- templates/equipos.html -->
 {% extends 'base.html' %}
+{% load static %}
 {% block title %}Equipos - LEC Stats{% endblock %}
 
 {% block content %}
-<h1>Equipos Activos</h1>
-<div class="row">
-  {% for equipo in equipos %}
-    <div class="col-md-4 mb-3">
-      <div class="card">
-        {% if equipo.logo %}
-          <img src="{{ equipo.logo }}" class="card-img-top" alt="{{ equipo.nombre }}">
-        {% endif %}
-        <div class="card-body">
-          <h5 class="card-title">{{ equipo.nombre }}</h5>
-          <p class="card-text">{{ equipo.region }}</p>
-        </div>
+  <style>
+    .equipos-grid {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 1rem;
+      justify-content: center;
+    }
+    .equipo-card-wrapper {
+      flex: 0 0 calc(20% - 1rem);
+      max-width: calc(20% - 1rem);
+    }
+    @media (max-width: 1200px) {
+      .equipo-card-wrapper {
+        flex: 0 0 calc(33.33% - 1rem);
+        max-width: calc(33.33% - 1rem);
+      }
+    }
+    @media (max-width: 768px) {
+      .equipo-card-wrapper {
+        flex: 0 0 calc(50% - 1rem);
+        max-width: calc(50% - 1rem);
+      }
+    }
+    @media (max-width: 576px) {
+      .equipo-card-wrapper {
+        flex: 0 0 100%;
+        max-width: 100%;
+      }
+    }
+  </style>
+
+  <!-- Sección Equipos Activos -->
+  <h1 class="mb-4 fs-3 text-white">Equipos Activos</h1>
+  <div class="row equipos-grid">
+    {% for equipo in equipos_activos %}
+      <div class="equipo-card-wrapper">
+        <a href="{% url 'detalle_equipo' equipo_id=equipo.id %}" class="text-decoration-none">
+          <div class="card h-100 text-center border-0 shadow-sm"
+               style="background-color: #1e1e1e; color: #f0f0f0; border-radius: 16px;">
+            {% if equipo.logo %}
+              <div class="p-3">
+                <img src="{{ MEDIA_URL }}{{ equipo.logo }}"
+                     alt="{{ equipo.nombre }}"
+                     class="img-fluid"
+                     style="max-height: 100px; object-fit: contain;">
+              </div>
+            {% endif %}
+            <div class="card-body pt-0">
+              <h6 class="card-title fw-semibold mb-1">{{ equipo.nombre }}</h6>
+              <p class="text-muted small mb-0">{{ equipo.region }}</p>
+            </div>
+          </div>
+        </a>
       </div>
-    </div>
-  {% empty %}
-    <p>No hay equipos registrados.</p>
-  {% endfor %}
-</div>
+    {% empty %}
+      <p class="text-muted">No hay equipos activos.</p>
+    {% endfor %}
+  </div>
+
+  <!-- Sección Todos los Equipos -->
+  <h1 class="mt-5 mb-4 fs-3 text-white">Todos los Equipos</h1>
+  <div class="row equipos-grid">
+    {% for equipo in todos_equipos %}
+      <div class="equipo-card-wrapper">
+        <a href="{% url 'detalle_equipo' equipo_id=equipo.id %}" class="text-decoration-none">
+          <div class="card h-100 text-center border-0 shadow-sm"
+               style="background-color: #1e1e1e; color: #f0f0f0; border-radius: 16px;">
+            {% if equipo.logo %}
+              <div class="p-3">
+                <img src="{{ MEDIA_URL }}{{ equipo.logo }}"
+                     alt="{{ equipo.nombre }}"
+                     class="img-fluid"
+                     style="max-height: 100px; object-fit: contain;">
+              </div>
+            {% endif %}
+            <div class="card-body pt-0">
+              <h6 class="card-title fw-semibold mb-1">{{ equipo.nombre }}</h6>
+              <p class="text-muted small mb-0">{{ equipo.region }}</p>
+            </div>
+          </div>
+        </a>
+      </div>
+    {% empty %}
+      <p class="text-muted">No hay equipos registrados.</p>
+    {% endfor %}
+  </div>
 {% endblock %}

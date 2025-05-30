@@ -13,7 +13,7 @@ import random
 PROJECT_ROOT = os.path.abspath(os.path.join(os.path.dirname(__file__), '..','..','..'))
 sys.path.insert(0, PROJECT_ROOT)
 
-from leaguepedia_teams_players import download_image, write_json, obtener_headers_dinamicos, get_html
+from .leaguepedia_teams_players import download_image, get_html
 # Importación de rutas desde archivo de configuración
 from Resources.rutas import *
 TEAMS_INSTALATION_JSON = os.path.join(JSON_INSTALATION_TEAMS, "teams_data_leguepedia.json")
@@ -121,24 +121,24 @@ def extraer_equipos(url):
         print(f"Error al procesar equipos en {url}: {e}")
         return equipos
 
-def eliminar_duplicados_json(ruta_archivo_json, clave_salida=None):
-    try:
-        with open(ruta_archivo_json, 'r', encoding='utf-8') as f:
-            datos = json.load(f)
-        datos_unicos = list({json.dumps(item, sort_keys=True): item for item in datos}.values())
+def quitar_duplicados(data, clave=None):
+    """
+    Elimina duplicados de una lista de diccionarios.
 
-        print(f"Original: {len(datos)} elementos")
-        print(f"Sin duplicados: {len(datos_unicos)} elementos")
-        
-        ruta_salida = clave_salida if clave_salida else ruta_archivo_json
-       
-        with open(ruta_salida, 'w', encoding='utf-8') as f:
-            json.dump(datos_unicos, f, indent=4, ensure_ascii=False)
-        
-        print(f"Archivo limpio guardado en: {ruta_salida}")
-    
-    except Exception as e:
-        print(f"Error al procesar el archivo JSON: {e}")
+    :param data: lista de diccionarios a depurar.
+    :param clave: nombre de campo dentro de cada dict para considerar unicidad.
+                  Si no se proporciona, compara todo el dict.
+    :return: nueva lista sin duplicados, manteniendo el primer encuentro.
+    """
+    vistos = set()
+    resultado = []
+    for item in data:
+        # Si se especifica una clave, usamos su valor; si no, serializamos todo el dict.
+        token = item.get(clave) if clave else json.dumps(item, sort_keys=True)
+        if token not in vistos:
+            vistos.add(token)
+            resultado.append(item)
+    return resultado
     
 if __name__ == '__main__':
     '''urls = get_urls_sesons()
