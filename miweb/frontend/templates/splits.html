@@ -5,80 +5,65 @@
 
 {% block content %}
 <div class="container mt-5 text-white">
+  <h1 class="mb-4">Historial de Splits</h1>
 
-  <h1 class="mb-4">Splits por Año</h1>
-
-  <!-- BARRA DE BÚSQUEDA Y FILTROS -->
-  <form method="get" class="row g-3 align-items-center mb-4">
-
-    <div class="col-auto">
-      <input type="text" name="split_type" placeholder="Tipo de split" class="form-control"
-            value="{{ request.GET.split_type }}">
+  <!-- FILTROS -->
+  <form method="get" class="row g-3 align-items-end bg-dark p-4 rounded-4 shadow mb-5">
+    <div class="col-md-4">
+      <label for="split_type" class="form-label text-white">Tipo de Split</label>
+      <input type="text" name="split_type" id="split_type" placeholder="Ej. Spring" class="form-control"
+             value="{{ request.GET.split_type }}">
     </div>
 
-    <div class="col-auto">
-      <select name="league" class="form-select">
-        <option value="">Liga (Todas)</option>
+    <div class="col-md-4">
+      <label for="league" class="form-label text-white">Liga</label>
+      <select name="league" id="league" class="form-select">
+        <option value="">Todas</option>
         {% for liga in ligas_disponibles %}
           <option value="{{ liga }}" {% if request.GET.league == liga %}selected{% endif %}>{{ liga }}</option>
         {% endfor %}
       </select>
     </div>
 
-    <div class="col-auto">
-      <input type="number" name="year" placeholder="Año" min="2000" max="2100" class="form-control"
-            value="{{ request.GET.year }}">
+    <div class="col-md-2">
+      <label for="year" class="form-label text-white">Año</label>
+      <input type="number" name="year" id="year" placeholder="2023" min="2000" max="2100" class="form-control"
+             value="{{ request.GET.year }}">
     </div>
 
-    <div class="col-auto">
-      <button type="submit" class="btn btn-primary">Buscar</button>
+    <div class="col-md-2 d-grid">
+      <button type="submit" class="btn btn-primary mt-md-0 mt-3">Buscar</button>
     </div>
-
   </form>
 
-  <!-- RESULTADOS FILTRADOS POR AÑO -->
+  <!-- RESULTADOS -->
   {% if year_ordenados %}
     {% for year in year_ordenados %}
-    <div class="card mb-4 bg-dark border-primary">
-      <div class="card-header bg-primary text-white">
-        <h4 class="mb-0">Año {{ year }}</h4>
-      </div>
-      <div class="card-body">
-        <div class="split-row d-grid gap-3" data-split-row>
-          {% for split in splits_por_year|dictget:year %}
-          <div class="card h-100 border-secondary bg-secondary bg-opacity-25 text-white p-2">
-            <div class="card-body d-flex flex-column justify-content-between">
-              <div>
-                <h5 class="card-title text-capitalize">{{ split.split_type }}</h5>
-                <p class="card-text mb-1">Liga: {{ split.league }}</p>
+      <div class="card bg-dark border-secondary mb-4 shadow">
+        <div class="card-header bg-gradient text-white fw-bold fs-5" style="background-color: #0d6efd;">
+          Splits del Año {{ year }}
+        </div>
+        <div class="card-body">
+          <div class="row g-3">
+            {% for split in splits_por_year|dictget:year %}
+              <div class="col-md-4 col-lg-3">
+                <div class="card h-100 bg-secondary bg-opacity-25 border-light text-white shadow-sm">
+                  <div class="card-body d-flex flex-column justify-content-between">
+                    <div>
+                      <h6 class="card-title text-capitalize mb-2">{{ split.split_type }}</h6>
+                      <p class="mb-1"><strong>Liga:</strong> {{ split.league }}</p>
+                      <p class="mb-0"><strong>ID:</strong> {{ split.split_id }}</p>
+                    </div>
+                  </div>
+                </div>
               </div>
-            </div>
+            {% endfor %}
           </div>
-          {% endfor %}
         </div>
       </div>
-    </div>
     {% endfor %}
   {% else %}
-    <p>No hay splits registrados.</p>
+    <div class="alert alert-warning">No se encontraron splits para los filtros aplicados.</div>
   {% endif %}
 </div>
-
-<script>
-  document.addEventListener('DOMContentLoaded', () => {
-    const splitRows = document.querySelectorAll('[data-split-row]');
-    
-    let maxSplits = 0;
-    
-    splitRows.forEach(row => {
-      const count = row.children.length;
-      if (count > maxSplits) maxSplits = count;
-    });
-
-    splitRows.forEach(row => {
-      row.style.gridTemplateColumns = `repeat(${maxSplits}, 1fr)`;
-    });
-  });
-
-</script>
 {% endblock %}

@@ -1,24 +1,103 @@
-<!-- templates/equipos.html -->
 {% extends 'base.html' %}
+{% load static %}
 {% block title %}Jugadores - LEC Stats{% endblock %}
 
 {% block content %}
-<h1>Jugadores Activos</h1>
-<div class="row">
-  {% for jugador in jugadores %}
-    <div class="col-md-4 mb-3">
-      <div class="card">
-        {% if jugador.logo %}
-          <img src="{{ jugador.logo }}" class="card-img-top" alt="{{ jugador.nombre }}">
-        {% endif %}
-        <div class="card-body">
-          <h5 class="card-title">{{ jugador.nombre }}</h5>
-          <p class="card-text">{{ jugador.region }}</p>
-        </div>
+  <style>
+    .jugadores-grid {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 1rem;
+      justify-content: center;
+    }
+
+    .jugador-card-wrapper {
+      flex: 0 0 calc(20% - 1rem);
+      max-width: calc(20% - 1rem);
+    }
+
+    @media (max-width: 1200px) {
+      .jugador-card-wrapper {
+        flex: 0 0 calc(33.33% - 1rem);
+        max-width: calc(33.33% - 1rem);
+      }
+    }
+
+    @media (max-width: 768px) {
+      .jugador-card-wrapper {
+        flex: 0 0 calc(50% - 1rem);
+        max-width: calc(50% - 1rem);
+      }
+    }
+
+    @media (max-width: 576px) {
+      .jugador-card-wrapper {
+        flex: 0 0 100%;
+        max-width: 100%;
+      }
+    }
+  </style>
+
+  <h1 class="mb-4 fs-3 text-white">Jugadores Activos</h1>
+  <!-- Buscador de Jugadores -->
+  <form method="get" action="{% url 'jugadores' %}" class="mb-4">
+    <div class="row g-2 align-items-end">
+      <div class="col-md-4">
+        <label for="nombre" class="form-label text-white">Nombre del jugador</label>
+        <input type="text" id="nombre" name="nombre" class="form-control" value="{{ request.GET.nombre }}">
+      </div>
+
+      <div class="col-md-4">
+        <label for="equipo" class="form-label text-white">Equipo</label>
+        <select id="equipo" name="equipo" class="form-select">
+          <option value="">Todos</option>
+          {% for eq in equipos_disponibles %}
+            <option value="{{ eq.id }}" {% if request.GET.equipo == eq.id|stringformat:"s" %}selected{% endif %}>
+              {{ eq.nombre }}
+            </option>
+          {% endfor %}
+        </select>
+      </div>
+
+      <div class="col-md-2">
+        <label for="rol" class="form-label text-white">Rol</label>
+        <select id="rol" name="rol" class="form-select">
+          <option value="">Todos</option>
+          {% for r in roles_disponibles %}
+            <option value="{{ r }}" {% if request.GET.rol == r %}selected{% endif %}>
+              {{ r }}
+            </option>
+          {% endfor %}
+        </select>
+      </div>
+
+      <div class="col-md-2">
+        <button type="submit" class="btn btn-primary w-100">Buscar</button>
       </div>
     </div>
-  {% empty %}
-    <p>No hay jugadores registrados.</p>
-  {% endfor %}
-</div>
+  </form>
+
+  <div class="row jugadores-grid">
+    {% for jugador in jugadores %}
+      <div class="jugador-card-wrapper">
+        <a href="{% url 'detalle_jugador' jugador_id=jugador.id %}" class="text-decoration-none">
+          <div class="card h-100 text-center border-0 shadow-sm"
+               style="background-color: #1e1e1e; color: #f0f0f0; border-radius: 16px;">
+            <div class="p-3">
+              <img src="{% if jugador.imagen %}{{ MEDIA_URL }}{{ jugador.imagen }}{% else %}{{ MEDIA_URL }}Images/PlayersLEC/Unknown.png{% endif %}"
+                   alt="{{ jugador.nombre }}"
+                   class="img-fluid rounded-circle"
+                   style="max-height: 100px; object-fit: contain;">
+            </div>
+            <div class="card-body pt-0">
+              <h6 class="card-title fw-semibold mb-1">{{ jugador.nombre }}</h6>
+              <p class="text-white small mb-0">{{ jugador.rol }} – {{ jugador.equipo.nombre }}</p>
+            </div>
+          </div>
+        </a>
+      </div>
+    {% empty %}
+      <p class="text-muted">No hay jugadores registrados.</p>
+    {% endfor %}
+  </div>
 {% endblock %}

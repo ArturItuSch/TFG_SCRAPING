@@ -9,6 +9,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 from database.models import *
 from django.db.models import Prefetch, Sum, F, ExpressionWrapper, FloatField, Case, When, Value, Count, Q
 from collections import defaultdict
+from datetime import datetime
 
 
 
@@ -196,8 +197,91 @@ def detalle_equipo(request, equipo_id):
     })
     
 def jugadores(request):
-    jugadores = Jugador.objects.filter(activo=True).order_by('nombre')
-    return render(request, 'jugadores.html', {'jugadores': jugadores})
+    jugadores = Jugador.objects.filter(activo=True)
+
+    nombre = request.GET.get('nombre')
+    equipo_id = request.GET.get('equipo')
+    rol = request.GET.get('rol')
+
+    if nombre:
+        jugadores = jugadores.filter(nombre__icontains=nombre)
+    if equipo_id:
+        jugadores = jugadores.filter(equipo__id=equipo_id)
+    if rol:
+        jugadores = jugadores.filter(rol=rol)
+
+    equipos_disponibles = Equipo.objects.filter(activo=True).order_by('nombre')
+    roles_disponibles = Jugador.objects.values_list('rol', flat=True).distinct().order_by('rol')
+
+    return render(request, 'jugadores.html', {
+        'jugadores': jugadores,
+        'equipos_disponibles': equipos_disponibles,
+        'roles_disponibles': roles_disponibles,
+    })
+
+def detalle_jugador(request, jugador_id):
+    jugador = get_object_or_404(Jugador, id=jugador_id)
+    year_actual = datetime.now().year
+    split_actual = SplitLEC.obtener_ultimo_split(year_actual)
+
+    # Parámetros de filtrado y orden
+    campeon_filtro = request.GET.get('campeon', '').strip().lower()
+    resultado_filtro = request.GET.get('resultado')
+    orden = request.GET.get('orden')
+
+    partidas_detalle = []
+    if split_actual:
+        partidas = (
+            JugadorEnPartida.objects
+            .filter(jugador=jugador, partido__serie__split=split_actual)
+            .select_related('partido', 'partido__equipo_azul', 'partido__equipo_rojo', 'partido__equipo_ganador', 'campeon')
+            .order_by('partido__serie__dia', 'partido__orden')
+        )
+
+        for p in partidas:
+            enemigo = p.partido.equipo_rojo if p.partido.equipo_azul == jugador.equipo else p.partido.equipo_azul
+            gano = p.partido.equipo_ganador == jugador.equipo
+            cs_total = (p.minionkills or 0) + (p.monsterkills or 0)
+
+            partida_dict = {
+                'enemigo': enemigo.nombre if enemigo else 'Desconocido',
+                'campeon': p.campeon.nombre,
+                'campeon_imagen': p.campeon.imagen,
+                'victoria': gano,
+                'kills': p.kills or 0,
+                'deaths': p.deaths or 0,
+                'assists': p.assists or 0,
+                'cs': cs_total,
+                'gold': p.totalgold or 0,
+                'damage': p.damagetochampions or 0,
+                'vision': p.visionscore or 0,
+            }
+
+            partidas_detalle.append(partida_dict)
+
+    # Filtros
+    if campeon_filtro:
+        partidas_detalle = [p for p in partidas_detalle if campeon_filtro in p['campeon'].lower()]
+    if resultado_filtro == 'win':
+        partidas_detalle = [p for p in partidas_detalle if p['victoria']]
+    elif resultado_filtro == 'lose':
+        partidas_detalle = [p for p in partidas_detalle if not p['victoria']]
+
+    # Ordenamiento
+    if orden in ['kills', 'deaths', 'assists', 'gold', 'damage', 'vision', 'cs']:
+        partidas_detalle.sort(key=lambda x: x.get(orden, 0), reverse=True)
+
+    return render(request, 'detalle_jugador.html', {
+        'jugador': jugador,
+        'split_actual': split_actual,
+        'partidas_detalle': partidas_detalle,
+        'orden': orden,
+        'campeon_filtro': campeon_filtro,
+        'resultado_filtro': resultado_filtro,
+    })
+
+
+    
 
 def partidos(request):
     partidos = Partido.objects.order_by('-serie__dia', '-hora')[:50]

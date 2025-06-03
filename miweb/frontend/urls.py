@@ -18,8 +18,7 @@ urlpatterns = [
     #path('equipos/<str:id>/jugadores/', views.jugadores_equipo, name='jugadores_equipo'),
 
     path('jugadores/', views.jugadores, name='jugadores'),
-    #path('jugadores/<str:id>/', views.detalle_jugador, name='detalle_jugador'),
-    #path('jugadores/<str:id>/partidas/', views.partidas_jugador, name='partidas_jugador'),
+    path('jugador/<uuid:jugador_id>/', views.detalle_jugador, name='detalle_jugador'),   
 
     path('partidos/', views.partidos, name='partidos'),
     #path('partidos/<str:id>/', views.detalle_partido, name='detalle_partido'),
