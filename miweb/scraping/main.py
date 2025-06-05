@@ -136,7 +136,6 @@ def importar_series_y_partidos():
         else:
             print(f"Error en datos de la serie {serie_id}: {serializer.errors}")
 
-    # 🔹 Insertar series en lote
     BATCH_SIZE = 1000
     for i in range(0, len(series_objs), BATCH_SIZE):
         with transaction.atomic():
@@ -146,10 +145,8 @@ def importar_series_y_partidos():
     print(f"✅ Total series insertadas: {len(series_objs)}")
     print(f"❌ Series omitidas por split no encontrado: {num_omitted_series}")
 
-    # 🔸 Cacheamos las series ya en base de datos (incluyendo recién insertadas)
     series_cache = {serie.id: serie for serie in Serie.objects.all()}
 
-    # 🔸 Ahora importar partidos
     for partido_id, partido_data in partidos_dict.items():
         if partido_id in partidos_existentes:
             continue
@@ -177,7 +174,6 @@ def importar_series_y_partidos():
         equipo_rojo_obj = get_equipo_obj(partido_data['equipo_rojo'])
         equipo_ganador_obj = get_equipo_obj(partido_data['equipo_ganador'])
 
-        # Si alguno de los equipos no existe, omitimos este partido
         if None in (equipo_azul_obj, equipo_rojo_obj, equipo_ganador_obj):
             print(f"⚠️ Uno o más equipos no encontrados para el partido {partido_id}")
             num_omitted_partidos += 1
@@ -350,6 +346,7 @@ def importar_jugadores_en_partida():
             partido=partido_obj,
             campeon=campeon_obj,
             position=limpiar_valor(data.get('position')),
+            side=limpiar_valor(data.get('side')),
             kills=limpiar_valor(data.get('kills')),
             deaths=limpiar_valor(data.get('deaths')),
             assists=limpiar_valor(data.get('assists')),
@@ -603,12 +600,3 @@ def importar_objetivos_neutrales(batch_size=1000):
 
     print(f"🔄 Ignorados {ya_existentes} registros ya existentes.")
 
-if __name__ == '__main__':
-    importar_campeones()
-    '''importar_splits()
-    importar_equipos()
-    importar_jugadores() 
-    importar_series_y_partidos()
-    importar_jugadores_en_partida()
-    importar_selecciones()
-    importar_objetivos_neutrales()'''

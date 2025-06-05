@@ -498,6 +498,7 @@ def extract_all_jugadores_en_partida():
                         'partido': row.get("gameid"),
                         'campeon': row.get("champion"),
                         'position': str(row.get("position")).strip() if row.get("position") in posiciones else posiciones[i % len(posiciones)],
+                        'side': row.get("side"),
                         'kills': row.get('kills'),
                         'deaths': row.get('deaths'),
                         'assists': row.get('assists'),

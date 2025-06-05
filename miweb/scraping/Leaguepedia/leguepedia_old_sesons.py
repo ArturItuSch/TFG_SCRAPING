@@ -1,13 +1,9 @@
-import requests
 from bs4 import BeautifulSoup
 from urllib.parse import urljoin
 import os
 import sys
 import json
-from pathlib import Path
 import re
-from datetime import datetime
-import random
 
 # Establece la ruta raíz del proyecto
 PROJECT_ROOT = os.path.abspath(os.path.join(os.path.dirname(__file__), '..','..','..'))
@@ -122,14 +118,6 @@ def extraer_equipos(url):
         return equipos
 
 def quitar_duplicados(data, clave=None):
-    """
-    Elimina duplicados de una lista de diccionarios.
-
-    :param data: lista de diccionarios a depurar.
-    :param clave: nombre de campo dentro de cada dict para considerar unicidad.
-                  Si no se proporciona, compara todo el dict.
-    :return: nueva lista sin duplicados, manteniendo el primer encuentro.
-    """
     vistos = set()
     resultado = []
     for item in data:
@@ -140,20 +128,21 @@ def quitar_duplicados(data, clave=None):
             resultado.append(item)
     return resultado
     
-if __name__ == '__main__':
-    '''urls = get_urls_sesons()
-    all_teams = []
+def obtener_equipos_antiguos():
+    print("⏳ Obteniendo URLs de temporadas...")
+    urls = get_urls_sesons()
+    if not urls:
+        print("⚠️ No se encontraron URLs de temporadas.")
+        return []
+
+    equipos_totales = []
     for url in urls:
-        print(f"Procesando URL: {url}")
+        print(f"🔎 Procesando temporada desde URL: {url}")
         equipos = extraer_equipos(url)
         if equipos:
-            all_teams.extend(equipos)
-        
+            equipos_totales.extend(equipos)
 
-    if all_teams:
-        write_json(TEAMS_OLD_INSTALATION_JSON, all_teams)
-        print(f"Datos guardados en {TEAMS_OLD_INSTALATION_JSON}")
-    else:
-        print("No se extrajo ningún equipo.")'''
-    #eliminar_duplicados_json(TEAMS_OLD_INSTALATION_JSON)
+    equipos_sin_duplicados = quitar_duplicados(equipos_totales, clave="name")
+    print(f"✅ Equipos antiguos extraídos: {len(equipos_sin_duplicados)}")
+    return equipos_sin_duplicados
     

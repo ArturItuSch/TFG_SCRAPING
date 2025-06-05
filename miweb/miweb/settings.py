@@ -19,13 +19,12 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 
 load_dotenv(os.path.join(BASE_DIR, '.env.dev'))
 
-
+GOOGLE_API_KEY = os.getenv("GOOGLE_API_KEY")
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/5.2/howto/deployment/checklist/
 
-# SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'django-insecure-&7%s%_%&-rw)i35^0ny)y+&i2qmw$$-06btq0(ofu=c!)r*w^c'
-
+SECRET_KEY = os.getenv("SECRET_KEY")
+HASHIDS_SALT = os.getenv("HASHIDS_SALT")
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
@@ -146,4 +145,4 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 MEDIA_URL = '/Resources/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'Resources')
 
-
+HASHIDS_SALT = os.getenv("HASHIDS_SALT", "h6sK8!7@asP9#31xe*D")

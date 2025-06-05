@@ -145,6 +145,7 @@ class JugadorEnPartida(models.Model):
     partido = models.ForeignKey(Partido, on_delete=models.SET_NULL, null=True, blank=True)
     campeon = models.ForeignKey(Campeon, on_delete=models.SET_NULL, null=True, blank=True) #champion
     position = models.CharField(max_length=10, null=True, blank=True) #position
+    side = models.CharField(max_length=10, null=True, blank=True)
     kills = models.PositiveIntegerField(null=True, blank=True) #kills
     deaths = models.PositiveIntegerField(null=True, blank=True) #deaths
     assists = models.PositiveIntegerField(null=True, blank=True) #assists

@@ -259,6 +259,21 @@ def detalle_jugador(request, jugador_id):
 
             partidas_detalle.append(partida_dict)
 
+    # Estadísticas generales
+    estadisticas_generales = None
+    if partidas_detalle:
+        total_partidas = len(partidas_detalle)
+        total_wins = sum(1 for p in partidas_detalle if p['victoria'])
+
+        estadisticas_generales = {
+            'prom_kills': round(sum(p['kills'] for p in partidas_detalle) / total_partidas, 1),
+            'prom_deaths': round(sum(p['deaths'] for p in partidas_detalle) / total_partidas, 1),
+            'prom_assists': round(sum(p['assists'] for p in partidas_detalle) / total_partidas, 1),
+            'prom_cs': round(sum(p['cs'] for p in partidas_detalle) / total_partidas, 1),
+            'prom_vision': round(sum(p['vision'] for p in partidas_detalle) / total_partidas, 1),
+            'winrate': round(100 * total_wins / total_partidas, 1),
+        }
+            
     # Filtros
     if campeon_filtro:
         partidas_detalle = [p for p in partidas_detalle if campeon_filtro in p['campeon'].lower()]
@@ -278,6 +293,7 @@ def detalle_jugador(request, jugador_id):
         'orden': orden,
         'campeon_filtro': campeon_filtro,
         'resultado_filtro': resultado_filtro,
+        'estadisticas_generales': estadisticas_generales if partidas_detalle else None,
     })
 
 
@@ -379,4 +395,52 @@ def campeones(request):
         'years_disponibles': years_disponibles,
         'orden': orden,
         'splits_disponibles': splits_disponibles,
+    })
+    
+    
+def series_jugadas(request):
+    split_id = request.GET.get('split_id')
+
+    # Filtro de splits disponibles
+    splits = SplitLEC.objects.all().order_by('-year', 'split_type')
+
+    # Cargar series y filtrar por split si aplica
+    series = Serie.objects.select_related('split').prefetch_related(
+        'partidos__equipo_azul', 'partidos__equipo_rojo'
+    )
+    if split_id:
+        series = series.filter(split__split_id=split_id)
+    series = series.order_by('-dia')
+
+    series_data = []
+    for s in series:
+        resultados = s.resultados_por_equipos()
+        partidas_data = []
+
+        for partido in s.partidos.all():
+            jugadores = JugadorEnPartida.objects.filter(partido=partido).select_related('jugador', 'campeon')
+
+            jugadores_azul = [jp for jp in jugadores if jp.side == 'Blue']
+            jugadores_rojo = [jp for jp in jugadores if jp.side == 'Red']
+
+            partidas_data.append({
+                'partido': partido,
+                'equipo_azul': partido.equipo_azul,
+                'equipo_rojo': partido.equipo_rojo,
+                'jugadores_azul': jugadores_azul,
+                'jugadores_rojo': jugadores_rojo,
+            })
+
+        series_data.append({
+            'serie': s,
+            'dia': s.dia,
+            'playoffs': s.playoffs,
+            'resultados': resultados,
+            'partidas': partidas_data,
+        })
+
+    return render(request, 'series_list.html', {
+        'splits': splits,
+        'split_id': split_id,
+        'series': series_data,
     })

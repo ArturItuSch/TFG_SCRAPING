@@ -4,7 +4,10 @@ import requests
 import os
 import sys
 
-load_dotenv()
+
+# Cargar las variables del entorno
+BASE_DIR = os.path.abspath(os.path.join(os.path.dirname(__file__), '..'))
+load_dotenv(os.path.join(BASE_DIR, '.env.dev'))
 
 API_KEY = os.getenv('GOOGLE_API_KEY')
 FOLDER_ID = os.getenv('GOOGLE_DRIVE_FOLDER_ID')
@@ -150,6 +153,6 @@ if __name__ == "__main__":
     #importar_equipos()
     #importar_jugadores() 
     #importar_series_y_partidos()
-    #importar_jugadores_en_partida()
-    importar_selecciones()
+    importar_jugadores_en_partida()
+    #importar_selecciones()
     #importar_objetivos_neutrales()    

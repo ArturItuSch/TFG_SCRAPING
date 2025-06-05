@@ -12,6 +12,7 @@ django.setup()
 from database.models import Jugador, Equipo
 from database.serializers import *
 from scraping.Leaguepedia.leaguepedia_teams_players import get_player_data, get_team_data
+from scraping.Leaguepedia.leguepedia_old_sesons import obtener_equipos_antiguos
 
 def parse_fecha(fecha_str):
     if not fecha_str:
@@ -137,9 +138,57 @@ def actualizar_equipos_activos(lista_equipos):
             print(f"Equipo actualizado: {nombre_equipo}")
         else:
             print(f"Errores al actualizar {nombre_equipo}: {serializer.errors}")
-                       
+
+def actualizar_info_equipos(equipos, activo=False):
+    for eq in equipos:
+        nombre = eq.get("name", "").replace("_", " ") or eq.get("nombre_equipo", "").replace("_", " ")
+        if not nombre:
+            print("⚠️ Equipo sin nombre, se omite.")
+            continue
+
+        equipo_obj = Equipo.objects.filter(nombre__iexact=nombre).first()
+        if not equipo_obj:
+            print(f"❌ Equipo no encontrado: {nombre}")
+            continue
+
+        logo = eq.get("imagen_url") or eq.get("logo")
+        if logo:
+            logo = logo.replace("\\", "/")
+
+        datos = {
+            'id': equipo_obj.id,
+            'nombre': nombre,
+            'pais': eq.get('pais'),
+            'region': eq.get('region'),
+            'propietario': eq.get('propietario'),
+            'head_coach': eq.get('head_coach'),
+            'partners': eq.get('partners')[:100] if eq.get('partners') else None,
+            'fecha_fundacion': parse_fecha_equipo(eq.get('fecha_fundacion')),
+            'logo': logo,
+            'activo': activo,
+        }
+
+        serializer = EquipoSerializer(instance=equipo_obj, data=datos)
+        if serializer.is_valid():
+            serializer.save()
+            print(f"🔄 Equipo actualizado: {nombre} {'(activo)' if activo else '(inactivo)'}")
+        else:
+            print(f"❌ Error al actualizar {nombre}: {serializer.errors}")
+
+def actualizar_todo_equipos_y_jugadores():
+    print("📄 Actualizando info de equipos antiguos...")
+    antiguos = obtener_equipos_antiguos()
+    actualizar_info_equipos(antiguos, activo=False)
+
+    print("🚀 Actualizando info de equipos actuales...")
+    actuales = get_team_data()
+    actualizar_info_equipos(actuales, activo=True)
+
+    print("👤 Actualizando jugadores...")
+    jugadores = get_player_data()
+    actualizar_jugadores(jugadores)
+
+    print("✅ Todo actualizado correctamente.")
+                          
 if __name__ == "__main__":
-    data = get_player_data()
-    actualizar_jugadores(data)
-    data = get_team_data()
-    actualizar_equipos_activos(data)
+    actualizar_todo_equipos_y_jugadores()
