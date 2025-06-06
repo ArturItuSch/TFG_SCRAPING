@@ -401,42 +401,44 @@ def campeones(request):
 def series_jugadas(request):
     split_id = request.GET.get('split_id')
 
-    # Filtro de splits disponibles
+    # Cargar splits disponibles
     splits = SplitLEC.objects.all().order_by('-year', 'split_type')
 
-    # Cargar series y filtrar por split si aplica
+    # Si no se selecciona un split, usar el último disponible
+    if not split_id and splits.exists():
+        split_id = splits.first().split_id
+
+    # Filtrar series por split
     series = Serie.objects.select_related('split').prefetch_related(
         'partidos__equipo_azul', 'partidos__equipo_rojo'
-    )
-    if split_id:
-        series = series.filter(split__split_id=split_id)
-    series = series.order_by('-dia')
+    ).filter(split__split_id=split_id).order_by('-dia')
 
     series_data = []
     for s in series:
+        partidos = s.partidos.all().order_by('orden', 'id')
+        if not partidos.exists():
+            continue
+
+        primer_partido = partidos.first()
+        equipo_azul = primer_partido.equipo_azul
+        equipo_rojo = primer_partido.equipo_rojo
+
+        jugadores_primer_partido = JugadorEnPartida.objects.filter(partido=primer_partido).select_related('jugador', 'campeon')
+
+        jugadores_equipo_azul = [jp for jp in jugadores_primer_partido if jp.side == 'Blue']
+        jugadores_equipo_rojo = [jp for jp in jugadores_primer_partido if jp.side == 'Red']
+
         resultados = s.resultados_por_equipos()
-        partidas_data = []
-
-        for partido in s.partidos.all():
-            jugadores = JugadorEnPartida.objects.filter(partido=partido).select_related('jugador', 'campeon')
-
-            jugadores_azul = [jp for jp in jugadores if jp.side == 'Blue']
-            jugadores_rojo = [jp for jp in jugadores if jp.side == 'Red']
-
-            partidas_data.append({
-                'partido': partido,
-                'equipo_azul': partido.equipo_azul,
-                'equipo_rojo': partido.equipo_rojo,
-                'jugadores_azul': jugadores_azul,
-                'jugadores_rojo': jugadores_rojo,
-            })
 
         series_data.append({
-            'serie': s,
+            'id': s.id,
             'dia': s.dia,
             'playoffs': s.playoffs,
+            'equipo_azul': equipo_azul,
+            'equipo_rojo': equipo_rojo,
+            'jugadores_azul': jugadores_equipo_azul,
+            'jugadores_rojo': jugadores_equipo_rojo,
             'resultados': resultados,
-            'partidas': partidas_data,
         })
 
     return render(request, 'series_list.html', {
@@ -444,3 +446,89 @@ def series_jugadas(request):
         'split_id': split_id,
         'series': series_data,
     })
+
+def detalle_serie(request, id):
+    serie = get_object_or_404(
+        Serie.objects.prefetch_related('partidos__equipo_azul', 'partidos__equipo_rojo'),
+        id=id
+    )
+    partidos = serie.partidos.all().order_by('orden', 'id')
+    primer_partido = partidos.first() if partidos.exists() else None
+    resultados = serie.resultados_por_equipos()
+
+    partidas_data = []
+    for partido in partidos:
+        jugadores = JugadorEnPartida.objects.filter(partido=partido).select_related('jugador', 'campeon')
+        jugadores_azul = [jp for jp in jugadores if jp.side == 'Blue']
+        jugadores_rojo = [jp for jp in jugadores if jp.side == 'Red']
+        partidas_data.append({
+            'partido': partido,
+            'jugadores_azul': jugadores_azul,
+            'jugadores_rojo': jugadores_rojo,
+        })
+
+    return render(request, 'serie_info.html', {
+        'serie': serie,
+        'partidos': partidos,
+        'primer_partido': primer_partido,
+        'resultados': resultados,
+        'partidas_data': partidas_data,
+    })
+    
+def partido_info(request, id):
+    partido = get_object_or_404(Partido, id=id)
+
+    jugadores = JugadorEnPartida.objects.filter(partido=partido).select_related('jugador', 'campeon')
+    objetivos = ObjetivosNeutrales.objects.filter(partida=partido)
+    selecciones = Seleccion.objects.filter(partido=partido).select_related('campeon_seleccionado', 'campeon_baneado', 'equipo')
+
+    equipo_azul = partido.equipo_azul
+    equipo_rojo = partido.equipo_rojo
+    equipo_ganador = partido.equipo_ganador
+
+    objetivos_azul = objetivos.filter(equipo=equipo_azul).first()
+    objetivos_rojo = objetivos.filter(equipo=equipo_rojo).first()
+
+    picks_azul = selecciones.filter(equipo=equipo_azul, seleccion__isnull=False).order_by('seleccion')
+    bans_azul = selecciones.filter(equipo=equipo_azul, baneo__isnull=False).order_by('baneo')
+    picks_rojo = selecciones.filter(equipo=equipo_rojo, seleccion__isnull=False).order_by('seleccion')
+    bans_rojo = selecciones.filter(equipo=equipo_rojo, baneo__isnull=False).order_by('baneo')
+
+    # Separar jugadores por side
+    jugadores_blue = [j for j in jugadores if j.side and j.side.lower() == 'blue']
+    jugadores_red = [j for j in jugadores if j.side and j.side.lower() == 'red']
+
+    # Duración formateada
+    minutos = partido.duracion // 60 if partido.duracion else 0
+    segundos = partido.duracion % 60 if partido.duracion else 0
+    duracion_format = f"{minutos}:{segundos:02d}"
+
+    context = {
+        'partido': partido,
+        'equipo_ganador': equipo_ganador if equipo_ganador else None,
+        'duracion': duracion_format,
+        'equipos_data': [
+            {
+                'equipo': equipo_azul,
+                'objetivos': objetivos_azul,
+                'picks': picks_azul,
+                'bans': bans_azul,
+                'side_color': 'primary',
+                'side': 'blue',
+                'win': equipo_azul == equipo_ganador,
+            },
+            {
+                'equipo': equipo_rojo,
+                'objetivos': objetivos_rojo,
+                'picks': picks_rojo,
+                'bans': bans_rojo,
+                'side_color': 'danger',
+                'side': 'red',
+                'win': equipo_rojo == equipo_ganador,
+            }
+        ],
+        'jugadores_blue': jugadores_blue,
+        'jugadores_red': jugadores_red,
+    }
+
+    return render(request, 'partido.html', context)

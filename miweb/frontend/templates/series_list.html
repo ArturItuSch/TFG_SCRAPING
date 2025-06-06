@@ -11,9 +11,8 @@
   <form method="get" class="row g-3 mb-4">
     <div class="col-md-3">
       <select name="split_id" class="form-select" onchange="this.form.submit()">
-        <option value="">Todos los Splits</option>
         {% for split in splits %}
-          <option value="{{ split.split_id }}" {% if request.GET.split_id == split.split_id %}selected{% endif %}>
+          <option value="{{ split.split_id }}" {% if split.split_id == split_id %}selected{% endif %}>
             {{ split.split_type }} {{ split.year }}
           </option>
         {% endfor %}
@@ -23,48 +22,75 @@
 
   <!-- Lista de series -->
   {% for serie in series %}
-  <div class="card bg-dark text-white mb-4 p-3 shadow">
-    <div class="text-center mb-2">
-      <strong>{{ serie.dia|date:"d M Y" }}</strong> - 
-      <span class="badge {% if serie.playoffs %}bg-danger{% else %}bg-primary{% endif %}">
-        {% if serie.playoffs %}Playoffs{% else %}Regular Season{% endif %}
-      </span>
-    </div>
+    <div class="card bg-dark text-white mb-4 p-3 shadow">
+      <div class="text-center mb-2">
+        <strong>{{ serie.dia|date:"d M Y" }}</strong> - 
+        <span class="badge {% if serie.playoffs %}bg-danger{% else %}bg-primary{% endif %}">
+          {% if serie.playoffs %}Playoffs{% else %}Regular Season{% endif %}
+        </span>
+      </div>
 
-    {% for partida in serie.partidas %}
-    <div class="border-top border-secondary pt-3 mt-3">
-      <div class="d-flex align-items-center justify-content-between flex-wrap">
-        <!-- Equipo Azul -->
-        <div class="text-center" style="width: 30%;">
-          <img src="/Resources/{{ partida.equipo_azul.logo|default:'Images/TeamsLEC/Unknown.png' }}" alt="logo azul" style="max-height: 70px;">
-          <h5 class="mt-2">{{ partida.equipo_azul.nombre }}</h5>
-          <ul class="list-unstyled small">
-            {% for jugador in partida.jugadores_azul %}
-              <li>{{ jugador.jugador.nombre }}{% if jugador.campeon %} ({{ jugador.campeon.nombre }}){% endif %}</li>
-            {% endfor %}
-          </ul>
-        </div>
+      <div class="border-top border-secondary pt-3 mt-3">
+        <div class="row text-center align-items-start">
 
-        <!-- Separador de resultado (opcional) -->
-        <div class="text-center" style="width: 30%;">
-          <h6 class="text-muted">Partida {{ partida.partido.orden|default:"" }}</h6>
-          <h4>vs</h4>
-        </div>
+          <!-- Equipo Azul -->
+          <div class="col-md-5 mb-3">
+            <a href="{% url 'detalle_equipo' serie.equipo_azul.id %}">
+              <img src="/Resources/{{ serie.equipo_azul.logo|default:'Images/TeamsLEC/Unknown.png' }}" alt="logo azul" style="max-height: 70px;">
+            </a>
+            <h6 class="mt-2">{{ serie.equipo_azul.nombre }}</h6>
+            <div class="row justify-content-center g-2 mt-2">
+              {% for jugador in serie.jugadores_azul %}
+                <div class="col-6 col-sm-4">
+                  <a href="{% url 'detalle_jugador' jugador.jugador.id %}" class="text-decoration-none">
+                    <div class="card bg-secondary text-white p-2 h-100">
+                      <div class="small text-center text-truncate" style="max-width: 100%;">
+                        <strong>{{ jugador.position }}</strong><br>
+                        {{ jugador.jugador.nombre }}
+                      </div>
+                    </div>
+                  </a>
+                </div>
+              {% endfor %}
+            </div>
+          </div>
 
-        <!-- Equipo Rojo -->
-        <div class="text-center" style="width: 30%;">
-          <img src="/Resources/{{ partida.equipo_rojo.logo|default:'Images/TeamsLEC/Unknown.png' }}" alt="logo rojo" style="max-height: 70px;">
-          <h5 class="mt-2">{{ partida.equipo_rojo.nombre }}</h5>
-          <ul class="list-unstyled small">
-            {% for jugador in partida.jugadores_rojo %}
-              <li>{{ jugador.jugador.nombre }}{% if jugador.campeon %} ({{ jugador.campeon.nombre }}){% endif %}</li>
-            {% endfor %}
-          </ul>
+          <!-- Resultado -->
+          <div class="col-md-2 d-flex flex-column justify-content-center align-items-center">
+            <div class="small text-muted mb-1">{{ serie.dia|date:"d M Y" }}</div>
+            <div class="h5">{{ serie.resultados.azul.victorias }} - {{ serie.resultados.rojo.victorias }}</div>
+            {% if serie.id %}
+              <a href="{% url 'serie_info' serie.id %}" class="btn btn-sm btn-outline-light mt-2">
+                + info
+              </a>
+            {% endif %}
+          </div>
+
+          <!-- Equipo Rojo -->
+          <div class="col-md-5 mb-3">
+            <a href="{% url 'detalle_equipo' serie.equipo_rojo.id %}">
+              <img src="/Resources/{{ serie.equipo_rojo.logo|default:'Images/TeamsLEC/Unknown.png' }}" alt="logo rojo" style="max-height: 70px;">
+            </a>
+            <h6 class="mt-2">{{ serie.equipo_rojo.nombre }}</h6>
+            <div class="row justify-content-center g-2 mt-2">
+              {% for jugador in serie.jugadores_rojo %}
+                <div class="col-6 col-sm-4">
+                  <a href="{% url 'detalle_jugador' jugador.jugador.id %}" class="text-decoration-none">
+                    <div class="card bg-secondary text-white p-2 h-100">
+                      <div class="small text-center text-truncate" style="max-width: 100%;">
+                        <strong>{{ jugador.position }}</strong><br>
+                        {{ jugador.jugador.nombre }}
+                      </div>
+                    </div>
+                  </a>
+                </div>
+              {% endfor %}
+            </div>  
+          </div>
+
         </div>
       </div>
     </div>
-    {% endfor %}
-  </div>
   {% empty %}
     <p>No hay series registradas para este split.</p>
   {% endfor %}

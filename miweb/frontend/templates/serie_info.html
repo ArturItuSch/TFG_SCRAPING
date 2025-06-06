@@ -1,0 +1,140 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Detalle Serie - LEC Stats{% endblock %}
+
+{% block content %}
+<div class="container text-white mt-5">
+
+  <!-- Tarjeta de resultado de la serie -->
+  <div class="card bg-dark text-white mb-4 shadow">
+    <div class="card-header text-center">
+        <div class="small text-white">
+            {{ serie.dia|date:"d M Y" }} · {{ serie.split.split_type|title }} {{ serie.split.year }}
+            {% if serie.patch %}
+            · Patch {{ serie.patch }}
+            {% endif %}
+            {% if serie.playoffs %}
+            · <span class="badge bg-danger">Playoffs</span>
+            {% else %}
+            · <span class="badge bg-primary">Regular Season</span>
+            {% endif %}
+        </div>
+    </div>
+    
+    <div class="card-body d-flex justify-content-between align-items-center text-center flex-wrap">
+
+        
+      <!-- Equipo Azul -->
+      <div class="flex-fill">
+        <img src="/Resources/{{ primer_partido.equipo_azul.logo|default:'Images/TeamsLEC/Unknown.png' }}" alt="logo azul" style="max-height: 70px;">
+        <h6 class="mt-2">{{ primer_partido.equipo_azul.nombre }}</h6>
+      </div>
+
+      <!-- Resultado -->
+      <div class="flex-fill">
+        <h2 class="mb-1">{{ resultados.azul.victorias }} - {{ resultados.rojo.victorias }}</h2>
+        <p class="text-muted small">Resultado final</p>
+      </div>
+
+      <!-- Equipo Rojo -->
+      <div class="flex-fill">
+        <img src="/Resources/{{ primer_partido.equipo_rojo.logo|default:'Images/TeamsLEC/Unknown.png' }}" alt="logo rojo" style="max-height: 70px;">
+        <h6 class="mt-2">{{ primer_partido.equipo_rojo.nombre }}</h6>
+      </div>
+
+    </div>
+  </div>
+
+  <hr class="text-secondary">
+
+  <h4>Partidos</h4>
+    {% for partida in partidas_data %}
+    <div class="card bg-dark text-white mb-5 shadow-lg rounded">
+        <div class="card-body">
+            <div class="text-center mb-2">
+            <a href="{% url 'partido_info' partida.partido.id %}" class="btn btn-sm btn-outline-light rounded-pill px-3">
+                + info
+            </a>
+            </div>
+        <!-- Encabezado de partido -->
+        <div class="d-flex justify-content-between align-items-center mb-2">
+            
+            <!-- Equipo Azul -->
+            <div class="text-start">
+            <h5 class="mb-0">{{ partida.partido.equipo_azul.nombre }}</h5>
+            {% if partida.partido.equipo_ganador == partida.partido.equipo_azul %}
+                <span class="badge bg-success">WIN</span>
+            {% else %}
+                <span class="badge bg-danger">LOSE</span>
+            {% endif %}
+            </div>
+
+            <!-- Equipo Rojo -->
+            <div class="text-end">
+            <h5 class="mb-0">{{ partida.partido.equipo_rojo.nombre }}</h5>
+            {% if partida.partido.equipo_ganador == partida.partido.equipo_rojo %}
+                <span class="badge bg-success">WIN</span>
+            {% else %}
+                <span class="badge bg-danger">LOSE</span>
+            {% endif %}
+            </div>
+        </div>
+
+        <!-- Sides -->
+        <div class="d-flex text-white fw-bold text-uppercase text-center mb-3">
+            <div class="w-50 py-1 bg-primary rounded-start">Blue Side</div>
+            <div class="w-50 py-1 bg-danger rounded-end">Red Side</div>
+        </div>
+
+        <!-- Jugadores -->
+        <div class="overflow-auto px-2">
+            <div class="d-flex justify-content-between" style="min-width: 900px;">
+            <!-- Jugadores Azul -->
+            <div class="d-flex gap-2 border-end border-light pe-3 w-50 justify-content-center">
+                {% for jugador in partida.jugadores_azul %}
+                <div class="card bg-secondary text-white p-2 text-center" style="width: 110px;">
+                    <div class="fw-bold text-truncate" title="{{ jugador.jugador.nombre }}">
+                    {{ jugador.jugador.nombre }}
+                    </div>
+                    <hr class="my-1">
+                    {% if jugador.campeon %}
+                    <img src="/Resources/{{ jugador.campeon.imagen|default:'Images/Champions/Unknown.png' }}"
+                        alt="{{ jugador.campeon.nombre }}"
+                        title="{{ jugador.campeon.nombre }}"
+                        class="mb-1 mx-auto d-block" style="height: 28px; width: auto;">
+                    {% endif %}
+                    <hr class="my-1">
+                    <div class="small text-muted">{{ jugador.position|upper }}</div>
+                </div>
+                {% endfor %}
+            </div>
+
+            <!-- Jugadores Rojo -->
+            <div class="d-flex gap-2 ps-3 w-50 justify-content-center">
+                {% for jugador in partida.jugadores_rojo %}
+                <div class="card bg-secondary text-white p-2 text-center" style="width: 110px;">
+                    <div class="fw-bold text-truncate" title="{{ jugador.jugador.nombre }}">
+                    {{ jugador.jugador.nombre }}
+                    </div>
+                    <hr class="my-1">
+                    {% if jugador.campeon %}
+                    <img src="/Resources/{{ jugador.campeon.imagen|default:'Images/Champions/Unknown.png' }}"
+                        alt="{{ jugador.campeon.nombre }}"
+                        title="{{ jugador.campeon.nombre }}"
+                        class="mb-1 mx-auto d-block" style="height: 28px; width: auto;">
+                    {% endif %}
+                    <hr class="my-1">
+                    <div class="small text-muted">{{ jugador.position|upper }}</div>
+                </div>
+                {% endfor %}
+            </div>
+            </div>
+        </div>
+
+        </div>
+    </div>
+    {% endfor %}
+
+</div>
+{% endblock %}

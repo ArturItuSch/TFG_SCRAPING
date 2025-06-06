@@ -20,13 +20,13 @@ urlpatterns = [
     path('jugadores/', views.jugadores, name='jugadores'),
     path('jugador/<uuid:jugador_id>/', views.detalle_jugador, name='detalle_jugador'),   
 
-    path('partidos/', views.partidos, name='partidos'),
-    #path('partidos/<str:id>/', views.detalle_partido, name='detalle_partido'),
-
     #path('series/<str:id>/', views.detalle_serie, name='detalle_serie'),
     path('campeones/', views.campeones, name='campeones'),
     
     path('series/', views.series_jugadas, name='series_jugadas'),
+    path('series/<str:id>/', views.detalle_serie, name='serie_info'),
+    path('partido/<str:id>/', views.partido_info, name='partido_info'),
+
 ]
 
 if settings.DEBUG:
