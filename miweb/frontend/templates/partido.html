@@ -87,36 +87,48 @@
         <div class="col-md-6">
             <div class="card bg-dark text-white shadow">
             <div class="card-body">
-                <h5 class="text-{{ data.side_color }}">{{ data.equipo.nombre }}</h5>
-                {% if data.objetivos %}
-                <p><strong>Total Drakes:</strong> {{ data.objetivos.dragons }}</p>
+                <h5 class="text-{{ data.side_color }} mb-3">{{ data.equipo.nombre }}</h5>
 
-                <div class="d-flex flex-wrap justify-content-center gap-2 mb-2">
-                {% if data.objetivos.infernals %}
-                    <span class="badge bg-danger">🔥 Infernal: {{ data.objetivos.infernals }}</span>
-                {% endif %}
-                {% if data.objetivos.oceans %}
-                    <span class="badge bg-info">💧 Ocean: {{ data.objetivos.oceans }}</span>
-                {% endif %}
-                {% if data.objetivos.winds %}
-                    <span class="badge bg-primary">🌪️ Cloud: {{ data.objetivos.winds }}</span>
-                {% endif %}
-                {% if data.objetivos.mountains %}
-                    <span class="badge bg-secondary">⛰️ Mountain: {{ data.objetivos.mountains }}</span>
-                {% endif %}
-                {% if data.objetivos.hextechs %}
-                    <span class="badge bg-warning text-dark">⚡ Hextech: {{ data.objetivos.hextechs }}</span>
-                {% endif %}
-                {% if data.objetivos.chempunks %}
-                    <span class="badge bg-success">🧪 Chemtech: {{ data.objetivos.chempunks }}</span>
-                {% endif %}
+                {% if data.objetivos %}
+                <!-- Dragones -->
+                <div class="mb-3">
+                    <p class="mb-1"><strong>Dragones:</strong> {{ data.objetivos.dragons }}</p>
+                    <div class="d-flex flex-wrap justify-content-center gap-2">
+                        {% if data.objetivos.infernals %}
+                        <span class="badge bg-danger">🔥 Infernal: {{ data.objetivos.infernals }}</span>
+                        {% endif %}
+                        {% if data.objetivos.oceans %}
+                        <span class="badge bg-info">💧 Ocean: {{ data.objetivos.oceans }}</span>
+                        {% endif %}
+                        {% if data.objetivos.winds %}
+                        <span class="badge bg-primary">🌪️ Cloud: {{ data.objetivos.winds }}</span>
+                        {% endif %}
+                        {% if data.objetivos.mountains %}
+                        <span class="badge bg-secondary">⛰️ Mountain: {{ data.objetivos.mountains }}</span>
+                        {% endif %}
+                        {% if data.objetivos.hextechs %}
+                        <span class="badge bg-warning text-dark">⚡ Hextech: {{ data.objetivos.hextechs }}</span>
+                        {% endif %}
+                        {% if data.objetivos.chempunks %}
+                        <span class="badge bg-success">🧪 Chemtech: {{ data.objetivos.chempunks }}</span>
+                        {% endif %}
+                    </div>
                 </div>
 
-                <p><strong>Barons:</strong> {{ data.objetivos.barons }}</p>
-                <p><strong>Heralds:</strong> {{ data.objetivos.heralds }}</p>
-                <p><strong>Void Grubs:</strong> {{ data.objetivos.void_grubs }}</p>
-                <p><strong>Towers:</strong> {{ data.objetivos.towers }}</p>
-                <p><strong>Inhibitors:</strong> {{ data.objetivos.inhibitors }}</p>
+                <!-- Grandes objetivos -->
+                <div class="row text-start mb-3">
+                    <div class="col-6">
+                        <p><strong>🧟 Barons:</strong> {{ data.objetivos.barons }}</p>
+                        <p><strong>🪓 Heralds:</strong> {{ data.objetivos.heralds }}</p>
+                        <p><strong>🕷️ Void Grubs:</strong> {{ data.objetivos.void_grubs }}</p>
+                    </div>
+                    <div class="col-6">
+                        <p><strong>🏰 Towers:</strong> {{ data.objetivos.towers }}</p>
+                        <p><strong>🔒 Inhibitors:</strong> {{ data.objetivos.inhibitors }}</p>
+                        <p><strong>🪙 Plates:</strong> {{ data.objetivos.turretplates }}</p>
+                    </div>
+
+                </div>
                 {% else %}
                 <p class="text-muted">No neutral objectives data available</p>
                 {% endif %}
@@ -125,62 +137,144 @@
         </div>
     {% endfor %}
     </div>
+
+
     <hr class="text-secondary">
     <h4 class="text-center text-white my-4">Player Statistics</h4>
 
-    <div class="row text-center">
-    <!-- Jugadores Blue Side -->
-    <div class="col-md-6">
-        <h5 class="text-primary">Blue Side</h5>
-        <div class="d-flex flex-wrap justify-content-center gap-3">
-        {% for jugador in jugadores_blue %}
-        <div class="card bg-dark text-white p-2" style="width: 160px;">
-            {% if jugador.jugador %}
-            <div class="fw-bold small text-truncate" title="{{ jugador.jugador.nombre }}">{{ jugador.jugador.nombre }}</div>
-            {% endif %}
-            {% if jugador.campeon %}
-            <img src="/Resources/{{ jugador.campeon.imagen|default:'Images/Champions/Unknown.png' }}" alt="{{ jugador.campeon.nombre }}" class="mx-auto my-1" style="height: 36px;">
-            {% endif %}
-            <hr class="my-1">
-            <div class="small">
-            <strong>POS:</strong> {{ jugador.position|upper }}<br>
-            <strong>K/D/A:</strong> {{ jugador.kills }}/{{ jugador.deaths }}/{{ jugador.assists }}<br>
-            <strong>Gold:</strong> {{ jugador.totalgold|default:"-" }}<br>
-            <strong>DMG:</strong> {{ jugador.damagetochampions|floatformat:0|default:"-" }}<br>
-            <strong>Vision:</strong> {{ jugador.visionscore|default:"-" }}<br>
-            <strong>CS:</strong> {{ jugador.total_cs|default:"-" }}
+    <!-- Selector de vista -->
+    <div class="text-center mb-4">
+        <button class="btn btn-outline-light me-2" onclick="mostrarVista('tarjetas')">Ver Tarjetas</button>
+        <button class="btn btn-outline-primary" onclick="mostrarVista('grafico')">Ver Gráfico</button>
+    </div>
+
+    <!-- Contenedor de gráfico (inicialmente oculto) -->
+    <div id="vista-grafico" style="display: none;">
+        <div class="text-center mb-3">
+            <h5 class="text-white">Visualización Gráfica</h5>
+            <div class="btn-group" role="group">
+                <button class="btn btn-outline-warning" onclick="mostrarGrafico('gold')">Oro</button>
+                <button class="btn btn-outline-light" onclick="mostrarGrafico('cs')">CS</button>
+                <button class="btn btn-outline-info" onclick="mostrarGrafico('vision')">Visión</button>
             </div>
         </div>
-        {% endfor %}
+        <div style="height: 350px;">
+            <canvas id="graficoEstadisticas"></canvas>
+        </div>
+    </div>
+    <!-- Contenedor de tarjetas -->
+    <div id="vista-tarjetas">
+        <!-- Fila Blue Side -->
+        <div class="mb-4">
+            <h5 class="text-primary text-center">Blue Side</h5>
+            <div class="d-flex flex-row flex-wrap justify-content-center gap-3">
+                {% for jugador in jugadores_blue %}
+                <div class="card bg-dark text-white p-2 border border-secondary rounded" style="width: 160px;">
+                    {% if jugador.jugador %}
+                    <div class="fw-bold small text-truncate text-center" title="{{ jugador.jugador.nombre }}">
+                        {{ jugador.jugador.nombre }}
+                    </div>
+                    {% endif %}
+                    {% if jugador.campeon %}
+                    <img src="/Resources/{{ jugador.campeon.imagen|default:'Images/Champions/Unknown.png' }}" alt="{{ jugador.campeon.nombre }}" class="mx-auto my-1" style="height: 36px;">
+                    {% endif %}
+                    <hr class="my-1">
+                    <div class="small text-start">
+                        <div><strong>POS:</strong> {{ jugador.position|upper }}</div>
+                        <div><strong>K/D/A:</strong> {{ jugador.kills }}/{{ jugador.deaths }}/{{ jugador.assists }}</div>
+                        <div><strong>Gold:</strong> {{ jugador.totalgold|default:"-" }}</div>
+                        <div><strong>DMG:</strong> {{ jugador.damagetochampions|floatformat:0|default:"-" }}</div>
+                        <div><strong>Vision:</strong> {{ jugador.visionscore|default:"-" }}</div>
+                        {% with cs=jugador.minionkills|default:0|add:jugador.monsterkills|default:0 %}
+                        <div><strong>CS:</strong> {{ cs }}</div>
+                        {% endwith %}
+                    </div>
+                    </div>
+                    {% endfor %}
+                </div>
+            </div>
+
+            <!-- Fila Red Side -->
+            <div class="mb-4">
+            <h5 class="text-danger text-center">Red Side</h5>
+            <div class="d-flex flex-row flex-wrap justify-content-center gap-3">
+                {% for jugador in jugadores_red %}
+                <div class="card bg-dark text-white p-2 border border-secondary rounded" style="width: 160px;">
+                    {% if jugador.jugador %}
+                    <div class="fw-bold small text-truncate text-center" title="{{ jugador.jugador.nombre }}">
+                        {{ jugador.jugador.nombre }}
+                    </div>
+                    {% endif %}
+                    {% if jugador.campeon %}
+                    <img src="/Resources/{{ jugador.campeon.imagen|default:'Images/Champions/Unknown.png' }}" alt="{{ jugador.campeon.nombre }}" class="mx-auto my-1" style="height: 36px;">
+                    {% endif %}
+                    <hr class="my-1">
+                    <div class="small text-start">
+                        <div><strong>POS:</strong> {{ jugador.position|upper }}</div>
+                        <div><strong>K/D/A:</strong> {{ jugador.kills }}/{{ jugador.deaths }}/{{ jugador.assists }}</div>
+                        <div><strong>Gold:</strong> {{ jugador.totalgold|default:"-" }}</div>
+                        <div><strong>DMG:</strong> {{ jugador.damagetochampions|floatformat:0|default:"-" }}</div>
+                        <div><strong>Vision:</strong> {{ jugador.visionscore|default:"-" }}</div>
+                        {% with cs=jugador.minionkills|default:0|add:jugador.monsterkills|default:0 %}
+                        <div><strong>CS:</strong> {{ cs }}</div>
+                        {% endwith %}
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
         </div>
     </div>
 
-    <!-- Jugadores Red Side -->
-    <div class="col-md-6">
-        <h5 class="text-danger">Red Side</h5>
-        <div class="d-flex flex-wrap justify-content-center gap-3">
-        {% for jugador in jugadores_red %}
-        <div class="card bg-dark text-white p-2" style="width: 160px;">
-            {% if jugador.jugador %}
-            <div class="fw-bold small text-truncate" title="{{ jugador.jugador.nombre }}">{{ jugador.jugador.nombre }}</div>
-            {% endif %}
-            {% if jugador.campeon %}
-            <img src="/Resources/{{ jugador.campeon.imagen|default:'Images/Champions/Unknown.png' }}" alt="{{ jugador.campeon.nombre }}" class="mx-auto my-1" style="height: 36px;">
-            {% endif %}
-            <hr class="my-1">
-            <div class="small">
-            <strong>POS:</strong> {{ jugador.position|upper }}<br>
-            <strong>K/D/A:</strong> {{ jugador.kills }}/{{ jugador.deaths }}/{{ jugador.assists }}<br>
-            <strong>Gold:</strong> {{ jugador.totalgold|default:"-" }}<br>
-            <strong>DMG:</strong> {{ jugador.damagetochampions|floatformat:0|default:"-" }}<br>
-            <strong>Vision:</strong> {{ jugador.visionscore|default:"-" }}<br>
-            <strong>CS:</strong> {{ jugador.total_cs|default:"-" }}
+    <!-- Contenedor de gráfico (inicialmente oculto) -->
+    <div id="vista-grafico" style="display: none;">
+        <div class="text-center">
+            <h5 class="text-white">Visualización Gráfica: Daño a Campeones</h5>
+            <div style="height: 350px;">
+            <canvas id="graficoEstadisticas"></canvas>
             </div>
         </div>
-        {% endfor %}
-        </div>
     </div>
-    </div>
-
+    
 </div>
+{% endblock %}
+{% block scripts %}
+<script>
+    function mostrarVista(vista) {
+        document.getElementById('vista-tarjetas').style.display = (vista === 'tarjetas') ? 'block' : 'none';
+        document.getElementById('vista-grafico').style.display = (vista === 'grafico') ? 'block' : 'none';
+    }
+</script>
+<!-- Chart.js CDN -->
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+<!-- Datos del gráfico como variable global -->
+<script>
+const labels = [
+  {% for jugador in jugadores_blue %}"{{ jugador.jugador.nombre }}",{% endfor %}
+  {% for jugador in jugadores_red %}"{{ jugador.jugador.nombre }}",{% endfor %}
+];
+
+const datasetsPorTipo = {
+  gold: {
+    label: "Oro total",
+    data: [{% for j in jugadores_blue %}{{ j.totalgold|default:0 }},{% endfor %}{% for j in jugadores_red %}{{ j.totalgold|default:0 }},{% endfor %}],
+    backgroundColor: [{% for _ in jugadores_blue %}"rgba(255, 193, 7, 0.6)",{% endfor %}{% for _ in jugadores_red %}"rgba(255, 193, 7, 0.6)",{% endfor %}],
+    borderColor: [{% for _ in jugadores_blue %}"rgba(255, 193, 7, 1)",{% endfor %}{% for _ in jugadores_red %}"rgba(255, 193, 7, 1)",{% endfor %}],
+  },
+  cs: {
+    label: "CS total",
+    data: [{% for j in jugadores_blue %}{{ j.minionkills|default:0|add:j.monsterkills|default:0 }},{% endfor %}{% for j in jugadores_red %}{{ j.minionkills|default:0|add:j.monsterkills|default:0 }},{% endfor %}],
+    backgroundColor: [{% for _ in jugadores_blue %}"rgba(0, 123, 255, 0.6)",{% endfor %}{% for _ in jugadores_red %}"rgba(220, 53, 69, 0.6)",{% endfor %}],
+    borderColor: [{% for _ in jugadores_blue %}"rgba(0, 123, 255, 1)",{% endfor %}{% for _ in jugadores_red %}"rgba(220, 53, 69, 1)",{% endfor %}],
+  },
+  vision: {
+    label: "Visión Score",
+    data: [{% for j in jugadores_blue %}{{ j.visionscore|default:0 }},{% endfor %}{% for j in jugadores_red %}{{ j.visionscore|default:0 }},{% endfor %}],
+    backgroundColor: [{% for _ in jugadores_blue %}"rgba(13, 202, 240, 0.6)",{% endfor %}{% for _ in jugadores_red %}"rgba(13, 202, 240, 0.6)",{% endfor %}],
+    borderColor: [{% for _ in jugadores_blue %}"rgba(13, 202, 240, 1)",{% endfor %}{% for _ in jugadores_red %}"rgba(13, 202, 240, 1)",{% endfor %}],
+  }
+};
+</script>
+
+<script src="{% static 'js/grafico_partido.js' %}"></script>
 {% endblock %}
