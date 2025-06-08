@@ -164,6 +164,172 @@ def splits(request):
 
     return render(request, 'splits.html', context)
 
+def split_detail(request, split_id):
+    split = get_object_or_404(SplitLEC, split_id=split_id)
+
+    # --- SERIES ---
+    series_regular = Serie.objects.filter(split=split, playoffs=False).prefetch_related('partidos')
+    series_playoffs = Serie.objects.filter(split=split, playoffs=True).prefetch_related('partidos')
+
+    # --- JUGADORES DEL SPLIT (único cálculo) ---
+    jugadores_por_equipo = defaultdict(dict)
+    jugadores_en_split = JugadorEnPartida.objects.filter(partido__serie__split=split).select_related('jugador', 'partido', 'campeon')
+
+    for jp in jugadores_en_split:
+        if jp.side == "Blue":
+            equipo = jp.partido.equipo_azul
+        elif jp.side == "Red":
+            equipo = jp.partido.equipo_rojo
+        else:
+            continue
+
+        if equipo and jp.jugador:
+            jugadores_por_equipo[equipo.id][jp.jugador.id] = {
+                'nombre': jp.jugador.nombre,
+                'rol': jp.jugador.rol,
+                'pais': jp.jugador.pais,
+                'imagen': jp.jugador.imagen,
+                'equipo_nombre': equipo.nombre,
+            }
+
+    # --- PROCESAMIENTO DE ESTADÍSTICAS ---
+    def procesar_estadisticas(series):
+        clasificacion = defaultdict(lambda: {'equipo': None, 'victorias': 0, 'derrotas': 0})
+        jugadores_en_partidas = JugadorEnPartida.objects.filter(partido__in=[p for s in series for p in s.partidos.all()]).select_related('jugador', 'partido', 'campeon')
+
+        for serie in series:
+            resultado = serie.resultados_por_equipos()
+            azul = resultado['azul']
+            rojo = resultado['rojo']
+            for side in [azul, rojo]:
+                equipo = side['equipo']
+                if equipo:
+                    clasificacion[equipo.id]['equipo'] = equipo
+
+            ganador = azul['equipo'] if azul['victorias'] > rojo['victorias'] else rojo['equipo']
+            perdedor = rojo['equipo'] if ganador == azul['equipo'] else azul['equipo']
+            if ganador:
+                clasificacion[ganador.id]['victorias'] += 1
+            if perdedor:
+                clasificacion[perdedor.id]['derrotas'] += 1
+
+        # Campeones
+        campeon_stats = defaultdict(lambda: {
+            'nombre': '',
+            'imagen': '',
+            'veces_jugado': 0,
+            'victorias': 0,
+            'derrotas': 0,
+            'pickrate': 0,
+            'banrate': 0,
+            'winrate': 0,
+            'loserate': 0,
+        })
+
+        total_partidos = jugadores_en_partidas.values('partido_id').distinct().count()
+
+        for jp in jugadores_en_partidas:
+            c = jp.campeon
+            if not c:
+                continue
+            stat = campeon_stats[c.id]
+            stat['nombre'] = c.nombre
+            stat['imagen'] = c.imagen
+            stat['veces_jugado'] += 1
+
+            if (jp.side == 'Blue' and jp.partido.equipo_azul == jp.partido.equipo_ganador) or \
+               (jp.side == 'Red' and jp.partido.equipo_rojo == jp.partido.equipo_ganador):
+                stat['victorias'] += 1
+            else:
+                stat['derrotas'] += 1
+
+        picks = Seleccion.objects.filter(partido__in=[p for s in series for p in s.partidos.all()], campeon_seleccionado__isnull=False).values('campeon_seleccionado').annotate(picks=Count('id'))
+        bans = Seleccion.objects.filter(partido__in=[p for s in series for p in s.partidos.all()], campeon_baneado__isnull=False).values('campeon_baneado').annotate(bans=Count('id'))
+
+        for p in picks:
+            cid = p['campeon_seleccionado']
+            if cid in campeon_stats:
+                campeon_stats[cid]['pickrate'] = (p['picks'] / (total_partidos * 2)) * 100
+
+        for b in bans:
+            cid = b['campeon_baneado']
+            if cid in campeon_stats:
+                campeon_stats[cid]['banrate'] = (b['bans'] / (total_partidos * 2)) * 100
+
+        for stat in campeon_stats.values():
+            total = stat['veces_jugado']
+            stat['winrate'] = (stat['victorias'] / total * 100) if total else 0
+            stat['loserate'] = (stat['derrotas'] / total * 100) if total else 0
+
+        clasificacion_ordenada = sorted(
+            clasificacion.values(),
+            key=lambda x: x['victorias'],
+            reverse=True
+        )
+
+        return clasificacion_ordenada, list(campeon_stats.values())
+
+    # Procesar ambas fases
+    clasificacion_regular, campeones_regular = procesar_estadisticas(series_regular)
+    clasificacion_playoffs, campeones_playoffs = procesar_estadisticas(series_playoffs)
+
+    # Filtros para campeones de fase regular
+    search = request.GET.get('search', '').strip().lower()
+    sort = request.GET.get('sort', '')
+    if search:
+        campeones_regular = [c for c in campeones_regular if search in c['nombre'].lower()]
+    if sort in {'veces_jugado', 'pickrate', 'banrate', 'winrate'}:
+        campeones_regular.sort(key=lambda c: c.get(sort, 0), reverse=True)
+
+    context = {
+        'split': split,
+        'clasificacion': [
+            {
+                'nombre': d['equipo'].nombre,
+                'logo': d['equipo'].logo,
+                'victorias': d['victorias'],
+                'derrotas': d['derrotas'],
+                'jugadores': list(jugadores_por_equipo.get(d['equipo'].id, {}).values())
+            }
+            for d in clasificacion_regular if d['equipo'] is not None
+        ],
+        'campeones': campeones_regular,
+        'playoffs_clasificacion': [
+            {
+                'nombre': d['equipo'].nombre,
+                'logo': d['equipo'].logo,
+                'victorias': d['victorias'],
+                'derrotas': d['derrotas'],
+                'jugadores': list(jugadores_por_equipo.get(d['equipo'].id, {}).values())
+            }
+            for d in clasificacion_playoffs if d['equipo'] is not None
+        ],
+        'playoffs_campeones': campeones_playoffs,
+        'series_playoffs': list(series_playoffs),  
+    }
+
+    rondas_dict = defaultdict(list)
+    for serie in series_playoffs:
+        clave = serie.dia.strftime("Ronda %d/%m")
+        rondas_dict[clave].append(serie)
+
+    context['playoffs_rondas'] = sorted(rondas_dict.items(), key=lambda x: x[0])
+    
+    ganador_playoffs = None
+    if series_playoffs.exists():
+        ultima_serie = series_playoffs.order_by('-dia').first()
+        resultado_final = ultima_serie.resultados_por_equipos()
+        if resultado_final['azul']['victorias'] > resultado_final['rojo']['victorias']:
+            ganador_playoffs = resultado_final['azul']['equipo']
+        else:
+            ganador_playoffs = resultado_final['rojo']['equipo']
+
+    context['ganador_playoffs'] = ganador_playoffs
+    
+    return render(request, 'split_detail.html', context)
+
+
+
 def equipos(request):
     equipos_activos = Equipo.objects.filter(activo=True)
     todos_equipos = Equipo.objects.filter(activo=False)

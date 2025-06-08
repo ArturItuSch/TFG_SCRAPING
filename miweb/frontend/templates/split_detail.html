@@ -1,0 +1,249 @@
+{% extends 'base.html' %}
+{% load static %}
+{% load custom_filters %}
+<style>
+  .bracket-container {
+    padding-bottom: 2rem;
+  }
+
+  .bracket-column {
+    min-width: 240px;
+  }
+
+  .bracket-match {
+    min-height: 110px;
+  }
+
+  .text-truncate {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+</style>
+
+{% block title %}Estadísticas Split - {{ split.split_type }} {{ split.year }}{% endblock %}
+
+{% block content %}
+  <div class="container mt-5 text-white">
+    <div class="d-flex justify-content-between align-items-center mb-4">
+    <h1 class="display-5 fw-bold mb-0">
+      {{ split.split_type }} {{ split.year }} <span class="text-primary">({{ split.league }})</span>
+    </h1>
+    <a href="{% url 'splits' %}" class="btn btn-outline-light">
+      ← Volver a todas los splits
+    </a>
+  </div>
+
+  <!-- Navegación entre vistas -->
+  <div class="btn-group mb-5" role="group">
+    <a href="?view=clasificacion" class="btn btn-outline-primary {% if request.GET.view == 'clasificacion' or not request.GET.view %}active{% endif %}">Clasificación</a>
+    <a href="?view=bracket" class="btn btn-outline-primary {% if request.GET.view == 'bracket' %}active{% endif %}">Playoffs Bracket</a>
+    <a href="?view=jugadores" class="btn btn-outline-primary {% if request.GET.view == 'jugadores' %}active{% endif %}">Jugadores</a>
+    <a href="?view=campeones" class="btn btn-outline-primary {% if request.GET.view == 'campeones' %}active{% endif %}">Campeones</a>
+  </div>
+  {% if request.GET.view == 'clasificacion' or not request.GET.view %}
+  <h3 class="mb-3">Clasificación de Equipos</h3>
+      <div class="alert alert-info">Estadísticas basadas en la <strong>Temporada Regular</strong>.</div>
+        <div class="table-responsive shadow rounded-4 overflow-hidden">
+          <table class="table table-dark table-striped align-middle mb-0">
+            <thead class="table-primary text-dark">
+              <tr>
+                <th>Logo</th>
+                <th>Equipo</th>
+                <th>Victorias</th>
+                <th>Derrotas</th>
+                <th>Jugadores</th>
+              </tr>
+            </thead>
+            <tbody>
+              {% for equipo in clasificacion %}
+              <tr>
+                <td><img src="/Resources/{{ equipo.logo|default:'Images/TeamsLEC/Unknown.png' }}" alt="{{ equipo.nombre }}" style="max-height: 60px;"></td>
+                <td class="fw-bold">{{ equipo.nombre }}</td>
+                <td>{{ equipo.victorias }}</td>
+                <td>{{ equipo.derrotas }}</td>
+                <td>
+                  <ul class="list-unstyled mb-0 small">
+                    {% for jugador in equipo.jugadores %}
+                      <li>{{ jugador.nombre }}{% if jugador.rol %} ({{ jugador.rol }}){% endif %}</li>
+                    {% endfor %}
+                  </ul>
+                </td>
+              </tr>
+              {% endfor %}
+            </tbody>
+          </table>
+        </div>
+  {% endif %}
+
+  {% if request.GET.view == 'bracket' %}
+    <h3 class="mb-4">Cuadro de Playoffs</h3>
+
+    {% if playoffs_rondas %}
+      {% if ganador_playoffs %}
+        <div class="alert alert-success text-center rounded-4 shadow-sm mb-4 py-3">
+          <h4 class="mb-0">
+            🏆 <span class="text-uppercase">Ganador del Split:</span>
+            <strong class="text-white">{{ ganador_playoffs.nombre }}</strong>
+            <img src="/Resources/{{ ganador_playoffs.logo|default:'Images/TeamsLEC/Unknown.png' }}"
+                alt="{{ ganador_playoffs.nombre }}"
+                style="height: 45px;"
+                class="ms-3 rounded shadow-sm border border-light bg-white p-1">
+          </h4>
+        </div>
+      {% endif %}
+
+      <div class="bracket-container d-flex gap-5 overflow-auto">
+        {% for ronda, series in playoffs_rondas %}
+          <div class="bracket-column">
+            <h5 class="text-center text-info mb-3">{{ ronda }}</h5>
+            <div class="vstack gap-4">
+              {% for serie in series %}
+                {% with partidos=serie.partidos.all|dictsort:"orden" %}
+                  {% if partidos and partidos.0.equipo_azul and partidos.0.equipo_rojo %}
+                    {% with primer=partidos.0 resultado=serie.resultados_por_equipos %}
+                    <div class="bracket-match card bg-gradient border-light border-1 shadow-sm rounded-4 p-3 text-white">
+                      <div class="d-flex justify-content-between align-items-center mb-2">
+                        <div class="d-flex align-items-center gap-2">
+                          <img src="/Resources/{{ primer.equipo_azul.logo|default:'Images/TeamsLEC/Unknown.png' }}" class="rounded" style="height: 36px;">
+                          <span class="fw-semibold small text-black" style="max-width: 100px;">{{ primer.equipo_azul.nombre }}</span>
+                        </div>
+                        <span class="badge {% if resultado.azul.victorias > resultado.rojo.victorias %}bg-success{% else %}bg-secondary{% endif %}">
+                          {{ resultado.azul.victorias }}
+                        </span>
+                      </div>
+
+                      <div class="d-flex justify-content-between align-items-center">
+                        <div class="d-flex align-items-center gap-2">
+                          <img src="/Resources/{{ primer.equipo_rojo.logo|default:'Images/TeamsLEC/Unknown.png' }}" class="rounded" style="height: 36px;">
+                          <span class="fw-semibold small text-black" style="max-width: 100px;">{{ primer.equipo_rojo.nombre }}</span>
+                        </div>
+                        <span class="badge {% if resultado.rojo.victorias > resultado.azul.victorias %}bg-success{% else %}bg-secondary{% endif %}">
+                          {{ resultado.rojo.victorias }}
+                        </span>
+                      </div>
+
+                      <div class="text-muted small mt-2">
+                        {% with total=resultado.azul.victorias|add:resultado.rojo.victorias %}
+                          {% if total == 1 %}
+                            Bo1 – {{ serie.dia }}
+                          {% elif total <= 3 and resultado.azul.victorias > 0 and resultado.rojo.victorias > 0 %}
+                            Bo3 – {{ serie.dia }}
+                          {% else %}
+                            Bo5 – {{ serie.dia }}
+                          {% endif %}
+                        {% endwith %}
+                      </div>
+                    </div>
+                    {% endwith %}
+                  {% endif %}
+                {% endwith %}
+              {% endfor %}
+            </div>
+          </div>
+        {% endfor %}
+      </div>
+    {% else %}
+      <div class="alert alert-warning">No hay series de playoffs disponibles para este split.</div>
+    {% endif %}
+    {% endif %}
+
+
+  {% if request.GET.view == 'jugadores' %}
+    <h3 class="mb-4">Jugadores por Equipo</h3>
+    <div class="vstack gap-4">
+      {% for equipo in clasificacion %}
+      <div class="card bg-dark border-light text-white shadow-sm p-3 rounded-4">
+        <div class="row align-items-start g-3">
+          <!-- Info equipo -->
+          <div class="col-auto text-center" style="min-width: 150px;">
+            <img src="/Resources/{{ equipo.logo|default:'Images/TeamsLEC/Unknown.png' }}" alt="{{ equipo.nombre }}" class="mb-2" style="height: 70px;">
+            <h5 class="fw-bold">{{ equipo.nombre }}</h5>
+          </div>
+          <!-- Jugadores -->
+          <div class="col">
+            <div class="d-flex flex-wrap justify-content-start" style="gap: 0.75rem;">
+              {% for jugador in equipo.jugadores %}
+              <div class="card bg-secondary bg-opacity-25 text-white p-2 text-center shadow-sm border-light" style="width: 120px;">
+                <img src="/Resources/{{ jugador.imagen|default:'Images/PlayersLEC/Unknown.png' }}" alt="{{ jugador.nombre }}" class="img-fluid rounded mb-2" style="height: 70px; object-fit: cover;">
+                <div class="fw-bold small">{{ jugador.nombre }}</div>
+                {% with "Top Laner,Jungler,Mid Laner,Bot Laner,Support" as default_roles %}
+                  {% with default_roles|split:"," as roles_list %}
+                    <div class="text-white small">
+                      {% if jugador.rol %}
+                        {{ jugador.rol }}
+                      {% else %}
+                        {{ roles_list|index:forloop.counter0|default:"Sin rol" }}
+                      {% endif %}
+                    </div>
+                  {% endwith %}
+                {% endwith %}
+              </div>
+              {% endfor %}
+            </div>
+          </div>
+        </div>
+      </div>
+      {% endfor %}
+    </div>
+  {% endif %}
+
+{% if request.GET.view == 'campeones' %}
+    <h3 class="mt-5">Campeones Utilizados</h3>
+
+    <!-- FILTROS DE CAMPEONES -->
+    <form method="get" class="row g-3 align-items-end bg-dark p-4 rounded-4 shadow mt-5 mb-4">
+      <input type="hidden" name="view" value="campeones">
+      <div class="col-md-4">
+        <label for="search" class="form-label text-white">Buscar por nombre</label>
+        <input type="text" class="form-control" name="search" id="search" placeholder="Ej. Aatrox"
+              value="{{ request.GET.search }}">
+      </div>
+
+      <div class="col-md-4">
+        <label for="sort" class="form-label text-white">Ordenar por</label>
+        <select class="form-select" name="sort" id="sort">
+          <option value="">-- Selecciona --</option>
+          <option value="veces_jugado" {% if request.GET.sort == 'veces_jugado' %}selected{% endif %}>Más jugado</option>
+          <option value="pickrate" {% if request.GET.sort == 'pickrate' %}selected{% endif %}>Pick Rate</option>
+          <option value="banrate" {% if request.GET.sort == 'banrate' %}selected{% endif %}>Ban Rate</option>
+          <option value="winrate" {% if request.GET.sort == 'winrate' %}selected{% endif %}>Win Rate</option>
+        </select>
+      </div>
+
+      <div class="col-md-2 d-grid">
+        <button type="submit" class="btn btn-primary">Aplicar</button>
+      </div>
+    </form>
+    <div class="table-responsive" style="max-width: 100%; overflow-x: auto;">
+      <div class="table-responsive" style="max-height: 500px; overflow-y: auto;">
+        <table class="table table-dark table-bordered table-striped align-middle mb-0">
+          <thead class="sticky-top bg-dark">
+            <tr>
+              <th>Logo</th>
+              <th>Campeón</th>
+              <th>Pick Rate</th>
+              <th>Ban Rate</th>
+              <th>Win Rate</th>
+              <th>Lose Rate</th>
+              <th>Veces Jugado</th>
+            </tr>
+          </thead>
+          <tbody>
+            {% for c in campeones %}
+            <tr>
+              <td><img src="/Resources/{{ c.imagen|default:'Images/Champions/Unknown.png' }}" alt="{{ c.nombre }}" style="max-height: 40px;"></td>
+              <td>{{ c.nombre }}</td>
+              <td>{{ c.pickrate|floatformat:2 }}%</td>
+              <td>{{ c.banrate|floatformat:2 }}%</td>
+              <td>{{ c.winrate|floatformat:2 }}%</td>
+              <td>{{ c.loserate|floatformat:2 }}%</td>
+              <td>{{ c.veces_jugado }}</td>
+            </tr>
+            {% endfor %}
+          </tbody>
+        </table>
+      </div>
+  {% endif %}
+</div>
+{% endblock %}
