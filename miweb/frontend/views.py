@@ -21,6 +21,7 @@ def safe_division(numerator, denominator):
     )
 
 def index(request):
+    # Últimas 20 series jugadas (incluye playoffs y regular season)
     ultimas_series = Serie.objects.order_by('-dia').prefetch_related(
         Prefetch('partidos', queryset=Partido.objects.select_related('equipo_azul', 'equipo_rojo', 'equipo_ganador'))
     )[:20]
@@ -30,9 +31,12 @@ def index(request):
         resultados_por_serie[serie.id] = serie.resultados_por_equipos()
 
     year_actual = timezone.now().year
-    split = SplitLEC.obtener_ultimo_split(year_actual)  
+    split = SplitLEC.obtener_ultimo_split(year_actual)
+
     if split:
-        series_split = Serie.objects.filter(split=split).prefetch_related('partidos')
+        # ⚠️ Solo estadísticas de fase regular (excluyendo playoffs)
+        series_split = Serie.objects.filter(split=split, playoffs=False).prefetch_related('partidos')
+
         resultados = defaultdict(lambda: {'series_ganadas': 0, 'series_perdidas': 0, 'equipo': None})
 
         for serie in series_split:
@@ -52,8 +56,9 @@ def index(request):
                     resultados[azul['equipo'].id]['series_perdidas'] += 1
 
         clasificacion = sorted(resultados.values(), key=lambda x: (-x['series_ganadas'], x['series_perdidas']))
-        partidos_split = Partido.objects.filter(serie__split=split)
+        partidos_split = Partido.objects.filter(serie__in=series_split)
 
+        # Jugadores top (solo de fase regular)
         top_jugadores = (
             JugadorEnPartida.objects
             .filter(partido__in=partidos_split)
@@ -68,7 +73,6 @@ def index(request):
             )
             .order_by('-kda')[:10]
         )
-
     else:
         print("No se encontró split para el año actual")
         clasificacion = []
@@ -77,7 +81,7 @@ def index(request):
 
     total_partidos_split = partidos_split.count()
 
-    # Picks por campeón
+    # Estadísticas de campeones (solo fase regular)
     picks_por_campeon = (
         Seleccion.objects
         .filter(partido__in=partidos_split)
@@ -86,7 +90,6 @@ def index(request):
         .order_by('-num_picks')[:10]
     )
 
-    # Bans por campeón
     bans_por_campeon = (
         Seleccion.objects
         .filter(partido__in=partidos_split)
@@ -94,10 +97,8 @@ def index(request):
         .annotate(num_bans=Count('id'))
     )
 
-    # Diccionario para bans rápido
     bans_dict = {b['campeon_baneado__id']: b['num_bans'] for b in bans_por_campeon if b['campeon_baneado__id']}
 
-    # Construcción de lista combinada
     campeones_stats = []
     for item in picks_por_campeon:
         campeon_id = item['campeon_seleccionado__id']
@@ -117,16 +118,17 @@ def index(request):
         })
 
     context = {
-        'ultimas_series': ultimas_series,
+        'ultimas_series': ultimas_series,                  
         'resultados_por_serie': resultados_por_serie,
-        'clasificacion': clasificacion,
+        'clasificacion': clasificacion,                    
         'ultimo_split': split,
-        'top_jugadores': top_jugadores,
+        'top_jugadores': top_jugadores,                  
         'today': timezone.localdate(),
-        'campeones_stats': campeones_stats,
+        'campeones_stats': campeones_stats,                
         'MEDIA_URL': settings.MEDIA_URL,
     }
     return render(request, 'index.html', context)
+
 
 def splits(request):
     # Obtener los parámetros GET para filtrar
@@ -164,7 +166,7 @@ def splits(request):
 
     return render(request, 'splits.html', context)
 
-def split_detail(request, split_id):
+def detalle_split(request, split_id):
     split = get_object_or_404(SplitLEC, split_id=split_id)
 
     # --- SERIES ---
@@ -326,7 +328,7 @@ def split_detail(request, split_id):
 
     context['ganador_playoffs'] = ganador_playoffs
     
-    return render(request, 'split_detail.html', context)
+    return render(request, 'detalle_split.html', context)
 
 
 

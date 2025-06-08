@@ -1,116 +1,164 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-    <meta charset="UTF-8">
-    <title>{% block title %}LEC Project{% endblock %}</title>
+  <meta charset="UTF-8">
+  <title>{% block title %}LEC Project{% endblock %}</title>
 
-    <!-- Bootstrap -->
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+  <!-- Bootstrap -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
 
-    <!-- Google Fonts (opcional) -->
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+  <!-- Google Fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
 
-    <style>
-        body {
-            font-family: 'Inter', sans-serif;
-            background: linear-gradient(to right, #0f0f0f, #1a1a1a);
-            color: #ffffff;
-        }
+  <style>
+    body {
+      font-family: 'Inter', sans-serif;
+      background: linear-gradient(135deg, #0f0f0f, #1a1a1a);
+      color: #f8f9fa;
+    }
 
-        .navbar {
-            box-shadow: 0 0 10px rgba(0,0,0,0.5);
-        }
+    .navbar {
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.6);
+      background-color: #121212 !important;
+    }
 
-        .navbar-brand {
-            font-size: 1.5rem;
-            font-weight: 700;
-            letter-spacing: 1px;
-        }
+    .navbar-brand {
+      font-size: 1.5rem;
+      font-weight: 700;
+      letter-spacing: 1px;
+    }
 
-        .nav-link {
-            font-size: 1.1rem;
-            transition: color 0.2s ease;
-        }
+    .nav-link {
+      font-size: 1.05rem;
+      font-weight: 500;
+      color: #ddd !important;
+      transition: color 0.2s ease;
+    }
 
-        .nav-link:hover,
-        .nav-link.active {
-            color: #0dcaf0 !important;
-        }
+    .nav-link:hover,
+    .nav-link.active {
+      color: #0dcaf0 !important;
+    }
 
-        .container {
-            max-width: 1300px;
-        }
+    .container {
+      max-width: 1320px;
+    }
 
-        h1, h2, h3, h4 {
-            font-weight: 600;
-        }
+    h1, h2, h3, h4 {
+      font-weight: 600;
+    }
 
-        .card {
-            border-radius: 1rem;
-            transition: transform 0.3s ease, box-shadow 0.3s ease;
-        }
+    .card {
+      border-radius: 1rem;
+      border: none;
+      background: #2c2c2c;
+      color: #fff;
+      transition: transform 0.2s ease, box-shadow 0.2s ease;
+    }
 
-        .card:hover {
-            transform: translateY(-4px);
-            box-shadow: 0 8px 20px rgba(0,0,0,0.3);
-        }
+    .card:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 8px 24px rgba(0, 0, 0, 0.4);
+    }
 
-        input, select, button {
-            font-size: 1rem !important;
-        }
+    .btn-primary {
+      background-color: #0d6efd;
+      border: none;
+      font-weight: 600;
+      transition: background-color 0.2s ease;
+    }
 
-        .btn-primary {
-            background-color: #0d6efd;
-            border: none;
-            transition: background-color 0.2s ease;
-        }
+    .btn-primary:hover {
+      background-color: #0b5ed7;
+    }
 
-        .btn-primary:hover {
-            background-color: #0b5ed7;
-        }
-    </style>
+    .btn-outline-light {
+      color: #f8f9fa;
+      border-color: #ccc;
+    }
 
-    {% block extra_css %}{% endblock %}
+    .btn-outline-light:hover {
+      background-color: #f8f9fa;
+      color: #000;
+    }
+
+    input, select, button {
+      font-size: 1rem !important;
+    }
+
+    .form-control,
+    .form-select {
+      background-color: #1e1e1e;
+      border: 1px solid #444;
+      color: #fff;
+    }
+
+    .form-control:focus,
+    .form-select:focus {
+      border-color: #0dcaf0;
+      box-shadow: 0 0 0 0.2rem rgba(13, 202, 240, 0.25);
+    }
+
+    footer {
+      background: #121212;
+      color: #aaa;
+      padding: 1rem 0;
+      text-align: center;
+      font-size: 0.9rem;
+      margin-top: auto;
+    }
+  </style>
+
+  {% block extra_css %}{% endblock %}
 </head>
-<body class="min-vh-100">
 
-    <!-- NAVBAR -->
-    <nav class="navbar navbar-expand-lg navbar-dark bg-dark py-3">
-        <div class="container-fluid">
-            <a class="navbar-brand" href="{% url 'index' %}">LEC</a>
-            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarLEC" aria-controls="navbarLEC" aria-expanded="false" aria-label="Toggle navigation">
-                <span class="navbar-toggler-icon"></span>
-            </button>
+<body class="min-vh-100 d-flex flex-column">
 
-            <div class="collapse navbar-collapse" id="navbarLEC">
-                <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
-                    <li class="nav-item">
-                        <a class="nav-link {% if request.resolver_match.url_name == 'splits' %}active{% endif %}" href="{% url 'splits' %}">Splits</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link {% if request.resolver_match.url_name == 'series_jugadas' %}active{% endif %}" href="{% url 'series_jugadas' %}">Series</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link {% if request.resolver_match.url_name == 'equipos' %}active{% endif %}" href="{% url 'equipos' %}">Equipos</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link {% if request.resolver_match.url_name == 'jugadores' %}active{% endif %}" href="{% url 'jugadores' %}">Jugadores</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link {% if request.resolver_match.url_name == 'campeones' %}active{% endif %}" href="{% url 'campeones' %}">Campeones</a>
-                    </li>                    
-                </ul>
-            </div>
-        </div>
-    </nav>
+  <!-- NAVBAR -->
+  <nav class="navbar navbar-expand-lg navbar-dark py-3">
+    <div class="container-fluid">
+      <a class="navbar-brand d-flex align-items-center gap-2" href="{% url 'index' %}">
+        <img src="/Resources/Images/Others/LEC_logo.png" alt="LEC Logo" style="height: 40px;">
+        <span class="fw-bold">LEC</span>
+      </a>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarLEC" aria-controls="navbarLEC" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
 
-    <!-- CONTENIDO PRINCIPAL -->
-    <div class="container mt-5 pb-5">
-        {% block content %}{% endblock %}
+      <div class="collapse navbar-collapse" id="navbarLEC">
+        <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
+          <li class="nav-item">
+            <a class="nav-link {% if request.resolver_match.url_name == 'splits' %}active{% endif %}" href="{% url 'splits' %}">Splits</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link {% if request.resolver_match.url_name == 'series_jugadas' %}active{% endif %}" href="{% url 'series_jugadas' %}">Series</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link {% if request.resolver_match.url_name == 'equipos' %}active{% endif %}" href="{% url 'equipos' %}">Equipos</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link {% if request.resolver_match.url_name == 'jugadores' %}active{% endif %}" href="{% url 'jugadores' %}">Jugadores</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link {% if request.resolver_match.url_name == 'campeones' %}active{% endif %}" href="{% url 'campeones' %}">Campeones</a>
+          </li>
+        </ul>
+      </div>
     </div>
+  </nav>
 
-    <!-- Bootstrap JS -->
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
-    {% block scripts %}{% endblock %}
+  <!-- CONTENIDO PRINCIPAL -->
+  <main class="container mt-5 pb-5 flex-grow-1">
+    {% block content %}{% endblock %}
+  </main>
+
+  <!-- FOOTER -->
+  <footer class="mt-auto">
+    Proyecto LEC &copy; {{ now|date:"Y" }} – Todos los derechos reservados.
+  </footer>
+
+  <!-- Bootstrap JS -->
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+  {% block scripts %}{% endblock %}
 </body>
 </html>

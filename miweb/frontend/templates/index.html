@@ -5,42 +5,40 @@
 {% block title %}Partidos - LEC{% endblock %}
 
 {% block content %}
-<div class="container mt-5 text-white">
+<div class="container mt-4 text-white">
 
   <!-- FILA 1 -->
   <div class="row g-4 mb-5">
-    <!-- Últimas Series -->
     <div class="col-12 col-md-6">
-      <h2>Últimas Series - {{ ultimo_split.year }} {{ ultimo_split.split_type|capfirst }}</h2>
-      <div id="series-container" class="border border-primary rounded bg-light overflow-auto" style="max-height: 600px;">
+      <h3 class="mb-3 text-info fw-bold">Últimas Series – {{ ultimo_split.year }} {{ ultimo_split.split_type|capfirst }}</h3>
+      <div id="series-container" class="bg-dark rounded-4 border border-info shadow-sm p-2 overflow-auto" style="max-height: 600px;">
         {% for serie in ultimas_series %}
         {% with resultados=resultados_por_serie|dictget:serie.id %}
-        <div class="card bg-dark text-white mb-3 border border-primary">
-          <div class="d-flex align-items-center justify-content-between p-3">
-            <div class="d-flex align-items-center me-2">
-              {% if resultados.azul.equipo %}
-                {% if resultados.azul.equipo.logo %}
-                  <img src="{{ MEDIA_URL }}{{ resultados.azul.equipo.logo }}" alt="{{ resultados.azul.equipo.nombre }}"
-                      class="img-fluid rounded-start" style="height: 60px;">
-                {% else %}
-                  <span class="text-white fw-bold">{{ resultados.azul.equipo.nombre }}</span>
-                {% endif %}
+        <div class="card bg-gradient text-white mb-3 rounded-3 border border-light shadow-sm">
+          <div class="d-flex justify-content-between align-items-center p-3 flex-wrap text-center text-md-start">
+            
+            <!-- Equipo Azul -->
+            <div class="d-flex align-items-center gap-2" style="min-width: 33%;">
+              {% if resultados.azul.equipo.logo %}
+                <img src="{{ MEDIA_URL }}{{ resultados.azul.equipo.logo }}" alt="{{ resultados.azul.equipo.nombre }}" style="height: 50px;">
               {% endif %}
+              <strong class="text-truncate">{{ resultados.azul.equipo.nombre }}</strong>
             </div>
-            <div class="text-center flex-grow-1">
-              <div class="small">{{ serie.dia|date:"d M Y" }}</div>
-              <div class="fs-4 fw-bold">
-                {{ resultados.azul.victorias }} : {{ resultados.rojo.victorias }}
+
+            <!-- Resultado + Fecha + Tipo -->
+            <div class="d-flex flex-column justify-content-center align-items-center" style="min-width: 33%;">
+              <div class="text-white small">{{ serie.dia|date:"d M Y" }}</div>
+              <div class="fs-4 fw-bold">{{ resultados.azul.victorias }} : {{ resultados.rojo.victorias }}</div>
+              <div class="small mt-1 {% if serie.playoffs %}text-danger{% else %}text-primary{% endif %}">
+                {% if serie.playoffs %}Playoffs{% else %}Regular{% endif %}
               </div>
             </div>
-            <div class="d-flex align-items-center ms-2">
-              {% if resultados.rojo.equipo %}
-                {% if resultados.rojo.equipo.logo %}
-                  <img src="{{ MEDIA_URL }}{{ resultados.rojo.equipo.logo }}" alt="{{ resultados.rojo.equipo.nombre }}"
-                      class="img-fluid rounded-end" style="height: 60px;">
-                {% else %}
-                  <span class="text-white fw-bold">{{ resultados.rojo.equipo.nombre }}</span>
-                {% endif %}
+
+            <!-- Equipo Rojo -->
+            <div class="d-flex align-items-center gap-2 justify-content-end" style="min-width: 33%;">
+              <strong class="text-truncate">{{ resultados.rojo.equipo.nombre }}</strong>
+              {% if resultados.rojo.equipo.logo %}
+                <img src="{{ MEDIA_URL }}{{ resultados.rojo.equipo.logo }}" alt="{{ resultados.rojo.equipo.nombre }}" style="height: 50px;">
               {% endif %}
             </div>
           </div>
@@ -52,10 +50,12 @@
 
     <!-- Clasificación -->
     <div class="col-12 col-md-6">
-      <h2>Clasificación del Split - {{ ultimo_split.year }} {{ ultimo_split.split_type|capfirst }}</h2>
-      <div id="clasificacion-container" class="table-responsive" style="max-height: 600px; overflow-y: auto;">
-        <table class="table table-dark table-hover table-bordered align-middle">
-          <thead class="table-primary text-dark">
+      <h3 class="mb-3 text-warning fw-bold">
+        <i class="bi bi-bar-chart-fill me-1"></i> Clasificación del Split – {{ ultimo_split.year }} {{ ultimo_split.split_type|capfirst }}
+      </h3>
+      <div id="clasificacion-container" class="table-responsive bg-dark p-2 rounded-4 border border-warning shadow-sm" style="max-height: 600px;">
+        <table class="table table-dark table-hover table-bordered align-middle mb-0">
+          <thead class="table-warning text-dark">
             <tr>
               <th>Equipo</th>
               <th>Victorias</th>
@@ -67,7 +67,7 @@
             <tr>
               <td>
                 {% if entry.equipo.logo %}
-                <img src="{{ MEDIA_URL }}{{ entry.equipo.logo }}" alt="{{ entry.equipo.nombre }}" class="me-2" style="height: 30px;">
+                <img src="{{ MEDIA_URL }}{{ entry.equipo.logo }}" alt="{{ entry.equipo.nombre }}" class="me-2 rounded" style="height: 30px;">
                 {% endif %}
                 {{ entry.equipo.nombre }}
               </td>
@@ -79,16 +79,15 @@
         </table>
       </div>
     </div>
-  </div>
 
   <!-- FILA 2 -->
   <div class="row g-4">
-    <!-- Top 10 Jugadores -->
+    <!-- Top Jugadores -->
     <div class="col-12 col-md-6">
-      <h2>Top 10 Jugadores por KDA - {{ ultimo_split.year }} {{ ultimo_split.split_type|capfirst }}</h2>
-      <div class="table-responsive" style="max-height: 500px; overflow-y: auto;">
-        <table id="top-jugadores-table" class="table table-dark table-bordered align-middle">
-          <thead class="table-primary text-dark">
+      <h3 class="mb-3 text-success fw-bold">Top 10 Jugadores por KDA – {{ ultimo_split.year }} {{ ultimo_split.split_type|capfirst }}</h3>
+      <div class="table-responsive bg-dark p-2 rounded-4 border border-success shadow-sm" style="max-height: 500px;">
+        <table id="top-jugadores-table" class="table table-dark table-bordered align-middle mb-0">
+          <thead class="table-success text-dark">
             <tr>
               <th>Jugador</th>
               <th>Equipo</th>
@@ -116,12 +115,12 @@
       </div>
     </div>
 
-    <!-- Top 10 Campeones más Jugados -->
+    <!-- Campeones Más Jugados -->
     <div class="col-12 col-md-6">
-      <h2>Campeones más Jugados - {{ ultimo_split.year }} {{ ultimo_split.split_type|capfirst }}</h2>
-      <div class="table-responsive" style="max-height: 500px; overflow-y: auto;">
-        <table id="campeones-table" class="table table-dark table-hover table-bordered align-middle">
-          <thead class="table-primary text-dark">
+      <h3 class="mb-3 text-info fw-bold">Campeones Más Jugados – {{ ultimo_split.year }} {{ ultimo_split.split_type|capfirst }}</h3>
+      <div class="table-responsive bg-dark p-2 rounded-4 border border-info shadow-sm" style="max-height: 500px;">
+        <table id="campeones-table" class="table table-dark table-hover table-bordered align-middle mb-0">
+          <thead class="table-info text-dark">
             <tr>
               <th>Campeón</th>
               <th>Veces Jugado</th>
@@ -135,7 +134,7 @@
             <tr>
               <td class="d-flex align-items-center">
                 {% if c.imagen %}
-                <img src="{{ MEDIA_URL }}{{ c.imagen }}" alt="{{ c.nombre }}" style="height: 40px; margin-right: 10px;">
+                <img src="{{ MEDIA_URL }}{{ c.imagen }}" alt="{{ c.nombre }}" class="me-2 rounded" style="height: 36px;">
                 {% endif %}
                 {{ c.nombre }}
               </td>
@@ -156,28 +155,20 @@
   function ajustarAlturaSeries() {
     const clasificacion = document.getElementById('clasificacion-container');
     const series = document.getElementById('series-container');
-
     if (clasificacion && series) {
-      const altura = clasificacion.offsetHeight;
-      series.style.maxHeight = altura + 'px';
-      series.style.overflowY = 'auto';  // habilita scroll si es necesario
+      series.style.maxHeight = clasificacion.offsetHeight + 'px';
+      series.style.overflowY = 'auto';
     }
   }
 
   function igualarAlturaFilas() {
     const filasJugadores = document.querySelectorAll('#top-jugadores-table tbody tr');
     const filasCampeones = document.querySelectorAll('#campeones-table tbody tr');
-
     const numFilas = Math.min(filasJugadores.length, filasCampeones.length);
-
     for (let i = 0; i < numFilas; i++) {
       filasJugadores[i].style.height = 'auto';
       filasCampeones[i].style.height = 'auto';
-
-      const alturaJug = filasJugadores[i].offsetHeight;
-      const alturaCam = filasCampeones[i].offsetHeight;
-      const maxAltura = Math.max(alturaJug, alturaCam);
-
+      const maxAltura = Math.max(filasJugadores[i].offsetHeight, filasCampeones[i].offsetHeight);
       filasJugadores[i].style.height = maxAltura + 'px';
       filasCampeones[i].style.height = maxAltura + 'px';
     }

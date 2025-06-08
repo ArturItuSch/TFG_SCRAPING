@@ -47,7 +47,7 @@
         <div class="row g-4">
           {% for split in splits_por_year|dictget:year %}
           <div class="col-md-6 col-lg-4 col-xl-3">
-            <a href="{% url 'split_detail' split.split_id %}" class="text-decoration-none text-white">
+            <a href="{% url 'detalle_split' split.split_id %}" class="text-decoration-none text-white">
               <div class="card h-100 bg-secondary bg-opacity-10 border border-secondary rounded-4 shadow-sm hover-shadow">
                 <div class="card-body d-flex flex-column justify-content-between">
                   <h5 class="card-title text-capitalize text-primary mb-2">{{ split.split_type }}</h5>
