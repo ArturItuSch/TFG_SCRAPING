@@ -59,8 +59,6 @@ def importar_campeones():
         Campeon.objects.bulk_create(campeones_nuevos)
 
     print(f"✅ Insertados {len(campeones_nuevos)} campeones nuevos.")
-    print(f"🛠️  Actualizados {campeones_actualizados} campeones con datos faltantes.")
-
     
 def importar_splits():
     splits_dict = extract_all_splits()
@@ -139,7 +137,7 @@ def importar_series_y_partidos():
             Serie.objects.bulk_create(series_objs[i:i + BATCH_SIZE])
         print(f"✅ Insertadas {min(i + BATCH_SIZE, len(series_objs))} de {len(series_objs)} series.")
 
-    print(f"✅ Total series insertadas: {len(series_objs)}")
+    print(f"✅ Insertadas {len(series_objs)} series nuevas.")
     print(f"❌ Series omitidas por split no encontrado: {num_omitted_series}")
 
     series_cache = {serie.id: serie for serie in Serie.objects.all()}

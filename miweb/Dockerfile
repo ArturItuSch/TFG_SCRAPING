@@ -1,9 +1,13 @@
 FROM python:3.11-slim
 
+# Para no generar archivos .pyc
 ENV PYTHONDONTWRITEBYTECODE=1
+
+# Ver los logs y print() en tienpo real
 ENV PYTHONUNBUFFERED=1
 
 WORKDIR /app
+
 # Instalar dependencias del sistema para mysqlclient y Chrome
 RUN apt-get update && apt-get install -y \
     gcc \

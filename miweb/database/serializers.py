@@ -29,8 +29,6 @@ class EquipoSerializer(serializers.ModelSerializer):
         
     
 class JugadorSerializer(serializers.ModelSerializer):
-    imagen = serializers.SerializerMethodField()
-
     class Meta:
         model = Jugador
         fields = '__all__'
