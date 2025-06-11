@@ -117,16 +117,6 @@ def extraer_equipos(url):
         print(f"Error al procesar equipos en {url}: {e}")
         return equipos
 
-def quitar_duplicados(data, clave=None):
-    vistos = set()
-    resultado = []
-    for item in data:
-        # Si se especifica una clave, usamos su valor; si no, serializamos todo el dict.
-        token = item.get(clave) if clave else json.dumps(item, sort_keys=True)
-        if token not in vistos:
-            vistos.add(token)
-            resultado.append(item)
-    return resultado
     
 def obtener_equipos_antiguos():
     print("⏳ Obteniendo URLs de temporadas...")
@@ -136,13 +126,19 @@ def obtener_equipos_antiguos():
         return []
 
     equipos_totales = []
+    equipos_procesados = set()
+
     for url in urls:
         print(f"🔎 Procesando temporada desde URL: {url}")
         equipos = extraer_equipos(url)
-        if equipos:
-            equipos_totales.extend(equipos)
 
-    equipos_sin_duplicados = quitar_duplicados(equipos_totales, clave="name")
-    print(f"✅ Equipos antiguos extraídos: {len(equipos_sin_duplicados)}")
-    return equipos_sin_duplicados
-    
+        for equipo in equipos:
+            nombre = equipo.get("name")
+            if not nombre or nombre in equipos_procesados:
+                continue
+
+            equipos_totales.append(equipo)
+            equipos_procesados.add(nombre)
+
+    print(f"✅ Equipos antiguos extraídos: {len(equipos_totales)}")
+    return equipos_totales

@@ -26,7 +26,7 @@ class Command(BaseCommand):
             return
 
         scheduler = BackgroundScheduler()
-        scheduler.add_job(actualizar_datos_desde_ultimo_csv, CronTrigger(hour=6, minute=0))
+        scheduler.add_job(actualizar_datos_desde_ultimo_csv, CronTrigger(hour=8, minute=40))
 
         self.stdout.write(self.style.SUCCESS("⏳ Scheduler iniciado. Ejecutando diariamente a las 6:00 AM."))
 

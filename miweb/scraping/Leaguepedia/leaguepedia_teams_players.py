@@ -372,6 +372,9 @@ def get_team_data():
             continue
     return informacion_equipos
 
-
+if __name__ == "__main__":
+    print("👤 Actualizando jugadores...")
+    jugadores = get_player_data()
+    print(jugadores)    
 
     

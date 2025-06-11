@@ -35,11 +35,6 @@ class JugadorSerializer(serializers.ModelSerializer):
         model = Jugador
         fields = '__all__'
 
-    def get_imagen(self, obj):
-        if obj.imagen:
-            return urllib.parse.unquote(obj.imagen)
-        return None
-
 
 class JugadorEnPartidaSerializer(serializers.ModelSerializer):
     class Meta:

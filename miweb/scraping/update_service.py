@@ -24,6 +24,7 @@ sys.path.append(BASE_DIR)
 from scraping.OracleElexir.csv_process import *
 from Resources.rutas import CARPETA_CSV_GAMES
 from scraping.main import *
+from scraping.Leaguepedia.import_data import actualizar_todo_equipos_y_jugadores
 
 CARPETA_CSV = os.path.join(CARPETA_CSV_GAMES)
 
@@ -130,7 +131,6 @@ def actualizar_datos_desde_ultimo_csv():
     
     # 4. Procesar e importar datos
     procesar_todos_los_csvs_en_lec()
-    importar_campeones()
     importar_splits()
     importar_equipos()
     importar_jugadores()
@@ -142,17 +142,32 @@ def actualizar_datos_desde_ultimo_csv():
     borrar_csv_en_carpeta(CARPETA_CSV)
 
     print("✅ Proceso completo de actualización desde último CSV.")
-        
-if __name__ == "__main__":
-    #descargar_todos_los_csv(API_KEY, FOLDER_ID, CARPETA_CSV)
-    #filtrar_ligas_automaticamente(CARPETA_CSV, CARPETA_CSV, BASE_DIR)    
-    #borrar_csv_en_carpeta(CARPETA_CSV)  
-    #procesar_todos_los_csvs_en_lec() 
-    #importar_campeones()
-    #importar_splits()
-    #importar_equipos()
-    #importar_jugadores() 
-    #importar_series_y_partidos()
+    
+def insertar_datos_base():
+    importar_campeones()
+    importar_splits()
+    importar_equipos()
+    importar_jugadores() 
+    importar_series_y_partidos()
     importar_jugadores_en_partida()
-    #importar_selecciones()
-    #importar_objetivos_neutrales()    
+    importar_selecciones()
+    importar_objetivos_neutrales() 
+    actualizar_todo_equipos_y_jugadores()
+    
+def insertar_datos_base_descargaCSV():
+    descargar_todos_los_csv(API_KEY, FOLDER_ID, CARPETA_CSV)
+    filtrar_ligas_automaticamente(CARPETA_CSV, CARPETA_CSV, BASE_DIR)    
+    borrar_csv_en_carpeta(CARPETA_CSV)  
+    procesar_todos_los_csvs_en_lec() 
+    importar_campeones()
+    importar_splits()
+    importar_equipos()
+    importar_jugadores() 
+    importar_series_y_partidos()
+    importar_jugadores_en_partida()
+    importar_selecciones()
+    importar_objetivos_neutrales()  
+    actualizar_todo_equipos_y_jugadores()
+  
+        
+   

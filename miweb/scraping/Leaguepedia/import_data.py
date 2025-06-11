@@ -6,9 +6,6 @@ import re
 PROJECT_ROOT = os.path.abspath(os.path.join(os.path.dirname(__file__), '..', '..'))
 sys.path.insert(0, PROJECT_ROOT)
 
-os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'miweb.settings')
-django.setup()
-
 from database.models import Jugador, Equipo
 from database.serializers import *
 from scraping.Leaguepedia.leaguepedia_teams_players import get_player_data, get_team_data
@@ -53,12 +50,17 @@ def actualizar_jugadores(data):
             print(f"Jugador duplicado: múltiples resultados para '{nombre}' en '{equipo_nombre}', omitiendo actualización.")
             continue
 
-        # Limitar soloqueue_ids a 100 caracteres
         soloqueue_ids = jugador_data.get('soloqueue_ids')
         if isinstance(soloqueue_ids, list):
             soloqueue_ids = ','.join(soloqueue_ids)
         soloqueue_ids = str(soloqueue_ids)[:100] if soloqueue_ids else None
 
+        image_raw = jugador_data.get('imagen')
+        if image_raw: 
+            logo = image_raw.replace('\\', '/') 
+        else:
+            logo = None
+        
         # Preparar los datos para el serializer
         datos_actualizados = {
             'id': jugador_obj.id,
@@ -72,7 +74,7 @@ def actualizar_jugadores(data):
             'soloqueue_ids': soloqueue_ids,
             'contratado_hasta': parse_fecha(jugador_data.get('contratado_hasta')),
             'contratado_desde': parse_fecha(jugador_data.get('contratado_desde')),
-            'imagen': jugador_data.get('imagen'),
+            'imagen': logo,
             'activo': jugador_obj.activo,
         }
 
