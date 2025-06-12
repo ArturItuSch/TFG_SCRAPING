@@ -1,3 +1,44 @@
+"""
+models.py
+=========
+
+Este módulo define todos los modelos Django utilizados para representar
+la estructura de datos del ecosistema competitivo de League of Legends
+(LEC). Incluye entidades como jugadores, equipos, partidos, campeones,
+series, selecciones y objetivos neutrales.
+
+Cada modelo se encuentra vinculado mediante claves foráneas que reflejan
+las relaciones reales entre entidades, y muchos de ellos incluyen
+métodos auxiliares para facilitar consultas y transformaciones
+habituales.
+
+Modelos principales:
+---------------------
+- SplitLEC: Representa un split (temporada) de una liga.
+- Serie: Representa una serie de partidos dentro de un split.
+- Partido: Representa un partido individual entre dos equipos.
+- Equipo: Representa un equipo competitivo.
+- Jugador: Contiene información de los jugadores.
+- Campeon: Representa un campeón de League of Legends.
+- JugadorEnPartida: Estadísticas detalladas de un jugador en un partido.
+- ObjetivosNeutrales: Objetivos tomados por equipo en un partido.
+- Seleccion: Representa los picks y bans de campeones en cada partida.
+
+Relaciones clave:
+------------------
+- `Serie` está relacionada con `SplitLEC`
+- `Partido` está vinculado a `Serie` y `Equipo`
+- `JugadorEnPartida` enlaza `Jugador`, `Partido` y `Campeon`
+- `ObjetivosNeutrales` enlaza `Equipo` y `Partido`
+- `Seleccion` enlaza `Equipo`, `Partido`, y `Campeon`
+
+Uso:
+-----
+Estos modelos son utilizados por los scripts de scraping, vistas de
+frontend y servicios de actualización para consultar, insertar y mantener
+actualizada la base de datos.
+
+"""
 from django.db import models
 from django.forms.models import model_to_dict
 

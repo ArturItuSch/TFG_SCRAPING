@@ -1,11 +1,40 @@
+"""
+recopilador.py
+==============
+
+Este módulo centraliza toda la lógica para importar, validar y registrar en la base de datos 
+los datos del ecosistema competitivo de League of Legends, enfocado principalmente en la liga LEC.
+
+Integra directamente las funciones de `csv_process.py` para filtrar, transformar y analizar archivos CSV, 
+y se encarga de convertir dichos datos en registros válidos dentro del modelo relacional del proyecto Django.
+
+Funcionalidades principales:
+- Validación e inserción de campeones scrapeados desde GOL.
+- Procesamiento de splits, series y partidos a partir de CSVs.
+- Inserción y asociación de equipos y jugadores.
+- Carga de estadísticas detalladas por jugador en cada partida.
+- Registro estructurado de selecciones (picks y bans).
+- Importación de objetivos neutrales tomados por los equipos.
+
+Características:
+- Verificación y limpieza de datos para evitar errores y duplicados.
+- Uso de `bulk_create` y `bulk_update` para eficiencia en grandes volúmenes.
+- Soporte para ejecución manual, como script independiente o desde comandos Django.
+- Compatible con ejecución periódica mediante APScheduler.
+
+Requisitos:
+- Base de datos activa con modelos correctamente migrados.
+- Archivos CSV estructurados ubicados en el directorio especificado.
+- Scrapers previos correctamente implementados para GOL y Leaguepedia.
+"""
+# Librerías estándar y externas utilizadas
 import unicodedata
 import re
 import os
-import django
 import sys
 import math
 
-# Ruta a tu proyecto Django (donde está settings.py)
+# Definición de directorios clave y rutas del proyecto
 BASE_DIR = os.path.abspath(os.path.join(os.path.dirname(__file__), '..'))
 sys.path.append(BASE_DIR)
 
@@ -18,11 +47,36 @@ from Resources.rutas import DICCIONARIO_CLAVES
 
 
 def limpiar_valor(valor):
+    """
+    Limpia valores NaN en datos numéricos provenientes de archivos CSV o cálculos.
+
+    Si el valor es un número flotante y es NaN (not-a-number), se devuelve `None`.
+    De lo contrario, se retorna el mismo valor.
+
+    Parameters:
+        valor (any): El valor a limpiar.
+
+    Returns:
+        any: `None` si el valor era NaN, o el valor original en caso contrario.
+    """
     if isinstance(valor, float) and math.isnan(valor):
         return None
     return valor
 
 def importar_campeones():
+    """
+    Descarga e inserta los campeones desde la fuente GOL usando Selenium con UBlock.
+
+    - Si un campeón ya existe en la base de datos y no tiene imagen, se actualiza.
+    - Si el campeón no existe y tiene imagen válida, se crea uno nuevo.
+    - Se utiliza un scraper Selenium con extensión UBlock para evitar bloqueos de cookies o anuncios.
+
+    La operación se realiza con validación mediante un serializer y `bulk_create` 
+    para eficiencia en la inserción masiva.
+
+    Prints:
+        Muestra por consola los campeones insertados, actualizados o errores de validación.
+    """
     driver = iniciar_driver()
     campeones_data = get_champions_information(driver)
     driver.quit()
@@ -61,6 +115,17 @@ def importar_campeones():
     print(f"✅ Insertados {len(campeones_nuevos)} campeones nuevos.")
     
 def importar_splits():
+    """
+    Extrae todos los splits disponibles desde los CSVs procesados y los inserta en la base de datos 
+    si no existen previamente.
+
+    - Se utiliza la función `extract_all_splits()` para obtener un diccionario con información de cada split.
+    - Cada split es validado con un serializer antes de agregarse a una lista.
+    - Los splits válidos se insertan de forma masiva con `bulk_create`.
+
+    Prints:
+        Muestra por consola cuántos splits han sido insertados y posibles errores de validación.
+    """
     splits_dict = extract_all_splits()
     
     splits_objs = []
@@ -82,6 +147,31 @@ def importar_splits():
     print(f"✅ Insertados {len(splits_objs)} splits nuevos.")
 
 def importar_series_y_partidos():
+    """
+    Importa todas las series y partidos desde los CSV procesados y los inserta en la base de datos.
+
+    Este proceso consta de dos fases:
+
+    1. **Importación de series**:
+        - Extrae series desde `extract_all_series_and_partidos()`.
+        - Valida si la serie ya existe en la base de datos.
+        - Intenta asociarla a un `SplitLEC` existente.
+        - Inserta las series válidas por lotes usando `bulk_create`.
+
+    2. **Importación de partidos**:
+        - Para cada partido, valida si ya existe en la base de datos.
+        - Verifica si la serie asociada existe.
+        - Mapea correctamente los equipos participantes (azul, rojo y ganador).
+        - Inserta los partidos válidos en lotes.
+
+    También se lleva el control de:
+        - Series y partidos omitidos por falta de información válida.
+        - IDs de partidos descartados por problemas con la serie o equipos.
+
+    Prints:
+        - Resumen de series insertadas, series omitidas.
+        - Resumen de partidos insertados y errores encontrados.
+    """
     from django.db import transaction
 
     series_dict, partidos_dict = extract_all_series_and_partidos()
@@ -91,12 +181,12 @@ def importar_series_y_partidos():
     num_omitted_series = 0
     num_omitted_partidos = 0
 
-    # 🔹 Cacheamos splits y series existentes
+    # Cacheamos splits y series existentes
     splits = {split.split_id: split for split in SplitLEC.objects.all()}
     series_existentes = set(Serie.objects.values_list('id', flat=True))
     partidos_existentes = set(Partido.objects.values_list('id', flat=True))
 
-    # 🔸 Primero importar series
+    # Primero importar series
     for serie_id, serie_data in series_dict.items():
         if serie_id in series_existentes:
             continue
@@ -202,6 +292,18 @@ def importar_series_y_partidos():
         print(f"IDs de partidos omitidos por serie no encontrada: {omitted_partidos_ids}")
 
 def importar_equipos():
+    """
+    Importa equipos desde los archivos CSV procesados y los inserta en la base de datos.
+
+    - Obtiene el diccionario de equipos desde `extract_all_teams()`.
+    - Verifica si cada equipo ya existe en la base de datos según su ID.
+    - Si no existe, crea un nuevo objeto `Equipo` a partir del serializer.
+    - Inserta todos los equipos nuevos en bloque con `bulk_create`.
+
+    Nota:
+        - Los campos adicionales como país, región o logo se dejan como `None` ya que no se extraen en esta fase.
+        - Se muestra un mensaje en consola con los errores de validación y el número total de equipos insertados.
+    """
     equipos_dict = extract_all_teams()
 
     equipos_objs = []
@@ -229,6 +331,20 @@ def importar_equipos():
     print(f"✅ Insertados {len(equipos_objs)} equipos nuevos.")
 
 def importar_jugadores():
+    """
+    Importa o actualiza los jugadores en la base de datos a partir de los datos extraídos desde los CSVs.
+
+    - Carga todos los jugadores desde `extract_all_players()`.
+    - Utiliza una caché de equipos para resolver las claves foráneas sin consultas repetidas.
+    - Si el jugador ya existe, actualiza su equipo si ha cambiado.
+    - Si no existe, lo inserta como un nuevo objeto `Jugador`, dejando los campos no extraídos en `None`.
+    - Inserta todos los nuevos jugadores en bloque con `bulk_create`.
+
+    Muestra por consola:
+        - El número de jugadores insertados.
+        - El número de jugadores actualizados.
+        - Cualquier error de validación del serializer.
+    """
     jugadores_dict = extract_all_players()  
     jugadores_objs = []
     actualizados = 0
@@ -275,6 +391,23 @@ def importar_jugadores():
     print(f"🔄 Actualizados {actualizados} jugadores existentes con nuevo equipo.")
 
 def importar_jugadores_en_partida():
+    """
+    Importa registros de jugadores en partida (`JugadorEnPartida`) desde los CSVs procesados.
+
+    Pasos:
+    - Carga los datos de cada jugador en cada partida mediante `extract_all_jugadores_en_partida()`.
+    - Usa caché de jugadores, partidas y campeones para evitar consultas repetidas.
+    - Asocia cada entrada con las FK correspondientes (`Jugador`, `Partido`, `Campeon`).
+    - Valida que no se inserten registros duplicados ya existentes.
+    - Inserta nuevos registros en bloques (`bulk_create`) para eficiencia.
+    - Si un jugador no tiene ID válido, se asocia a un jugador por defecto con ID `"unknown"`.
+    - Si falta una FK (jugador, partida o campeón), se omite el registro.
+
+    Imprime por consola:
+    - Número de registros insertados.
+    - Número de registros ya existentes.
+    - Mensajes de advertencia sobre FKs faltantes o errores.
+    """
     jugadores_en_partida_data = extract_all_jugadores_en_partida()
     jugadores_en_partida_objs = []
     actualizados = 0
@@ -514,7 +647,19 @@ def importar_selecciones(batch_size=1000):
 
 
 def importar_objetivos_neutrales(batch_size=1000):
-    datos = extract_objetivos_neutrales_matados()  # Ahora devuelve lista con dicts agrupados por equipo y partida
+    """
+    Importa o actualiza registros de objetivos neutrales (`ObjetivosNeutrales`) desde los CSVs procesados.
+
+    - Extrae los datos mediante `extract_objetivos_neutrales_matados()`, agrupados por `gameid` y `teamid`.
+    - Busca los objetos `Partido` y `Equipo` correspondientes a cada entrada.
+    - Si ya existe un registro de objetivos neutrales para la combinación partida-equipo, lo actualiza.
+    - Si no existe, crea un nuevo objeto `ObjetivosNeutrales`.
+    - Realiza inserciones y actualizaciones en lotes (`bulk_create` / `bulk_update`) para eficiencia.
+    - Imprime por consola el número de inserciones, actualizaciones e ignorados.
+
+    :param batch_size: Número de registros a procesar por lote para inserciones y actualizaciones (por defecto 1000).
+    """
+    datos = extract_objetivos_neutrales_matados() 
 
     objs_to_create = []
     objs_to_update = []

@@ -1,3 +1,33 @@
+"""
+`leaguepedia_teams_players.py`
+
+Este script realiza scraping sobre la wiki colaborativa [Leaguepedia](https://lol.fandom.com),
+extrayendo información actualizada de los **equipos** y **jugadores activos** en la LEC (League of Legends
+EMEA Championship) para una temporada concreta (por defecto: Spring 2025).
+
+La información recolectada incluye:
+- Enlaces a páginas de equipos.
+- Datos básicos de los jugadores: nombre, país, residencia, rol, fechas de contrato, IDs de soloqueue, imagen.
+- Información de equipos: nombre oficial, país, región, propietarios, patrocinadores, head coach y logo.
+
+También descarga y organiza las **imágenes de jugadores y equipos**, genera diccionarios estructurados
+y guarda datos en archivos JSON listos para su inserción en base de datos.
+
+### Funciones destacadas:
+
+- `get_team_links(url)`: Extrae los enlaces a todos los equipos participantes desde la página del split.
+- `get_extra_player_data(url)`: Obtiene información extendida de cada jugador desde su perfil individual.
+- `get_player_data()`: Itera por los equipos y compone una lista completa de los jugadores actuales.
+- `get_team_data()`: Extrae información detallada de cada equipo (estructura organizativa, fundación, logo, etc).
+- `download_image(ruta, url)`: Descarga una imagen desde una URL y la guarda en el disco.
+- `convertir_fecha()`, `get_html()`: Funciones auxiliares para limpieza y conexión.
+
+Este script es ejecutado directamente o bien invocado desde el scheduler o un script orquestador
+(`importar_datos.py`) para mantener actualizados los datos del split actual.
+
+**Requiere conexión a Internet y acceso a la plataforma Leaguepedia.**
+"""
+# Librerías estándar y externas utilizadas
 import requests
 from bs4 import BeautifulSoup
 from urllib.parse import urljoin
@@ -7,12 +37,13 @@ import re
 from datetime import datetime
 import random
 import time
-# Establece la ruta raíz del proyecto
+
+# Definición de directorios clave y rutas del proyecto
 PROJECT_ROOT = os.path.abspath(os.path.join(os.path.dirname(__file__), '..','..'))
 sys.path.insert(0, PROJECT_ROOT)
 
 # Importación de rutas desde archivo de configuración
-from Resources.rutas import *
+from Resources.rutas import * # Rutas globales del proyecto definidas externamente en el módulo Resources
 
 # Directorios y rutas para guardar datos
 TEAM_IMAGES_DIR = os.path.join(CARPETA_IMAGENES_TEAMS)
@@ -22,7 +53,7 @@ TEAMS_INSTALATION_JSON = os.path.join(JSON_INSTALATION_TEAMS, "teams_data_leguep
 LOGO_TEAMS_PATH = os.path.join(JSON_PATH_TEAMS_LOGOS, "teams_logos_path.json")
 
 
-# Encabezados para las peticiones HTTP
+# Headers HTTP simulando navegador real para evitar bloqueos
 headers = {
     "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36",
     "Accept-Language": "es-ES,es;q=0.9,en;q=0.8",
@@ -39,6 +70,15 @@ headers = {
 }
 
 def obtener_headers_dinamicos():
+    """
+    Genera encabezados HTTP dinámicos para simular distintos navegadores y evitar bloqueos por scraping.
+
+    Cambia aleatoriamente el `User-Agent` y el `Referer` para cada petición, eligiendo entre varias
+    opciones populares.
+
+    Returns:
+        dict: Diccionario de encabezados HTTP con `User-Agent` y `Referer` aleatorios.
+    """
     user_agents = [
         "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36",
         "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Firefox/112.0",
@@ -57,6 +97,18 @@ def obtener_headers_dinamicos():
     return headers
 
 def convertir_fecha(fecha_str):
+    """
+    Convierte una cadena de texto con formato de fecha en inglés (por ejemplo, 'March 10, 2002')
+    al formato ISO estándar (`YYYY-MM-DD`).
+
+    También elimina cualquier comentario entre paréntesis que acompañe la fecha (como nacionalidades o notas).
+
+    Args:
+        fecha_str (str): Fecha en formato inglés, potencialmente con anotaciones entre paréntesis.
+
+    Returns:
+        str or None: Fecha convertida al formato 'YYYY-MM-DD', o `None` si ocurre un error en el formato.
+    """
     try:
         fecha_limpia = re.sub(r'\(.*?\)', '', fecha_str).strip()
         fecha = datetime.strptime(fecha_limpia, "%B %d, %Y")
@@ -69,6 +121,19 @@ def convertir_fecha(fecha_str):
 
 
 def get_html(url, timeout=10):
+    """
+    Realiza una solicitud HTTP GET a la URL especificada y devuelve la respuesta si es exitosa.
+
+    Se utilizan encabezados dinámicos para simular navegación humana, y se maneja una amplia
+    gama de excepciones para garantizar robustez ante errores comunes de red.
+
+    Args:
+        url (str): Dirección web a la que se realizará la solicitud.
+        timeout (int): Tiempo máximo de espera en segundos antes de cancelar la solicitud (por defecto: 10).
+
+    Returns:
+        requests.Response or None: Objeto de respuesta si la solicitud fue exitosa, `None` si falló.
+    """
     try:
         time.sleep(1)
         headers = obtener_headers_dinamicos()
@@ -88,8 +153,21 @@ def get_html(url, timeout=10):
     except requests.exceptions.RequestException as e:
         print(f"⚠️ Error desconocido: {e}")
 
-# Conseguir los enlaces de los equipos de la LEC 2025 Spring Season
 def get_team_links(url):
+    """
+    Obtiene los enlaces a las páginas de todos los equipos que participan en una temporada específica
+    de la LEC desde Leaguepedia.
+
+    Esta función analiza la página principal de la temporada (`url`) y busca enlaces HTML con la clase
+    `catlink-teams`, típicamente utilizada en Leaguepedia para vincular a las páginas de equipos.
+
+    Args:
+        url (str): URL de la página de la temporada en Leaguepedia (por ejemplo, Spring 2025).
+
+    Returns:
+        set: Conjunto de URLs absolutas a las páginas de los equipos. Se devuelve un set vacío si ocurre
+        algún error durante la solicitud o el parseo.
+    """
     base_url = 'https://lol.fandom.com/'
     try:
         response = get_html(url, headers)
@@ -116,8 +194,25 @@ def get_team_links(url):
         print(f"Error inesperado al procesar los enlaces del equipo: {e}")
         return set()
 
-# Conseguir los datos específicos de los jugadores
 def get_extra_player_data(url):
+    """
+    Extrae información adicional de un jugador desde su perfil individual en Leaguepedia.
+
+    Esta función accede a la URL del perfil del jugador y obtiene detalles como:
+    - Imagen del jugador (descargada y almacenada localmente).
+    - Fecha de nacimiento (formateada como `YYYY-MM-DD`).
+    - Identificadores de SoloQueue (por región).
+
+    Se utiliza BeautifulSoup para parsear la tabla `infoboxPlayer` y descargar directamente la imagen
+    desde la ruta proporcionada en el HTML.
+
+    Args:
+        url (str): URL absoluta del perfil del jugador en Leaguepedia.
+
+    Returns:
+        dict or None: Diccionario con los campos `image`, `birthday`, `soloqueue_ids` si se extraen correctamente,
+        o `None` si ocurre un error en la carga o procesamiento de datos.
+    """
     try:
         response = get_html(url, headers)
         if response is None:
@@ -177,8 +272,26 @@ def get_extra_player_data(url):
                                  
             
 
-# Conseguir los datos de los jugadores de los equipos
 def get_player_data():
+    """
+    Extrae información detallada de todos los jugadores activos en la LEC desde Leaguepedia.
+
+    Recorre las páginas de los equipos participantes en el split actual (por defecto: Spring 2025)
+    y obtiene para cada jugador:
+    - Nombre de invocador y nombre real
+    - Residencia y nacionalidad
+    - Rol dentro del equipo
+    - Fecha de entrada y finalización de contrato
+    - IDs de SoloQueue
+    - Fecha de nacimiento
+    - Imagen (descargada y almacenada localmente)
+
+    Esta función hace uso de `get_team_links` para obtener los equipos, y `get_extra_player_data` para
+    ampliar los datos de cada jugador desde su perfil individual.
+
+    Returns:
+        list[dict]: Lista de diccionarios, cada uno representando a un jugador con sus campos estructurados.
+    """
     all_player_data = []
     urls = get_team_links("https://lol.fandom.com/wiki/LEC/2025_Season/Spring_Season")  
     for url in urls:
@@ -255,6 +368,20 @@ def get_player_data():
 
 
 def download_image(ruta_completa, url_imagen):
+    """
+    Descarga una imagen desde una URL y la guarda en la ruta especificada dentro del sistema de archivos local.
+
+    Si la imagen ya existe en el disco, se omite la descarga para evitar redundancias. Al finalizar,
+    se devuelve la ruta relativa normalizada desde el directorio `Resources/`, compatible con el uso
+    en rutas web o en base de datos.
+
+    Args:
+        ruta_completa (str): Ruta absoluta donde se debe guardar la imagen.
+        url_imagen (str): URL desde la cual descargar la imagen.
+
+    Returns:
+        str or None: Ruta relativa normalizada si la descarga o verificación es exitosa, `None` si ocurre un error.
+    """
     try:
         if os.path.exists(ruta_completa):
             print(f"Imagen ya existe en {ruta_completa}, se omite la descarga.")
@@ -279,8 +406,24 @@ def download_image(ruta_completa, url_imagen):
         print(f"Error al descargar la imagen: {e}")
         return None
     
-# Conseguir la información de los jugadores de los equipos que se pasan por una lista de urls y retorna una lista de diccionarios con la información de los jugadores
 def get_team_data():
+    """
+    Extrae información detallada de los equipos activos en la LEC para una temporada específica desde Leaguepedia.
+
+    Recorre las páginas de cada equipo listadas en la página del split actual (por defecto: Spring 2025),
+    y recopila los siguientes datos estructurados:
+    - Nombre oficial del equipo (limpiado y formateado)
+    - Logo del equipo (descargado localmente y guardado como ruta relativa)
+    - País de origen
+    - Región competitiva
+    - Propietario del equipo
+    - Entrenador principal (Head Coach)
+    - Patrocinadores (Partners)
+    - Fecha de fundación
+
+    Returns:
+        list[dict]: Lista de diccionarios con la información clave de cada equipo participante.
+    """
     informacion_equipos = []
     urls = get_team_links("https://lol.fandom.com/wiki/LEC/2025_Season/Spring_Season")
     if not urls:

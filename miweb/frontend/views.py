@@ -1,19 +1,61 @@
+"""
+views.py
+========
+
+Este módulo define todas las vistas de la capa frontend de la aplicación web.
+
+Las funciones incluidas aquí consultan la base de datos mediante los modelos definidos,
+procesan la información y la envían a las plantillas HTML para su visualización.
+
+Características principales:
+----------------------------
+- Página principal con últimas series jugadas, clasificación general y estadísticas destacadas.
+- Listado y detalle de splits, equipos, jugadores y campeones.
+- Filtros dinámicos por rol, equipo, resultado y campeón.
+- Estadísticas avanzadas por jugador y por campeón, incluyendo KDA, winrate, pickrate y banrate.
+- Visualización detallada de cada partido, picks/bans, objetivos y desempeño por jugador.
+
+Requiere:
+---------
+- Modelos importados desde `database.models`.
+- Archivos de plantilla HTML ubicados en `frontend/templates/`.
+
+Usado en:
+---------
+- `frontend/urls.py` para asociar las vistas con rutas accesibles desde el navegador.
+- Plantillas como `index.html`, `detalle_split.html`, `jugadores.html`, entre otras.
+"""
+# Librerías necesarias 
 from django.shortcuts import render, get_object_or_404
 from django.conf import settings
 from pathlib import Path
 from django.utils import timezone
+from datetime import datetime
+from collections import defaultdict
 
-
-
+# Importación de los modelos de database
 BASE_DIR = Path(__file__).resolve().parent.parent
 from database.models import *
 from django.db.models import Prefetch, Sum, F, ExpressionWrapper, FloatField, Case, When, Value, Count, Q
-from collections import defaultdict
-from datetime import datetime
 
 
 
 def safe_division(numerator, denominator):
+    """
+    Realiza una división segura entre dos campos de una query de Django,
+    devolviendo 0 si el denominador es menor o igual que cero.
+
+    Utiliza `Case` y `ExpressionWrapper` para manejar la lógica dentro de
+    una anotación de queryset, lo cual permite calcular valores como el KDA
+    sin errores de división por cero.
+
+    Args:
+        numerator: Campo de modelo usado como numerador.
+        denominator: Campo de modelo usado como denominador.
+
+    Returns:
+        Una expresión de Django (`Case`) que representa la división segura.
+    """
     return Case(
         When(**{f'{denominator.name}__gt': 0}, then=ExpressionWrapper(numerator / denominator, output_field=FloatField())),
         default=Value(0),
@@ -21,6 +63,24 @@ def safe_division(numerator, denominator):
     )
 
 def index(request):
+    """
+    Vista principal del sitio. Muestra un resumen de la actividad reciente de la LEC.
+
+    Incluye:
+    - Las últimas 20 series jugadas (incluyendo playoffs).
+    - Clasificación actual basada en la fase regular del último split disponible.
+    - Top 10 jugadores por KDA.
+    - Estadísticas de campeones más jugados y baneados (pick/ban rate).
+
+    La información es recopilada dinámicamente a partir de los modelos `Serie`, `Partido`,
+    `JugadorEnPartida` y `Seleccion`.
+
+    Args:
+        request: Objeto HTTP request de Django.
+
+    Returns:
+        HttpResponse renderizada con el contexto para `index.html`.
+    """
     # Últimas 20 series jugadas (incluye playoffs y regular season)
     ultimas_series = Serie.objects.order_by('-dia').prefetch_related(
         Prefetch('partidos', queryset=Partido.objects.select_related('equipo_azul', 'equipo_rojo', 'equipo_ganador'))
@@ -131,15 +191,29 @@ def index(request):
 
 
 def splits(request):
-    # Obtener los parámetros GET para filtrar
+    """
+    Vista para mostrar todos los splits históricos de la LEC, agrupados por año.
+
+    Permite aplicar filtros a través de parámetros GET para:
+    - Tipo de split (`split_type`) como 'spring', 'summer', etc.
+    - Liga (`league`) como 'LEC'.
+    - Año (`year`) como 2023, 2024, etc.
+
+    Los splits se agrupan por año y se pasan al contexto junto con las ligas
+    disponibles para mostrar en el formulario de filtrado.
+
+    Args:
+        request: Objeto HTTP request de Django.
+
+    Returns:
+        HttpResponse renderizada con el contexto para `splits.html`.
+    """
     split_type = request.GET.get('split_type', '').strip().lower()
     league = request.GET.get('league', '').strip()
     year = request.GET.get('year', '').strip()
 
-    # Empezar con todos los splits ordenados
     all_splits = SplitLEC.objects.order_by('-year', 'split_type')
 
-    # Aplicar filtros si vienen en GET
     if split_type:
         all_splits = all_splits.filter(split_type__icontains=split_type)
     if league:
@@ -161,19 +235,34 @@ def splits(request):
         'splits_por_year': splits_por_year,
         'year_ordenados': year_ordenados,
         'ligas_disponibles': ligas_disponibles,
-        'request': request,  # Para acceder a request.GET en template
+        'request': request,  
     }
 
     return render(request, 'splits.html', context)
 
 def detalle_split(request, split_id):
+    """
+    Vista detallada de un Split específico (temporada de competición).
+
+    Se muestran estadísticas generales tanto para la fase regular como para playoffs:
+    - Clasificación de equipos (victorias, derrotas, jugadores activos)
+    - Campeones más jugados, pickrate, banrate y winrate
+    - Series clasificadas por rondas y ganador del split si aplica
+
+    También permite aplicar filtros por nombre de campeón y ordenamientos por estadísticas.
+
+    Args:
+        request: Objeto HTTP request de Django con posibles filtros GET.
+        split_id: ID del split a visualizar (formato "Spring_2023", por ejemplo).
+
+    Returns:
+        HttpResponse renderizada con el contexto para `detalle_split.html`.
+    """
     split = get_object_or_404(SplitLEC, split_id=split_id)
 
-    # --- SERIES ---
     series_regular = Serie.objects.filter(split=split, playoffs=False).prefetch_related('partidos')
     series_playoffs = Serie.objects.filter(split=split, playoffs=True).prefetch_related('partidos')
 
-    # --- JUGADORES DEL SPLIT (único cálculo) ---
     jugadores_por_equipo = defaultdict(dict)
     jugadores_en_split = JugadorEnPartida.objects.filter(partido__serie__split=split).select_related('jugador', 'partido', 'campeon')
 
@@ -194,8 +283,22 @@ def detalle_split(request, split_id):
                 'equipo_nombre': equipo.nombre,
             }
 
-    # --- PROCESAMIENTO DE ESTADÍSTICAS ---
     def procesar_estadisticas(series):
+        """
+        Procesa un conjunto de series para generar estadísticas de equipos y campeones.
+
+        Calcula:
+        - Clasificación de equipos por número de victorias y derrotas.
+        - Estadísticas de campeones jugados: número de partidas, winrate, pickrate, banrate, etc.
+
+        Args:
+            series (QuerySet): Lista de objetos `Serie` correspondientes a una fase (regular o playoffs).
+
+        Returns:
+            Tuple:
+                - Lista ordenada de diccionarios con estadísticas por equipo.
+                - Lista de diccionarios con estadísticas agregadas por campeón.
+        """
         clasificacion = defaultdict(lambda: {'equipo': None, 'victorias': 0, 'derrotas': 0})
         jugadores_en_partidas = JugadorEnPartida.objects.filter(partido__in=[p for s in series for p in s.partidos.all()]).select_related('jugador', 'partido', 'campeon')
 
@@ -333,6 +436,18 @@ def detalle_split(request, split_id):
 
 
 def equipos(request):
+    """
+    Renderiza la vista de equipos mostrando los equipos activos y no activos por separado.
+
+    Separa los equipos en dos listas según su estado `activo` y los pasa al template
+    para su visualización diferenciada.
+
+    Args:
+        request (HttpRequest): La solicitud HTTP recibida.
+
+    Returns:
+        HttpResponse: Renderizado del template `equipos.html` con el contexto de equipos.
+    """
     equipos_activos = Equipo.objects.filter(activo=True)
     todos_equipos = Equipo.objects.filter(activo=False)
     return render(request, 'equipos.html', {
@@ -341,6 +456,18 @@ def equipos(request):
     })
 
 def obtener_orden_rol(jugador):
+    """
+    Devuelve la posición ordenada de un jugador en función de su rol para facilitar la organización.
+
+    Establece un orden lógico para los roles tradicionales del juego (Top, Jungle, Mid, Bot, Support).
+    Si el rol del jugador no es válido o no está definido, devuelve un valor alto (99) para posicionarlo al final.
+
+    Args:
+        jugador (Jugador): Instancia del modelo Jugador.
+
+    Returns:
+        int: Índice del rol en la lista predefinida o 99 si no se reconoce el rol.
+    """
     orden_roles = ['top', 'jung', 'mid', 'bot', 'supp']
     if jugador.rol:
         rol = jugador.rol.lower()
@@ -349,6 +476,19 @@ def obtener_orden_rol(jugador):
     return 99  
 
 def detalle_equipo(request, equipo_id):
+    """
+    Vista que muestra el detalle de un equipo específico junto con sus jugadores activos organizados por rol.
+
+    Filtra jugadores activos que pertenecen al equipo solicitado y los agrupa según los roles deseados
+    (Top Laner, Jungler, Mid Laner, Bot Laner, Support) para mostrarlos de forma estructurada en el template.
+
+    Args:
+        request (HttpRequest): La solicitud HTTP recibida.
+        equipo_id (str): Identificador único del equipo.
+
+    Returns:
+        HttpResponse: Renderiza la plantilla 'detalle_equipo.html' con el equipo y sus jugadores organizados por rol.
+    """
     equipo = get_object_or_404(Equipo, id=equipo_id)
     jugadores = Jugador.objects.filter(
         equipo=equipo,
@@ -365,6 +505,19 @@ def detalle_equipo(request, equipo_id):
     })
     
 def jugadores(request):
+    """
+    Vista que muestra una lista de jugadores activos con opciones de filtrado por nombre, equipo o rol.
+
+    Permite al usuario filtrar jugadores mediante parámetros GET en la URL. 
+    También proporciona los equipos y roles disponibles para usarlos en los filtros del template.
+
+    Args:
+        request (HttpRequest): La solicitud HTTP que puede contener filtros por nombre, equipo o rol.
+
+    Returns:
+        HttpResponse: Renderiza la plantilla 'jugadores.html' con la lista filtrada de jugadores,
+        junto con los equipos y roles disponibles para aplicar nuevos filtros.
+    """
     jugadores = Jugador.objects.filter(activo=True)
 
     nombre = request.GET.get('nombre')
@@ -388,6 +541,20 @@ def jugadores(request):
     })
 
 def detalle_jugador(request, jugador_id):
+    """
+    Vista que muestra el detalle estadístico de un jugador durante el split actual.
+
+    Incluye estadísticas por partida (KDA, oro, visión, etc.) y permite aplicar filtros por campeón o resultado,
+    además de ordenarlas según una métrica específica. También calcula estadísticas generales del rendimiento.
+
+    Args:
+        request (HttpRequest): La solicitud HTTP con posibles filtros por campeón, resultado o orden.
+        jugador_id (str): ID del jugador a mostrar.
+
+    Returns:
+        HttpResponse: Renderiza la plantilla 'detalle_jugador.html' con los datos del jugador, 
+        sus partidas en el split actual y estadísticas agregadas.
+    """
     jugador = get_object_or_404(Jugador, id=jugador_id)
     year_actual = datetime.now().year
     split_actual = SplitLEC.obtener_ultimo_split(year_actual)
@@ -468,11 +635,31 @@ def detalle_jugador(request, jugador_id):
     
 
 def partidos(request):
+    """
+    Vista que muestra los últimos 50 partidos ordenados por fecha (día de la serie) y hora de inicio, de más recientes a más antiguos.
+
+    Args:
+        request (HttpRequest): La solicitud HTTP entrante.
+
+    Returns:
+        HttpResponse: Renderiza la plantilla 'partidos.html' con los datos de los partidos más recientes.
+    """
     partidos = Partido.objects.order_by('-serie__dia', '-hora')[:50]
     return render(request, 'partidos.html', {'partidos': partidos})
 
 
 def campeones(request):
+    """
+    Vista que muestra estadísticas detalladas por campeón, permitiendo aplicar filtros por año, tipo de split y búsqueda por nombre.
+
+    Filtra partidos por los parámetros proporcionados, calcula número de selecciones, baneos, victorias, y genera estadísticas como pick rate, ban rate y win rate.
+
+    Args:
+        request (HttpRequest): Solicitud HTTP con posibles parámetros GET ('q', 'year', 'split_type', 'orden').
+
+    Returns:
+        HttpResponse: Renderiza la plantilla 'campeones.html' con los datos procesados para cada campeón.
+    """
     from django.conf import settings
 
     query = request.GET.get('q', '').strip()
@@ -567,6 +754,18 @@ def campeones(request):
     
     
 def series_jugadas(request):
+    """
+    Vista que muestra la lista de series jugadas para un split específico.
+
+    Filtra las series por el split seleccionado (o el más reciente si no se proporciona uno),
+    y obtiene los equipos y jugadores del primer partido de cada serie junto con los resultados.
+
+    Args:
+        request (HttpRequest): Solicitud HTTP que puede incluir el parámetro GET 'split_id'.
+
+    Returns:
+        HttpResponse: Renderiza la plantilla 'series_list.html' con los datos de las series jugadas.
+    """
     split_id = request.GET.get('split_id')
 
     # Cargar splits disponibles
@@ -616,6 +815,20 @@ def series_jugadas(request):
     })
 
 def detalle_serie(request, id):
+    """
+    Vista que muestra el detalle de una serie específica.
+
+    Obtiene todos los partidos de la serie, su orden, los resultados globales y los jugadores
+    de cada partida divididos por equipo (Blue y Red), para luego renderizar una vista detallada
+    de la serie.
+
+    Args:
+        request (HttpRequest): Solicitud HTTP.
+        id (str): ID de la serie a consultar.
+
+    Returns:
+        HttpResponse: Renderiza la plantilla 'serie_info.html' con los detalles de la serie.
+    """
     serie = get_object_or_404(
         Serie.objects.prefetch_related('partidos__equipo_azul', 'partidos__equipo_rojo'),
         id=id
@@ -644,6 +857,19 @@ def detalle_serie(request, id):
     })
     
 def partido_info(request, id):
+    """
+    Vista que muestra el detalle completo de un partido individual.
+
+    Incluye información sobre los jugadores por equipo (Blue y Red), duración del partido,
+    objetivos conseguidos, campeones seleccionados y baneados, y determina qué equipo ganó.
+
+    Args:
+        request (HttpRequest): Solicitud HTTP.
+        id (str): ID del partido a visualizar.
+
+    Returns:
+        HttpResponse: Renderiza la plantilla 'partido.html' con toda la información relevante del partido.
+    """
     partido = get_object_or_404(Partido, id=id)
 
     jugadores = JugadorEnPartida.objects.filter(partido=partido).select_related('jugador', 'campeon')

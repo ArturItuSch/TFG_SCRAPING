@@ -1,3 +1,40 @@
+"""
+`csv_process.py`
+
+Este módulo gestiona todo el procesamiento de archivos CSV descargados desde la API de Google Drive 
+(Oracle's Elixir), convirtiéndolos en datos estructurados para su posterior almacenamiento en la base 
+de datos del sistema.
+
+### Funcionalidades principales
+
+- **Filtrado y organización de CSVs por liga y año** mediante `filtrar_ligas_automaticamente()`.
+- **Limpieza y eliminación de archivos irrelevantes** con `borrar_csv_2025_lol_esports()`.
+- **Extracción y mapeo de IDs únicos** para equipos, jugadores y partidas a través de funciones como:
+  - `obtener_o_crear_id()`
+  - `reemplazar_ids()`
+- **Transformación de CSVs crudos en objetos de alto nivel** como:
+  - Series (`extract_all_series_and_partidos`)
+  - Jugadores en partida (`extract_all_jugadores_en_partida`)
+  - Picks y Baneos (`extraer_all_baneos_picks`)
+  - Objetivos neutrales (`extract_objetivos_neutrales_matados`)
+  - Splits, Equipos y Jugadores (`extract_all_splits`, `extract_all_teams`, `extract_all_players`)
+
+### Estructura de carpetas esperada
+
+- `/Resources/CSV/LEC/YYYY/*.csv`: CSVs filtrados y organizados por año.
+- Diccionarios auxiliares (`*.json`) para mantener IDs consistentes y trazables entre ejecuciones:
+  - `player_ids.json`
+  - `taem_ids.json`
+  - `partidos_ids.json`
+
+### Objetivo
+
+Transformar grandes volúmenes de datos de partidas en estructuras limpias, normalizadas y listas para
+ser importadas en modelos Django relacionados con splits, partidos, jugadores y estadísticas específicas.
+
+**Este script es clave para convertir datos externos crudos en conocimiento estructurado dentro del sistema.**
+"""
+# Librerías estándar y externas utilizadas
 from datetime import datetime
 import pandas as pd
 import sys
@@ -6,22 +43,34 @@ import json
 import uuid
 import re
 
+# Definición de directorios clave y rutas del proyecto
 PROJECT_ROOT = os.path.abspath(os.path.join(os.path.dirname(__file__), '..', '..'))
 sys.path.insert(0, PROJECT_ROOT)
+# Importación de rutas predefinidas desde el archivo de configuración central
 from Resources.rutas import *
 
+# Directorios de trabajo con CSV organizados por liga
 CARPETA_CSV = os.path.join(CARPETA_CSV_GAMES)
 CARPETA_CSV_LEC = os.path.join(CARPETA_CSV, 'LEC')
 CARPETA_CSV_LCK = os.path.join(CARPETA_CSV, 'LCK')
+# Diccionarios de mapeo persistente para IDs únicos de:
+# - Equipos
+# - Jugadores
+# - Partidas
 IDS_EQUIPOS_DICCIONARIO = os.path.join(DICCIONARIO_CLAVES, 'taem_ids.json')
 IDS_PLAYER_DICCIONARIO = os.path.join(DICCIONARIO_CLAVES, 'player_ids.json')
 IDS_PARTIDOS_DICCIONARIO = os.path.join(DICCIONARIO_CLAVES, 'partidos_ids.json')
-JSON_EQUIPOS = os.path.join(JSON_INSTALATION_TEAMS, 'teams_data_leguepedia.json')
-JSON_JUGADORES = os.path.join(JSON_INSTALATION_PLAYERS, 'players_data_leguepedia.json')
-JSON_PARTIDOS = os.path.join(JSON_GAMES)
-JSON_SPLITS_LEC = os.path.join(JSON_INSTALATION_SPLITS_LEC)
 
 def borrar_csv_2025_lol_esports(carpeta_base):
+    """
+    Elimina todos los archivos CSV que comienzan con "2025_LoL_esports" dentro de una carpeta y sus subdirectorios.
+
+    Esta función se utiliza para limpiar archivos descargados automáticamente que no cumplen con los
+    criterios de procesamiento, asegurando que no interfieran con la carga estructurada de datos.
+
+    Args:
+        carpeta_base (str): Ruta absoluta de la carpeta base donde buscar y eliminar los archivos CSV no deseados.
+    """
     for root, dirs, files in os.walk(carpeta_base):
         for file in files:
             if file.startswith("2025_LoL_esports") and file.endswith(".csv"):
@@ -33,12 +82,31 @@ def borrar_csv_2025_lol_esports(carpeta_base):
                     print(f"No se pudo eliminar {ruta_completa}: {e}")
                     
 def filtrar_ligas_automaticamente(carpeta_csv, carpeta_salida_base, project_root):
+    """
+    Filtra automáticamente los archivos CSV por liga (por ejemplo, LEC) y los organiza por año y grupo.
+
+    Esta función lee todos los CSV en una carpeta base, identifica la liga (`league`) dentro del contenido,
+    aplica equivalencias personalizadas (como agrupar 'EU LCS' y 'LEC' bajo 'LEC'), y guarda archivos
+    filtrados por grupo y año en subcarpetas estructuradas.
+
+    Estructura de salida generada:
+        carpeta_salida_base/
+            LEC/
+                2023/
+                    2023_nombreoriginal_LEC.csv
+                2024/
+                    ...
+
+    Args:
+        carpeta_csv (str): Carpeta donde se encuentran los CSV originales descargados.
+        carpeta_salida_base (str): Carpeta base donde se guardarán los archivos CSV filtrados y organizados.
+        project_root (str): Ruta raíz del proyecto usada para calcular rutas relativas.
+    """
     os.makedirs(carpeta_salida_base, exist_ok=True)
 
     equivalencias_ligas = {
         'EU LCS': 'LEC',
         'LEC': 'LEC',
-        # Puedes añadir más equivalencias aquí si quieres agrupar otras ligas
     }
 
     archivos_csv = [
@@ -85,8 +153,19 @@ def filtrar_ligas_automaticamente(carpeta_csv, carpeta_salida_base, project_root
         except Exception as e:
             print(f"Error procesando {archivo}: {e}")
  
-# Función para cargar o inicializar un diccionario desde JSON
 def cargar_diccionario(ruta):
+    """
+    Carga un diccionario desde un archivo JSON si existe, o retorna un diccionario vacío si no se encuentra.
+
+    Esta función es utilizada para mantener mapeos persistentes (como IDs de jugadores o equipos) entre
+    ejecuciones del script. También informa por consola la cantidad de elementos cargados o si se inicia vacío.
+
+    Args:
+        ruta (str): Ruta absoluta del archivo JSON que se desea cargar.
+
+    Returns:
+        dict: Diccionario cargado desde el archivo, o uno nuevo si no existe.
+    """
     if os.path.exists(ruta):
         with open(ruta, 'r', encoding='utf-8') as f:
             dic = json.load(f)
@@ -95,8 +174,17 @@ def cargar_diccionario(ruta):
     print(f"No existe el archivo {ruta}, se crea diccionario vacío.")
     return {}
 
-# Función para guardar un diccionario en JSON
 def guardar_diccionario(diccionario, ruta):
+    """
+    Guarda un diccionario Python en un archivo JSON con formato legible y codificación UTF-8.
+
+    Si la ruta del archivo no existe, se crea el directorio necesario antes de escribir el JSON.
+    Imprime un mensaje informativo con el número de entradas guardadas.
+
+    Args:
+        diccionario (dict): Diccionario de datos a guardar.
+        ruta (str): Ruta absoluta donde se guardará el archivo JSON.
+    """
     try:
         directorio = os.path.dirname(ruta)
         if directorio and not os.path.exists(directorio):
@@ -111,6 +199,15 @@ def guardar_diccionario(diccionario, ruta):
         
         
 def es_uuid(valor):
+    """
+    Verifica si un valor dado es un UUID válido en formato estándar.
+
+    Args:
+        valor (str): Valor a comprobar.
+
+    Returns:
+        bool: `True` si el valor es un UUID válido, `False` en caso contrario.
+    """
     if not isinstance(valor, str):
         return False
     patron_uuid = re.compile(
@@ -119,6 +216,18 @@ def es_uuid(valor):
     return bool(patron_uuid.match(valor))
 
 def extraer_hash_o_uuid(valor):
+    """
+    Extrae un UUID o hash válido desde un valor de entrada complejo.
+
+    Este método acepta entradas como UUIDs, hashes de 32 caracteres hexadecimales o strings con formato tipo
+    `"oe:player:abcdef1234567890..."`, extrayendo la parte identificadora.
+
+    Args:
+        valor (str): Valor original que puede contener un UUID o hash.
+
+    Returns:
+        str or None: UUID o hash extraído si es válido, o `None` si no se pudo interpretar.
+    """
     if not isinstance(valor, str):
         return None
     valor = valor.strip()
@@ -126,20 +235,32 @@ def extraer_hash_o_uuid(valor):
     if es_uuid(valor):
         return valor
 
-    # Si el valor es tipo "oe:player:..." -> extrae la parte final
     if ":" in valor:
         partes = valor.split(":")
         posible_hash = partes[-1]
         if re.fullmatch(r"[a-fA-F0-9]{32}", posible_hash):
             return posible_hash
 
-    # Si parece ser un hash directamente (32 chars hex)
     if re.fullmatch(r"[a-fA-F0-9]{32}", valor):
         return valor
 
-    return None  # No se puede usar como clave
+    return None  
 
 def obtener_o_crear_id(diccionario, valor_original):
+    """
+    Obtiene un ID único basado en un hash/UUID válido extraído del valor original.
+    Si no existe un ID asociado, genera un nuevo UUID persistente y lo guarda en el diccionario.
+
+    Esta función garantiza que cada identificador (jugador, equipo, partida) se mantenga constante
+    entre múltiples ejecuciones, incluso si el valor original es no estándar o cambiante.
+
+    Args:
+        diccionario (dict): Diccionario donde se almacenan los mapeos entre valores originales y UUIDs.
+        valor_original (str): Valor fuente del cual se intentará extraer un hash o UUID válido.
+
+    Returns:
+        str: UUID asignado o recuperado desde el diccionario para el valor proporcionado.
+    """
     id_base = extraer_hash_o_uuid(valor_original)
 
     if id_base is None:
@@ -161,6 +282,18 @@ def obtener_o_crear_id(diccionario, valor_original):
     return diccionario[id_base]
          
 def obtener_rutas_csv(carpeta):
+    """
+    Busca de forma recursiva rutas absolutas a archivos CSV dentro de subdirectorios anidados por año.
+
+    Esta función asume que los archivos CSV están organizados en carpetas por año, por ejemplo:
+    `carpeta/2023/archivo.csv`, `carpeta/2024/archivo.csv`, etc.
+
+    Args:
+        carpeta (str): Ruta de la carpeta raíz que contiene subdirectorios con archivos CSV.
+
+    Returns:
+        list[str]: Lista ordenada de rutas absolutas a los archivos CSV encontrados.
+    """
     rutas_csv = []
     for year in os.listdir(carpeta):
         year_path = os.path.join(carpeta, year)
@@ -173,6 +306,17 @@ def obtener_rutas_csv(carpeta):
     return rutas_csv
 
 def reemplazar_ids(df, columna, diccionario):
+    """
+    Reemplaza los valores de una columna en un DataFrame por UUIDs únicos utilizando un diccionario de mapeo.
+
+    Para cada valor original en la columna especificada, se obtiene o genera un UUID a través del diccionario.
+    Este procedimiento permite mantener la consistencia de identificadores únicos a lo largo de múltiples ejecuciones.
+
+    Args:
+        df (pd.DataFrame): DataFrame que contiene la columna a transformar.
+        columna (str): Nombre de la columna cuyos valores serán reemplazados.
+        diccionario (dict): Diccionario que almacena los mapeos entre valores originales y UUIDs.
+    """
     if columna not in df.columns:
         return
     nuevos_ids = []
@@ -181,6 +325,16 @@ def reemplazar_ids(df, columna, diccionario):
     df[columna] = nuevos_ids
 
 def procesar_todos_los_csvs_en_lec():
+    """
+    Procesa todos los archivos CSV de la liga LEC para reemplazar IDs sensibles por UUIDs persistentes.
+
+    Utiliza tres diccionarios para mapear y almacenar de forma consistente los IDs de equipos, jugadores y partidas.
+    Guarda los DataFrames actualizados sobrescribiendo los CSV originales. Además, actualiza y guarda los diccionarios
+    con nuevos UUIDs generados.
+
+    Returns:
+        str: Mensaje de confirmación indicando el número de archivos CSV procesados.
+    """
     dicc_teams = cargar_diccionario(IDS_EQUIPOS_DICCIONARIO)
     dicc_players = cargar_diccionario(IDS_PLAYER_DICCIONARIO)
     dicc_games = cargar_diccionario(IDS_PARTIDOS_DICCIONARIO)
@@ -206,6 +360,17 @@ def procesar_todos_los_csvs_en_lec():
         
             
 def extract_all_splits():
+    """
+    Extrae y agrupa todos los splits únicos presentes en los archivos CSV de partidas de la LEC.
+
+    Esta función recorre los archivos CSV organizados por año y liga, filtra los datos por el año
+    correspondiente al archivo, y construye un diccionario con información unificada de cada split,
+    incluyendo su identificador, liga, año y nombre de la temporada.
+
+    Returns:
+        dict[str, dict]: Diccionario con claves `split_id` y valores que contienen metainformación
+        del split: ID, liga, año y nombre de la temporada (season).
+    """
     all_splits = {}
 
     rutas_csv = obtener_rutas_csv(CARPETA_CSV_LEC)
@@ -245,6 +410,19 @@ def extract_all_splits():
     return all_splits
 
 def extract_all_series_and_partidos():
+    """
+    Extrae todas las series y partidos a partir de los archivos CSV de partidas de la LEC.
+
+    Esta función agrupa las partidas por `gameid` y organiza las series con base en la aparición
+    del juego 1 (`game == 1`). Cada serie contiene metainformación como fecha, número de partidas,
+    parche, y si corresponde a playoffs. Además, se extraen los datos detallados de cada partido
+    dentro de cada serie mediante `extract_partidos_de_serie`.
+
+    Returns:
+        tuple[dict, dict]:
+            - dict con claves `serie_id` y valores con metadatos de la serie (split_id, fecha, patch, playoffs).
+            - dict con claves `gameid` y valores con datos del partido (orden, duración, equipos, ganador, etc.).
+    """
     all_series = {}
     all_partidos = {}
 
@@ -327,6 +505,23 @@ def extract_all_series_and_partidos():
 
 
 def extract_partidos_de_serie(serie_id, serie_df):
+    """
+    Procesa un DataFrame que contiene los datos de una serie y extrae los partidos correspondientes.
+
+    Args:
+        serie_id (str): Identificador único de la serie.
+        serie_df (pd.DataFrame): DataFrame filtrado que contiene las filas de los partidos de la serie.
+
+    Returns:
+        dict: Diccionario donde cada clave es un `gameid` y el valor es un diccionario con:
+            - 'serie_id' (str): ID de la serie a la que pertenece el partido.
+            - 'hora' (datetime.time or None): Hora del inicio del partido.
+            - 'orden' (int): Orden del partido dentro de la serie.
+            - 'duracion' (int): Duración del partido en segundos.
+            - 'equipo_azul' (str): ID del equipo en el lado azul.
+            - 'equipo_rojo' (str): ID del equipo en el lado rojo.
+            - 'equipo_ganador' (str): ID del equipo que ganó el partido.
+    """
     partidos = {}
 
     grouped = serie_df.groupby('gameid')
@@ -383,6 +578,18 @@ def extract_partidos_de_serie(serie_id, serie_df):
 
 
 def extract_all_teams():
+    """
+    Extrae todos los equipos únicos a partir de los archivos CSV de la carpeta LEC.
+
+    Recorre todos los archivos CSV en la carpeta `CARPETA_CSV_LEC`, identifica los equipos únicos
+    según su `teamid` y `teamname`, y marca como activos aquellos que aparecen en el archivo más reciente.
+
+    Returns:
+        dict: Un diccionario donde cada clave es el ID del equipo (`teamid`) y cada valor es un diccionario con:
+            - 'id' (str): ID único del equipo.
+            - 'name' (str): Nombre del equipo.
+            - 'activo' (bool): `True` si el equipo aparece en el último archivo CSV procesado, `False` en caso contrario.
+    """
     all_teams = {}
     rutas_csv = obtener_rutas_csv(CARPETA_CSV_LEC)
 
@@ -427,6 +634,20 @@ def extract_all_teams():
     return all_teams
 
 def extract_all_players():
+    """
+    Extrae todos los jugadores únicos a partir de los archivos CSV en la carpeta LEC.
+
+    Recorre los archivos CSV para identificar jugadores por su `playerid`, `playername` y `teamid`, 
+    y determina su última aparición basada en el campo `year`. Marca como activos aquellos que aparecieron 
+    en el año más reciente.
+
+    Returns:
+        dict: Un diccionario donde cada clave es el ID del jugador (`playerid`) y el valor es un diccionario con:
+            - 'id' (str): ID único del jugador.
+            - 'nombre' (str): Nombre del jugador.
+            - 'equipo_id' (str): ID del equipo al que pertenecía.
+            - 'activo' (bool): `True` si el jugador jugó en el año más reciente encontrado, `False` en caso contrario.
+    """
     all_players = {} 
     last_appearance = {} 
 
@@ -467,6 +688,26 @@ def extract_all_players():
     return all_players
 
 def extract_all_jugadores_en_partida():
+    """
+    Extrae la información detallada de los jugadores en cada partida a partir de archivos CSV de la LEC.
+
+    Para cada archivo CSV encontrado, agrupa los datos por `gameid`, selecciona los primeros 10 jugadores 
+    (5 por equipo), y construye un diccionario con estadísticas individuales del jugador y su desempeño 
+    en diferentes puntos del tiempo (10, 15, 20, 25 minutos).
+
+    Returns:
+        list: Lista de diccionarios, cada uno representando a un jugador en una partida con estadísticas como:
+              - jugador (str): ID del jugador.
+              - partido (str): ID del partido.
+              - campeon (str): Campeón jugado.
+              - position (str): Posición jugada (top, jng, mid, bot, sup).
+              - side (str): Lado del mapa (Blue o Red).
+              - Estadísticas de combate: kills, deaths, assists, multikills.
+              - Participación en First Blood.
+              - Daño infligido y recibido.
+              - Visión y oro.
+              - Estadísticas por minuto (10, 15, 20, 25) para oro, experiencia, CS, kills, assists y deaths.
+    """
     all_jugadores_en_partida = []
     rutas_csv = obtener_rutas_csv(CARPETA_CSV_LEC)
 
@@ -557,6 +798,26 @@ def extract_all_jugadores_en_partida():
 
 
 def extraer_all_baneos_picks():
+    """
+    Extrae todos los registros de picks y baneos de campeones por equipo a partir de los CSV de la LEC.
+
+    Para cada archivo CSV:
+    - Identifica las filas correspondientes a los equipos (`position == 'team'`).
+    - Intenta obtener los campeones seleccionados (`pick1` a `pick5`) y baneados (`ban1` a `ban5`).
+    - Si no encuentra 5 picks, intenta inferirlos desde las filas de jugadores.
+    - Registra la información por cada selección realizada.
+
+    Returns:
+        list: Una lista de diccionarios con la información de picks y baneos. 
+              Cada diccionario contiene:
+            - 'equipo' (str): ID del equipo.
+            - 'partido' (str): ID del partido.
+            - 'campeon_baneado' (str | None): Campeón baneado, si existe.
+            - 'ban' (int | None): Orden del baneo (1 a 5), si existe.
+            - 'campeon_seleccionado' (str): Campeón seleccionado en ese turno.
+            - 'seleccion' (int): Orden del pick (1 a 5).
+            - 'equipo_nombre' (str): Nombre del equipo.
+    """
     rutas_csv = obtener_rutas_csv(CARPETA_CSV_LEC)
     resultados = []
 
@@ -570,7 +831,6 @@ def extraer_all_baneos_picks():
                 team_id = row['teamid']
                 team_name = row['teamname']
 
-                # Extraer picks del equipo
                 picks = []
                 for i in range(1, 6):
                     champ_s = row.get(f'pick{i}')
@@ -578,7 +838,6 @@ def extraer_all_baneos_picks():
                         picks.append((i, champ_s.strip()))
 
                 if len(picks) < 5:
-                    # Intentar recuperar picks desde la sección de jugadores
                     df_jugadores = df[
                         (df['position'].isin(['top', 'jng', 'mid', 'bot', 'sup'])) &
                         (df['teamid'] == team_id)
@@ -591,7 +850,6 @@ def extraer_all_baneos_picks():
                         if len(picks) == 5:
                             break
 
-                # Añadir 5 registros: pick + ban (si existe) en la misma fila
                 for i in range(1, 6):
                     champ_s = next((c for j, c in picks if j == i), None)
                     champ_b = row.get(f'ban{i}')
@@ -618,6 +876,21 @@ def extraer_all_baneos_picks():
 
 
 def extract_objetivos_neutrales_matados():
+    """
+    Extrae y agrupa estadísticas de objetivos neutrales matados por equipo y partida a partir de los archivos CSV.
+
+    Utiliza la configuración definida en el JSON `objetivosneutrales.json` para identificar los nombres
+    de los objetivos a buscar en los archivos. Recorre todos los archivos CSV de la LEC y agrupa las estadísticas
+    por combinación única de `gameid` y `teamid`.
+
+    Returns:
+        list: Lista de diccionarios, donde cada uno representa los objetivos conseguidos por un equipo en una partida.
+              Cada diccionario contiene:
+                - 'gameid' (str): ID del partido.
+                - 'teamid' (str): ID del equipo.
+                - 'teamname' (str): Nombre del equipo.
+                - {nombre_objetivo: cantidad} para cada objetivo presente en el archivo.
+    """
     try:
         with open(os.path.join(DICCIONARIO_CLAVES, 'objetivosneutrales.json'), 'r', encoding='utf-8') as f:
             data = json.load(f)
@@ -670,10 +943,3 @@ def extract_objetivos_neutrales_matados():
 
     return resultados
         
-
-
-   
-if __name__ == "__main__":
-    data = extraer_all_baneos_picks()
-    for item in data:
-        print(item)

@@ -1,18 +1,21 @@
 """
-URL configuration for miweb project.
+urls.py
+=======
 
-The `urlpatterns` list routes URLs to views. For more information please see:
-    https://docs.djangoproject.com/en/5.2/topics/http/urls/
-Examples:
-Function views
-    1. Add an import:  from my_app import views
-    2. Add a URL to urlpatterns:  path('', views.home, name='home')
-Class-based views
-    1. Add an import:  from other_app.views import Home
-    2. Add a URL to urlpatterns:  path('', Home.as_view(), name='home')
-Including another URLconf
-    1. Import the include() function: from django.urls import include, path
-    2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
+Configuración de rutas (URL routing) principal del proyecto `miweb`.
+
+Este archivo centraliza todas las rutas que redirigen a las vistas del proyecto.
+Es el punto de entrada para determinar cómo se manejan las URLs dentro de la aplicación Django.
+
+Rutas incluidas:
+- `/admin/`: Acceso al panel de administración de Django.
+- `/` (raíz): Delegada al módulo de rutas de la app `frontend`.
+
+Este archivo utiliza la función `include()` para permitir que cada aplicación
+gestione sus propias rutas, manteniendo una arquitectura modular y mantenible.
+
+Para más información sobre el enrutamiento en Django:
+https://docs.djangoproject.com/en/5.2/topics/http/urls/
 """
 from django.contrib import admin
 from django.urls import path, include

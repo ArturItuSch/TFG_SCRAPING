@@ -1,3 +1,21 @@
+"""
+Este módulo contiene la lógica para realizar scraping sobre la página gol.gg, específicamente para
+obtener estadísticas de campeones utilizadas en competiciones profesionales de League of Legends.
+
+El scraping se realiza sobre la URL principal de campeones y utiliza Selenium para gestionar
+la aceptación de cookies, navegación dinámica y extracción del HTML, y BeautifulSoup para procesar
+el contenido de manera estructurada.
+
+También se descargan imágenes de campeones y se genera un diccionario local con identificadores únicos.
+
+Dependencias:
+- Selenium: Para interacción dinámica con la web.
+- BeautifulSoup: Para parsear el HTML extraído.
+- requests: Para descargas directas de imágenes.
+- uuid: Para asignar identificadores únicos cuando es necesario.
+"""
+
+# Librerías estándar y externas utilizadas
 import os
 import random
 from selenium.webdriver.common.by import By
@@ -12,20 +30,23 @@ import requests
 import re
 import uuid
 
-# Ubiciaciones de los archivos json:
+# Definición de directorios clave y rutas del proyecto
 BASE_DIR = os.path.abspath(os.path.join(os.path.dirname(__file__), '..', '..'))
-sys.path.insert(0, BASE_DIR)
-from scraping.driver import iniciar_driver
-from Resources.rutas import *
+sys.path.insert(0, BASE_DIR) # Añade la ruta raíz del proyecto al path
 
-JSON_DIR = os.path.join(BASE_DIR, "Resources", "JSON")
-CHAMPIONS_FOLDER_PATH = os.path.join(BASE_DIR, CARPETA_IMAGENES_CHAMPIONS)
-CHAMPION_DICCIONARIY_ID = os.path.join(BASE_DIR, DICCIONARIO_CLAVES, "champions_ids.json")
+from scraping.driver import iniciar_driver # Función para lanzar el navegador Selenium
+from Resources.rutas import * # Rutas globales del proyecto definidas externamente en el módulo Resources
 
+# Directorios y archivos utilizados para la salida del scraping
+JSON_DIR = os.path.join(BASE_DIR, "Resources", "JSON") # Carpeta para guardar los JSON de campeones
+CHAMPIONS_FOLDER_PATH = os.path.join(BASE_DIR, CARPETA_IMAGENES_CHAMPIONS) # Carpeta donde se guardan las imágenes de los Campeones
+CHAMPION_DICCIONARIY_ID = os.path.join(BASE_DIR, DICCIONARIO_CLAVES, "champions_ids.json") # Diccionario con IDs de campeones
+
+# URLs de la web gol.gg utilizadas para el scraping
 BASE_URL = "https://gol.gg"
-CHAMPIONS_URL = "https://gol.gg/champion/list/season-S15/split-Spring/tournament-ALL/sort-1/"
+CHAMPIONS_URL = "https://gol.gg/champion/list/season-S15/split-Spring/tournament-ALL/sort-1/" # Página con la lista de campeones
 
-# Encabezados para las peticiones HTTP
+# Headers HTTP simulando navegador real para evitar bloqueos
 headers = {
     "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36",
     "Accept-Language": "es-ES,es;q=0.9,en;q=0.8",
@@ -41,8 +62,16 @@ headers = {
     "Cache-Control": "max-age=0",
 }
 
-# Si deseas cambiar el "Referer" o el "User-Agent" de forma dinámica
 def obtener_headers_dinamicos():
+    """
+    Genera encabezados HTTP dinámicos para simular distintos navegadores y evitar bloqueos por scraping.
+
+    Cambia aleatoriamente el `User-Agent` y el `Referer` para cada petición, eligiendo entre varias
+    opciones populares.
+
+    Returns:
+        dict: Diccionario de encabezados HTTP con `User-Agent` y `Referer` aleatorios.
+    """
     user_agents = [
         "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36",
         "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Firefox/112.0",
@@ -61,6 +90,15 @@ def obtener_headers_dinamicos():
     return headers
         
 def accept_cookies(driver):
+    """
+    Acepta automáticamente las cookies y las políticas de privacidad en gol.gg utilizando Selenium.
+
+    Esta función navega a la página principal de gol.gg y simula el clic sobre el botón de consentimiento
+    de cookies, evitando bloqueos futuros al acceder a otras rutas protegidas por banners.
+
+    Args:
+        driver (selenium.webdriver.Chrome): Instancia del navegador automatizado.
+    """
     try:
         driver.get("https://gol.gg/esports/home/")
         time.sleep(5)
@@ -73,6 +111,12 @@ def accept_cookies(driver):
         print("No se pudo aceptar cookies:", e)
 
 def cargar_diccionario_ids():
+    """
+    Carga desde disco el diccionario local de identificadores de campeones, si existe.
+
+    Returns:
+        dict: Diccionario con los IDs de campeones previamente almacenados, o uno vacío si no existe.
+    """
     if os.path.exists(CHAMPION_DICCIONARIY_ID):
         with open(CHAMPION_DICCIONARIY_ID, "r", encoding="utf-8") as f:
             return json.load(f)
@@ -80,6 +124,14 @@ def cargar_diccionario_ids():
         return {}
 
 def guardar_diccionario_ids(diccionario):
+    """
+    Guarda en disco el diccionario de IDs de campeones en formato JSON.
+
+    Este archivo se utiliza para mapear de forma persistente cada campeón a su identificador único.
+
+    Args:
+        diccionario (dict): Diccionario con los datos que se desean guardar.
+    """
     with open(CHAMPION_DICCIONARIY_ID, "w", encoding="utf-8") as f:
         json.dump(diccionario, f, ensure_ascii=False, indent=4)
 
@@ -119,12 +171,21 @@ def download_image(ruta_local, url_imagen):
         time.sleep(random.uniform(1, 2))
         return None
 
-    except Exception as e:
-        print(f"❌ Error al descargar la imagen: {e}")
-        time.sleep(random.uniform(1, 2))
-        return None
-
 def get_champions_information(driver):
+    """
+    Descarga una imagen desde una URL y la guarda en el sistema de archivos en una ruta local especificada.
+
+    Si la imagen ya existe localmente, se omite la descarga para evitar redundancias. Utiliza encabezados
+    HTTP dinámicos para simular navegación humana y evitar bloqueos por scraping. Devuelve una ruta
+    relativa compatible con URLs para uso posterior en base de datos o interfaces web.
+
+    Args:
+        ruta_local (str): Ruta absoluta donde se guardará la imagen.
+        url_imagen (str): URL de la imagen a descargar.
+
+    Returns:
+        str or None: Ruta relativa al directorio `Resources` si la descarga es exitosa, `None` si falla.
+    """
     champions = []
     ids_existentes = cargar_diccionario_ids()
     nuevos_ids = False 
@@ -195,6 +256,21 @@ def get_champions_information(driver):
     return champions
 
 def verificar_existencia_imagen(nombre_campeon, ruta_json):
+    """
+    Función auxiliar para el desarrollo:
+    Verifica si existe la imagen local asociada a un campeón, basándose en la información de un archivo JSON.
+
+    Esta función busca el nombre del campeón dentro del JSON especificado, y comprueba si la ruta de su
+    imagen existe en el sistema de archivos. Permite evitar descargas innecesarias y asegurar la integridad
+    de los recursos visuales antes de utilizarlos en la aplicación.
+
+    Args:
+        nombre_campeon (str): Nombre del campeón a verificar.
+        ruta_json (str): Ruta absoluta al archivo JSON que contiene los datos de los campeones.
+
+    Returns:
+        bool: `True` si la imagen existe en la ruta especificada, `False` en caso contrario o si hay error.
+    """
     try:
         with open(ruta_json, 'r', encoding='utf-8') as f:
             datos = json.load(f)

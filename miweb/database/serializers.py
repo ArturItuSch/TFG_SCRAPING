@@ -1,6 +1,33 @@
+"""
+serializers.py
+==============
+
+Este módulo define los serializadores para los modelos del proyecto, utilizando
+el framework `Django REST Framework`.
+
+Cada clase representa un serializador para un modelo específico, permitiendo
+convertir instancias de modelos Django en formatos JSON (u otros formatos
+compatibles con REST), y viceversa.
+
+Serializadores definidos:
+- CampeonSerializer
+- SplitLECSerializer
+- SerieSerializer
+- PartidoSerializer
+- EquipoSerializer
+- JugadorSerializer
+- JugadorEnPartidaSerializer
+- SeleccionSerializer (con relaciones explícitas)
+- ObjetivosNeutralesSerializer
+
+Algunos serializadores definen relaciones foráneas con `PrimaryKeyRelatedField`
+para facilitar la validación e inserción desde peticiones externas.
+
+Estos serializadores son fundamentales para las vistas API o para importar datos
+de manera controlada desde fuentes externas.
+"""
 from rest_framework import serializers
 from .models import *
-import urllib.parse
 
 class CampeonSerializer(serializers.ModelSerializer):
     class Meta:
