@@ -127,11 +127,16 @@ def download_image(ruta_local, url_imagen):
 def get_champions_information(driver):
     champions = []
     ids_existentes = cargar_diccionario_ids()
-    nuevos_ids = False 
+    nuevos_ids = False
+    total_campeones = 0
+    campeones_exitosos = 0
+
+    print("⏳ Iniciando scraping de campeones...")
+    start_time = time.time()  # ⏱️ Inicia el temporizador
+
     try:
         driver.get(CHAMPIONS_URL)
 
-        # Espera a que se cargue la tabla
         WebDriverWait(driver, 15).until(
             EC.presence_of_element_located((By.CLASS_NAME, "table_list"))
         )
@@ -140,58 +145,77 @@ def get_champions_information(driver):
         soup = BeautifulSoup(response, 'html.parser')
         table = soup.find('table', class_='table_list')
 
-        if table:
-            tbody = table.find('tbody')
-            rows = tbody.find_all('tr') if tbody else []
+        if not table:
+            print("❌ No se encontró la tabla de campeones.")
+            return champions
 
-            for row in rows:
-                try:
-                    img = row.find('img', class_='champion_icon_light')
-                    if not img:
-                        continue
-                    
-                    nombre = re.sub(r'[\\/*?:"<>|]', "", img['alt'])   
-                    if nombre in ids_existentes:
-                        champ_id = ids_existentes[nombre]
-                    else:
-                        champ_id = str(uuid.uuid4())
-                        ids_existentes[nombre] = champ_id
-                        nuevos_ids = True
-                        
-                    url_relativa = img['src']
-                    champion = {
-                        'id': champ_id,
-                        'nombre': nombre,
-                        'ruta_imagen': None
-                    }
-                    nombre_archivo = f"{nombre}.png"
-                    ruta_local = os.path.join(CHAMPIONS_FOLDER_PATH, nombre_archivo)
+        tbody = table.find('tbody')
+        rows = tbody.find_all('tr') if tbody else []
 
-                    # Asegurar que la URL sea válida
-                    if not url_relativa.startswith("http"):
-                        url_relativa = url_relativa if url_relativa.startswith("/") else "/" + url_relativa
-                        url_absoluta = urljoin(BASE_URL, url_relativa)
-                    else:
-                        url_absoluta = url_relativa
+        total_campeones = len(rows)
+        print(f"🔍 Detectados {total_campeones} campeones en la tabla...")
 
-                    # Descargar imagen y guardar la ruta relativa
-                    ruta_relativa = download_image(ruta_local, url_absoluta)
-                    if ruta_relativa:
-                        champion["ruta_imagen"] = ruta_relativa
-                    else:
-                        print(f"No se pudo descargar la imagen de {nombre}")
-
-                    champions.append(champion)
-
-                except Exception as e:
-                    print(f"Error procesando fila: {e}")
+        for row in rows:
+            try:
+                img = row.find('img', class_='champion_icon_light')
+                if not img:
                     continue
-        else:
-            print("No se encontró la tabla.")
+
+                nombre = re.sub(r'[\\/*?:"<>|]', "", img['alt'])
+                if nombre in ids_existentes:
+                    champ_id = ids_existentes[nombre]
+                else:
+                    champ_id = str(uuid.uuid4())
+                    ids_existentes[nombre] = champ_id
+                    nuevos_ids = True
+
+                url_relativa = img['src']
+                champion = {
+                    'id': champ_id,
+                    'nombre': nombre,
+                    'ruta_imagen': None
+                }
+
+                nombre_archivo = f"{nombre}.png"
+                ruta_local = os.path.join(CHAMPIONS_FOLDER_PATH, nombre_archivo)
+
+                # Asegurar que la URL sea válida
+                if not url_relativa.startswith("http"):
+                    url_relativa = url_relativa if url_relativa.startswith("/") else "/" + url_relativa
+                    url_absoluta = urljoin(BASE_URL, url_relativa)
+                else:
+                    url_absoluta = url_relativa
+
+                ruta_relativa = download_image(ruta_local, url_absoluta)
+                if ruta_relativa:
+                    champion["ruta_imagen"] = ruta_relativa
+                    campeones_exitosos += 1
+                    print(f"✅ Campeón {nombre} procesado correctamente.")
+                else:
+                    print(f"⚠️ No se pudo descargar la imagen de {nombre}")
+
+                champions.append(champion)
+
+            except Exception as e:
+                print(f"⚠️ Error procesando fila: {e}")
+                continue
+
     except Exception as e:
-        print(f"Error inesperado: {e}")
+        print(f"🔥 Error inesperado: {e}")
+
     if nuevos_ids:
         guardar_diccionario_ids(ids_existentes)
+
+    end_time = time.time()
+    elapsed = end_time - start_time
+    minutos, segundos = divmod(elapsed, 60)
+
+    print("\n📋 Resumen del scraping de campeones:")
+    print(f"🏆 Campeones detectados: {total_campeones}")
+    print(f"✔️ Campeones procesados correctamente: {campeones_exitosos}")
+    print(f"❌ Fallos de extracción: {total_campeones - campeones_exitosos}")
+    print(f"⏱️ Duración total del scraping: {int(minutos)} min {int(segundos)} s")
+
     return champions
 
 def verificar_existencia_imagen(nombre_campeon, ruta_json):

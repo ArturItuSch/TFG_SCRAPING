@@ -132,21 +132,20 @@ def get_extra_player_data(url):
                 return None
             player_data = {}
             rows = table.find_all('tr')
+            # Obtener imagen del jugador (una sola vez)
+            img_link_tag = table.find('a', class_='image')
+            if img_link_tag and img_link_tag.has_attr('href'):
+                player_image = download_image(os.path.join(PLAYER_IMAGES_DIR, f"{url.split('/')[-1]}.png"), img_link_tag['href'])
+                if player_image is not None:
+                    player_data['image'] = player_image
+                else:
+                    print(f"Error al descargar la imagen del jugador: {url}")
+                    player_data['image'] = None
+            else:
+                print(f"No se encontró la imagen del jugador en: {url}")
+                player_data['image'] = None
+
             for row in rows:
-                td = row.find('td', class_='infobox-wide')
-                if td is not None:
-                    img_link_tag = table.find('a', class_='image')
-                    if img_link_tag and img_link_tag.has_attr('href'):
-                        player_image = download_image(os.path.join(PLAYER_IMAGES_DIR, f"{url.split('/')[-1]}.png"), img_link_tag['href'])
-                        if player_image is not None:
-                            player_data['image'] = player_image
-                            continue
-                        else:
-                            print(f"Error al descargar la imagen del jugador: {url}")
-                            player_data['image'] = None
-                    else:
-                        print(f"No se encontró la imagen del jugador en: {url}")
-                        return None                            
                 # Conseguir el cumpleaños del jugador y sus nicknames de SoloQ
                 cells = row.find_all('td')
                 if len(cells) == 2:
@@ -177,36 +176,47 @@ def get_extra_player_data(url):
                                  
             
 
-# Conseguir los datos de los jugadores de los equipos
 def get_player_data():
     all_player_data = []
-    urls = get_team_links("https://lol.fandom.com/wiki/LEC/2025_Season/Spring_Season")  
+    urls = get_team_links("https://lol.fandom.com/wiki/LEC/2025_Season/Spring_Season")
+    total_urls = len(urls)
+    total_jugadores = 0
+    jugadores_exitosos = 0
+
+    if not urls:
+        print("❌ No se encontraron URLs de equipos.")
+        return []
+
+    print(f"🔍 Consultando datos de {total_urls} equipos...")
+    start_time = time.time()  # ⏱️ Inicia el temporizador
+
     for url in urls:
         try:
             response = get_html(url, headers)
             if response is None:
-                print(f"No se pudo obtener respuesta de la URL: {url} en get_team_data")
-                continue  # Saltar a la siguiente URL si no se obtiene respuesta
+                print(f"❌ No se pudo obtener respuesta de la URL: {url}")
+                continue
 
             soup = BeautifulSoup(response.text, 'html.parser')
             tabla = soup.find('table', class_='team-members')
             if not tabla:
-                print(f"No se encontró la tabla de miembros en: {url}")
-                continue  # Saltar a la siguiente URL si no se encuentra la tabla
+                print(f"❌ No se encontró la tabla de miembros en: {url}")
+                continue
 
             tbody = tabla.find('tbody')
             if not tbody:
-                print(f"No se encontró el cuerpo de la tabla en: {url}")
-                continue  # Saltar a la siguiente URL si no se encuentra el cuerpo de la tabla
+                print(f"❌ No se encontró el cuerpo de la tabla en: {url}")
+                continue
 
             rows = tbody.find_all('tr')
 
             for row in rows:
                 celdas = row.find_all('td')
                 if len(celdas) < 7:
-                    continue 
+                    continue
+
+                total_jugadores += 1
                 try:
-                    
                     residencia = celdas[0].get_text(strip=True)
                     pais = celdas[1].find('span')['title'] if celdas[1].find('span') else ''
                     jugador = celdas[2].get_text(strip=True)
@@ -215,16 +225,12 @@ def get_player_data():
                     contrato = celdas[5].get_text(strip=True)
                     spans = celdas[6].find_all('span')
                     fecha_union = spans[1].get_text(strip=True) if len(spans) > 1 else ''
-                
-                    try:
-                        enlace_tag = celdas[2].find('a')
-                        url_relativa = enlace_tag['href'] if enlace_tag else ''
-                        url_jugador = urljoin('https://lol.fandom.com', url_relativa)
-                        datos_complementarios = get_extra_player_data(url_jugador)
-                    except Exception as e:
-                        print(f"Error al obtener datos complementarios del jugador: {e}")
-                        datos_complementarios = {}
-                        
+
+                    enlace_tag = celdas[2].find('a')
+                    url_relativa = enlace_tag['href'] if enlace_tag else ''
+                    url_jugador = urljoin('https://lol.fandom.com', url_relativa)
+                    datos_complementarios = get_extra_player_data(url_jugador) or {}
+
                     miembro = {
                         'jugador': jugador,
                         'nombre': nombre_real,
@@ -232,25 +238,40 @@ def get_player_data():
                         'rol': rol,
                         'equipo': re.sub(r'\s*\(.*?\)\s*', '', url.split('/')[-1].replace('_', ' ').replace('Season', '').strip()),
                         'pais': pais,
-                        'nacimiento': datos_complementarios.get('birthday', None),
-                        'soloqueue_ids': datos_complementarios.get('soloqueue_ids', None),
+                        'nacimiento': datos_complementarios.get('birthday'),
+                        'soloqueue_ids': datos_complementarios.get('soloqueue_ids'),
                         'contratado_hasta': contrato,
                         'contratado_desde': fecha_union,
-                        'imagen': datos_complementarios.get('image', None),
+                        'imagen': datos_complementarios.get('image'),
                     }
+
                     all_player_data.append(miembro)
+                    jugadores_exitosos += 1
+                    print(f"✅ Jugador extraído correctamente: {jugador}")
 
                 except Exception as e:
-                    print(f"Error al procesar una fila: {e}")
-                    continue  
+                    print(f"⚠️ Error al procesar jugador: {e}")
+                    continue
 
         except requests.exceptions.RequestException as e:
-            print(f"Error de red al acceder a {url}: {e}")
-            continue 
+            print(f"🌐 Error de red en {url}: {e}")
+            continue
 
         except Exception as e:
-            print(f"Error inesperado al procesar los datos del equipo en {url}: {e}")
-            continue  
+            print(f"🔥 Error inesperado al procesar URL {url}: {e}")
+            continue
+
+    end_time = time.time()
+    elapsed = end_time - start_time
+    minutos, segundos = divmod(elapsed, 60)
+
+    print("\n📋 Resumen del scraping:")
+    print(f"🔗 URLs consultadas: {total_urls}")
+    print(f"👥 Total de jugadores detectados: {total_jugadores}")
+    print(f"✔️ Jugadores extraídos correctamente: {jugadores_exitosos}")
+    print(f"❌ Fallos de extracción: {total_jugadores - jugadores_exitosos}")
+    print(f"⏱️ Duración total del scraping: {int(minutos)} min {int(segundos)} s")
+
     return all_player_data
 
 
@@ -279,27 +300,36 @@ def download_image(ruta_completa, url_imagen):
         print(f"Error al descargar la imagen: {e}")
         return None
     
-# Conseguir la información de los jugadores de los equipos que se pasan por una lista de urls y retorna una lista de diccionarios con la información de los jugadores
+# Conseguir la información de los jugadores de los equipos desde una lista de URLs
 def get_team_data():
     informacion_equipos = []
     urls = get_team_links("https://lol.fandom.com/wiki/LEC/2025_Season/Spring_Season")
+    
+    total_urls = len(urls)
+    total_equipos = 0
+    equipos_exitosos = 0
+
     if not urls:
-        print("No se encontraron enlaces de equipos.")
+        print("❌ No se encontraron enlaces de equipos.")
         return []
+
+    print(f"🔍 Consultando información de {total_urls} equipos...")
+    start_time = time.time()  # ⏱️ Inicia el temporizador
+
     for url in urls:
+        total_equipos += 1
         try:
             response = get_html(url, headers)
             if response is None:
-                print(f"No se pudo obtener respuesta de la URL: {url}")
+                print(f"❌ No se pudo obtener respuesta de la URL: {url}")
                 continue
-            
-            soup = BeautifulSoup(response.text, 'html.parser')
 
-            # Buscar la tabla de información del equipo
+            soup = BeautifulSoup(response.text, 'html.parser')
             table = soup.select_one('table#infoboxTeam')
             if not table:
-                print(f"No se encontró la tabla de información del equipo en: {url}")
+                print(f"❌ No se encontró la tabla de información del equipo en: {url}")
                 continue
+
             equipo = {
                 'nombre_equipo': None,
                 'logo': None,
@@ -311,70 +341,72 @@ def get_team_data():
                 'fecha_fundacion': None
             }
 
-            # Nombre del equipo
             nombre = table.select_one('th.infobox-title')
             if nombre:
                 texto = nombre.get_text(strip=True)
-                # Eliminar todo lo que esté entre paréntesis y los paréntesis
                 texto_sin_parentesis = re.sub(r'\s*\(.*?\)\s*', '', texto)
                 equipo['nombre_equipo'] = texto_sin_parentesis.replace(' ', '_').replace('Season', '').strip()
 
-            # Logo
             logo_img = table.select_one('img[data-src]')
             if logo_img:
                 logo_path = download_image(os.path.join(TEAM_IMAGES_DIR, f"{equipo['nombre_equipo']}.png"), logo_img['data-src'])
                 if logo_path is not None:
                     equipo['logo'] = logo_path
             else:
-                print(f"No se encontró la imagen del logo en: {url}")
+                print(f"⚠️ No se encontró la imagen del logo en: {url}")
 
-            # País (Org Location)
             org_location_row = table.find('td', class_='infobox-label', string='Org Location')
             if org_location_row:
                 pais_td = org_location_row.find_next_sibling('td')
                 pais_span = pais_td.select_one('span.markup-object-name')
                 equipo['pais'] = pais_span.get_text(strip=True) if pais_span else pais_td.get_text(strip=True)
 
-            # Región
             region_icon = table.select_one('tr.infobox-region div.region-icon')
             if region_icon:
                 equipo['region'] = region_icon.get_text(strip=True)
 
-            # Propietario (Owner)
             owner_row = table.find('td', class_='infobox-label', string='Owner')
             if owner_row:
                 owner_td = owner_row.find_next_sibling('td')
                 equipo['propietario'] = owner_td.get_text(" ", strip=True)
 
-            # Head Coach
             coach_row = table.find('td', class_='infobox-label', string='Head Coach')
             if coach_row:
                 coach_td = coach_row.find_next_sibling('td')
                 equipo['head_coach'] = coach_td.get_text(" ", strip=True)
 
-            # Partners
             partners_row = table.find('td', class_='infobox-label', string='Partner')
             if partners_row:
                 partners_td = partners_row.find_next_sibling('td')
                 partners_links = partners_td.select('a')
-                equipo['partners'] = equipo['partners'] = ", ".join([a.get_text(strip=True) for a in partners_links])
+                equipo['partners'] = ", ".join([a.get_text(strip=True) for a in partners_links])
 
-            # Fecha de fundación
             fecha_row = table.select_one('table.infobox-subtable td')
             if fecha_row:
                 equipo['fecha_fundacion'] = fecha_row.get_text(strip=True)
 
-            # Mostrar resultado
-            print(f"Información del equipo {equipo['nombre_equipo']} extraída correctamente.") 
             informacion_equipos.append(equipo)
+            equipos_exitosos += 1
+            print(f"✅ Información del equipo {equipo['nombre_equipo']} extraída correctamente.")
+
         except Exception as e:
-            print(f"Error al intentar extraer la información del equipo: {e}")
+            print(f"🔥 Error al intentar extraer información del equipo en {url}: {e}")
             continue
+
+    end_time = time.time()  # ⏱️ Finaliza el temporizador
+    elapsed = end_time - start_time
+    minutos, segundos = divmod(elapsed, 60)
+
+    print("\n📋 Resumen del scraping de equipos:")
+    print(f"🔗 URLs consultadas: {total_urls}")
+    print(f"🏢 Total de equipos detectados: {total_equipos}")
+    print(f"✔️ Equipos extraídos correctamente: {equipos_exitosos}")
+    print(f"❌ Fallos de extracción: {total_equipos - equipos_exitosos}")
+    print(f"⏱️ Duración total del scraping: {int(minutos)} min {int(segundos)} s")
+
     return informacion_equipos
 
 if __name__ == "__main__":
-    print("👤 Actualizando jugadores...")
-    jugadores = get_player_data()
-    print(jugadores)    
-
+    equipos = get_player_data()
+    
     

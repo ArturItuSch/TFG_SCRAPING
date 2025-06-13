@@ -14,7 +14,7 @@ def iniciar_driver():
             return None
 
         chrome_options = UC.ChromeOptions()
-        chrome_options.binary_location = "/usr/bin/google-chrome"
+        #chrome_options.binary_location = "/usr/bin/google-chrome"
 
         chrome_options.add_experimental_option("prefs", {
             "credentials_enable_service": False,
@@ -32,7 +32,7 @@ def iniciar_driver():
         # No uses executable_path si ChromeDriver ya está en PATH o manejado por UC
         driver = UC.Chrome(
             options=chrome_options,
-            browser_executable_path="/usr/bin/google-chrome"
+            #browser_executable_path="/usr/bin/google-chrome"
         )
         return driver
 

@@ -14,7 +14,7 @@ class ScrapingConfig(AppConfig):
             scheduler = BackgroundScheduler()
             scheduler.add_job(
                 actualizar_datos_desde_ultimo_csv,
-                CronTrigger(hour=6, minute=0),  
+                CronTrigger(hour=14, minute=45),  
                 id='actualizar_csv_diario',
                 replace_existing=True
             )

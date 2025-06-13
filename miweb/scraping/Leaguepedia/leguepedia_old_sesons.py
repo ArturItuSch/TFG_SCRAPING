@@ -2,9 +2,8 @@ from bs4 import BeautifulSoup
 from urllib.parse import urljoin
 import os
 import sys
-import json
 import re
-
+import time
 # Establece la ruta raíz del proyecto
 PROJECT_ROOT = os.path.abspath(os.path.join(os.path.dirname(__file__), '..','..','..'))
 sys.path.insert(0, PROJECT_ROOT)
@@ -65,7 +64,6 @@ def extraer_imagen_equipo(url):
         tag = table.find('img')
         if tag:
             logo_url = tag.get('data-src') or tag.get('src')
-            print("Logo encontrado:", logo_url)
             return logo_url
         else:
             print("No se encontró ninguna imagen en la tabla.")
@@ -120,13 +118,17 @@ def extraer_equipos(url):
     
 def obtener_equipos_antiguos():
     print("⏳ Obteniendo URLs de temporadas...")
+    start_time = time.time()  # Iniciar temporizador
+
     urls = get_urls_sesons()
     if not urls:
         print("⚠️ No se encontraron URLs de temporadas.")
         return []
 
+    total_urls = len(urls)
     equipos_totales = []
     equipos_procesados = set()
+    equipos_extraidos = 0
 
     for url in urls:
         print(f"🔎 Procesando temporada desde URL: {url}")
@@ -139,6 +141,19 @@ def obtener_equipos_antiguos():
 
             equipos_totales.append(equipo)
             equipos_procesados.add(nombre)
+            equipos_extraidos += 1
+            print(f"✅ Equipo extraído: {nombre}")
 
-    print(f"✅ Equipos antiguos extraídos: {len(equipos_totales)}")
+    end_time = time.time()
+    elapsed = end_time - start_time
+    minutos, segundos = divmod(elapsed, 60)
+
+    print("\n📋 Resumen del scraping de equipos antiguos:")
+    print(f"📆 URLs de temporadas procesadas: {total_urls}")
+    print(f"🏁 Total de equipos antiguos extraídos: {equipos_extraidos}")
+    print(f"⏱️ Duración total del scraping: {int(minutos)} min {int(segundos)} s")
+
     return equipos_totales
+
+if __name__ == "__main__":
+    obtener_equipos_antiguos()
