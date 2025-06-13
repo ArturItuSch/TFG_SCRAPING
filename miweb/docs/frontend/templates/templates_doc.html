@@ -1,0 +1,423 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <title>Documentación de Plantillas HTML – LEC Stats</title>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css">
+</head>
+<body class="bg-dark text-white p-4">
+
+  <div class="container">
+    <h1 class="mb-4 text-info">Explicación de la Página Principal (index.html)</h1>
+
+    <p>La página <strong>index.html</strong> presenta un resumen dinámico y visual del estado competitivo actual en la LEC para el último split. Está dividida en dos grandes filas:</p>
+
+    <img src="../../static/images/index_layout.png" alt="Estructura de index.html" class="img-fluid rounded border border-info mb-4">
+
+    <h3 class="text-warning">Fila 1 – Series recientes y Clasificación</h3>
+    <ul>
+      <li><strong>Últimas Series:</strong> se listan las series más recientes del split activo, mostrando nombre de los equipos, logos, resultado final, fecha y si fue de temporada regular o playoffs. Se organiza en tarjetas responsivas con color de fondo oscuro.</li>
+      <li><strong>Clasificación del Split:</strong> tabla con los equipos, número de victorias y derrotas en el split actual. Se presenta con colores amarillos e íconos para destacar la sección.</li>
+    </ul>
+
+    <h3 class="text-success">Fila 2 – Jugadores y Campeones</h3>
+    <ul>
+      <li><strong>Top 10 Jugadores por KDA:</strong> tabla con los 10 jugadores con mejor KDA, mostrando también kills, muertes y asistencias. Se colorea con estilos verdes.</li>
+      <li><strong>Campeones Más Jugados:</strong> tabla con los campeones más utilizados del split, indicando su imagen, número de picks, bans y porcentajes respectivos. Presentado en tonos azul claro.</li>
+    </ul>
+
+    <h3 class="text-primary">Funcionalidades adicionales</h3>
+    <ul>
+      <li><strong>Diseño responsivo:</strong> usa Bootstrap para adaptarse a distintos tamaños de pantalla.</li>
+      <li><strong>Ajustes automáticos con JavaScript:</strong> el script al final ajusta las alturas para que la presentación sea simétrica y consistente.</li>
+    </ul>
+
+    <p>Este template refleja la importancia de una <strong>visualización clara, rápida y estética</strong> para el análisis de estadísticas de eSports.</p>
+  </div>
+  <div class="container mt-5">
+  <h1 class="mb-4 text-info">Explicación de la Página de Historial de Splits (splits.html)</h1>
+
+  <p>La plantilla <strong>splits.html</strong> permite visualizar y filtrar los diferentes <em>splits</em> históricos de las ligas disponibles, agrupándolos por año. Cada tarjeta enlaza a una vista detallada de ese split.</p>
+
+  <img src="../../static/images/splits_layout.png" alt="Estructura de splits.html" class="img-fluid rounded border border-primary mb-4">
+
+  <h3 class="text-warning">Filtros disponibles</h3>
+  <ul>
+    <li><strong>Tipo de Split:</strong> Campo de texto libre para filtrar por nombre del split (ej. Spring, Summer).</li>
+    <li><strong>Liga:</strong> Selector desplegable generado dinámicamente a partir de las ligas disponibles.</li>
+    <li><strong>Año:</strong> Campo numérico para acotar la búsqueda por año (rango permitido: 2000–2100).</li>
+    <li><strong>Botón Buscar:</strong> Envía la consulta GET para actualizar la lista según los filtros.</li>
+  </ul>
+
+  <h3 class="text-success">Visualización por año</h3>
+  <ul>
+    <li>Los splits encontrados se agrupan y muestran bajo tarjetas por año, cada una con un encabezado destacado en azul.</li>
+    <li>Cada split se presenta en una tarjeta gris con el nombre del tipo de split (ej. Spring) y su liga asociada.</li>
+    <li>Al hacer clic en una tarjeta, se redirige a la vista de detalle del split.</li>
+  </ul>
+
+  <h3 class="text-primary">Comportamiento adicional</h3>
+  <ul>
+    <li>Si no hay resultados para los filtros aplicados, se muestra una alerta amarilla informando al usuario.</li>
+    <li>El diseño es completamente responsivo, adaptando las tarjetas a 1, 2, 3 o 4 columnas según el ancho de pantalla.</li>
+  </ul>
+
+  <p>Esta página proporciona una forma clara y accesible de consultar el historial competitivo por temporada, facilitando el acceso a los datos segmentados por año, tipo y liga.</p>
+  </div>
+  <!-- DETALLE_SPLIT.HTML -->
+  <div class="container mt-5">
+    <h1 class="mb-4 text-info">Explicación de la Página Detalle de Split (detalle_split.html)</h1>
+
+    <p>La plantilla <strong>detalle_split.html</strong> presenta una vista completa y segmentada del split seleccionado, con acceso dinámico a varias subsecciones: Clasificación, Bracket de Playoffs, Jugadores y Campeones.</p>
+
+    <video controls class="w-100 rounded border border-info mb-4" onerror="this.style.display='none';document.getElementById('fallback-img').style.display='block';">
+    <source src="../../static/videos/detalle_split_demo.mp4" type="video/mp4">
+    Tu navegador no soporta la reproducción de video.
+  </video>
+
+  <img id="fallback-img" src="../../static/images/detalle_split_layout.png" alt="Estructura detalle_split" class="img-fluid rounded border border-info mb-4" style="display: none;">
+    <h3 class="text-primary">Secciones dinámicas mediante tabs (GET)</h3>
+    <p>La navegación entre vistas se gestiona mediante parámetros GET como <code>?view=clasificacion</code>, <code>?view=bracket</code>, etc. Se muestran diferentes bloques según el valor recibido.</p>
+
+    <h4 class="text-warning">1. Clasificación</h4>
+    <ul>
+      <li>Muestra una tabla con el desempeño de cada equipo en la fase regular: victorias, derrotas y su plantilla.</li>
+      <li>Incluye el logo del equipo y una lista de jugadores asociados con sus roles si están disponibles.</li>
+    </ul>
+
+    <h4 class="text-warning">2. Bracket de Playoffs</h4>
+    <ul>
+      <li>Representación visual del cuadro de playoffs: ronda por ronda, con tarjetas por serie.</li>
+      <li>Cada tarjeta incluye los dos equipos enfrentados, sus logos, resultado (Bo1/Bo3/Bo5) y fecha.</li>
+      <li>Si hay un ganador del split, se muestra destacado en la parte superior.</li>
+    </ul>
+
+    <h4 class="text-warning">3. Jugadores por Equipo</h4>
+    <ul>
+      <li>Sección que organiza a los jugadores por equipo usando tarjetas individuales dentro de una card grande por equipo.</li>
+      <li>Se muestra la imagen, nombre y rol del jugador. Si no hay rol definido, se asigna uno por posición predefinida.</li>
+    </ul>
+
+    <h4 class="text-warning">4. Campeones Utilizados</h4>
+    <ul>
+      <li>Tabla que muestra estadísticas de los campeones jugados durante el split: nombre, imagen, pickrate, banrate, winrate, etc.</li>
+      <li>Incluye un formulario con filtros dinámicos (buscar por nombre, ordenar por métricas).</li>
+      <li>Diseño completamente responsivo y tabla con scroll vertical para grandes cantidades de datos.</li>
+    </ul>
+
+    <h3 class="text-success">Aspectos técnicos</h3>
+    <ul>
+      <li>Diseño adaptativo con Bootstrap, sombreado y tarjetas decorativas para secciones clave.</li>
+      <li>Uso de filtros personalizados y estructuras condicionales para mostrar contenido dinámico en función del estado de los datos.</li>
+      <li>Fallback visual en caso de logos o imágenes no disponibles (por ejemplo, `Unknown.png`).</li>
+    </ul>
+
+    <p>Esta vista es el eje central de análisis de un split individual, permitiendo al usuario consultar de forma clara y estructurada todo el desarrollo del torneo en esa edición.</p>
+  </div>
+
+  <!-- SERIES_LIST.HTML -->
+  <div class="container mt-5">
+    <h1 class="mb-4 text-info">Explicación de la Página de Series Jugadas (series_list.html)</h1>
+
+    <p>La plantilla <strong>series_list.html</strong> muestra todas las series jugadas dentro de un split seleccionado, incluyendo detalles como fecha, tipo de fase, resultado, equipos y jugadores por lado.</p>
+
+    <img src="../../static/images/series_list_layout.png" alt="Estructura de series_list.html" class="img-fluid rounded border border-info mb-4">
+
+    <h3 class="text-warning">Filtro por Split</h3>
+    <ul>
+      <li>En la parte superior hay un filtro desplegable para seleccionar un split (por tipo y año).</li>
+      <li>El formulario se envía automáticamente cuando el usuario cambia el valor del selector.</li>
+    </ul>
+
+    <h3 class="text-warning">Visualización de Series</h3>
+    <ul>
+      <li>Cada serie se muestra dentro de una tarjeta oscura que incluye:
+        <ul>
+          <li>Fecha del enfrentamiento</li>
+          <li>Etiqueta indicando si fue <strong>Regular Season</strong> o <strong>Playoffs</strong></li>
+          <li>Resultado (victorias por equipo)</li>
+          <li>Botón <code>+ info</code> para ver el detalle completo de la serie</li>
+        </ul>
+      </li>
+    </ul>
+
+    <h3 class="text-success">Equipos y Jugadores</h3>
+    <ul>
+      <li>Cada equipo (azul y rojo) se presenta con:
+        <ul>
+          <li>Logo con enlace a la página del equipo</li>
+          <li>Nombre del equipo</li>
+          <li>Listado de los jugadores alineados, con nombre y posición</li>
+        </ul>
+      </li>
+      <li>Cada jugador está enlazado a su perfil individual.</li>
+    </ul>
+
+    <p>Esta vista permite revisar visualmente el desarrollo competitivo de un split, con acceso directo a la información de cada serie y sus protagonistas.</p>
+  </div>
+
+  <!-- SERIES_INFO.HTML -->
+  <div class="container mt-5">
+    <h1 class="mb-4 text-info">Explicación de la Página de Detalle de Serie (series_info.html)</h1>
+
+    <p>La plantilla <strong>series_info.html</strong> muestra toda la información relevante de una serie específica jugada en un split, incluyendo equipos enfrentados, resultado general y detalle individual de cada partida.</p>
+
+    <img src="../../static/images/series_info_layout.png" alt="Estructura de series_info.html" class="img-fluid rounded border border-info mb-4">
+
+    <h3 class="text-warning">Resumen General</h3>
+    <ul>
+      <li>Encabezado con fecha, split, versión de parche (si existe) y tipo de fase (Playoffs o Regular Season).</li>
+      <li>Visualización central de los dos equipos enfrentados con sus logos, nombres y el resultado final de la serie.</li>
+    </ul>
+
+    <h3 class="text-warning">Listado de Partidas</h3>
+    <ul>
+      <li>Para cada partida disputada se muestra una tarjeta con:
+        <ul>
+          <li>Ganador de cada lado (con badge verde/rojo)</li>
+          <li>Botón <code>+ info</code> que enlaza al detalle completo del partido</li>
+          <li>Etiqueta visual de los sides (Blue Side / Red Side)</li>
+        </ul>
+      </li>
+    </ul>
+
+    <h3 class="text-success">Visualización de Jugadores</h3>
+    <ul>
+      <li>En cada partida, los jugadores se listan por equipo en dos columnas diferenciadas (azul y rojo).</li>
+      <li>Cada jugador aparece en una tarjeta que incluye:
+        <ul>
+          <li>Su nombre (recortado si es largo)</li>
+          <li>Campeón jugado con icono</li>
+          <li>Rol</li>
+        </ul>
+      </li>
+      <li>Diseño adaptativo con scroll horizontal para pantallas pequeñas.</li>
+    </ul>
+
+    <p>Esta vista permite consultar el desarrollo completo de una serie y el rendimiento individual de cada jugador en cada mapa. Es especialmente útil para análisis posteriores y revisiones técnicas.</p>
+  </div>
+  <!-- DETALLE_EQUIPO.HTML -->
+  <div class="container mt-5">
+    <h1 class="mb-4 text-info">Explicación de la Página de Detalle de Equipo (detalle_equipo.html)</h1>
+
+    <p>La plantilla <strong>detalle_equipo.html</strong> muestra información detallada sobre un equipo específico de la LEC, incluyendo sus datos organizativos y jugadores activos clasificados por rol.</p>
+
+    <img src="../../static/images/detalle_equipo_layout.png" alt="Estructura de detalle_equipo.html" class="img-fluid rounded border border-info mb-4">
+
+    <h3 class="text-warning">Encabezado del Equipo</h3>
+    <ul>
+      <li>Muestra el logo del equipo (si está disponible), el nombre y la región como badge visual.</li>
+      <li>Diseño con fondo oscuro y tarjeta destacada en la parte superior.</li>
+    </ul>
+
+    <h3 class="text-warning">Sección de Información General</h3>
+    <ul>
+      <li>Presenta información clave como país, región, head coach, propietario, año de fundación y sponsors.</li>
+      <li>Se usa una tarjeta Bootstrap con fondo oscuro y un encabezado diferenciado.</li>
+    </ul>
+
+    <h3 class="text-warning">Jugadores Activos</h3>
+    <ul>
+      <li>Se muestran tarjetas por jugador, agrupadas por el rol (`Top`, `Jungla`, `Mid`, `ADC`, `Support`).</li>
+      <li>Incluye nombre, imagen y badge del rol. La imagen se recorta y enmarca con estilos personalizados.</li>
+      <li>Layout responsivo en una cuadrícula fluida con columnas que se adaptan al tamaño de pantalla.</li>
+    </ul>
+
+    <h3 class="text-success">Detalles técnicos y visuales</h3>
+    <ul>
+      <li>Uso de `dictget` para agrupar jugadores por rol dentro del contexto del equipo.</li>
+      <li>Fallback en imágenes gestionado con condiciones `{% if jugador.imagen %}`.</li>
+      <li>Diseño oscuro consistente con el resto de la interfaz de LEC Stats.</li>
+    </ul>
+
+    <p>Esta vista permite al usuario conocer en profundidad a cada equipo y explorar su plantilla de forma clara y atractiva.</p>
+  </div>
+  <!-- EQUIPO.HTML -->
+  <div class="container mt-5">
+    <h1 class="mb-4 text-info">Explicación de la Página de Equipos (equipo.html)</h1>
+
+    <p>La plantilla <strong>equipo.html</strong> muestra una vista de cuadrícula con todos los equipos registrados en la base de datos, diferenciando entre los <strong>equipos activos</strong> y el total histórico. Cada tarjeta lleva al detalle del equipo correspondiente.</p>
+
+    <img id="fallback-img-equipos" src="../../static/images/equipo_layout.png" alt="Estructura de equipo.html" class="img-fluid rounded border border-info mb-4" style="display">
+
+    <h3 class="text-warning">Sección de Equipos Activos</h3>
+    <ul>
+      <li>Se muestra en la parte superior, con diseño de tarjetas <code>.card</code> alineadas en una cuadrícula responsiva.</li>
+      <li>Cada tarjeta contiene: el logo del equipo (si lo tiene), su nombre y la región a la que pertenece.</li>
+      <li>El enlace en cada tarjeta lleva a la vista <code>detalle_equipo</code>.</li>
+    </ul>
+
+    <h3 class="text-warning">Sección de Todos los Equipos</h3>
+    <ul>
+      <li>Ubicada justo debajo de la anterior, contiene tanto activos como equipos pasados (históricos).</li>
+      <li>Si el equipo no tiene logo, se muestra una imagen por defecto (`Unknown.png`).</li>
+    </ul>
+
+    <h3 class="text-success">Diseño y comportamiento responsivo</h3>
+    <ul>
+      <li>Se adapta automáticamente mediante media queries a columnas de 5, 3, 2 o 1 tarjeta por fila, según el ancho de pantalla.</li>
+      <li>Utiliza `flexbox` (`.equipos-grid`) para una distribución fluida y centrada.</li>
+      <li>Estilo visual unificado con tonos oscuros, bordes redondeados, y sombras suaves.</li>
+    </ul>
+
+    <p>Esta plantilla proporciona una navegación rápida e intuitiva para explorar equipos actuales y pasados que han formado parte de la LEC.</p>
+  </div>
+
+  <!-- PARTIDO.HTML -->
+  <div class="container mt-5">
+    <h1 class="mb-4 text-info">Explicación de la Página Detalle del Partido (partido.html)</h1>
+
+    <p>La plantilla <strong>partido.html</strong> ofrece una vista completa de todo lo sucedido en un partido de la LEC, incluyendo picks, bans, objetivos neutrales, estadísticas individuales de jugadores y visualizaciones gráficas.</p>
+
+    <video controls class="w-100 rounded border border-info mb-4">
+      <source src="../../static/videos/partido_demo.mp4" type="video/mp4">
+      Tu navegador no soporta la reproducción de video.
+    </video>
+
+    <h3 class="text-warning">Resumen y Resultado</h3>
+    <ul>
+      <li>Sección inicial que muestra a ambos equipos, sus logos, nombre, side (blue/red), duración del partido y el resultado (victoria/derrota).</li>
+    </ul>
+
+    <h3 class="text-warning">Sección de Picks y Bans</h3>
+    <ul>
+      <li>Cada equipo tiene sus bans y picks en tarjetas pequeñas con número de selección/baneo, imagen del campeón y nombre.</li>
+      <li>Los datos se organizan en columnas separadas para el equipo azul y rojo.</li>
+    </ul>
+
+    <h3 class="text-warning">Objetivos Neutrales</h3>
+    <ul>
+      <li>Representación visual por equipo de dragones (con tipos individuales), barones, heraldos, torres, inhibidores, y placas.</li>
+      <li>Se muestran usando emojis y badges visuales para mejorar la comprensión rápida.</li>
+    </ul>
+
+    <h3 class="text-success">Estadísticas de Jugadores</h3>
+    <ul>
+      <li>Presentadas en forma de tarjetas por jugador, incluyendo:
+        <ul>
+          <li>Nombre, posición y campeón jugado</li>
+          <li>KDA, oro, daño, visión y CS</li>
+        </ul>
+      </li>
+      <li>Se organiza en secciones diferenciadas para Blue Side y Red Side.</li>
+    </ul>
+
+    <h3 class="text-success">Visualización Gráfica</h3>
+    <ul>
+      <li>Se puede alternar entre vista de tarjetas y gráficos con botones interactivos.</li>
+      <li>Los gráficos (oro, CS y visión) se generan con Chart.js, usando un canvas dinámico.</li>
+    </ul>
+
+    <p>Esta plantilla es clave para analizar a fondo el desarrollo de un partido individual, tanto a nivel de estrategia (picks/bans) como de ejecución (estadísticas por jugador).</p>
+  </div>
+  <!-- JUGADORES.HTML -->
+<div class="container mt-5">
+  <h1 class="mb-4 text-info">Explicación de la Página de Jugadores (jugadores.html)</h1>
+
+  <p>La plantilla <strong>jugadores.html</strong> permite visualizar, buscar y filtrar a todos los jugadores activos durante el split actual. Presenta sus imágenes, nombres, roles y equipos asociados en un diseño de cuadrícula responsiva.</p>
+
+  <img src="../../static/images/jugadores_layout.png" alt="Estructura de jugadores.html" class="img-fluid rounded border border-info mb-4">
+
+  <h3 class="text-warning">Buscador de Jugadores</h3>
+  <ul>
+    <li>Incluye filtros por:
+      <ul>
+        <li><strong>Nombre del jugador</strong> (campo de texto)</li>
+        <li><strong>Equipo</strong> (selector desplegable)</li>
+        <li><strong>Rol</strong> (selector desplegable)</li>
+      </ul>
+    </li>
+    <li>El formulario se envía por método <code>GET</code> para mantener los filtros visibles en la URL y en la interfaz.</li>
+  </ul>
+
+  <h3 class="text-success">Tarjetas de Jugador</h3>
+  <ul>
+    <li>Cada jugador se presenta en una tarjeta que incluye:
+      <ul>
+        <li>Imagen (con fallback si no tiene)</li>
+        <li>Nombre</li>
+        <li>Rol y equipo</li>
+      </ul>
+    </li>
+    <li>Las tarjetas enlazan a la vista <code>detalle_jugador</code>.</li>
+    <li>Diseño en cuadrícula responsiva con 5, 3, 2 o 1 columna según el tamaño de pantalla.</li>
+  </ul>
+
+  <p>Esta vista facilita la exploración del roster activo de la LEC y permite filtrar por criterios clave para análisis o navegación específica.</p>
+</div>
+<!-- DETALLE_JUGADOR.HTML -->
+<div class="container mt-5">
+  <h1 class="mb-4 text-info">Explicación de la Página de Detalle de Jugador (detalle_jugador.html)</h1>
+
+  <p>La plantilla <strong>detalle_jugador.html</strong> ofrece una vista individualizada de cada jugador activo, incluyendo su información biográfica, estadísticas acumuladas por split y un listado de sus partidas más recientes con filtros aplicables.</p>
+
+  <video controls class="w-100 rounded border border-info mb-4">
+    <source src="../../static/videos/detalle_jugador_demo.mp4" type="video/mp4">
+    Tu navegador no soporta la reproducción de video.
+  </video>
+
+  <h3 class="text-warning">Cabecera del Jugador</h3>
+  <ul>
+    <li>Incluye imagen, nombre, equipo y logo del equipo (si está disponible).</li>
+    <li>Se muestra dentro de una tarjeta con diseño centrado, fondo oscuro y bordes redondeados.</li>
+  </ul>
+
+  <h3 class="text-warning">Información Personal y Contrato</h3>
+  <ul>
+    <li>Sección lateral que presenta nombre real, rol, país, residencia, fechas de contrato y si está activo.</li>
+    <li>Diseño dividido en dos columnas responsivas para adaptarse a diferentes tamaños de pantalla.</li>
+  </ul>
+
+  <h3 class="text-success">Estadísticas Generales del Split</h3>
+  <ul>
+    <li>Promedios de KDA, CS, visión y winrate presentados como tarjetas de resumen.</li>
+  </ul>
+
+  <h3 class="text-success">Tabla de Rendimiento por Partida</h3>
+  <ul>
+    <li>Se incluye un buscador con filtros por campeón, resultado y ordenamiento por métricas (kills, gold, visión, etc.).</li>
+    <li>La tabla muestra rival, campeón usado, resultado, K/D/A, CS, oro, daño y visión para cada partida.</li>
+    <li>Diseño responsivo y scroll vertical garantizado con `table-responsive`.</li>
+  </ul>
+
+  <p>Esta vista permite realizar un seguimiento detallado del rendimiento de un jugador a lo largo del split, facilitando tanto el análisis estadístico como el acceso a su historial competitivo.</p>
+</div>
+<!-- CAMPEONES.HTML -->
+<div class="container mt-5">
+  <h1 class="mb-4 text-info">Explicación de la Página de Estadísticas de Campeones (campeones.html)</h1>
+
+  <p>La plantilla <strong>campeones.html</strong> muestra una lista de todos los campeones utilizados durante los splits de la LEC, permitiendo buscar, filtrar y ordenar la información por distintas métricas clave.</p>
+
+  <img src="../../static/images/campeones_layout.png" alt="Estructura de campeones.html" class="img-fluid rounded border border-info mb-4">
+
+  <h3 class="text-warning">Buscador y Filtros</h3>
+  <ul>
+    <li>Se permite filtrar por:
+      <ul>
+        <li><strong>Nombre del campeón</strong> (campo de texto)</li>
+        <li><strong>Año</strong> del split</li>
+        <li><strong>Tipo de split</strong> (Spring, Summer, etc.)</li>
+        <li><strong>Métrica de ordenación</strong> (nombre, pickrate, banrate, winrate)</li>
+      </ul>
+    </li>
+    <li>El formulario utiliza <code>GET</code> para mantener filtros y facilitar la navegación.</li>
+  </ul>
+
+  <h3 class="text-success">Tarjetas de Campeones</h3>
+  <ul>
+    <li>Cada campeón se presenta en una tarjeta con:
+      <ul>
+        <li>Imagen (o inicial del nombre si no tiene)</li>
+        <li>Nombre del campeón</li>
+        <li>Número de picks y bans</li>
+        <li>Win Rate, Pick Rate y Ban Rate</li>
+      </ul>
+    </li>
+    <li>Diseño en filas responsivas de 1 a 3 columnas.</li>
+    <li>Tarjetas con estilo oscuro y métricas alineadas para fácil comparación.</li>
+  </ul>
+
+  <p>Esta vista permite a los usuarios analizar la popularidad y efectividad de los campeones en la escena competitiva profesional, filtrando por contexto histórico o estratégico.</p>
+</div>
+</body>
+</html>
